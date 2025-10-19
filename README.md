@@ -37,7 +37,7 @@ Toolkit complet de développement pour Symfony/PHP.
 
 ```bash
 # Clone le repo
-git clone https://github.com/atournayre/claude-plugin.git
+git clone https://github.com/atournayre/claude-marketplace.git
 
 # Configure ton marketplace dans Claude Code settings
 # Ajoute le chemin vers le fichier .claude-plugin/marketplace.json

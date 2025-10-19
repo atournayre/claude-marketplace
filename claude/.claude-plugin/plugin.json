@@ -6,8 +6,8 @@
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
   },
-  "homepage": "https://github.com/atournayre/claude-plugin",
-  "repository": "https://github.com/atournayre/claude-plugin",
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
   "keywords": [
     "claude-code",
