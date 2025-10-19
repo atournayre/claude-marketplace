@@ -1,0 +1,24 @@
+{
+  "name": "atournayre-claude-plugin-marketplace",
+  "owner": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "claude",
+      "source": "./claude",
+      "description": "Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation"
+    },
+    {
+      "name": "customize",
+      "source": "./customize",
+      "description": "Personnalise ton expérience Claude Code avec hooks, output styles et status lines sur mesure"
+    },
+    {
+      "name": "dev",
+      "source": "./dev",
+      "description": "Toolkit complet de développement pour Symfony/PHP avec commandes Git, debugging, documentation, et QA automatisée"
+    }
+  ]
+}

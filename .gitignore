@@ -1,0 +1,15 @@
+# Claude Code - Logs et data
+.claude/logs/
+.claude/data/
+logs/
+
+# Python cache (hooks)
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+
+# Secrets
+*.env
+credentials.json

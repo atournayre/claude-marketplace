@@ -1,0 +1,20 @@
+{
+  "name": "claude",
+  "description": "Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation",
+  "version": "1.0.0",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-plugin",
+  "repository": "https://github.com/atournayre/claude-plugin",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "documentation",
+    "code-generation",
+    "slash-commands",
+    "evaluation",
+    "assistant"
+  ]
+}

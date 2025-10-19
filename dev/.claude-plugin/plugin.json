@@ -1,0 +1,32 @@
+{
+  "name": "dev",
+  "description": "Toolkit complet de développement pour Symfony/PHP avec commandes Git, debugging, documentation, et QA automatisée",
+  "version": "1.0.0",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-plugin",
+  "repository": "https://github.com/atournayre/claude-plugin",
+  "license": "MIT",
+  "keywords": [
+    "symfony",
+    "php",
+    "git",
+    "documentation",
+    "debugging",
+    "qa",
+    "phpstan",
+    "docker",
+    "meilisearch",
+    "api-platform",
+    "workflow",
+    "hooks",
+    "automation",
+    "testing",
+    "adr",
+    "pull-request",
+    "commit",
+    "sessions"
+  ]
+}
