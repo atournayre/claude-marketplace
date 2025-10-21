@@ -33,49 +33,31 @@ def get_repo_info():
         sys.exit(1)
 
 
-def get_projects_graphql(owner):
-    """Récupère les projets via GraphQL"""
-    query = """
-    query($owner: String!) {
-      user(login: $owner) {
-        projectsV2(first: 20, orderBy: {field: UPDATED_AT, direction: DESC}) {
-          nodes {
-            id
-            title
-            number
-          }
-        }
-      }
-      organization(login: $owner) {
-        projectsV2(first: 20, orderBy: {field: UPDATED_AT, direction: DESC}) {
-          nodes {
-            id
-            title
-            number
-          }
-        }
-      }
-    }
-    """
-
+def get_projects_list(owner):
+    """Récupère les projets via gh project list"""
     try:
+        # Utiliser gh project list qui gère automatiquement user/org
         result = subprocess.run(
-            ["gh", "api", "graphql", "-f", f"query={query}", "-f", f"owner={owner}"],
+            ["gh", "project", "list", "--owner", owner, "--format", "json"],
             capture_output=True,
             text=True,
             check=True
         )
-        data = json.loads(result.stdout)
 
+        projects_data = json.loads(result.stdout)
+
+        # Transformer au format attendu (id, title, number)
         projects = []
-        if data.get('data', {}).get('user', {}).get('projectsV2', {}).get('nodes'):
-            projects.extend(data['data']['user']['projectsV2']['nodes'])
-        if data.get('data', {}).get('organization', {}).get('projectsV2', {}).get('nodes'):
-            projects.extend(data['data']['organization']['projectsV2']['nodes'])
+        for project in projects_data.get('projects', []):
+            projects.append({
+                'id': project.get('id'),
+                'title': project.get('title'),
+                'number': project.get('number')
+            })
 
         return projects
     except subprocess.CalledProcessError as e:
-        print(f"❌ Erreur récupération projets: {e.stderr}", file=sys.stderr)
+        print(f"⚠️  Impossible de récupérer les projets: {e.stderr}", file=sys.stderr)
         return []
     except json.JSONDecodeError as e:
         print(f"❌ Erreur parsing JSON projets: {e}", file=sys.stderr)
@@ -140,7 +122,7 @@ def main():
     args = parser.parse_args()
 
     owner, repo = get_repo_info()
-    projects = get_projects_graphql(owner)
+    projects = get_projects_list(owner)
 
     if not projects:
         print("ℹ️  Aucun projet trouvé - ignoré")
