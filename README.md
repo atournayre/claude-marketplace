@@ -1,5 +1,7 @@
 # Claude Plugin Marketplace
 
+> ⚠️ **DISCLAIMER:** Ce plugin est en cours de développement actif. Utilise-le avec précaution et n'hésite pas à remonter tout bug ou comportement inattendu via les issues GitHub.
+
 Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour améliorer ton workflow de développement.
 
 ## 📦 Plugins disponibles
