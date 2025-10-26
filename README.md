@@ -37,13 +37,63 @@ Toolkit complet de développement pour Symfony/PHP.
 
 ## 🚀 Installation
 
-```bash
-# Clone le repo
-git clone https://github.com/atournayre/claude-marketplace.git
+### Ajouter le marketplace
 
-# Configure ton marketplace dans Claude Code settings
-# Ajoute le chemin vers le fichier .claude-plugin/marketplace.json
+Depuis Claude Code, ajoute le marketplace à ta configuration :
+
+```bash
+/plugin marketplace add atournayre/claude-marketplace
 ```
+
+### Installer tous les plugins
+
+Pour installer tous les plugins du marketplace en une fois :
+
+```bash
+/plugin
+```
+
+Puis sélectionne "Browse Plugins" et installe les plugins souhaités.
+
+### Installer un plugin spécifique
+
+Pour installer un plugin individuellement :
+
+```bash
+# Plugin Claude (commandes essentielles)
+/plugin install claude@atournayre
+
+# Plugin Customize (hooks, output styles, status lines)
+/plugin install customize@atournayre
+
+# Plugin Dev (toolkit Symfony/PHP complet)
+/plugin install dev@atournayre
+```
+
+### Vérifier l'installation
+
+Vérifie que les plugins sont bien installés :
+
+```bash
+/help
+```
+
+Tu devrais voir les nouvelles commandes disponibles avec leurs préfixes (`/claude:`, `/customize:`, `/dev:`).
+
+### Configuration équipe (optionnel)
+
+Pour partager la configuration avec ton équipe, ajoute dans `.claude/settings.json` de ton projet :
+
+```json
+{
+  "plugins": {
+    "marketplaces": ["atournayre/claude-marketplace"],
+    "installed": ["claude@atournayre", "customize@atournayre", "dev@atournayre"]
+  }
+}
+```
+
+Les plugins s'installeront automatiquement quand les membres de l'équipe trustent le dossier.
 
 ## 📝 Structure du projet
 
@@ -81,6 +131,24 @@ Une fois installé, tu peux utiliser les commandes avec le préfixe du plugin:
 /dev:git:commit
 /dev:symfony:make entity
 /customize # Active les hooks et styles
+```
+
+### Gestion des plugins
+
+**Activer/Désactiver un plugin** sans le désinstaller :
+
+```bash
+# Désactiver temporairement
+/plugin disable dev@atournayre
+
+# Réactiver
+/plugin enable dev@atournayre
+```
+
+**Désinstaller un plugin** complètement :
+
+```bash
+/plugin uninstall dev@atournayre
 ```
 
 ## 🤝 Contribution
