@@ -1,0 +1,20 @@
+{
+  "name": "symfony",
+  "description": "Plugin Symfony avec commandes make, documentation et intégrations framework",
+  "version": "1.0.0",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "symfony",
+    "php",
+    "framework",
+    "maker",
+    "documentation",
+    "commands"
+  ]
+}
