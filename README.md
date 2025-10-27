@@ -24,16 +24,24 @@ Personnalise ton expérience Claude avec hooks, output styles et status lines.
 - Status lines customisables (5 variantes)
 
 ### ⚙️ Dev
-Toolkit complet de développement pour Symfony/PHP.
+Toolkit complet de développement pour PHP.
 
 **Domaines couverts:**
 - **Git:** Gestion branches, commits, PRs, conflits, status
 - **Documentation:** ADR, RTFM, mises à jour automatiques
 - **Debugging:** Stack traces, error-fix
 - **QA:** PHPStan level 9
-- **Framework:** Symfony, API Platform, Meilisearch
+- **Framework:** API Platform, Meilisearch
 - **Sessions:** Gestion de sessions de développement
 - **Workflow:** Docker, analytics, context management
+
+### 🎯 Symfony
+Plugin spécialisé pour le framework Symfony.
+
+**Commandes:**
+- `/symfony:make` - Utilisation des makers Symfony
+- `/symfony:doc:load` - Chargement de la documentation Symfony
+- `/symfony:doc:question` - Questions sur la documentation Symfony
 
 ## 🚀 Installation
 
@@ -66,8 +74,11 @@ Pour installer un plugin individuellement :
 # Plugin Customize (hooks, output styles, status lines)
 /plugin install customize@atournayre
 
-# Plugin Dev (toolkit Symfony/PHP complet)
+# Plugin Dev (toolkit PHP complet)
 /plugin install dev@atournayre
+
+# Plugin Symfony (commandes et intégrations Symfony)
+/plugin install symfony@atournayre
 ```
 
 ### Vérifier l'installation
@@ -88,7 +99,7 @@ Pour partager la configuration avec ton équipe, ajoute dans `.claude/settings.j
 {
   "plugins": {
     "marketplaces": ["atournayre/claude-marketplace"],
-    "installed": ["claude@atournayre", "customize@atournayre", "dev@atournayre"]
+    "installed": ["claude@atournayre", "customize@atournayre", "dev@atournayre", "symfony@atournayre"]
   }
 }
 ```
@@ -108,7 +119,11 @@ Les plugins s'installeront automatiquement quand les membres de l'équipe truste
 │   ├── hooks/
 │   ├── output-styles/
 │   └── status_lines/
-└── dev/                      # Plugin de développement
+├── dev/                      # Plugin de développement
+│   ├── commands/
+│   └── skills/
+└── symfony/                  # Plugin Symfony
+    ├── .claude-plugin/
     ├── commands/
     └── skills/
 ```
@@ -129,7 +144,7 @@ Une fois installé, tu peux utiliser les commandes avec le préfixe du plugin:
 # Exemples
 /claude:challenge
 /dev:git:commit
-/dev:symfony:make entity
+/symfony:make entity
 /customize # Active les hooks et styles
 ```
 

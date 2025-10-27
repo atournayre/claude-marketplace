@@ -1,6 +1,6 @@
 {
   "name": "dev",
-  "description": "Toolkit complet de développement pour Symfony/PHP avec commandes Git, debugging, documentation, et QA automatisée",
+  "description": "Toolkit complet de développement pour PHP avec commandes Git, debugging, documentation, et QA automatisée",
   "version": "1.0.0",
   "author": {
     "name": "Aurélien Tournayre",
@@ -10,7 +10,6 @@
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
   "keywords": [
-    "symfony",
     "php",
     "git",
     "documentation",

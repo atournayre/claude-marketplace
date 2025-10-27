@@ -19,6 +19,11 @@
       "name": "dev",
       "source": "./dev",
       "description": "Toolkit complet de développement pour Symfony/PHP avec commandes Git, debugging, documentation, et QA automatisée"
+    },
+    {
+      "name": "symfony",
+      "source": "./symfony",
+      "description": "Plugin Symfony avec commandes make, documentation et intégrations framework"
     }
   ]
 }
