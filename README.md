@@ -10,10 +10,11 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 Plugin de base pour Claude Code avec commandes essentielles.
 
 **Commandes:**
-- `/claude:challenge` - Évaluation et amélioration de tes réponses
+- `/cc:challenge` - Évaluation et amélioration de tes réponses
+- `/cc:make:command` - Générateur de slash commands
 - `/claude:doc:load` - Chargement de la documentation Claude Code
 - `/claude:doc:question` - Questions sur la documentation Claude Code
-- `/claude:make:command` - Générateur de slash commands
+- `/alias:add` - Créer des alias de commandes
 
 ### 🎨 Customize
 Personnalise ton expérience Claude avec hooks, output styles et status lines.
@@ -42,6 +43,18 @@ Plugin spécialisé pour le framework Symfony.
 - `/symfony:make` - Utilisation des makers Symfony
 - `/symfony:doc:load` - Chargement de la documentation Symfony
 - `/symfony:doc:question` - Questions sur la documentation Symfony
+
+### 📊 Output Styles
+Styles de sortie personnalisés pour formater les réponses.
+
+**Styles disponibles:**
+- `/style:ultra-concise` - Mode ultra-concis
+- `/style:yaml-structured` - Format YAML structuré
+- `/style:markdown-focused` - Markdown enrichi
+- `/style:genui` - UI générative avec HTML
+- `/style:html-structured` - HTML sémantique
+- `/style:table-based` - Tableaux markdown
+- `/style:bullet-points` - Listes à puces hiérarchiques
 
 ## 🚀 Installation
 
@@ -79,6 +92,9 @@ Pour installer un plugin individuellement :
 
 # Plugin Symfony (commandes et intégrations Symfony)
 /plugin install symfony@atournayre
+
+# Plugin Output Styles (styles de sortie personnalisés)
+/plugin install output-styles@atournayre
 ```
 
 ### Vérifier l'installation
@@ -89,7 +105,7 @@ Vérifie que les plugins sont bien installés :
 /help
 ```
 
-Tu devrais voir les nouvelles commandes disponibles avec leurs préfixes (`/claude:`, `/customize:`, `/dev:`).
+Tu devrais voir les nouvelles commandes disponibles avec leurs préfixes (`/cc:`, `/git:`, `/symfony:`, `/style:`).
 
 ### Configuration équipe (optionnel)
 
@@ -99,7 +115,7 @@ Pour partager la configuration avec ton équipe, ajoute dans `.claude/settings.j
 {
   "plugins": {
     "marketplaces": ["atournayre/claude-marketplace"],
-    "installed": ["claude@atournayre", "customize@atournayre", "dev@atournayre", "symfony@atournayre"]
+    "installed": ["claude@atournayre", "customize@atournayre", "dev@atournayre", "symfony@atournayre", "output-styles@atournayre"]
   }
 }
 ```
@@ -122,10 +138,14 @@ Les plugins s'installeront automatiquement quand les membres de l'équipe truste
 ├── dev/                      # Plugin de développement
 │   ├── commands/
 │   └── skills/
-└── symfony/                  # Plugin Symfony
+├── symfony/                  # Plugin Symfony
+│   ├── .claude-plugin/
+│   ├── commands/
+│   └── skills/
+└── output-styles/           # Plugin styles de sortie
     ├── .claude-plugin/
     ├── commands/
-    └── skills/
+    └── hooks/
 ```
 
 ## 🔧 Configuration
@@ -133,8 +153,8 @@ Les plugins s'installeront automatiquement quand les membres de l'équipe truste
 Chaque plugin contient:
 - `.claude-plugin/plugin.json` - Métadonnées du plugin
 - `commands/` - Slash commands disponibles
-- `skills/` - Compétences spécialisées (dev uniquement)
-- `hooks/` - Scripts de hooks (customize uniquement)
+- `skills/` - Compétences spécialisées (dev, symfony)
+- `hooks/` - Scripts de hooks (customize, output-styles)
 
 ## 📖 Utilisation
 
@@ -142,10 +162,10 @@ Une fois installé, tu peux utiliser les commandes avec le préfixe du plugin:
 
 ```bash
 # Exemples
-/claude:challenge
-/dev:git:commit
+/cc:challenge
+/git:commit
 /symfony:make entity
-/customize # Active les hooks et styles
+/style:yaml-structured
 ```
 
 ### Gestion des plugins
