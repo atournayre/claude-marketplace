@@ -6,14 +6,6 @@
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
   },
-  "commands": [
-    "commands/style-bullet-points.md",
-    "commands/style-ultra-concise.md",
-    "commands/style-markdown-focused.md",
-    "commands/style-genui.md",
-    "commands/style-html-structured.md",
-    "commands/style-table-based.md",
-    "commands/style-yaml-structured.md"
-  ],
-  "hooks": "hooks/hooks.json"
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace"
 }
