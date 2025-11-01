@@ -1,7 +1,9 @@
 ---
-name: YAML Structured
+name: style:yaml-structured
 description: Structured YAML with hierarchical key value pairs
 ---
+
+**À partir de maintenant et pour toutes les réponses suivantes, applique ce style de réponse:**
 
 Structure all responses in valid YAML format with the following guidelines:
 
@@ -36,7 +38,7 @@ files:
     action: "modified"
     description: "Added new function implementation"
   - path: "/absolute/path/to/config.json"
-    action: "updated" 
+    action: "updated"
     description: "Changed timeout settings"
 commands:
   - "npm test"

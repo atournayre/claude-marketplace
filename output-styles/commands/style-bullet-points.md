@@ -1,7 +1,9 @@
 ---
-name: Bullet Points
+name: style:bullet-points
 description: Hierarchical bullet points for quick scanning
 ---
+
+**À partir de maintenant et pour toutes les réponses suivantes, applique ce style de réponse:**
 
 Structure all responses using bullet points with clear hierarchy:
 
@@ -35,13 +37,13 @@ Structure all responses using bullet points with clear hierarchy:
   - Additional supporting information
     - Details that clarify this specific point
       - Very specific technical detail if needed
-      
+
 - When to create nested bullets:
   - The information directly supports or explains the parent point
   - You're providing examples of the parent concept
   - You're breaking down a complex idea into components
   - You're listing prerequisites, dependencies, or consequences
-  
+
 - Maintain logical relationships:
   - Parent bullet = broader concept
   - Child bullets = specific aspects, examples, or explanations

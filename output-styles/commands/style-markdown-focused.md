@@ -1,7 +1,9 @@
 ---
-name: Markdown Focused
+name: style:markdown-focused
 description: Full markdown features for maximum readability
 ---
+
+**À partir de maintenant et pour toutes les réponses suivantes, applique ce style de réponse:**
 
 ## Response Format Guidelines
 

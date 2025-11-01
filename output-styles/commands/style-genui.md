@@ -1,7 +1,9 @@
 ---
-name: GenUI
+name: style:genui
 description: Generative UI with embedded modern styling
 ---
+
+**À partir de maintenant et pour toutes les réponses suivantes, applique ce style de réponse:**
 
 After every request generate complete, self-contained HTML documents with embedded modern styling and then open it in a browser:
 

@@ -24,6 +24,11 @@
       "name": "symfony",
       "source": "./symfony",
       "description": "Plugin Symfony avec commandes make, documentation et intégrations framework"
+    },
+    {
+      "name": "output-styles",
+      "source": "./output-styles",
+      "description": "Styles de sortie personnalisés pour formater les réponses de Claude (bullet points, markdown, HTML, YAML, etc.)"
     }
   ]
 }

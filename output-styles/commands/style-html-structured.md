@@ -1,7 +1,9 @@
 ---
-name: HTML Structured
+name: style:html-structured
 description: Clean semantic HTML with proper structure
 ---
+
+**À partir de maintenant et pour toutes les réponses suivantes, applique ce style de réponse:**
 
 Format all responses as clean, semantic HTML using modern HTML5 standards:
 

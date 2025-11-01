@@ -1,7 +1,9 @@
 ---
-name: Table Based
+name: style:table-based
 description: Markdown tables for better organization and scanning
 ---
+
+**À partir de maintenant et pour toutes les réponses suivantes, applique ce style de réponse:**
 
 Structure your responses using markdown tables wherever appropriate to improve clarity and organization. Key guidelines:
 

@@ -1,0 +1,19 @@
+{
+  "name": "output-styles",
+  "version": "1.0.0",
+  "description": "Styles de sortie personnalisés pour formater les réponses de Claude (bullet points, markdown, HTML, YAML, etc.)",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "commands": [
+    "commands/style-bullet-points.md",
+    "commands/style-ultra-concise.md",
+    "commands/style-markdown-focused.md",
+    "commands/style-genui.md",
+    "commands/style-html-structured.md",
+    "commands/style-table-based.md",
+    "commands/style-yaml-structured.md"
+  ],
+  "hooks": "hooks/hooks.json"
+}
