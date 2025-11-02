@@ -1,6 +1,7 @@
 # Claude Code - Logs et data
 .claude/logs/
 .claude/data/
+.claude/sessions/
 logs/
 
 # Python cache (hooks)
