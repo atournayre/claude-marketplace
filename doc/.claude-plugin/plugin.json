@@ -1,0 +1,10 @@
+{
+  "name": "doc",
+  "version": "1.0.0",
+  "description": "Documentation : ADR, RTFM, génération docs, framework docs",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "keywords": ["documentation", "adr", "rtfm", "docs"]
+}

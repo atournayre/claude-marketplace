@@ -1,0 +1,10 @@
+{
+  "name": "qa",
+  "version": "1.0.0",
+  "description": "Quality assurance : PHPStan, tests, linters",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "keywords": ["qa", "phpstan", "quality", "tests"]
+}

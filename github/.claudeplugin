@@ -1,0 +1,6 @@
+{
+  "name": "github",
+  "version": "1.0.0",
+  "description": "Gestion GitHub issues, PR et analyse d'impact",
+  "commands": "./commands"
+}

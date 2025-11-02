@@ -1,0 +1,10 @@
+{
+  "name": "git",
+  "version": "1.0.0",
+  "description": "Workflow Git complet : branches, commits, conflits, PR",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "keywords": ["git", "workflow", "branches", "commits", "pr"]
+}

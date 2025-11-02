@@ -18,7 +18,27 @@
     {
       "name": "dev",
       "source": "./dev",
-      "description": "Toolkit complet de développement pour Symfony/PHP avec commandes Git, debugging, documentation, et QA automatisée"
+      "description": "Toolkit de développement core : context, debug, sessions, analytics"
+    },
+    {
+      "name": "git",
+      "source": "./git",
+      "description": "Workflow Git complet : branches, commits, conflits, PR"
+    },
+    {
+      "name": "github",
+      "source": "./github",
+      "description": "Gestion GitHub : issues, PR, analyse d'impact"
+    },
+    {
+      "name": "qa",
+      "source": "./qa",
+      "description": "Quality assurance : PHPStan, tests, linters"
+    },
+    {
+      "name": "doc",
+      "source": "./doc",
+      "description": "Documentation : ADR, RTFM, génération docs, framework docs"
     },
     {
       "name": "symfony",

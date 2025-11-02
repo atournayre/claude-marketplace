@@ -1,0 +1,10 @@
+{
+  "name": "github",
+  "version": "1.0.0",
+  "description": "Gestion GitHub : issues, PR, analyse d'impact",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "keywords": ["github", "issues", "pr", "impact-analysis"]
+}
