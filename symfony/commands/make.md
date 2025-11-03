@@ -30,43 +30,7 @@ Vous êtes un assistant Symfony expert qui :
 - `config/packages/maker.yaml` - Configuration Maker Bundle
 - `composer.json` - Dépendances incluant symfony/maker-bundle
 
-## Timing
-
-### Début d'Exécution
-**OBLIGATOIRE - PREMIÈRE ACTION** :
-1. Exécuter `date` pour obtenir l'heure réelle
-2. Afficher immédiatement : 🕐 **Démarrage** : [Résultat de la commande date]
-3. Stocker le timestamp pour le calcul de durée
-
-### Fin d'Exécution
-**OBLIGATOIRE - DERNIÈRE ACTION** :
-1. Exécuter `date` à nouveau pour obtenir l'heure de fin
-2. Calculer la durée réelle entre début et fin
-3. Afficher :
-   - ✅ **Terminé** : [Résultat de la commande date]
-   - ⏱️ **Durée** : [Durée calculée au format lisible]
-
-### Formats
-- Date : résultat brut de la commande `date` (incluant CEST/CET automatiquement)
-- Durée :
-  - Moins d'1 minute : `XXs` (ex: 45s)
-  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
-  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
-
-### Instructions CRITIQUES
-- TOUJOURS exécuter `date` via Bash - JAMAIS inventer/halluciner l'heure
-- Le timestamp de début DOIT être obtenu en exécutant `date` immédiatement
-- Le timestamp de fin DOIT être obtenu en exécutant `date` à la fin
-- Calculer la durée en soustrayant les timestamps unix (utiliser `date +%s`)
-- NE JAMAIS supposer ou deviner l'heure
-
 ## Workflow
-
-### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
-```
-🕐 Démarrage: [timestamp Europe/Paris avec CEST/CET]
-```
-- Enregistrer le timestamp pour calcul ultérieur
 
 ### Étape 1: Analyse de la tâche
 - Parser la description de la tâche fournie
@@ -139,8 +103,6 @@ make:fixtures        # Créer des fixtures
 /symfony:make "créer un controller pour gérer les utilisateurs"
 
 # Sortie attendue
-🕐 Démarrage: 2025-10-15 23:55:00 CEST
-
 Analyse: création d'un controller
 Maker identifié: make:controller
 
@@ -153,10 +115,6 @@ Prochaines étapes:
 - Ajouter les routes dans les annotations
 - Créer les templates Twig associés
 - Écrire les tests fonctionnels
-
----
-✅ Terminé : 2025-10-15 23:55:12 CEST
-⏱️ Durée : 12s
 ```
 
 ### Exemple 2: Créer une entité
@@ -165,8 +123,6 @@ Prochaines étapes:
 /symfony:make "ajouter une entité Product avec nom et prix"
 
 # Sortie attendue
-🕐 Démarrage: 2025-10-15 23:56:00 CEST
-
 Analyse: création d'une entité
 Maker identifié: make:entity
 
@@ -184,10 +140,6 @@ Prochaines étapes:
 - Générer la migration: bin/console make:migration
 - Exécuter la migration: bin/console doctrine:migrations:migrate
 - Créer les fixtures de test
-
----
-✅ Terminé : 2025-10-15 23:56:45 CEST
-⏱️ Durée : 45s
 ```
 
 ### Exemple 3: Tâche sans maker (fallback)
@@ -196,25 +148,17 @@ Prochaines étapes:
 /symfony:make "implémenter un système de cache Redis personnalisé"
 
 # Sortie attendue
-🕐 Démarrage: 2025-10-15 23:57:00 CEST
-
 Analyse: système de cache Redis personnalisé
 Aucun maker Symfony disponible pour cette tâche
 
 Génération du plan d'implémentation...
 [Exécution de /prepare "implémenter un système de cache Redis personnalisé"]
-
----
-✅ Terminé : 2025-10-15 23:57:30 CEST
-⏱️ Durée : 30s
 ```
 
 ## Report
 
 ### Format du rapport
 ```markdown
-🕐 Démarrage: [timestamp]
-
 ## Analyse de la tâche
 - Tâche demandée: [TASK]
 - Maker identifié: [MAKER_COMMAND ou "Aucun"]
@@ -227,10 +171,6 @@ Génération du plan d'implémentation...
 
 ## Prochaines étapes
 - [Suggestions]
-
----
-✅ Terminé : [timestamp]
-⏱️ Durée : [durée]
 ```
 
 ## Best Practices

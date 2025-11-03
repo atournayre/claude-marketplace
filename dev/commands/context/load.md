@@ -91,9 +91,6 @@ Charge tous les presets dans l'ordre : default → elegant-objects → ddd
 [Si preset=ddd ou full]
 - [Liste patterns disponibles]
 
----
-✅ Terminé : [timestamp]
-⏱️ Durée : [durée]
 ```
 
 ## Exemples

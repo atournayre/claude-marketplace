@@ -34,44 +34,7 @@ Cette commande active un contexte spécial où Claude utilisera systématiquemen
 - `.dockerignore` - Fichiers exclus du build
 - `docker/` - Configurations Docker additionnelles
 
-## Timing
-
-### Début d'Exécution
-**OBLIGATOIRE - PREMIÈRE ACTION** :
-1. Exécuter `date` pour obtenir l'heure réelle
-2. Afficher immédiatement : 🕐 **Démarrage** : [Résultat de la commande date]
-3. Stocker le timestamp pour le calcul de durée
-
-### Fin d'Exécution
-**OBLIGATOIRE - DERNIÈRE ACTION** :
-1. Exécuter `date` à nouveau pour obtenir l'heure de fin
-2. Calculer la durée réelle entre début et fin
-3. Afficher :
-   - ✅ **Terminé** : [Résultat de la commande date]
-   - ⏱️ **Durée** : [Durée calculée au format lisible]
-
-### Formats
-- Date : résultat brut de la commande `date` (incluant CEST/CET automatiquement)
-- Durée :
-  - Moins d'1 minute : `XXs` (ex: 45s)
-  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
-  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
-
-### Instructions CRITIQUES
-- TOUJOURS exécuter `date` via Bash - JAMAIS inventer/halluciner l'heure
-- Le timestamp de début DOIT être obtenu en exécutant `date` immédiatement
-- Le timestamp de fin DOIT être obtenu en exécutant `date` à la fin
-- Calculer la durée en soustrayant les timestamps unix (utiliser `date +%s`)
-- NE JAMAIS supposer ou deviner l'heure
-
 ## Workflow
-
-### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
-```
-🕐 Démarrage: [timestamp Europe/Paris avec CEST/CET]
-```
-- Cette étape DOIT être la toute première action
-- Enregistrer le timestamp pour calcul ultérieur
 
 ### Étape 1: Analyse de l'environnement Docker
 - Détecter le fichier docker-compose.yml ou Dockerfile
@@ -96,7 +59,6 @@ Cette commande active un contexte spécial où Claude utilisera systématiquemen
 - Afficher la configuration Docker détectée
 - Confirmer le mode actif
 - Indiquer comment les prochaines commandes seront exécutées
-- Inclure le timing de fin
 
 ## Instructions pour Claude
 
@@ -164,11 +126,6 @@ Exemples :
 • php bin/console → docker compose exec php php bin/console
 
 ℹ️ Toutes les prochaines commandes système seront exécutées via Docker.
-
----
-✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
-
-⏱️ Durée : [durée formatée]
 ```
 
 ## Examples

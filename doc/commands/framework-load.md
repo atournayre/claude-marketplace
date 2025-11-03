@@ -94,10 +94,6 @@ statistics:
   coverage: "[%]"
 notes:
   - "Documentation ${FRAMEWORK} [version ${VERSION}] disponible"
-
----
-✅ Terminé : [timestamp]
-⏱️ Durée : [durée]
 ```
 
 ## Exemples

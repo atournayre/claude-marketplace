@@ -12,36 +12,6 @@ Analyse critique de ma dernière réponse fournie et proposition d'une version a
 ## Purpose
 Permettre à Claude d'évaluer objectivement la qualité de sa dernière réponse et d'identifier les axes d'amélioration concrets.
 
-## Timing
-
-### Début d'Exécution
-**OBLIGATOIRE - PREMIÈRE ACTION** :
-1. Exécuter `date` pour obtenir l'heure réelle
-2. Afficher immédiatement : 🕐 **Démarrage** : [Résultat de la commande date]
-3. Stocker le timestamp pour le calcul de durée
-
-### Fin d'Exécution
-**OBLIGATOIRE - DERNIÈRE ACTION** :
-1. Exécuter `date` à nouveau pour obtenir l'heure de fin
-2. Calculer la durée réelle entre début et fin
-3. Afficher :
-   - ✅ **Terminé** : [Résultat de la commande date]
-   - ⏱️ **Durée** : [Durée calculée au format lisible]
-
-### Formats
-- Date : résultat brut de la commande `date` (incluant CEST/CET automatiquement)
-- Durée :
-  - Moins d'1 minute : `XXs` (ex: 45s)
-  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
-  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
-
-### Instructions CRITIQUES
-- TOUJOURS exécuter `date` via Bash - JAMAIS inventer/halluciner l'heure
-- Le timestamp de début DOIT être obtenu en exécutant `date` immédiatement
-- Le timestamp de fin DOIT être obtenu en exécutant `date` à la fin
-- Calculer la durée en soustrayant les timestamps unix (utiliser `date +%s`)
-- NE JAMAIS supposer ou deviner l'heure
-
 ## Variables
 - LAST_RESPONSE: Ma dernière réponse dans la conversation
 - ORIGINAL_QUESTION: La question ou demande initiale de l'utilisateur
@@ -51,13 +21,6 @@ Permettre à Claude d'évaluer objectivement la qualité de sa dernière répons
 - Historique de conversation (contexte automatique)
 
 ## Workflow
-
-### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
-```
-🕐 Démarrage: [timestamp Europe/Paris avec CEST/CET]
-```
-- Cette étape DOIT être la toute première action
-- Enregistrer le timestamp pour calcul ultérieur
 
 ### 1. Identification du contexte
 - Identifie la dernière question/demande de l'utilisateur
@@ -131,11 +94,6 @@ Permettre à Claude d'évaluer objectivement la qualité de sa dernière répons
 
 **Version améliorée (si note < 8/10) :**
 [Nouvelle version de la réponse intégrant les améliorations]
-
----
-✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
-
-⏱️ Durée : [durée formatée]
 
 ## Best Practices
 - Être honnête et autocritique sans tomber dans l'auto-flagellation

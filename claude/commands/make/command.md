@@ -38,6 +38,11 @@ Vous êtes un générateur expert de slash commands. Créez des commandes :
 
 ## Workflow
 
+### Étape 0: Initialisation du Timing
+- Cette commande génère d'autres commandes avec section timing
+- Mais elle-même n'utilise pas de timing dans son workflow
+- Les commandes générées incluront la section timing automatiquement
+
 ### 1. Analyse des arguments
 - Parse COMMAND_NAME, DESCRIPTION, TOOLS, CATEGORY
 - Valide le nom (format kebab-case, pas de caractères spéciaux)
@@ -84,29 +89,15 @@ argument-hint: [ARGUMENTS]
 
 ## Workflow
 
-### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
-```
-🕐 Démarrage: [timestamp Europe/Paris avec CEST/CET]
-```
-- Cette étape DOIT être la toute première action
-- Enregistrer le timestamp pour calcul ultérieur
-
 ### Étape 1: [Première vraie étape de la commande]
 - [Étapes logiques d'exécution]
 
 ### Étape N: Rapport Final
-- Calculer la durée totale
-- Afficher le rapport avec timing
+- Afficher le rapport
 
 ## Report
 ```
 [Contenu du rapport]
-
----
-✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
-
-⏱️ Durée : [durée formatée]
-```
 ```
 
 **IMPORTANT** : Ne PAS copier-coller la section Timing manuellement.

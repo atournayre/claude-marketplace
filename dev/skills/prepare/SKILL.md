@@ -9,36 +9,6 @@ model: claude-opus-4-1-20250805
 # Quick Plan
 Create a detailed implementation plan based on the user's requirements provided through the `USER_PROMPT` variable. Analyze the request, think through the implementation approach, and save a comprehensive specification document to `PLAN_OUTPUT_DIRECTORY/<name-of-plan>.md` that can be used as a blueprint for actual development work.
 
-## Timing
-
-### Début d'Exécution
-**OBLIGATOIRE - PREMIÈRE ACTION** :
-1. Exécuter `date` pour obtenir l'heure réelle
-2. Afficher immédiatement : 🕐 **Démarrage** : [Résultat de la commande date]
-3. Stocker le timestamp pour le calcul de durée
-
-### Fin d'Exécution
-**OBLIGATOIRE - DERNIÈRE ACTION** :
-1. Exécuter `date` à nouveau pour obtenir l'heure de fin
-2. Calculer la durée réelle entre début et fin
-3. Afficher :
-   - ✅ **Terminé** : [Résultat de la commande date]
-   - ⏱️ **Durée** : [Durée calculée au format lisible]
-
-### Formats
-- Date : résultat brut de la commande `date` (incluant CEST/CET automatiquement)
-- Durée :
-  - Moins d'1 minute : `XXs` (ex: 45s)
-  - Moins d'1 heure : `XXm XXs` (ex: 2m 30s)
-  - Plus d'1 heure : `XXh XXm XXs` (ex: 1h 15m 30s)
-
-### Instructions CRITIQUES
-- TOUJOURS exécuter `date` via Bash - JAMAIS inventer/halluciner l'heure
-- Le timestamp de début DOIT être obtenu en exécutant `date` immédiatement
-- Le timestamp de fin DOIT être obtenu en exécutant `date` à la fin
-- Calculer la durée en soustrayant les timestamps unix (utiliser `date +%s`)
-- NE JAMAIS supposer ou deviner l'heure
-
 ## Variables
 USER_PROMPT: $ARGUMENTS
 PLAN_OUTPUT_DIRECTORY: `docs/specs/`
@@ -62,13 +32,6 @@ PLAN_OUTPUT_DIRECTORY: `docs/specs/`
 
 ## Workflow
 
-### Étape 0: Initialisation du Timing (OBLIGATOIRE - PREMIÈRE ACTION)
-```
-🕐 Démarrage: [timestamp Europe/Paris avec CEST/CET]
-```
-- Cette étape DOIT être la toute première action
-- Enregistrer le timestamp pour calcul ultérieur
-
 1. Analyze Requirements - THINK HARD and parse the USER_PROMPT to understand the core problem and desired outcome
 2. Design Solution - Develop technical approach including architecture decisions and implementation strategy
 3. Document Plan - Structure a comprehensive markdown document with problem statement, implementation steps, and testing approach
@@ -90,9 +53,4 @@ Key Comgonents:
 - <main component 1>
 - <main component 2>
 - <main component 3>
-
----
-✅ Terminé : [timestamp Europe/Paris avec CEST/CET]
-
-⏱️ Durée : [durée formatée]
 ```

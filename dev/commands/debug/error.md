@@ -118,10 +118,6 @@ Si utilisateur demande résolution :
 
 ## Prochaines Étapes
 [Actions recommandées]
-
----
-✅ Terminé : [timestamp]
-⏱️ Durée : [durée]
 ```
 
 ### Message Simple
@@ -147,10 +143,6 @@ Si utilisateur demande résolution :
 - Actions effectuées
 - Validations
 - Suivi
-
----
-✅ Terminé : [timestamp]
-⏱️ Durée : [durée]
 ```
 
 ## Exemples

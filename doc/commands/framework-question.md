@@ -79,10 +79,6 @@ Si FRAMEWORK non supporté ou QUESTION vide :
 
 ### Voir Aussi
 - Concepts connexes
-
----
-✅ Terminé : [timestamp]
-⏱️ Durée : [durée]
 ```
 
 ## Gestion Erreurs
