@@ -10,11 +10,11 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 Plugin de base pour Claude Code avec commandes essentielles.
 
 **Commandes:**
-- `/cc:challenge` - Évaluation et amélioration de tes réponses
-- `/cc:make:command` - Générateur de slash commands
+- `/claude:challenge` - Évaluation et amélioration de tes réponses
+- `/claude:make:command` - Générateur de slash commands
 - `/claude:doc:load` - Chargement de la documentation Claude Code
 - `/claude:doc:question` - Questions sur la documentation Claude Code
-- `/alias:add` - Créer des alias de commandes
+- `/claude:alias:add` - Créer des alias de commandes
 
 ### 🎨 Customize
 Personnalise ton expérience Claude avec hooks, output styles et status lines.
@@ -25,16 +25,47 @@ Personnalise ton expérience Claude avec hooks, output styles et status lines.
 - Status lines customisables (5 variantes)
 
 ### ⚙️ Dev
-Toolkit complet de développement pour PHP.
+Toolkit général de développement.
 
-**Domaines couverts:**
-- **Git:** Gestion branches, commits, PRs, conflits, status
-- **Documentation:** ADR, RTFM, mises à jour automatiques
-- **Debugging:** Stack traces, error-fix
-- **QA:** PHPStan level 9
-- **Framework:** API Platform, Meilisearch
-- **Sessions:** Gestion de sessions de développement
-- **Workflow:** Docker, analytics, context management
+**Commandes:**
+- `/dev:code` - Coder depuis un plan
+- `/dev:docker` - Actions via Docker
+- `/dev:prepare` - Génération plan d'implémentation
+- `/dev:question` - Questions structure projet
+- `/dev:context:load` - Charger preset de contexte
+- `/dev:debug:error` - Analyser et résoudre erreurs
+
+### 🔧 Git
+Workflow Git complet.
+
+**Commandes:**
+- `/git:branch` - Création branches structurées
+- `/git:commit` - Commits conventional avec emoji
+- `/git:conflit` - Résolution conflits guidée
+- `/git:pr` - Création Pull Request optimisée
+
+### 🐙 GitHub
+Gestion GitHub et analyse.
+
+**Commandes:**
+- `/github:fix` - Corriger une issue GitHub
+- `/github:impact` - Analyse impact modifications PR
+
+### 📋 QA
+Quality assurance et tests.
+
+**Commandes:**
+- `/qa:phpstan` - Résolution erreurs PHPStan
+
+### 📚 Doc
+Gestion documentation.
+
+**Commandes:**
+- `/doc:adr` - Génération Architecture Decision Record
+- `/doc:framework-load` - Charger doc framework
+- `/doc:framework-question` - Interroger doc framework
+- `/doc:rtfm` - Lire documentation technique
+- `/doc:update` - Créer/mettre à jour documentation
 
 ### 🎯 Symfony
 Plugin spécialisé pour le framework Symfony.
@@ -48,13 +79,13 @@ Plugin spécialisé pour le framework Symfony.
 Styles de sortie personnalisés pour formater les réponses.
 
 **Styles disponibles:**
-- `/style:ultra-concise` - Mode ultra-concis
-- `/style:yaml-structured` - Format YAML structuré
-- `/style:markdown-focused` - Markdown enrichi
-- `/style:genui` - UI générative avec HTML
-- `/style:html-structured` - HTML sémantique
-- `/style:table-based` - Tableaux markdown
-- `/style:bullet-points` - Listes à puces hiérarchiques
+- `/output-styles:style-ultra-concise` - Mode ultra-concis
+- `/output-styles:style-yaml-structured` - Format YAML structuré
+- `/output-styles:style-markdown-focused` - Markdown enrichi
+- `/output-styles:style-genui` - UI générative avec HTML
+- `/output-styles:style-html-structured` - HTML sémantique
+- `/output-styles:style-table-based` - Tableaux markdown
+- `/output-styles:style-bullet-points` - Listes à puces hiérarchiques
 
 ## 🚀 Installation
 
@@ -87,13 +118,25 @@ Pour installer un plugin individuellement :
 # Plugin Customize (hooks, output styles, status lines)
 /plugin install customize@atournayre
 
-# Plugin Dev (toolkit PHP complet)
+# Plugin Dev (toolkit développement)
 /plugin install dev@atournayre
 
-# Plugin Symfony (commandes et intégrations Symfony)
+# Plugin Git (workflow Git)
+/plugin install git@atournayre
+
+# Plugin GitHub (gestion GitHub)
+/plugin install github@atournayre
+
+# Plugin QA (quality assurance)
+/plugin install qa@atournayre
+
+# Plugin Doc (documentation)
+/plugin install doc@atournayre
+
+# Plugin Symfony (commandes Symfony)
 /plugin install symfony@atournayre
 
-# Plugin Output Styles (styles de sortie personnalisés)
+# Plugin Output Styles (styles de sortie)
 /plugin install output-styles@atournayre
 ```
 
@@ -105,7 +148,7 @@ Vérifie que les plugins sont bien installés :
 /help
 ```
 
-Tu devrais voir les nouvelles commandes disponibles avec leurs préfixes (`/cc:`, `/git:`, `/symfony:`, `/style:`).
+Tu devrais voir les nouvelles commandes disponibles avec leurs préfixes (`/claude:`, `/dev:`, `/git:`, `/github:`, `/qa:`, `/doc:`, `/symfony:`, `/output-styles:`).
 
 ### Configuration équipe (optionnel)
 
@@ -115,7 +158,17 @@ Pour partager la configuration avec ton équipe, ajoute dans `.claude/settings.j
 {
   "plugins": {
     "marketplaces": ["atournayre/claude-marketplace"],
-    "installed": ["claude@atournayre", "customize@atournayre", "dev@atournayre", "symfony@atournayre", "output-styles@atournayre"]
+    "installed": [
+      "claude@atournayre",
+      "customize@atournayre",
+      "dev@atournayre",
+      "git@atournayre",
+      "github@atournayre",
+      "qa@atournayre",
+      "doc@atournayre",
+      "symfony@atournayre",
+      "output-styles@atournayre"
+    ]
   }
 }
 ```
@@ -136,13 +189,26 @@ Les plugins s'installeront automatiquement quand les membres de l'équipe truste
 │   ├── output-styles/
 │   └── status_lines/
 ├── dev/                      # Plugin de développement
+│   ├── .claude-plugin/
 │   ├── commands/
-│   └── skills/
+│   └── agents/
+├── git/                      # Plugin Git
+│   ├── .claude-plugin/
+│   └── commands/
+├── github/                   # Plugin GitHub
+│   ├── .claude-plugin/
+│   └── commands/
+├── qa/                       # Plugin QA
+│   ├── .claude-plugin/
+│   └── commands/
+├── doc/                      # Plugin Documentation
+│   ├── .claude-plugin/
+│   └── commands/
 ├── symfony/                  # Plugin Symfony
 │   ├── .claude-plugin/
 │   ├── commands/
 │   └── skills/
-└── output-styles/           # Plugin styles de sortie
+└── output-styles/            # Plugin styles de sortie
     ├── .claude-plugin/
     ├── commands/
     └── hooks/
@@ -162,10 +228,13 @@ Une fois installé, tu peux utiliser les commandes avec le préfixe du plugin:
 
 ```bash
 # Exemples
-/cc:challenge
+/claude:challenge
 /git:commit
+/github:fix 123
+/qa:phpstan
+/doc:adr "Choix architecture API"
 /symfony:make entity
-/style:yaml-structured
+/output-styles:style-yaml-structured
 ```
 
 ### Gestion des plugins
