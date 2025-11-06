@@ -10,6 +10,7 @@ import json
 import subprocess
 import sys
 import re
+from milestone_cache import MilestoneCache
 
 
 def get_repo_info():
@@ -51,6 +52,34 @@ def get_open_milestones(repo):
         return []
 
 
+def get_open_milestones_cached(repo):
+    """Récupère milestones avec cache"""
+    cache = MilestoneCache()
+    if not cache.cache.get("milestones"):
+        milestones = get_open_milestones(repo)
+        cache.refresh_from_api(milestones)
+        return milestones
+    return cache.cache["milestones"]
+
+
+def find_milestone(repo, query):
+    """Cherche milestone par query (exact ou partiel)"""
+    cache = MilestoneCache()
+    result = cache.find(query)
+    if result:
+        return result
+    normalized = cache.normalize_semver(query)
+    result = cache.find(normalized)
+    if result:
+        return result
+    milestones = get_open_milestones(repo)
+    cache.refresh_from_api(milestones)
+    result = cache.find(normalized)
+    if result:
+        return result
+    return cache.create(normalized)
+
+
 def assign_milestone(pr_number, milestone_title):
     """Assigne un milestone à la PR"""
     try:
@@ -73,27 +102,25 @@ def main():
     args = parser.parse_args()
 
     repo = get_repo_info()
-    milestones = get_open_milestones(repo)
+    milestones = get_open_milestones_cached(repo)
 
     if not milestones:
         print("ℹ️  Aucun milestone ouvert - ignoré")
         print("ignored")
         sys.exit(0)
 
-    # Si --milestone fourni, valider et assigner
+    # Si --milestone fourni, utiliser find_milestone pour recherche intelligente
     if args.milestone:
-        matching = [m for m in milestones if m['title'] == args.milestone]
-        if not matching:
-            print(f"❌ Milestone '{args.milestone}' non trouvé", file=sys.stderr)
-            available = [m['title'] for m in milestones]
-            print(f"Milestones disponibles: {', '.join(available)}", file=sys.stderr)
-            sys.exit(1)
-
-        if assign_milestone(args.pr_number, args.milestone):
-            print(f"✅ Milestone '{args.milestone}' assigné")
-            print(args.milestone)
-            sys.exit(0)
-        else:
+        try:
+            milestone = find_milestone(repo, args.milestone)
+            if assign_milestone(args.pr_number, milestone['title']):
+                print(f"✅ Milestone '{milestone['title']}' assigné")
+                print(milestone['title'])
+                sys.exit(0)
+            else:
+                sys.exit(1)
+        except Exception as e:
+            print(f"❌ Erreur: {e}", file=sys.stderr)
             sys.exit(1)
 
     # Sinon, retourner JSON pour AskUserQuestion
