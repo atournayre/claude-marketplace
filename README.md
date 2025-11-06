@@ -194,7 +194,8 @@ Les plugins s'installeront automatiquement quand les membres de l'équipe truste
 │   └── agents/
 ├── git/                      # Plugin Git
 │   ├── .claude-plugin/
-│   └── commands/
+│   ├── commands/
+│   └── skills/
 ├── github/                   # Plugin GitHub
 │   ├── .claude-plugin/
 │   └── commands/
