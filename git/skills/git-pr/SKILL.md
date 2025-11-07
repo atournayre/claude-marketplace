@@ -17,7 +17,53 @@ model: claude-sonnet-4-5-20250929
 ARGUMENTS="$ARGUMENTS"  # Arguments passés par la slash command
 PR_TEMPLATE_PATH=".github/pull_request_template.md"
 SCRIPTS_DIR="./scripts"
+REQUIRED_GH_SCOPES="repo read:org read:project project gist"
 ```
+
+## Prérequis: Authentification GitHub
+
+**IMPORTANT**: Avant d'utiliser ce skill, vérifier que l'authentification GitHub dispose de TOUS les scopes requis.
+
+### Scopes Requis
+- `repo`: Accès complet aux repos (PRs, commits, branches)
+- `read:org`: Lecture informations organisation
+- `read:project`: Lecture projets GitHub
+- `project`: Écriture/assignation aux projets
+- `gist`: Gestion des gists
+
+### Vérification Automatique
+
+Au début du workflow, TOUJOURS vérifier les scopes:
+
+```bash
+# Vérifier scopes actuels
+CURRENT_SCOPES=$(gh auth status 2>&1 | grep "Token scopes" | cut -d: -f2 | tr -d "'")
+
+# Vérifier si tous les scopes requis sont présents
+MISSING_SCOPES=()
+for scope in repo read:org read:project project gist; do
+    if ! echo "$CURRENT_SCOPES" | grep -q "$scope"; then
+        MISSING_SCOPES+=("$scope")
+    fi
+done
+
+# Si scopes manquants, renouveler l'authentification
+if [ ${#MISSING_SCOPES[@]} -gt 0 ]; then
+    echo "⚠️  Scopes manquants: ${MISSING_SCOPES[*]}"
+    echo "🔄 Renouvellement authentification..."
+    bash $SCRIPTS_DIR/gh_auth_setup.sh
+fi
+```
+
+### Script de Configuration
+
+Un script `gh_auth_setup.sh` est disponible pour configurer automatiquement TOUS les scopes requis:
+
+```bash
+bash $SCRIPTS_DIR/gh_auth_setup.sh
+```
+
+Ce script garantit la constance des scopes à chaque renouvellement d'authentification.
 
 ## Workflow
 
@@ -50,6 +96,38 @@ for arg in "${ARGS[@]}"; do
     if [ "$arg" = "--delete" ]; then DELETE_FLAG="--delete"; fi
     if [ "$arg" = "--no-review" ]; then NO_REVIEW_FLAG="--no-review"; fi
 done
+```
+
+### Étape 1.5: Vérification Scopes GitHub
+
+**OBLIGATOIRE** : Vérifier les scopes GitHub avant toute opération.
+
+```bash
+# Vérifier scopes actuels
+CURRENT_SCOPES=$(gh auth status 2>&1 | grep "Token scopes" | cut -d: -f2 | tr -d "'" | tr ',' ' ')
+
+# Scopes requis
+REQUIRED_SCOPES=(repo read:org read:project project gist)
+
+# Vérifier si tous les scopes requis sont présents
+MISSING_SCOPES=()
+for scope in "${REQUIRED_SCOPES[@]}"; do
+    if ! echo "$CURRENT_SCOPES" | grep -q "$scope"; then
+        MISSING_SCOPES+=("$scope")
+    fi
+done
+
+# Si scopes manquants, ARRÊT et demande renouvellement
+if [ ${#MISSING_SCOPES[@]} -gt 0 ]; then
+    echo "❌ Scopes GitHub manquants: ${MISSING_SCOPES[*]}"
+    echo ""
+    echo "🔄 Pour renouveler l'authentification avec TOUS les scopes requis:"
+    echo "   bash ./scripts/gh_auth_setup.sh"
+    echo ""
+    exit 1
+fi
+
+echo "✅ Scopes GitHub valides: $CURRENT_SCOPES"
 ```
 
 ### Étape 2: TodoWrite Initialisation

@@ -2,6 +2,7 @@
 .claude/logs/
 .claude/data/
 .claude/sessions/
+.claude/cache/
 logs/
 
 # Python cache (hooks)
