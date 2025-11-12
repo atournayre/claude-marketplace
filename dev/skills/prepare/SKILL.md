@@ -20,6 +20,7 @@ PLAN_OUTPUT_DIRECTORY: `docs/specs/`
 - Clear problem statement and objectives
 - Technical approach and architecture decisions
 - Step-by-step implementation guide
+- **Actionable todo list** with markdown checkboxes that can be tracked and updated during implementation
 - Potential challenges and solutions
 - Testing strategy
 - Success criteria
@@ -27,6 +28,7 @@ PLAN_OUTPUT_DIRECTORY: `docs/specs/`
 - Save the complete implementation plan to `PLAN_OUTPUT_DIRECTORY/<descriptive-name>.md`
   - Ensure the plan is detailed enough that another developer could follow it to implement the solution
   - Include code examples or pseudo-code where appropriate to clarify complex concepts
+  - The todo list must use markdown checkboxes `- [ ]` with granular, actionable tasks in logical implementation order
 - Consider edge cases, error handling, and scalability concerns
   - Structure the document with clear sections and proper markdown formatting
 
@@ -49,7 +51,7 @@ File: PLAN_OUTPUT_DIRECTORY/<filename>.md
 
 Topic: <brief description of what the plan covers>
 
-Key Comgonents:
+Key Components:
 - <main component 1>
 - <main component 2>
 - <main component 3>
