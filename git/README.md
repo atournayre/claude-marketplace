@@ -135,6 +135,49 @@ Validation : [étape par étape]
 
 ---
 
+### `/git:release-report`
+
+Génère un rapport HTML d'analyse d'impact entre deux branches.
+
+**Arguments :**
+```bash
+/git:release-report <branche-source> <branche-cible> [nom-release]
+```
+
+**Exemples :**
+```bash
+# Rapport release vs main
+/git:release-report release/v27.0.0 main
+
+# Avec nom custom
+/git:release-report release/v27.0.0 develop v27.0.0
+
+# Feature vs main
+/git:release-report feature/new-module main "Module XYZ"
+```
+
+**Contenu du rapport :**
+- Statistiques globales (fichiers, lignes, commits)
+- Répartition par type de fichier (PHP, Twig, JS, etc.)
+- Fonctionnalités principales extraites depuis commits
+- Impact métier par domaine fonctionnel
+- Qualité et maintenabilité
+- KPI visuels orientés Product Owner
+
+**Sortie :**
+```
+REPORT_PATH/impact_<nom-release>.html
+```
+
+**Format :**
+- HTML auto-suffisant avec CSS inline
+- Design moderne (gradient violet)
+- KPI avec couleurs par impact
+- Charts et progress bars
+- Responsive et imprimable
+
+---
+
 ### `/git:pr`
 
 Crée une Pull Request optimisée avec workflow structuré.
