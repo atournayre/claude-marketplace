@@ -1,5 +1,6 @@
 ---
 description: Crée une Pull Request optimisée avec workflow structuré
+argument-hint: [branch-base, milestone, project, --delete, --no-review]
 ---
 
-Use the git:git-pr skill exactly as written with the following arguments.
+You must use the Skill tool to invoke the "git-pr" skill with the following arguments.

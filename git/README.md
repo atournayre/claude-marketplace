@@ -139,9 +139,27 @@ Validation : [étape par étape]
 
 Crée une Pull Request optimisée avec workflow structuré.
 
-**Usage :**
+**Arguments :**
 ```bash
+/git:pr [branch-base] [milestone] [project] [--delete] [--no-review]
+```
+
+**Exemples :**
+```bash
+# PR simple
 /git:pr
+
+# PR vers branche spécifique
+/git:pr develop
+
+# PR avec milestone
+/git:pr main "v1.2.0"
+
+# PR sans demander review
+/git:pr --no-review
+
+# PR avec suppression branche après merge
+/git:pr --delete
 ```
 
 **Prérequis :**
