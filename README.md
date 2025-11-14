@@ -66,6 +66,16 @@ Sélectionne "Browse Plugins" et installe les plugins souhaités.
 
 Installation automatique au trust du projet.
 
+## 🧪 Tests
+
+Lance tous les tests du projet:
+
+```bash
+./run_tests.sh
+```
+
+Chaque skill peut avoir son dossier `tests/` avec `run_tests.sh`.
+
 ## 🤝 Contribution
 
 Contributions bienvenues via issues ou PR.

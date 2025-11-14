@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Cache test local
+.claude/
+
+# Éditeurs
+*~
+*.swp
+*.swo
+.DS_Store

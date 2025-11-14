@@ -3,10 +3,13 @@
 
 import json
 import os
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
+
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 from milestone_cache import MilestoneCache, CACHE_DIR, CACHE_FILE
 
 

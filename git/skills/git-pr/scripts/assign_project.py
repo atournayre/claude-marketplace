@@ -10,6 +10,7 @@ import json
 import subprocess
 import sys
 import re
+from project_cache import ProjectCache
 
 
 def get_repo_info():
@@ -36,17 +37,13 @@ def get_repo_info():
 def get_projects_list(owner):
     """Récupère les projets via gh project list"""
     try:
-        # Utiliser gh project list qui gère automatiquement user/org
         result = subprocess.run(
             ["gh", "project", "list", "--owner", owner, "--format", "json"],
             capture_output=True,
             text=True,
             check=True
         )
-
         projects_data = json.loads(result.stdout)
-
-        # Transformer au format attendu (id, title, number)
         projects = []
         for project in projects_data.get('projects', []):
             projects.append({
@@ -54,7 +51,6 @@ def get_projects_list(owner):
                 'title': project.get('title'),
                 'number': project.get('number')
             })
-
         return projects
     except subprocess.CalledProcessError as e:
         print(f"⚠️  Impossible de récupérer les projets: {e.stderr}", file=sys.stderr)
@@ -64,12 +60,27 @@ def get_projects_list(owner):
         return []
 
 
-def find_project_by_name(projects, project_name):
-    """Recherche un projet par nom (case-insensitive)"""
-    for project in projects:
-        if project['title'].lower() == project_name.lower():
-            return project
-    return None
+def get_projects_cached(owner):
+    """Récupère projets avec cache"""
+    cache = ProjectCache()
+    if not cache.cache.get("projects"):
+        projects = get_projects_list(owner)
+        cache.refresh_from_api(projects)
+        return projects
+    return cache.cache["projects"]
+
+
+def find_project(owner, query):
+    """Cherche projet par query (exact ou alias)"""
+    cache = ProjectCache()
+    result = cache.find(query)
+    if result:
+        return result
+    projects = get_projects_list(owner)
+    cache.refresh_from_api(projects)
+    return cache.find(query)
+
+
 
 
 def assign_pr_to_project(pr_number, project_id, owner, repo):
@@ -122,27 +133,31 @@ def main():
     args = parser.parse_args()
 
     owner, repo = get_repo_info()
-    projects = get_projects_list(owner)
+    projects = get_projects_cached(owner)
 
     if not projects:
         print("ℹ️  Aucun projet trouvé - ignoré")
         print("ignored")
         sys.exit(0)
 
-    # Si --project fourni, rechercher et assigner
+    # Si --project fourni, utiliser find_project pour recherche intelligente
     if args.project:
-        project = find_project_by_name(projects, args.project)
-        if not project:
-            print(f"❌ Projet '{args.project}' non trouvé", file=sys.stderr)
-            available = [p['title'] for p in projects]
-            print(f"Projets disponibles: {', '.join(available)}", file=sys.stderr)
-            sys.exit(1)
+        try:
+            project = find_project(owner, args.project)
+            if not project:
+                print(f"❌ Projet '{args.project}' non trouvé", file=sys.stderr)
+                available = [p['title'] for p in projects]
+                print(f"Projets disponibles: {', '.join(available)}", file=sys.stderr)
+                sys.exit(1)
 
-        if assign_pr_to_project(args.pr_number, project['id'], owner, repo):
-            print(f"✅ Projet '{project['title']}' assigné")
-            print(project['title'])
-            sys.exit(0)
-        else:
+            if assign_pr_to_project(args.pr_number, project['id'], owner, repo):
+                print(f"✅ Projet '{project['title']}' assigné")
+                print(project['title'])
+                sys.exit(0)
+            else:
+                sys.exit(1)
+        except Exception as e:
+            print(f"❌ Erreur: {e}", file=sys.stderr)
             sys.exit(1)
 
     # Sinon, retourner JSON pour AskUserQuestion
