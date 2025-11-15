@@ -59,6 +59,8 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 ### `/github:impact`
 
+**🔹 Skill disponible : `github-impact`**
+
 Analyse le détail des modifications git et fournit 2 rapports d'impact (métier + technique).
 
 **Arguments :**
@@ -73,16 +75,21 @@ Analyse le détail des modifications git et fournit 2 rapports d'impact (métier
 
 **Workflow :**
 1. Récupère diff de la PR via `gh pr diff`
-2. Analyse tous les changements
+2. Analyse tous les changements :
+   - Fichiers modifiés (PHP, JS/TS, templates, styles, config, assets)
+   - Dépendances (composer, npm)
+   - Tests associés
+   - Couverture de tests
 3. Catégorise par type :
    - Features
    - Fixes
    - Refactoring
    - Breaking changes
 4. Génère 2 rapports :
-   - **Rapport Métier** : impact fonctionnel
-   - **Rapport Technique** : impact code/architecture
-5. Ajoute rapports à la description de la PR
+   - **Rapport Métier** : impact fonctionnel, UX, risques identifiés
+   - **Rapport Technique** : métriques, architecture, sécurité, performance
+5. Ajoute rapports à la description de la PR avec marqueurs `<!-- IMPACT-REPORTS-START/END -->`
+6. Sauvegarde locale dans `.analysis-reports/impact_pr_<number>.md`
 
 **Rapport Métier :**
 ```markdown
@@ -194,6 +201,27 @@ Analyse le détail des modifications git et fournit 2 rapports d'impact (métier
 - `/github:impact 789`
 - Rapports métier + technique
 - Décision éclairée
+
+## Skills Disponibles
+
+### `github-impact`
+
+**Localisation :** `skills/github-impact/`
+
+Skill spécialisé pour l'analyse d'impact des PR. Utilisé automatiquement par `/github:impact`.
+
+**Fonctionnalités :**
+- Analyse complète des modifications (fichiers, dépendances, tests)
+- Détection automatique des templates (Twig, Blade, Vue, etc.)
+- Analyse des styles (CSS, SCSS, SASS, LESS)
+- Détection des assets (images, fonts)
+- Analyse de sécurité
+- Génération rapports métier + technique
+- Intégration automatique dans description PR
+
+**Modèle :** opus-4
+
+**Outils :** Bash, Read, Write, TodoWrite, Grep, Glob
 
 ## Licence
 

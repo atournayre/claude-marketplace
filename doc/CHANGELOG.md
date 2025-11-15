@@ -5,6 +5,24 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.1.0] - 2025-11-16
+
+### Added
+- Skill `doc-loader` - Skill générique pour chargement documentation frameworks
+  - Support multi-framework (Symfony, API Platform, Meilisearch, atournayre-framework, Claude Code)
+  - Support multi-version (argument optionnel)
+  - Cache intelligent 24h (ignore récents, supprime anciens)
+  - Délégation aux agents scraper spécialisés
+  - Anti-rate-limiting (délai 2s entre URLs)
+  - Statistiques détaillées (couverture, taille, fichiers)
+
+### Changed
+- Commande `/doc:framework-load` convertie en délégation au skill `doc-loader`
+- Commande `/symfony:doc:load` convertie en délégation au skill `doc-loader` avec argument "symfony"
+- Commande `/claude:doc:load` convertie en délégation au skill `doc-loader` avec argument "claude"
+- Workflow unifié pour tous les frameworks
+- Gestion cache améliorée
+
 ## [1.0.0] - 2025-11-15
 
 ### Added

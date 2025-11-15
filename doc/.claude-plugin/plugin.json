@@ -1,10 +1,10 @@
 {
   "name": "doc",
-  "version": "1.0.0",
-  "description": "Documentation : ADR, RTFM, génération docs, framework docs",
+  "version": "1.1.0",
+  "description": "Documentation : ADR, RTFM, génération docs, framework docs avec skills spécialisés",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
   },
-  "keywords": ["documentation", "adr", "rtfm", "docs"]
+  "keywords": ["documentation", "adr", "rtfm", "docs", "skills", "framework-loader"]
 }

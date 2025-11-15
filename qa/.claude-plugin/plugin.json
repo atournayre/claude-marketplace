@@ -1,10 +1,10 @@
 {
   "name": "qa",
-  "version": "1.0.0",
-  "description": "Quality assurance : PHPStan, tests, linters",
+  "version": "1.1.0",
+  "description": "Quality assurance : PHPStan automatisé, tests, linters avec skills spécialisés",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
   },
-  "keywords": ["qa", "phpstan", "quality", "tests"]
+  "keywords": ["qa", "phpstan", "quality", "tests", "skills", "automation"]
 }

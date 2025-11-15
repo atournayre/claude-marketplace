@@ -7,6 +7,44 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2025.11.16] - 2025-11-16
+
+### Skills Added
+- **github-impact** (`github` v1.1.0) - Skill spécialisé analyse d'impact PR
+  - Analyse complète modifications (fichiers, dépendances, tests, sécurité)
+  - Détection automatique templates (Twig, Blade, Vue, etc.)
+  - Analyse styles (CSS, SCSS, SASS, LESS) et assets
+  - Génération 2 rapports (métier + technique)
+  - Intégration automatique description PR
+  - Sauvegarde locale `.analysis-reports/`
+
+- **phpstan-resolver** (`qa` v1.1.0) - Skill spécialisé résolution erreurs PHPStan
+  - Boucle résolution itérative (max 10 itérations)
+  - Batch processing (5 erreurs/fichier/itération)
+  - Détection automatique stagnation
+  - Support PHPStan format JSON
+  - Rapport détaillé avec taux de succès
+  - Délégation agent `@phpstan-error-resolver`
+
+- **doc-loader** (`doc` v1.1.0) - Skill générique chargement documentation frameworks
+  - Support multi-framework (Symfony, API Platform, Meilisearch, atournayre-framework, Claude Code)
+  - Support multi-version (argument optionnel)
+  - Cache intelligent 24h (ignore récents, supprime anciens)
+  - Délégation agents scraper spécialisés
+  - Anti-rate-limiting (délai 2s entre URLs)
+  - Statistiques détaillées (couverture, taille, fichiers)
+
+### Commands Updated
+- **github** v1.1.0 - `/github:impact` convertie en délégation skill
+- **qa** v1.1.0 - `/qa:phpstan` convertie en délégation skill
+- **doc** v1.1.0 - `/doc:framework-load`, `/symfony:doc:load`, `/claude:doc:load` converties en délégation skill
+
+### Architecture
+- Pattern commande → skill pour tâches complexes orchestrées
+- Réduction taille commandes (406 → 6 lignes pour github:impact)
+- Meilleure séparation des responsabilités
+- TodoWrite systématique dans skills pour suivi progression
+
 ## [2025.11.15] - 2025-11-15
 
 ### Marketplace

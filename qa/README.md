@@ -12,6 +12,8 @@ Quality assurance : PHPStan, tests, linters.
 
 ### `/qa:phpstan`
 
+**🔹 Skill disponible : `phpstan-resolver`**
+
 Résout les erreurs PHPStan en utilisant l'agent `phpstan-error-resolver`.
 
 **Usage :**
@@ -20,17 +22,19 @@ Résout les erreurs PHPStan en utilisant l'agent `phpstan-error-resolver`.
 ```
 
 **Workflow :**
-1. Exécute PHPStan niveau 9
-2. Parse les erreurs
-3. Catégorise par type :
-   - Types stricts
-   - Annotations generics
-   - Array shapes
-   - Collections Doctrine
-   - Null safety
-4. Résout automatiquement chaque erreur
-5. Vérifie corrections avec nouveau run PHPStan
-6. Crée tests si nécessaire
+1. Exécute PHPStan niveau 9 (format JSON)
+2. Parse et groupe les erreurs par fichier
+3. Boucle de résolution (max 10 itérations) :
+   - Batch de 5 erreurs par fichier par itération
+   - Délégation à agent `@phpstan-error-resolver`
+   - Corrections via Edit tool
+   - Re-exécution PHPStan pour vérification
+4. Détection de stagnation (erreurs qui ne diminuent plus)
+5. Rapport final avec :
+   - Nombre erreurs initial/final
+   - Erreurs corrigées
+   - Taux de succès
+   - Fichiers avec erreurs restantes
 
 **Types d'erreurs résolues :**
 
@@ -114,6 +118,31 @@ Résolution :
 Vérification :
 ✅ PHPStan niveau 9 passe
 ```
+
+## Skills Disponibles
+
+### `phpstan-resolver`
+
+**Localisation :** `skills/phpstan-resolver/`
+
+Skill spécialisé pour la résolution automatique des erreurs PHPStan. Utilisé automatiquement par `/qa:phpstan`.
+
+**Fonctionnalités :**
+- Boucle de résolution itérative (max 10 itérations)
+- Batch processing (5 erreurs/fichier/itération)
+- Détection de stagnation automatique
+- Rapport détaillé avec taux de succès
+- Support PHPStan format JSON
+- Délégation à agent `@phpstan-error-resolver` pour corrections
+
+**Configuration :**
+- `ERROR_BATCH_SIZE`: 5
+- `MAX_ITERATIONS`: 10
+- `PHPSTAN_CONFIG`: phpstan.neon ou phpstan.neon.dist
+
+**Modèle :** opus-4
+
+**Outils :** Task, Bash, Read, Edit, Grep, Glob, TodoWrite
 
 ## Agent Spécialisé
 

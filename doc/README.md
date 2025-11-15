@@ -136,6 +136,8 @@ docs/
 
 ### `/doc:framework-load`
 
+**🔹 Skill disponible : `doc-loader`**
+
 Charge la documentation d'un framework depuis son site web dans des fichiers markdown locaux.
 
 **Arguments :**
@@ -144,11 +146,11 @@ Charge la documentation d'un framework depuis son site web dans des fichiers mar
 ```
 
 **Frameworks supportés :**
-- `symfony`
-- `api-platform`
-- `doctrine`
-- `phpunit`
-- Custom (via configuration)
+- `symfony` → Agent: `symfony-docs-scraper`
+- `api-platform` → Agent: `api-platform-docs-scraper`
+- `meilisearch` → Agent: `meilisearch-docs-scraper`
+- `atournayre-framework` → Agent: `atournayre-framework-docs-scraper`
+- `claude` → Agent: `claude-docs-scraper`
 
 **Exemples :**
 ```bash
@@ -158,26 +160,44 @@ Charge la documentation d'un framework depuis son site web dans des fichiers mar
 # API Platform version spécifique
 /doc:framework-load api-platform 3.2
 
-# Doctrine ORM
-/doc:framework-load doctrine
+# Meilisearch
+/doc:framework-load meilisearch 1.5
 ```
 
 **Fonctionnalités :**
-- Cache 24h
-- Download depuis site officiel
-- Stockage `docs/{framework}/`
+- Cache intelligent 24h (ignore fichiers récents, supprime anciens)
+- Délégation aux agents scraper spécialisés
+- Support multi-version (argument optionnel)
+- Anti-rate-limiting (délai 2s entre URLs)
+- Stockage `docs/{framework}/[version]/`
 - Disponible offline après chargement
+- Statistiques détaillées (couverture, taille, fichiers)
+
+**Workflow :**
+1. Validation framework supporté
+2. Lecture README avec liste URLs (`~/.claude/docs/<framework>/[version]/README.md`)
+3. Gestion cache (skip/delete)
+4. Pour chaque URL :
+   - Délégation à agent scraper via Task tool
+   - Sauvegarde markdown
+   - Délai 2s anti-rate-limit
+5. Rapport final (URLs traitées, fichiers créés, erreurs)
 
 **Sauvegarde :**
 ```
 docs/
 ├── symfony/
-│   ├── README.md
-│   ├── security.md
-│   ├── routing.md
-│   └── ...
-└── api-platform/
-    ├── README.md
+│   ├── 6.4/
+│   │   ├── security.md
+│   │   ├── routing.md
+│   │   └── ...
+│   └── latest/
+│       └── ...
+├── api-platform/
+│   ├── 3.2/
+│   │   └── ...
+└── claude/
+    ├── commands.md
     └── ...
 ```
 
@@ -280,6 +300,32 @@ Interroge la documentation locale d'un framework pour répondre à une question.
 - Reload hebdomadaire pour updates
 - Version spécifique pour prod
 - Cache local pour perf
+
+## Skills Disponibles
+
+### `doc-loader`
+
+**Localisation :** `skills/doc-loader/`
+
+Skill générique pour le chargement de documentation de frameworks. Utilisé automatiquement par `/doc:framework-load`, `/symfony:doc:load`, et `/claude:doc:load`.
+
+**Fonctionnalités :**
+- Support multi-framework (5 frameworks)
+- Support multi-version (optionnel)
+- Gestion cache intelligent (24h)
+- Délégation aux agents scraper spécialisés
+- Anti-rate-limiting (délai 2s)
+- Statistiques détaillées (couverture, taille)
+- Gestion erreurs non bloquante
+
+**Configuration :**
+- `CACHE_HOURS`: 24h
+- Délai entre URLs: 2s
+- README requis: `~/.claude/docs/<framework>/[version]/README.md`
+
+**Modèle :** sonnet-4.5
+
+**Outils :** Task, WebFetch, Write, Edit, Bash, Read, Glob
 
 ## Licence
 
