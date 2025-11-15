@@ -28,17 +28,17 @@
     {
       "name": "github",
       "source": "./github",
-      "description": "Gestion GitHub : issues, PR, analyse d'impact"
+      "description": "Gestion GitHub : issues, PR, analyse d'impact avec skills spécialisés"
     },
     {
       "name": "qa",
       "source": "./qa",
-      "description": "Quality assurance : PHPStan, tests, linters"
+      "description": "Quality assurance : PHPStan automatisé, tests, linters avec skills spécialisés"
     },
     {
       "name": "doc",
       "source": "./doc",
-      "description": "Documentation : ADR, RTFM, génération docs, framework docs"
+      "description": "Documentation : ADR, RTFM, génération docs, framework docs avec skills spécialisés"
     },
     {
       "name": "symfony",
