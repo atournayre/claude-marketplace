@@ -10,8 +10,19 @@ Résout les erreurs PHPStan détectées dans le projet en utilisant l'agent spé
 
 ## Variables
 
-PHPSTAN_CONFIG: phpstan.neon (ou phpstan.neon.dist)
+**Lire configuration :**
+- Lire `.claude/plugins.settings.json` et `~/.claude/plugins.settings.json`
+- Extraire `atournayre-claude-plugin-marketplace.qa.phpstan.*`
+- Fusionner configs (projet écrase global)
+- Valeurs par défaut si absentes :
+  - `level`: 9
+  - `auto_fix`: true
+  - `config_file`: "phpstan.neon"
+
+PHPSTAN_CONFIG: Valeur de config `config_file` OU phpstan.neon (ou phpstan.neon.dist)
 PHPSTAN_BIN: ./vendor/bin/phpstan
+PHPSTAN_LEVEL: Valeur de config `level` OU 9
+AUTO_FIX: Valeur de config `auto_fix` OU true
 ERROR_BATCH_SIZE: 5
 
 ## Flux de Travail

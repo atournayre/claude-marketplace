@@ -29,8 +29,15 @@ ISSUE_OR_TEXT: $2
 
 **🚨 ÉTAPE CRITIQUE : CHECKOUT VERS SOURCE D'ABORD 🚨**
 
+0. **Lire configuration si SOURCE_BRANCH non fourni**
+   - Lire `.claude/plugins.settings.json` et `~/.claude/plugins.settings.json`
+   - Extraire `atournayre-claude-plugin-marketplace.git.default_branch`
+   - Fusionner configs (projet écrase global)
+   - Si `SOURCE_BRANCH` non fourni ET config existe → utiliser `default_branch` de la config
+   - Si `SOURCE_BRANCH` non fourni ET pas de config → ARRÊTER et demander à l'utilisateur
+
 1. **Vérifier SOURCE_BRANCH obligatoire**
-   - Si `SOURCE_BRANCH` n'est pas fourni → ARRÊTER et demander à l'utilisateur
+   - Si `SOURCE_BRANCH` n'est pas fourni (et pas dans config) → ARRÊTER et demander à l'utilisateur
 
 2. **Valider SOURCE_BRANCH existe localement**
    - `git branch --list "$SOURCE_BRANCH"`

@@ -11,6 +11,17 @@ description: Génère un Architecture Decision Record (ADR) formaté et structur
 Génère un Architecture Decision Record (ADR) complet et structuré pour documenter les décisions architecturales importantes du projet.
 
 ## Variables
+
+**Lire configuration :**
+- Lire `.claude/plugins.settings.json` et `~/.claude/plugins.settings.json`
+- Extraire `atournayre-claude-plugin-marketplace.doc.adr.*`
+- Fusionner configs (projet écrase global)
+- Valeurs par défaut si absentes :
+  - `directory`: "docs/adr"
+  - `template`: "default"
+
+- **ADR_DIRECTORY**: Valeur de config `directory` OU "docs/adr"
+- **ADR_TEMPLATE**: Valeur de config `template` OU "default"
 - **DECISION_TITLE**: Le titre de la décision architecturale
 - **DECISION_NUMBER**: Le numéro séquentiel de l'ADR (auto-généré si non fourni)
 
@@ -22,8 +33,8 @@ Génère un Architecture Decision Record (ADR) complet et structuré pour docume
 - Respecte les conventions de documentation du projet
 
 ## Relevant Files
-- `docs/adr/` - Dossier contenant les ADR existants
-- `docs/adr/README.md` - Liste des ADR existants
+- `{ADR_DIRECTORY}/` - Dossier contenant les ADR existants (configurable)
+- `{ADR_DIRECTORY}/README.md` - Liste des ADR existants
 - `docs/README.md` - Contexte général du projet
 - `CLAUDE.md` - Conventions et préférences
 
@@ -105,6 +116,6 @@ docs/
 
 ## Report
 - Affiche le numéro ADR généré
-- Confirme la création du fichier dans `docs/adr/`
+- Confirme la création du fichier dans `{ADR_DIRECTORY}/`
 - Liste les fichiers ADR existants pour référence
 - Rappelle les prochaines étapes (review, validation)

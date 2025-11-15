@@ -11,7 +11,14 @@ Create a detailed implementation plan based on the user's requirements provided 
 
 ## Variables
 USER_PROMPT: $ARGUMENTS
-PLAN_OUTPUT_DIRECTORY: `docs/specs/`
+
+**Lire configuration :**
+- Lire `.claude/plugins.settings.json` et `~/.claude/plugins.settings.json`
+- Extraire `atournayre-claude-plugin-marketplace.dev.specs_dir`
+- Fusionner configs (projet écrase global)
+- Valeur par défaut si absente : "specs"
+
+PLAN_OUTPUT_DIRECTORY: Valeur de config `specs_dir` OU `specs/`
 
 ## Instructions
 - Carefully user's requirements provided in the USER_PROMPT variable

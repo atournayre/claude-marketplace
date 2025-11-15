@@ -42,7 +42,11 @@ Le rapport est généré dans `REPORT_PATH/impact_<nom-release>.html`
 
 ## Variables
 
-REPORT_PATH: `.claude/reports`
+**Lire configuration :**
+- Lire `.claude/plugins.settings.json` et `~/.claude/plugins.settings.json`
+- Extraire `atournayre-claude-plugin-marketplace.git.release.report_path`
+- Fusionner configs (projet écrase global)
+- REPORT_PATH: Valeur de config OU `.claude/reports` si absente
 
 Variables à extraire des arguments :
 

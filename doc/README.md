@@ -250,18 +250,35 @@ Interroge la documentation locale d'un framework pour répondre à une question.
 
 ## Configuration
 
-`.claude/settings.json` :
+`.claude/plugins.settings.json` :
 ```json
 {
-  "doc": {
-    "adr_path": "docs/adr",
-    "auto_number": true,
-    "frameworks": {
-      "symfony": "https://symfony.com/doc/current",
-      "api-platform": "https://api-platform.com/docs"
+  "atournayre-claude-plugin-marketplace": {
+    "doc": {
+      "adr": {
+        "directory": "docs/adr",
+        "template": "default"
+      },
+      "output_dir": "docs"
     }
   }
 }
+```
+
+### Options
+
+- `adr.directory` (string) : Dossier pour ADR (défaut: `"docs/adr"`)
+- `adr.template` (string) : Template ADR (défaut: `"default"`)
+- `output_dir` (string) : Dossier docs général (défaut: `"docs"`)
+
+### Utilisation avec Config
+
+```bash
+# Avec adr.directory: "architecture/decisions" configuré
+/doc:adr "Choix API"               # Sauvegarde dans architecture/decisions/
+
+# Avec output_dir: "documentation" configuré
+/doc:update                        # Génère docs dans documentation/
 ```
 
 ## Best Practices

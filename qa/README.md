@@ -133,6 +133,39 @@ Agent proactif qui :
 - Glob
 - Bash (phpstan)
 
+## Configuration
+
+`.claude/plugins.settings.json` :
+```json
+{
+  "atournayre-claude-plugin-marketplace": {
+    "qa": {
+      "phpstan": {
+        "level": 9,
+        "auto_fix": true,
+        "config_file": "phpstan.neon"
+      }
+    }
+  }
+}
+```
+
+### Options
+
+- `phpstan.level` (int) : Niveau PHPStan (défaut: `9`)
+- `phpstan.auto_fix` (bool) : Corriger automatiquement (défaut: `true`)
+- `phpstan.config_file` (string) : Fichier config PHPStan (défaut: `"phpstan.neon"`)
+
+### Utilisation avec Config
+
+```bash
+# Avec auto_fix: true configuré
+/qa:phpstan                        # Corrige automatiquement
+
+# Avec level: 8 configuré
+/qa:phpstan                        # Analyse niveau 8
+```
+
 ## Configuration PHPStan
 
 `phpstan.neon` recommandé :

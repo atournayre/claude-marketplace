@@ -173,6 +173,39 @@ Examine le code PHP pour conformité Elegant Objects.
 - Méthodes sans `null`
 - Classes `final`
 
+## Configuration
+
+`.claude/plugins.settings.json` :
+```json
+{
+  "atournayre-claude-plugin-marketplace": {
+    "dev": {
+      "docker": {
+        "enabled": false,
+        "compose_file": "docker-compose.yml"
+      },
+      "specs_dir": "specs"
+    }
+  }
+}
+```
+
+### Options
+
+- `docker.enabled` (bool) : Activer Docker par défaut (défaut: `false`)
+- `docker.compose_file` (string) : Fichier Docker Compose (défaut: `"docker-compose.yml"`)
+- `specs_dir` (string) : Dossier pour specs (défaut: `"specs"`)
+
+### Utilisation avec Config
+
+```bash
+# Avec specs_dir: "docs/specs" configuré
+/dev:prepare                       # Sauvegarde dans docs/specs/
+
+# Avec docker.enabled: true configuré
+/dev:docker                        # Utilise Docker automatiquement
+```
+
 ## Structure
 
 ```

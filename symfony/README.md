@@ -198,16 +198,33 @@ bin/console make:migration
 
 ## Configuration
 
-`.claude/settings.json` :
+`.claude/plugins.settings.json` :
 ```json
 {
-  "symfony": {
-    "version": "6.4",
-    "env": "dev",
-    "maker_bundle": true,
-    "auto_tests": true
+  "atournayre-claude-plugin-marketplace": {
+    "symfony": {
+      "default_version": "6.4",
+      "maker": {
+        "auto_install": false
+      }
+    }
   }
 }
+```
+
+### Options
+
+- `default_version` (string) : Version Symfony par défaut (défaut: `"6.4"`)
+- `maker.auto_install` (bool) : Installer Maker Bundle auto (défaut: `false`)
+
+### Utilisation avec Config
+
+```bash
+# Avec default_version: "7.0" configuré
+/symfony:doc:load                  # Charge docs Symfony 7.0
+
+# Avec maker.auto_install: true configuré
+/symfony:make entity               # Installe Maker si absent
 ```
 
 ## Intégrations

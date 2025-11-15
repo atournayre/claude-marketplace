@@ -1,0 +1,54 @@
+{
+  "atournayre-claude-plugin-marketplace": {
+    "git": {
+      "default_branch": "main",
+      "conventional_commits": true,
+      "emoji": true,
+      "auto_push": false,
+      "auto_verify": true,
+      "pr": {
+        "auto_delete_branch": false,
+        "auto_request_review": true,
+        "default_milestone": null,
+        "default_project": null
+      },
+      "release": {
+        "report_path": "reports"
+      }
+    },
+    "github": {
+      "auto_assign": true,
+      "default_labels": [],
+      "pr": {
+        "add_impact_report": true
+      }
+    },
+    "dev": {
+      "docker": {
+        "enabled": false,
+        "compose_file": "docker-compose.yml"
+      },
+      "specs_dir": "specs"
+    },
+    "qa": {
+      "phpstan": {
+        "level": 9,
+        "auto_fix": true,
+        "config_file": "phpstan.neon"
+      }
+    },
+    "doc": {
+      "adr": {
+        "directory": "docs/adr",
+        "template": "default"
+      },
+      "output_dir": "docs"
+    },
+    "symfony": {
+      "default_version": "6.4",
+      "maker": {
+        "auto_install": false
+      }
+    }
+  }
+}

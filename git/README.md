@@ -268,18 +268,63 @@ Crée une Pull Request optimisée avec workflow structuré.
 /git:pr
 ```
 
-## Configuration Recommandée
+## Configuration
 
-`.claude/settings.json` :
+`.claude/plugins.settings.json` :
 ```json
 {
-  "git": {
-    "conventional_commits": true,
-    "emoji": true,
-    "auto_push": false,
-    "default_branch": "main"
+  "atournayre-claude-plugin-marketplace": {
+    "git": {
+      "default_branch": "main",
+      "conventional_commits": true,
+      "emoji": true,
+      "auto_push": false,
+      "auto_verify": true,
+      "pr": {
+        "auto_delete_branch": false,
+        "auto_request_review": true,
+        "default_milestone": null,
+        "default_project": null
+      },
+      "release": {
+        "report_path": "reports"
+      }
+    }
   }
 }
+```
+
+### Options
+
+**Générales :**
+- `default_branch` (string) : Branche par défaut pour `/git:branch` (défaut: `"main"`)
+- `conventional_commits` (bool) : Utiliser format conventional commits (défaut: `true`)
+- `emoji` (bool) : Ajouter emojis aux commits (défaut: `true`)
+- `auto_push` (bool) : Push auto après commit avec `/git:commit --push` (défaut: `false`)
+- `auto_verify` (bool) : Exécuter pre-commit hooks (défaut: `true`)
+
+**Pull Request :**
+- `pr.auto_delete_branch` (bool) : Supprimer branche après merge (défaut: `false`)
+- `pr.auto_request_review` (bool) : Demander review auto (défaut: `true`)
+- `pr.default_milestone` (string|null) : Milestone par défaut
+- `pr.default_project` (string|null) : Projet par défaut
+
+**Release :**
+- `release.report_path` (string) : Dossier pour rapports release (défaut: `"reports"`)
+
+### Utilisation avec Config
+
+```bash
+# Avec default_branch: "main" configuré
+/git:branch 123                    # Utilise "main" comme source
+/git:branch develop 123            # Override : utilise "develop"
+
+# Avec auto_push: true configuré
+/git:commit "feat: add feature"    # Push automatique
+
+# Avec pr.auto_delete_branch: true configuré
+/git:pr                            # Branche supprimée après merge
+/git:pr --no-delete                # Override : branche conservée
 ```
 
 ## Licence
