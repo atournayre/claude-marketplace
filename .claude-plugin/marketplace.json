@@ -49,6 +49,11 @@
       "name": "output-styles",
       "source": "./output-styles",
       "description": "Styles de sortie personnalisés pour formater les réponses de Claude (bullet points, markdown, HTML, YAML, etc.)"
+    },
+    {
+      "name": "framework",
+      "source": "./framework",
+      "description": "Plugin pour atournayre/framework avec commandes et intégrations"
     }
   ]
 }
