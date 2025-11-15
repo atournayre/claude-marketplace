@@ -66,6 +66,71 @@ Sélectionne "Browse Plugins" et installe les plugins souhaités.
 
 Installation automatique au trust du projet.
 
+## ⚙️ Configuration des Plugins
+
+Les plugins peuvent être configurés via `.claude/plugins.settings.json`.
+
+### Structure
+
+```json
+{
+  "atournayre-claude-plugin-marketplace": {
+    "plugin-name": {
+      "option": "value"
+    }
+  }
+}
+```
+
+### Hiérarchie
+
+Le fichier de configuration suit la même hiérarchie que `settings.json` :
+- **Global** : `~/.claude/plugins.settings.json`
+- **Projet** : `.claude/plugins.settings.json`
+
+Les valeurs du projet écrasent les valeurs globales.
+
+### Exemple Complet
+
+`.claude/plugins.settings.json` :
+```json
+{
+  "atournayre-claude-plugin-marketplace": {
+    "git": {
+      "default_branch": "main",
+      "conventional_commits": true,
+      "emoji": true,
+      "auto_push": false,
+      "pr": {
+        "auto_delete_branch": false,
+        "auto_request_review": true
+      }
+    },
+    "qa": {
+      "phpstan": {
+        "level": 9,
+        "auto_fix": true
+      }
+    }
+  }
+}
+```
+
+### Utilisation
+
+Les commandes utilisent automatiquement la config si arguments non fournis.
+
+Exemple :
+```bash
+# Sans config : arguments obligatoires
+/git:branch main 123
+
+# Avec config default_branch: "main"
+/git:branch 123
+```
+
+Voir README de chaque plugin pour options disponibles.
+
 ## 🧪 Tests
 
 Lance tous les tests du projet:

@@ -11,15 +11,27 @@ Créer un commit bien formaté : $ARGUMENTS
 
 ## Ce Que Fait Cette Commande
 
-1. Sauf si spécifié avec --no-verify, exécute automatiquement les vérifications pre-commit :
+0. **Lire configuration**
+   - Lire `.claude/plugins.settings.json` et `~/.claude/plugins.settings.json`
+   - Extraire `atournayre-claude-plugin-marketplace.git.*`
+   - Fusionner configs (projet écrase global)
+   - Utiliser valeurs par défaut si config absente :
+     - `auto_verify`: true
+     - `auto_push`: false
+     - `conventional_commits`: true
+     - `emoji`: true
+
+1. Sauf si spécifié avec --no-verify OU si `auto_verify: false` dans config, exécute automatiquement les vérifications pre-commit :
     - make qa pour assurer la qualité du code
 2. Vérifie quels fichiers sont stagés avec git status
 3. Si 0 fichiers sont stagés, ajoute automatiquement tous les fichiers modifiés et nouveaux avec git add
 4. Effectue un git diff pour comprendre les changements à commiter
 5. Analyse le diff pour déterminer si plusieurs changements logiques distincts sont présents
 6. Si plusieurs changements distincts sont détectés, suggère de diviser le commit en plusieurs commits plus petits
-7. Pour chaque commit (ou le commit unique si pas de division), crée un message de commit utilisant le format conventional avec emoji
-8. Si l'option --push est spécifiée, pousse automatiquement le(s) commit(s) vers le remote avec git push
+7. Pour chaque commit (ou le commit unique si pas de division), crée un message de commit :
+   - Utilise format conventional si `conventional_commits: true` (config ou défaut)
+   - Ajoute emoji si `emoji: true` (config ou défaut)
+8. Si l'option --push est spécifiée OU si `auto_push: true` dans config, pousse automatiquement le(s) commit(s) vers le remote avec git push
 
 ## Bonnes Pratiques pour les Commits
 

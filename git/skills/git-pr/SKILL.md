@@ -74,21 +74,47 @@ START_TIME=$(date +%s)
 date  # Afficher timestamp début
 ```
 
-### Étape 1: Parsing Arguments
+### Étape 1: Lire Configuration
 
-Parser `$ARGUMENTS` pour extraire:
-- `BRANCH_BASE`: Branche de destination (1er arg)
-- `MILESTONE`: Milestone à assigner (2e arg, optionnel)
-- `PROJECT_NAME`: Nom du projet (3e arg, optionnel)
-- `DELETE_FLAG`: `--delete` présent ou non
-- `NO_REVIEW_FLAG`: `--no-review` présent ou non
+Lire la configuration depuis `.claude/plugins.settings.json` et `~/.claude/plugins.settings.json` :
+
+```bash
+# Lire config globale
+GLOBAL_CONFIG=""
+if [ -f ~/.claude/plugins.settings.json ]; then
+    GLOBAL_CONFIG=$(cat ~/.claude/plugins.settings.json)
+fi
+
+# Lire config projet
+PROJECT_CONFIG=""
+if [ -f .claude/plugins.settings.json ]; then
+    PROJECT_CONFIG=$(cat .claude/plugins.settings.json)
+fi
+
+# Extraire valeurs (projet écrase global)
+# Utiliser jq ou python pour parser JSON
+CONFIG_DEFAULT_BRANCH=$(echo "$PROJECT_CONFIG" | python3 -c "import sys, json; c=json.load(sys.stdin).get('atournayre-claude-plugin-marketplace',{}).get('git',{}).get('default_branch'); print(c if c else '')" 2>/dev/null || echo "")
+CONFIG_AUTO_DELETE=$(echo "$PROJECT_CONFIG" | python3 -c "import sys, json; c=json.load(sys.stdin).get('atournayre-claude-plugin-marketplace',{}).get('git',{}).get('pr',{}).get('auto_delete_branch'); print(str(c).lower() if c is not None else '')" 2>/dev/null || echo "")
+CONFIG_AUTO_REVIEW=$(echo "$PROJECT_CONFIG" | python3 -c "import sys, json; c=json.load(sys.stdin).get('atournayre-claude-plugin-marketplace',{}).get('git',{}).get('pr',{}).get('auto_request_review'); print(str(c).lower() if c is not None else '')" 2>/dev/null || echo "")
+CONFIG_DEFAULT_MILESTONE=$(echo "$PROJECT_CONFIG" | python3 -c "import sys, json; c=json.load(sys.stdin).get('atournayre-claude-plugin-marketplace',{}).get('git',{}).get('pr',{}).get('default_milestone'); print(c if c else '')" 2>/dev/null || echo "")
+CONFIG_DEFAULT_PROJECT=$(echo "$PROJECT_CONFIG" | python3 -c "import sys, json; c=json.load(sys.stdin).get('atournayre-claude-plugin-marketplace',{}).get('git',{}).get('pr',{}).get('default_project'); print(c if c else '')" 2>/dev/null || echo "")
+```
+
+### Étape 2: Parsing Arguments
+
+Parser `$ARGUMENTS` pour extraire (avec fallback sur config):
+- `BRANCH_BASE`: Branche de destination (1er arg OU `CONFIG_DEFAULT_BRANCH`)
+- `MILESTONE`: Milestone à assigner (2e arg OU `CONFIG_DEFAULT_MILESTONE`, optionnel)
+- `PROJECT_NAME`: Nom du projet (3e arg OU `CONFIG_DEFAULT_PROJECT`, optionnel)
+- `DELETE_FLAG`: `--delete` présent OU `CONFIG_AUTO_DELETE=true`
+- `NO_REVIEW_FLAG`: `--no-review` présent OU `CONFIG_AUTO_REVIEW=false`
 
 ```bash
 # Exemple parsing
 ARGS=($ARGUMENTS)
-BRANCH_BASE="${ARGS[0]}"
-MILESTONE="${ARGS[1]}"
-PROJECT_NAME="${ARGS[2]}"
+BRANCH_BASE="${ARGS[0]:-$CONFIG_DEFAULT_BRANCH}"
+MILESTONE="${ARGS[1]:-$CONFIG_DEFAULT_MILESTONE}"
+PROJECT_NAME="${ARGS[2]:-$CONFIG_DEFAULT_PROJECT}"
 DELETE_FLAG=""
 NO_REVIEW_FLAG=""
 
@@ -96,6 +122,14 @@ for arg in "${ARGS[@]}"; do
     if [ "$arg" = "--delete" ]; then DELETE_FLAG="--delete"; fi
     if [ "$arg" = "--no-review" ]; then NO_REVIEW_FLAG="--no-review"; fi
 done
+
+# Appliquer config si flags non fournis
+if [ "$CONFIG_AUTO_DELETE" = "true" ] && [ -z "$DELETE_FLAG" ]; then
+    DELETE_FLAG="--delete"
+fi
+if [ "$CONFIG_AUTO_REVIEW" = "false" ] && [ -z "$NO_REVIEW_FLAG" ]; then
+    NO_REVIEW_FLAG="--no-review"
+fi
 ```
 
 ### Étape 1.5: Vérification Scopes GitHub

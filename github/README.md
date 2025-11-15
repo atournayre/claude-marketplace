@@ -164,15 +164,35 @@ Analyse le détail des modifications git et fournit 2 rapports d'impact (métier
 
 ## Configuration
 
-`.claude/settings.json` :
+`.claude/plugins.settings.json` :
 ```json
 {
-  "github": {
-    "auto_create_pr": true,
-    "auto_add_impact": true,
-    "default_labels": ["bug", "automated-fix"]
+  "atournayre-claude-plugin-marketplace": {
+    "github": {
+      "auto_assign": true,
+      "default_labels": [],
+      "pr": {
+        "add_impact_report": true
+      }
+    }
   }
 }
+```
+
+### Options
+
+- `auto_assign` (bool) : Auto-assign issues (défaut: `true`)
+- `default_labels` (array) : Labels par défaut (défaut: `[]`)
+- `pr.add_impact_report` (bool) : Ajouter rapport d'impact auto (défaut: `true`)
+
+### Utilisation avec Config
+
+```bash
+# Avec auto_assign: true configuré
+/github:fix 123                    # Auto-assigné
+
+# Avec pr.add_impact_report: true configuré
+/github:impact 456                 # Rapport ajouté auto à la PR
 ```
 
 ## Cas d'Usage
