@@ -17,30 +17,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📚 **Doc** | Documentation : ADR, RTFM, génération docs, framework docs | [README](doc/README.md) |
 | 🎯 **Symfony** | Plugin Symfony avec commandes make, documentation et intégrations | [README](symfony/README.md) |
 | 📊 **Output Styles** | Styles de sortie personnalisés pour formater les réponses | [README](output-styles/README.md) |
-
-## ✨ Nouveautés v1.1.0
-
-### Skills Spécialisés
-
-3 nouveaux skills ont été ajoutés pour automatiser des tâches complexes :
-
-**🐙 github-impact** (`github` plugin v1.1.0)
-- Analyse complète des PR (fichiers, dépendances, tests, sécurité)
-- Génération 2 rapports (métier + technique)
-- Intégration automatique dans description PR
-- Utilisation : `/github:impact <pr-number>`
-
-**🔍 phpstan-resolver** (`qa` plugin v1.1.0)
-- Résolution automatique erreurs PHPStan
-- Boucle itérative avec détection stagnation
-- Batch processing (5 erreurs/fichier/itération)
-- Utilisation : `/qa:phpstan`
-
-**📚 doc-loader** (`doc` plugin v1.1.0)
-- Chargement documentation multi-framework
-- Support 5 frameworks (Symfony, API Platform, Meilisearch, atournayre-framework, Claude Code)
-- Cache intelligent 24h + anti-rate-limiting
-- Utilisation : `/doc:framework-load <framework> [version]`
+| 🏗️ **Framework** | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
 
 ## 🚀 Installation
 
