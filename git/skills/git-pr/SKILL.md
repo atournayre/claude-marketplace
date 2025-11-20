@@ -333,10 +333,15 @@ Marquer todo #7 `in_progress`.
 - Le cache des projets pour éviter les requêtes API répétées
 - La compatibilité utilisateur/organisation (via `gh project list --owner`)
 - La recherche par alias case-insensitive
+- L'API GraphQL V2 (`addProjectV2ItemById`) compatible avec les nouveaux GitHub Projects
 
-**INTERDIT**: Ne JAMAIS utiliser directement `gh api graphql` avec `organization(login: ...)` car:
-- Échoue si le owner est un utilisateur (pas une organisation)
-- Ne bénéficie pas du cache
+**INTERDIT**: Ne JAMAIS utiliser:
+- `gh pr edit --add-project` car:
+  - Projects (classic) est deprecated depuis 2024
+  - Erreur: "Projects (classic) is being deprecated in favor of the new Projects experience"
+- `gh api graphql` avec `organization(login: ...)` car:
+  - Échoue si le owner est un utilisateur (pas une organisation)
+  - Ne bénéficie pas du cache
 
 ```bash
 # Si PROJECT_NAME fourni en argument

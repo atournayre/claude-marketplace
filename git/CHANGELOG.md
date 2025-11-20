@@ -5,6 +5,12 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.3] - 2025-11-20
+
+### Fixed
+- Interdiction explicite `gh pr edit --add-project` (Projects classic deprecated)
+- Documentation API GraphQL V2 (`addProjectV2ItemById`) pour assignation projets
+
 ## [1.4.2] - 2025-11-20
 
 ### Fixed
