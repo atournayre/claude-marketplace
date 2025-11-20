@@ -285,6 +285,13 @@ Marquer todo #5 `completed`.
 
 Marquer todo #6 `in_progress`.
 
+**IMPORTANT**: TOUJOURS utiliser le script Python `assign_milestone.py` qui gère:
+- Le cache des milestones pour éviter les requêtes API répétées
+- Les alias (ex: "26" → "26.0.0 (Avenant)")
+- La recherche intelligente (exact, alias, normalisation semver)
+
+**INTERDIT**: Ne JAMAIS utiliser directement `gh pr edit --milestone` car GitHub ne supporte pas les alias.
+
 ```bash
 # Si MILESTONE fourni en argument
 if [ -n "$MILESTONE" ]; then
@@ -321,6 +328,15 @@ Marquer todo #6 `completed`.
 ### Étape 9: Assignation Projet
 
 Marquer todo #7 `in_progress`.
+
+**IMPORTANT**: TOUJOURS utiliser le script Python `assign_project.py` qui gère:
+- Le cache des projets pour éviter les requêtes API répétées
+- La compatibilité utilisateur/organisation (via `gh project list --owner`)
+- La recherche par alias case-insensitive
+
+**INTERDIT**: Ne JAMAIS utiliser directement `gh api graphql` avec `organization(login: ...)` car:
+- Échoue si le owner est un utilisateur (pas une organisation)
+- Ne bénéficie pas du cache
 
 ```bash
 # Si PROJECT_NAME fourni en argument

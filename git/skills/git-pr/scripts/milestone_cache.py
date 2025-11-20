@@ -60,20 +60,25 @@ class MilestoneCache:
         self.save()
 
     def generate_aliases(self, title: str) -> list[str]:
-        """Génère aliases depuis titre (version exacte uniquement)
+        """Génère aliases depuis titre (version exacte + formes courtes)
 
         Exemples:
-        - "26.1.1 (Hotfix)" → ["26.1.1"]
-        - "26.1.0" → ["26.1.0"]
-        - "26.0.0 (Avenant)" → ["26.0.0"]
+        - "26.1.1 (Hotfix)" → ["26.1.1", "26.1", "26"]
+        - "26.1.0" → ["26.1.0", "26.1", "26"]
+        - "26.0.0 (Avenant)" → ["26.0.0", "26.0", "26"]
 
-        Logique: extraire version semver avant parenthèses
-        Pas de troncature automatique
+        Logique: extraire version semver et générer formes courtes
         """
-        match = re.match(r'^(\d+\.\d+\.\d+)', title)
+        match = re.match(r'^(\d+)\.(\d+)\.(\d+)', title)
         if match:
-            version = match.group(1)
-            return [version] if version != title else []
+            major, minor, patch = match.groups()
+            aliases = []
+            full_version = f"{major}.{minor}.{patch}"
+            if full_version != title:
+                aliases.append(full_version)
+            aliases.append(f"{major}.{minor}")
+            aliases.append(major)
+            return aliases
         return []
 
     def refresh_from_api(self, milestones: list[dict]):

@@ -5,6 +5,12 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.2] - 2025-11-20
+
+### Fixed
+- Génération aliases milestone supportant formes courtes ("26" → "26.0.0 (Avenant)")
+- Renforcement SKILL.md pour imposer utilisation scripts Python avec cache (milestone/projet)
+
 ## [1.4.1] - 2025-11-15
 
 ### Fixed
