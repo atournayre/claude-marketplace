@@ -1,6 +1,6 @@
 {
   "name": "git",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Workflow Git complet : branches, commits, conflits, PR avec automation QA",
   "author": {
     "name": "Aurélien Tournayre",

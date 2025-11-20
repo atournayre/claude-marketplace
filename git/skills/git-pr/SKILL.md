@@ -253,11 +253,26 @@ BRANCH_NAME=$(git branch --show-current)
 # Lire le template PR du projet
 PR_TEMPLATE=$(cat "$PR_TEMPLATE_PATH")
 
-# Générer titre PR
-# - Si issue liée: "[Titre issue] / Issue #XX"
-# - Sinon: Titre métier descriptif
+# Détecter issue depuis nom de branche (ex: feat/123-description, fix/456-bug)
+ISSUE_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[0-9]+' | head -1)
 
-PR_TITLE="[TITRE_GÉNÉRÉ]"
+# Générer titre PR
+if [ -n "$ISSUE_NUMBER" ]; then
+    # Vérifier que l'issue existe et récupérer son titre
+    ISSUE_TITLE=$(gh issue view "$ISSUE_NUMBER" --json title -q '.title' 2>/dev/null)
+    if [ -n "$ISSUE_TITLE" ]; then
+        PR_TITLE="$ISSUE_TITLE / Issue #$ISSUE_NUMBER"
+        echo "✅ Titre PR basé sur issue #$ISSUE_NUMBER"
+    else
+        # Issue non trouvée, générer titre métier descriptif
+        echo "⚠️ Issue #$ISSUE_NUMBER non trouvée, génération titre métier"
+        PR_TITLE="[Titre métier descriptif basé sur les changements]"
+    fi
+else
+    # Pas de numéro d'issue dans le nom de branche
+    echo "ℹ️ Pas d'issue détectée dans '$BRANCH_NAME', génération titre métier"
+    PR_TITLE="[Titre métier descriptif basé sur les changements]"
+fi
 
 # Créer fichier temporaire avec le body
 PR_BODY_FILE="/tmp/pr_body_$(date +%s).md"
