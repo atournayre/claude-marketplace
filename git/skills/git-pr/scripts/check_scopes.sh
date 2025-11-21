@@ -4,10 +4,10 @@
 
 set -e
 
-REQUIRED_SCOPES=(repo read:org read:project project gist)
+REQUIRED_SCOPES=(repo read:org project gist)
 
 # Récupérer scopes actuels
-CURRENT_SCOPES=$(gh auth status 2>&1 | grep "Token scopes" | cut -d: -f2 | tr -d "'" | tr ',' ' ')
+CURRENT_SCOPES=$(gh auth status 2>&1 | grep "Token scopes" | sed 's/.*Token scopes: //' | tr -d "'" | tr ',' ' ')
 
 if [ -z "$CURRENT_SCOPES" ]; then
     echo "❌ Impossible de récupérer les scopes GitHub"

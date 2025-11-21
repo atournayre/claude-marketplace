@@ -5,6 +5,12 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.7] - 2025-11-21
+
+### Fixed
+- Suppression scope `read:project` obsolète des requis GitHub
+- Correction parsing des scopes dans `check_scopes.sh`
+
 ## [1.4.6] - 2025-11-21
 
 ### Changed
