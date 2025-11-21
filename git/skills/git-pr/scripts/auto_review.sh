@@ -1,6 +1,7 @@
 #!/bin/bash
-# Lance une review automatique et poste un commentaire sur la PR
+# Récupère les données de la PR pour analyse intelligente par Claude
 # Usage: auto_review.sh <pr_number>
+# Sortie: JSON avec toutes les informations nécessaires pour la review
 # Exit 0 si OK, Exit 1 si échec
 
 set -euo pipefail
@@ -12,50 +13,29 @@ if [ -z "$PR_NUMBER" ]; then
     exit 1
 fi
 
-echo "🔍 Analyse des changements de la PR #$PR_NUMBER..."
+# Récupérer les informations de la PR
+PR_INFO=$(gh pr view "$PR_NUMBER" --json title,body,files,additions,deletions,commits,baseRefName,headRefName 2>/dev/null)
 
-# Récupérer le diff de la PR
+if [ -z "$PR_INFO" ]; then
+    echo "❌ Impossible de récupérer les informations de la PR" >&2
+    exit 1
+fi
+
+# Récupérer le diff complet
 DIFF=$(gh pr diff "$PR_NUMBER" 2>/dev/null || echo "")
 
-if [ -z "$DIFF" ]; then
-    echo "⚠️ Impossible de récupérer le diff de la PR" >&2
-    exit 1
+# Récupérer le template PR s'il existe
+PR_TEMPLATE=""
+if [ -f ".github/pull_request_template.md" ]; then
+    PR_TEMPLATE=$(cat .github/pull_request_template.md)
 fi
 
-# Compter les lignes modifiées
-ADDITIONS=$(echo "$DIFF" | grep -c "^+" || echo "0")
-DELETIONS=$(echo "$DIFF" | grep -c "^-" || echo "0")
-FILES_CHANGED=$(gh pr view "$PR_NUMBER" --json files -q '.files | length' 2>/dev/null || echo "0")
-
-# Récupérer la liste des fichiers modifiés
-FILES_LIST=$(gh pr view "$PR_NUMBER" --json files -q '.files[].path' 2>/dev/null | head -20 || echo "")
-
-# Générer le commentaire de review
-REVIEW_COMMENT="## 🔍 Review Automatique
-
-### Statistiques
-- **Fichiers modifiés**: $FILES_CHANGED
-- **Lignes ajoutées**: $ADDITIONS
-- **Lignes supprimées**: $DELETIONS
-
-### Fichiers analysés
-\`\`\`
-$FILES_LIST
-\`\`\`
-
-### Vérifications
-- ✅ Diff récupéré avec succès
-- ✅ Analyse des changements effectuée
-
----
-*Review automatique générée par git-pr skill*"
-
-# Poster le commentaire
-echo "📝 Publication du commentaire de review..."
-if gh pr comment "$PR_NUMBER" --body "$REVIEW_COMMENT"; then
-    echo "✅ Review automatique complétée"
-    exit 0
-else
-    echo "❌ Échec publication commentaire" >&2
-    exit 1
-fi
+# Générer sortie JSON pour Claude
+cat <<EOF
+{
+  "pr_number": $PR_NUMBER,
+  "pr_info": $PR_INFO,
+  "diff": $(echo "$DIFF" | jq -Rs .),
+  "template": $(echo "$PR_TEMPLATE" | jq -Rs .)
+}
+EOF

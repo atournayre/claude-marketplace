@@ -42,6 +42,9 @@ todos:
   - content: "Confirmer branche de base"
     status: "pending"
     activeForm: "Confirmation de la branche de base"
+  - content: "Générer description PR intelligente"
+    status: "pending"
+    activeForm: "Génération de la description PR intelligente"
   - content: "Push et création PR"
     status: "pending"
     activeForm: "Push et création de la PR"
@@ -162,21 +165,49 @@ questions:
 
 - Marquer todo #4 completed
 
-### 8. Création PR
+### 8. Génération description intelligente
 
-- Marquer todo #5 in_progress
+- Marquer todo "Générer description PR intelligente" in_progress
+
+EXÉCUTER pour récupérer les informations :
+```bash
+BRANCH_NAME=$(git branch --show-current)
+echo "=== COMMITS ==="
+git log $BRANCH_BASE..$BRANCH_NAME --oneline
+echo ""
+echo "=== DIFF STAT ==="
+git diff $BRANCH_BASE..$BRANCH_NAME --stat
+echo ""
+echo "=== FICHIERS MODIFIÉS ==="
+git diff $BRANCH_BASE..$BRANCH_NAME --name-only
+```
+
+LIRE le template PR avec Read tool : `$PR_TEMPLATE_PATH`
+
+**GÉNÉRER LA DESCRIPTION** en tant que Claude :
+1. Analyser les commits et le diff
+2. Remplir intelligemment chaque section du template :
+   - **Bug fix** : supprimer si pas de fix, sinon lier l'issue
+   - **Description** : résumer les changements basé sur les commits
+   - **Type de changement** : cocher (✔️) les types appropriés basé sur les commits
+   - **Tests** : indiquer si tests ajoutés/modifiés
+   - **Checklist** : cocher ce qui s'applique
+   - **Actions** : cocher ce qui est nécessaire
+3. Sauvegarder dans `/tmp/pr_body_generated.md` avec Write tool
+
+### 9. Création PR
 
 EXÉCUTER :
 ```bash
-PR_NUMBER=$(bash $SCRIPTS_DIR/create_pr.sh "$BRANCH_BASE" "$PR_TEMPLATE_PATH")
+PR_NUMBER=$(bash $SCRIPTS_DIR/create_pr.sh "$BRANCH_BASE" "/tmp/pr_body_generated.md")
 ```
 
-- Exit 0 → stocker PR_NUMBER, marquer todo #5 completed
+- Exit 0 → stocker PR_NUMBER, marquer todo "Générer description PR intelligente" completed, puis marquer todo "Push et création PR" completed
 - Exit 1 → ARRÊT
 
-### 9. Milestone
+### 10. Milestone
 
-- Marquer todo #6 in_progress
+- Marquer todo "Assigner milestone" in_progress
 
 Si MILESTONE fourni :
 ```bash
@@ -190,11 +221,11 @@ python3 $SCRIPTS_DIR/assign_milestone.py $PR_NUMBER
 
 Si needs_user_input: true → utiliser AskUserQuestion avec milestones disponibles
 
-- Marquer todo #6 completed (même si échec, non bloquant)
+- Marquer todo "Assigner milestone" completed (même si échec, non bloquant)
 
-### 10. Projet
+### 11. Projet
 
-- Marquer todo #7 in_progress
+- Marquer todo "Assigner projet GitHub" in_progress
 
 Si PROJECT_NAME fourni :
 ```bash
@@ -208,22 +239,73 @@ python3 $SCRIPTS_DIR/assign_project.py $PR_NUMBER
 
 Si needs_user_input: true → utiliser AskUserQuestion avec projets disponibles
 
-- Marquer todo #7 completed (même si échec, non bloquant)
+- Marquer todo "Assigner projet GitHub" completed (même si échec, non bloquant)
 
-### 11. Review (si pas --no-review)
+### 12. Review intelligente (si pas --no-review)
 
-- Marquer todo #8 in_progress
+- Marquer todo "Code review automatique" in_progress
 
-EXÉCUTER :
+EXÉCUTER pour récupérer les données :
 ```bash
-bash $SCRIPTS_DIR/auto_review.sh $PR_NUMBER
+PR_DATA=$(bash $SCRIPTS_DIR/auto_review.sh $PR_NUMBER)
 ```
 
-- Marquer todo #8 completed
+**ANALYSER EN TANT QUE CLAUDE** les données JSON retournées et générer une review intelligente :
 
-### 12. Nettoyage
+1. **Conformité template PR** :
+   - Vérifier que toutes les sections requises sont remplies
+   - Signaler les sections manquantes ou incomplètes
 
-- Marquer todo #9 in_progress
+2. **Qualité du code** :
+   - Patterns suspects (code dupliqué, fonctions trop longues)
+   - Problèmes de sécurité potentiels (injections, données sensibles)
+   - Respect des conventions du projet
+
+3. **Tests** :
+   - Tests manquants pour les nouvelles fonctionnalités
+   - Couverture des cas limites
+
+4. **Documentation** :
+   - Commentaires nécessaires absents
+   - Mise à jour README si API modifiée
+
+5. **Suggestions d'amélioration** :
+   - Refactorisation possible
+   - Performance
+   - Lisibilité
+
+**GÉNÉRER le commentaire de review** avec structure :
+```markdown
+## 🔍 Code Review Automatique
+
+### ✅ Points positifs
+- [ce qui est bien fait]
+
+### ⚠️ Points d'attention
+- [problèmes potentiels à vérifier]
+
+### 💡 Suggestions
+- [améliorations possibles]
+
+### 📋 Checklist conformité
+- [ ] Template PR complet
+- [ ] Tests présents
+- [ ] Documentation à jour
+
+---
+*Review générée par git-pr skill*
+```
+
+EXÉCUTER pour poster le commentaire :
+```bash
+gh pr comment $PR_NUMBER --body "$REVIEW_COMMENT"
+```
+
+- Marquer todo "Code review automatique" completed
+
+### 13. Nettoyage
+
+- Marquer todo "Nettoyage branche locale" in_progress
 
 EXÉCUTER :
 ```bash
@@ -232,9 +314,9 @@ bash $SCRIPTS_DIR/cleanup_branch.sh "$BRANCH_BASE" "$BRANCH_NAME" $DELETE_FLAG
 
 Si needs_user_input: true → utiliser AskUserQuestion pour confirmer suppression
 
-- Marquer todo #9 completed
+- Marquer todo "Nettoyage branche locale" completed
 
-### 13. Rapport final
+### 14. Rapport final
 
 EXÉCUTER :
 ```bash
