@@ -9,129 +9,25 @@ allowed-tools: [Bash, Read, Write, TodoWrite, AskUserQuestion]
 model: claude-sonnet-4-5-20250929
 ---
 
-# Git Pull Request Automation Skill
+# Git PR Skill - Checklist d'exécution
 
-## Variables
+## Configuration
 
 ```bash
-ARGUMENTS="$ARGUMENTS"  # Arguments passés par la slash command
+SCRIPTS_DIR="/home/atournayre/.claude/plugins/marketplaces/atournayre-claude-plugin-marketplace/git/skills/git-pr/scripts"
 PR_TEMPLATE_PATH=".github/pull_request_template.md"
-SCRIPTS_DIR="./scripts"
-REQUIRED_GH_SCOPES="repo read:org read:project project gist"
 ```
 
-## Prérequis: Authentification GitHub
+## Checklist d'exécution
 
-**IMPORTANT**: Avant d'utiliser ce skill, vérifier que l'authentification GitHub dispose de TOUS les scopes requis.
+### 1. Initialisation
 
-### Scopes Requis
-- `repo`: Accès complet aux repos (PRs, commits, branches)
-- `read:org`: Lecture informations organisation
-- `read:project`: Lecture projets GitHub
-- `project`: Écriture/assignation aux projets
-- `gist`: Gestion des gists
-
-### Vérification Automatique
-
-Au début du workflow, TOUJOURS vérifier les scopes:
-
-```bash
-# Vérifier scopes actuels
-CURRENT_SCOPES=$(gh auth status 2>&1 | grep "Token scopes" | cut -d: -f2 | tr -d "'")
-
-# Vérifier si tous les scopes requis sont présents
-MISSING_SCOPES=()
-for scope in repo read:org read:project project gist; do
-    if ! echo "$CURRENT_SCOPES" | grep -q "$scope"; then
-        MISSING_SCOPES+=("$scope")
-    fi
-done
-
-# Si scopes manquants, renouveler l'authentification
-if [ ${#MISSING_SCOPES[@]} -gt 0 ]; then
-    echo "⚠️  Scopes manquants: ${MISSING_SCOPES[*]}"
-    echo "🔄 Renouvellement authentification..."
-    bash $SCRIPTS_DIR/gh_auth_setup.sh
-fi
-```
-
-### Script de Configuration
-
-Un script `gh_auth_setup.sh` est disponible pour configurer automatiquement TOUS les scopes requis:
-
-```bash
-bash $SCRIPTS_DIR/gh_auth_setup.sh
-```
-
-Ce script garantit la constance des scopes à chaque renouvellement d'authentification.
-
-## Workflow
-
-### Étape 0: Timing
-
+EXÉCUTER :
 ```bash
 START_TIME=$(date +%s)
-date  # Afficher timestamp début
 ```
 
-### Étape 1: Parsing Arguments
-
-Parser `$ARGUMENTS` pour extraire:
-- `BRANCH_BASE`: Branche de destination (1er arg)
-- `MILESTONE`: Milestone à assigner (2e arg, optionnel)
-- `PROJECT_NAME`: Nom du projet (3e arg, optionnel)
-- `DELETE_FLAG`: `--delete` présent ou non
-- `NO_REVIEW_FLAG`: `--no-review` présent ou non
-
-```bash
-# Exemple parsing
-ARGS=($ARGUMENTS)
-BRANCH_BASE="${ARGS[0]}"
-MILESTONE="${ARGS[1]}"
-PROJECT_NAME="${ARGS[2]}"
-DELETE_FLAG=""
-NO_REVIEW_FLAG=""
-
-for arg in "${ARGS[@]}"; do
-    if [ "$arg" = "--delete" ]; then DELETE_FLAG="--delete"; fi
-    if [ "$arg" = "--no-review" ]; then NO_REVIEW_FLAG="--no-review"; fi
-done
-```
-
-### Étape 1.5: Vérification Scopes GitHub
-
-**OBLIGATOIRE** : Vérifier les scopes GitHub avant toute opération.
-
-```bash
-# Vérifier scopes actuels
-CURRENT_SCOPES=$(gh auth status 2>&1 | grep "Token scopes" | cut -d: -f2 | tr -d "'" | tr ',' ' ')
-
-# Scopes requis
-REQUIRED_SCOPES=(repo read:org read:project project gist)
-
-# Vérifier si tous les scopes requis sont présents
-MISSING_SCOPES=()
-for scope in "${REQUIRED_SCOPES[@]}"; do
-    if ! echo "$CURRENT_SCOPES" | grep -q "$scope"; then
-        MISSING_SCOPES+=("$scope")
-    fi
-done
-
-# Si scopes manquants, ARRÊT et demande renouvellement
-if [ ${#MISSING_SCOPES[@]} -gt 0 ]; then
-    echo "❌ Scopes GitHub manquants: ${MISSING_SCOPES[*]}"
-    echo ""
-    echo "🔄 Pour renouveler l'authentification avec TOUS les scopes requis:"
-    echo "   bash ./scripts/gh_auth_setup.sh"
-    echo ""
-    exit 1
-fi
-
-echo "✅ Scopes GitHub valides: $CURRENT_SCOPES"
-```
-
-### Étape 2: TodoWrite Initialisation
-
+EXÉCUTER TodoWrite avec ces todos exacts :
 ```yaml
 todos:
   - content: "Vérifier template PR"
@@ -163,320 +59,186 @@ todos:
     activeForm: "Nettoyage de la branche locale"
 ```
 
-### Étape 3: Vérification Template PR
+### 2. Parsing arguments
 
-Marquer todo #1 `in_progress`.
+EXÉCUTER ce bloc pour parser $ARGUMENTS :
+```bash
+ARGS=($ARGUMENTS)
+BRANCH_BASE=""
+MILESTONE=""
+PROJECT_NAME=""
+DELETE_FLAG=""
+NO_REVIEW_FLAG=""
 
+for arg in "${ARGS[@]}"; do
+    case "$arg" in
+        --delete) DELETE_FLAG="--delete" ;;
+        --no-review) NO_REVIEW_FLAG="--no-review" ;;
+        *)
+            if [ -z "$BRANCH_BASE" ]; then
+                BRANCH_BASE="$arg"
+            elif [ -z "$MILESTONE" ]; then
+                MILESTONE="$arg"
+            elif [ -z "$PROJECT_NAME" ]; then
+                PROJECT_NAME="$arg"
+            fi
+            ;;
+    esac
+done
+```
+
+### 3. Vérification scopes GitHub
+
+EXÉCUTER :
+```bash
+bash $SCRIPTS_DIR/check_scopes.sh
+```
+
+- Exit 0 → continuer
+- Exit 1 → ARRÊT, afficher message du script
+
+### 4. Template PR
+
+- Marquer todo #1 in_progress
+
+EXÉCUTER :
 ```bash
 bash $SCRIPTS_DIR/verify_pr_template.sh "$PR_TEMPLATE_PATH"
 ```
 
-Si exit code != 0: ARRÊT avec message d'erreur.
+- Exit 0 → marquer todo #1 completed
+- Exit 1 → ARRÊT
 
-Marquer todo #1 `completed`.
+### 5. QA (si pas --no-review)
 
-### Étape 4: QA Intelligente
+- Marquer todo #2 in_progress
 
-Marquer todo #2 `in_progress`.
-
+EXÉCUTER :
 ```bash
 bash $SCRIPTS_DIR/smart_qa.sh
 ```
 
-Si exit code == 1: ARRÊT avec message d'erreur (QA échouée).
-Si exit code == 0: Continuer (QA passée ou ignorée).
+- Exit 0 → marquer todo #2 completed
+- Exit 1 → ARRÊT
 
-Marquer todo #2 `completed`.
+### 6. Analyse changements
 
-### Étape 5: Analyse Changements
+- Marquer todo #3 in_progress
 
-Marquer todo #3 `in_progress`.
-
+EXÉCUTER :
 ```bash
-STATS=$(bash $SCRIPTS_DIR/analyze_changes.sh)
+bash $SCRIPTS_DIR/analyze_changes.sh
 ```
 
-Parser le JSON retourné pour obtenir:
-- `files_changed`
-- `additions`
-- `deletions`
-- `modified_files`
-- `has_php_files`
+- Stocker sortie JSON
+- Marquer todo #3 completed
 
-Marquer todo #3 `completed`.
+### 7. Branche de base
 
-### Étape 6: Confirmation Branche de Base
+- Marquer todo #4 in_progress
 
-Marquer todo #4 `in_progress`.
-
+Si BRANCH_BASE fourni :
 ```bash
-# Si BRANCH_BASE fourni en argument
-if [ -n "$BRANCH_BASE" ]; then
-    RESULT=$(python3 $SCRIPTS_DIR/confirm_base_branch.py --branch "$BRANCH_BASE")
-    if [ $? -ne 0 ]; then
-        echo "❌ Branche '$BRANCH_BASE' invalide"
-        exit 1
-    fi
-    BRANCH_BASE="$RESULT"
-else
-    # Sinon, demander à l'utilisateur
-    RESULT=$(python3 $SCRIPTS_DIR/confirm_base_branch.py)
-    # Parser JSON
-    # Utiliser AskUserQuestion avec les branches disponibles
-    # Stocker la réponse dans BRANCH_BASE
-fi
+python3 $SCRIPTS_DIR/confirm_base_branch.py --branch "$BRANCH_BASE"
 ```
 
-Exemple AskUserQuestion:
+Sinon :
+```bash
+python3 $SCRIPTS_DIR/confirm_base_branch.py
+```
+
+Si needs_user_input: true → utiliser AskUserQuestion :
 ```yaml
 questions:
   - question: "Quelle branche de base pour la PR ?"
-    header: "Branche base"
+    header: "Branche"
     multiSelect: false
     options:
       - label: "develop"
-        description: "Branche de développement principale"
+        description: "Branche développement"
       - label: "main"
-        description: "Branche de production"
+        description: "Branche production"
 ```
 
-Marquer todo #4 `completed`.
+- Marquer todo #4 completed
 
-### Étape 7: Push et Création PR
+### 8. Création PR
 
-Marquer todo #5 `in_progress`.
+- Marquer todo #5 in_progress
 
+EXÉCUTER :
 ```bash
-# Récupérer branche courante
-BRANCH_NAME=$(git branch --show-current)
-
-# Lire le template PR du projet
-PR_TEMPLATE=$(cat "$PR_TEMPLATE_PATH")
-
-# Détecter issue depuis nom de branche (ex: feat/123-description, fix/456-bug)
-ISSUE_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[0-9]+' | head -1)
-
-# Générer titre PR
-if [ -n "$ISSUE_NUMBER" ]; then
-    # Vérifier que l'issue existe et récupérer son titre
-    ISSUE_TITLE=$(gh issue view "$ISSUE_NUMBER" --json title -q '.title' 2>/dev/null)
-    if [ -n "$ISSUE_TITLE" ]; then
-        PR_TITLE="$ISSUE_TITLE / Issue #$ISSUE_NUMBER"
-        echo "✅ Titre PR basé sur issue #$ISSUE_NUMBER"
-    else
-        # Issue non trouvée, générer titre métier descriptif
-        echo "⚠️ Issue #$ISSUE_NUMBER non trouvée, génération titre métier"
-        PR_TITLE="[Titre métier descriptif basé sur les changements]"
-    fi
-else
-    # Pas de numéro d'issue dans le nom de branche
-    echo "ℹ️ Pas d'issue détectée dans '$BRANCH_NAME', génération titre métier"
-    PR_TITLE="[Titre métier descriptif basé sur les changements]"
-fi
-
-# Créer fichier temporaire avec le body
-PR_BODY_FILE="/tmp/pr_body_$(date +%s).md"
-echo "$PR_TEMPLATE" > "$PR_BODY_FILE"
-# Remplir les placeholders du template avec les infos réelles
-
-# Appeler le script de push sécurisé
-PR_NUMBER=$(bash $SCRIPTS_DIR/safe_push_pr.sh "$BRANCH_BASE" "$BRANCH_NAME" "$PR_TITLE" "$PR_BODY_FILE")
-
-if [ $? -ne 0 ]; then
-    echo "❌ Échec création PR"
-    rm "$PR_BODY_FILE"
-    exit 1
-fi
-
-# Nettoyer
-rm "$PR_BODY_FILE"
-
-echo "✅ PR #$PR_NUMBER créée"
+PR_NUMBER=$(bash $SCRIPTS_DIR/create_pr.sh "$BRANCH_BASE" "$PR_TEMPLATE_PATH")
 ```
 
-Marquer todo #5 `completed`.
+- Exit 0 → stocker PR_NUMBER, marquer todo #5 completed
+- Exit 1 → ARRÊT
 
-### Étape 8: Assignation Milestone
+### 9. Milestone
 
-Marquer todo #6 `in_progress`.
+- Marquer todo #6 in_progress
 
-**IMPORTANT**: TOUJOURS utiliser le script Python `assign_milestone.py` qui gère:
-- Le cache des milestones pour éviter les requêtes API répétées
-- Les alias (ex: "26" → "26.0.0 (Avenant)")
-- La recherche intelligente (exact, alias, normalisation semver)
-
-**INTERDIT**: Ne JAMAIS utiliser directement `gh pr edit --milestone` car GitHub ne supporte pas les alias.
-
+Si MILESTONE fourni :
 ```bash
-# Si MILESTONE fourni en argument
-if [ -n "$MILESTONE" ]; then
-    RESULT=$(python3 $SCRIPTS_DIR/assign_milestone.py "$PR_NUMBER" --milestone "$MILESTONE")
-    if [ $? -ne 0 ]; then
-        echo "⚠️ Échec assignation milestone (non bloquant)"
-    else
-        echo "✅ Milestone '$MILESTONE' assigné"
-    fi
-else
-    # Sinon, demander à l'utilisateur
-    RESULT=$(python3 $SCRIPTS_DIR/assign_milestone.py "$PR_NUMBER")
-    # Si needs_user_input: true
-    # Parser JSON et utiliser AskUserQuestion
-    # Rappeler le script avec --milestone après réponse
-fi
+python3 $SCRIPTS_DIR/assign_milestone.py $PR_NUMBER --milestone "$MILESTONE"
 ```
 
-Exemple AskUserQuestion:
-```yaml
-questions:
-  - question: "Assigner un milestone à la PR ?"
-    header: "Milestone"
-    multiSelect: false
-    options:
-      - label: "1.0.0"
-        description: "Version 1.0.0 (suggéré)"
-      - label: "1.1.0"
-        description: "Version 1.1.0"
-```
-
-Marquer todo #6 `completed`.
-
-### Étape 9: Assignation Projet
-
-Marquer todo #7 `in_progress`.
-
-**IMPORTANT**: TOUJOURS utiliser le script Python `assign_project.py` qui gère:
-- Le cache des projets pour éviter les requêtes API répétées
-- La compatibilité utilisateur/organisation (via `gh project list --owner`)
-- La recherche par alias case-insensitive
-- L'API GraphQL V2 (`addProjectV2ItemById`) compatible avec les nouveaux GitHub Projects
-
-**INTERDIT**: Ne JAMAIS utiliser:
-- `gh pr edit --add-project` car:
-  - Projects (classic) est deprecated depuis 2024
-  - Erreur: "Projects (classic) is being deprecated in favor of the new Projects experience"
-- `gh api graphql` avec `organization(login: ...)` car:
-  - Échoue si le owner est un utilisateur (pas une organisation)
-  - Ne bénéficie pas du cache
-
+Sinon :
 ```bash
-# Si PROJECT_NAME fourni en argument
-if [ -n "$PROJECT_NAME" ]; then
-    RESULT=$(python3 $SCRIPTS_DIR/assign_project.py "$PR_NUMBER" --project "$PROJECT_NAME")
-    if [ $? -ne 0 ]; then
-        echo "⚠️ Échec assignation projet (non bloquant)"
-    else
-        echo "✅ Projet '$PROJECT_NAME' assigné"
-    fi
-else
-    # Sinon, demander à l'utilisateur
-    RESULT=$(python3 $SCRIPTS_DIR/assign_project.py "$PR_NUMBER")
-    # Si needs_user_input: true
-    # Parser JSON et utiliser AskUserQuestion
-    # Rappeler le script avec --project après réponse
-fi
+python3 $SCRIPTS_DIR/assign_milestone.py $PR_NUMBER
 ```
 
-Marquer todo #7 `completed`.
+Si needs_user_input: true → utiliser AskUserQuestion avec milestones disponibles
 
-### Étape 10: Code Review
+- Marquer todo #6 completed (même si échec, non bloquant)
 
-Marquer todo #8 `in_progress`.
+### 10. Projet
 
+- Marquer todo #7 in_progress
+
+Si PROJECT_NAME fourni :
 ```bash
-if [ -n "$NO_REVIEW_FLAG" ]; then
-    echo "ℹ️ Review automatique ignorée (--no-review)"
-else
-    echo "🔍 Lancement code review automatique..."
-    # Utiliser la commande /review ou analyser les changements
-    # et poster un commentaire de review sur la PR
-    # Via: gh pr comment $PR_NUMBER --body "[REVIEW]"
-    echo "✅ Review complétée"
-fi
+python3 $SCRIPTS_DIR/assign_project.py $PR_NUMBER --project "$PROJECT_NAME"
 ```
 
-Marquer todo #8 `completed`.
-
-### Étape 11: Nettoyage Branche
-
-Marquer todo #9 `in_progress`.
-
+Sinon :
 ```bash
-if [ -n "$DELETE_FLAG" ]; then
-    bash $SCRIPTS_DIR/cleanup_branch.sh "$BRANCH_BASE" "$BRANCH_NAME" --delete
-    echo "✅ Branche locale supprimée"
-else
-    RESULT=$(bash $SCRIPTS_DIR/cleanup_branch.sh "$BRANCH_BASE" "$BRANCH_NAME")
-    # Si needs_user_input: true
-    # Utiliser AskUserQuestion pour confirmer suppression
-fi
+python3 $SCRIPTS_DIR/assign_project.py $PR_NUMBER
 ```
 
-Marquer todo #9 `completed`.
+Si needs_user_input: true → utiliser AskUserQuestion avec projets disponibles
 
-### Étape 12: Rapport Final
+- Marquer todo #7 completed (même si échec, non bloquant)
 
-```yaml
-task: "Pull Request créée avec succès"
-status: "completed"
+### 11. Review (si pas --no-review)
 
-details:
-  pr_number: $PR_NUMBER
-  pr_title: "$PR_TITLE"
-  pr_url: "[URL récupérée via gh pr view]"
-  branch_source: $BRANCH_NAME
-  branch_base: $BRANCH_BASE
-  milestone: $MILESTONE
-  project: $PROJECT_NAME
+- Marquer todo #8 in_progress
 
-stats:
-  files_changed: [VALUE]
-  additions: [VALUE]
-  deletions: [VALUE]
-
-qa_status: "[PASSÉE/IGNORÉE/ÉCHEC]"
-review_status: "[COMPLÉTÉE/IGNORÉE]"
-branch_cleanup: "[SUPPRIMÉE/CONSERVÉE]"
-
-timing:
-  start: "[TIMESTAMP_START]"
-  end: "[TIMESTAMP_END via date]"
-  duration: "[DURÉE_CALCULÉE]"
-```
-
-Calculer durée:
+EXÉCUTER :
 ```bash
-END_TIME=$(date +%s)
-DURATION=$((END_TIME - START_TIME))
-
-# Formater durée
-if [ $DURATION -lt 60 ]; then
-    DURATION_STR="${DURATION}s"
-elif [ $DURATION -lt 3600 ]; then
-    MINUTES=$((DURATION / 60))
-    SECONDS=$((DURATION % 60))
-    DURATION_STR="${MINUTES}m ${SECONDS}s"
-else
-    HOURS=$((DURATION / 3600))
-    MINUTES=$(((DURATION % 3600) / 60))
-    SECONDS=$((DURATION % 60))
-    DURATION_STR="${HOURS}h ${MINUTES}m ${SECONDS}s"
-fi
-
-echo "⏱️ Durée: $DURATION_STR"
+bash $SCRIPTS_DIR/auto_review.sh $PR_NUMBER
 ```
 
-## Error Handling
+- Marquer todo #8 completed
 
-- Template PR absent → ARRÊT immédiat (exit 1)
-- QA échec → ARRÊT immédiat (exit 1)
-- Branche invalide → ARRÊT immédiat (exit 1)
-- Push échec → ARRÊT immédiat (exit 1)
-- Milestone/Projet échec → WARNING (non bloquant)
+### 12. Nettoyage
 
-## Notes
+- Marquer todo #9 in_progress
 
-- Tous les scripts sont dans `./scripts/` relatif au SKILL.md
-- Utiliser `bash` pour les scripts .sh
-- Utiliser `python3` pour les scripts .py
-- Parser JSON via `jq` ou équivalent
-- Marquer CHAQUE todo completed immédiatement après succès
+EXÉCUTER :
+```bash
+bash $SCRIPTS_DIR/cleanup_branch.sh "$BRANCH_BASE" "$BRANCH_NAME" $DELETE_FLAG
+```
+
+Si needs_user_input: true → utiliser AskUserQuestion pour confirmer suppression
+
+- Marquer todo #9 completed
+
+### 13. Rapport final
+
+EXÉCUTER :
+```bash
+bash $SCRIPTS_DIR/final_report.sh $PR_NUMBER $START_TIME
+```
+
+Afficher le rapport YAML généré.

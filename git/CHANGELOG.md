@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.5] - 2025-11-21
+
+### Added
+- Scripts bash modulaires pour workflow PR : `auto_review.sh`, `check_scopes.sh`, `create_pr.sh`, `final_report.sh`
+
+### Changed
+- Documentation SKILL.md renforcée pour imposer utilisation scripts Python avec cache (milestone/projet)
+
 ## [1.4.4] - 2025-11-20
 
 ### Fixed
