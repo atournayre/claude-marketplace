@@ -5,6 +5,19 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.2.0] - 2025-11-25
+
+### Added
+- Skill `elegant-objects` - Vérifie la conformité aux principes Elegant Objects de Yegor Bugayenko
+  - Analyse fichier spécifique ou fichiers modifiés dans la branche
+  - Règles de conception des classes (final, max 4 attributs, pas de getters/setters)
+  - Règles de méthodes (pas de null, corps sans lignes vides)
+  - Règles de style (messages sans point final, fail fast)
+  - Règles de tests (une assertion par test, noms français)
+  - Score de conformité sur 100
+  - Rapport détaillé avec suggestions
+- Commande `/qa:elegant-objects` - Délègue au skill `elegant-objects`
+
 ## [1.1.0] - 2025-11-16
 
 ### Added
