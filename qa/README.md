@@ -119,6 +119,77 @@ Vérification :
 ✅ PHPStan niveau 9 passe
 ```
 
+---
+
+### `/qa:elegant-objects`
+
+**🔹 Skill disponible : `elegant-objects`**
+
+Vérifie la conformité du code PHP aux principes Elegant Objects de Yegor Bugayenko.
+
+**Usage :**
+```bash
+/qa:elegant-objects [fichier.php]
+```
+
+**Arguments :**
+- `fichier.php` (optionnel) : Fichier spécifique à analyser
+- Sans argument : analyse tous les fichiers PHP modifiés dans la branche
+
+**Exemples :**
+```bash
+# Fichier spécifique
+/qa:elegant-objects src/Domain/User.php
+
+# Tous les fichiers modifiés
+/qa:elegant-objects
+```
+
+**Règles vérifiées :**
+
+**Conception des classes :**
+- Classes `final` (sauf abstraites)
+- Max 4 attributs par classe
+- Pas de getters/setters
+- Pas de méthodes statiques
+- Pas de noms en -er (Manager, Handler, Helper...)
+- Constructeur unique avec affectations simples
+
+**Méthodes :**
+- Pas de retour `null`
+- Pas d'argument `null`
+- Corps sans lignes vides ni commentaires inline
+- Séparation CQRS (commandes void / queries avec retour)
+
+**Style :**
+- Messages d'erreur sans point final
+- Fail fast (exceptions au plus tôt)
+
+**Tests :**
+- Une assertion par test
+- Pas de setUp/tearDown
+- Noms français décrivant le comportement
+
+**Rapport :**
+```
+## Score de conformité Elegant Objects
+
+Score global: 75/100
+
+## Violations critiques (bloquantes)
+
+### Classes non-final
+- **Fichier:** src/User.php:12
+- **Problème:** Classe User non déclarée final
+- **Suggestion:** final class User
+
+## Statistiques
+
+- Fichiers analysés: 5
+- Classes analysées: 8
+- Total violations: 12
+```
+
 ## Skills Disponibles
 
 ### `phpstan-resolver`
@@ -143,6 +214,33 @@ Skill spécialisé pour la résolution automatique des erreurs PHPStan. Utilisé
 **Modèle :** opus-4
 
 **Outils :** Task, Bash, Read, Edit, Grep, Glob, TodoWrite
+
+---
+
+### `elegant-objects`
+
+**Localisation :** `skills/elegant-objects/`
+
+Skill spécialisé pour vérifier la conformité aux principes Elegant Objects de Yegor Bugayenko.
+
+**Fonctionnalités :**
+- Analyse fichier spécifique ou fichiers modifiés dans la branche
+- Règles de conception (final, max 4 attributs, pas de getters/setters)
+- Règles de méthodes (pas de null, CQRS)
+- Règles de style (messages, fail fast)
+- Règles de tests (une assertion, noms français)
+- Score de conformité sur 100
+- Rapport détaillé avec suggestions de correction
+
+**Calcul du score :**
+- Violation critique : -10 points
+- Violation majeure : -5 points
+- Recommandation : -2 points
+- Score de base : 100
+
+**Modèle :** sonnet
+
+**Outils :** Bash, Read, Grep, Glob
 
 ## Agent Spécialisé
 

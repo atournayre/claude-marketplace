@@ -1,6 +1,7 @@
 ---
 name: git:release-report
 description: Génère un rapport HTML d'analyse d'impact entre deux branches
+argument-hint: [branch-source, branche-cible, nom-release]
 arguments:
   - name: branche-source
     description: Branche source à analyser (ex release/v27.0.0)
@@ -53,6 +54,22 @@ Variables à extraire des arguments :
 Si `$RELEASE_NAME` n'est pas fourni, utiliser le nom de `$BRANCH_SOURCE` en retirant le préfixe "release/"
 
 ## Workflow
+
+### 0. Vérification des arguments obligatoires
+
+**AVANT TOUTE EXÉCUTION**, vérifier que les arguments obligatoires sont fournis :
+
+1. Si `$BRANCH_SOURCE` est manquant :
+   - Utiliser `AskUserQuestion` pour demander la branche source
+   - Question : "Quelle est la branche source à analyser ?"
+   - Proposer les branches récentes de type `release/*` ou `feature/*`
+
+2. Si `$BRANCH_TARGET` est manquant :
+   - Utiliser `AskUserQuestion` pour demander la branche cible
+   - Question : "Quelle est la branche de référence ?"
+   - Options suggérées : `main`, `develop`, `master`
+
+**Ne pas continuer** tant que les deux arguments obligatoires ne sont pas fournis.
 
 ### 1. Validation des paramètres
 

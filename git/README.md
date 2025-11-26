@@ -144,6 +144,8 @@ Génère un rapport HTML d'analyse d'impact entre deux branches.
 /git:release-report <branche-source> <branche-cible> [nom-release]
 ```
 
+> **Note :** Si les arguments obligatoires ne sont pas fournis, la commande les demandera interactivement.
+
 **Exemples :**
 ```bash
 # Rapport release vs main
@@ -154,6 +156,9 @@ Génère un rapport HTML d'analyse d'impact entre deux branches.
 
 # Feature vs main
 /git:release-report feature/new-module main "Module XYZ"
+
+# Sans arguments (mode interactif)
+/git:release-report
 ```
 
 **Contenu du rapport :**
