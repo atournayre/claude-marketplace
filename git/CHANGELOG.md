@@ -5,6 +5,16 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.9] - 2025-11-26
+
+### Added
+- Skill `release-notes` - Génère des notes de release HTML orientées utilisateurs finaux
+  - Transformation commits techniques → descriptions accessibles
+  - Catégorisation automatique (Nouveautés, Améliorations, Corrections, Sécurité)
+  - Filtrage des commits internes (tests, CI, refactoring)
+  - Modèle sonnet pour qualité rédactionnelle
+- Commande `/git:release-notes` - Délègue au skill `release-notes`
+
 ## [1.4.8] - 2025-11-26
 
 ### Changed

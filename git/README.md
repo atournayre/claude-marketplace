@@ -183,6 +183,56 @@ REPORT_PATH/impact_<nom-release>.html
 
 ---
 
+### `/git:release-notes`
+
+**🔹 Skill disponible : `release-notes`**
+
+Génère des notes de release HTML orientées **utilisateurs finaux** (sans jargon technique).
+
+**Arguments :**
+```bash
+/git:release-notes <branche-source> <branche-cible> [nom-release]
+```
+
+> **Note :** Si les arguments obligatoires ne sont pas fournis, la commande les demandera interactivement.
+
+**Exemples :**
+```bash
+# Notes de release
+/git:release-notes release/v27.0.0 main
+
+# Avec nom personnalisé
+/git:release-notes release/v27.0.0 develop "Version 27"
+```
+
+**Différence avec `/git:release-report` :**
+
+| Aspect | release-report | release-notes |
+|--------|----------------|---------------|
+| Public cible | Équipe technique / PO | Utilisateurs finaux |
+| Langage | Technique (KPI, stats) | Simple, accessible |
+| Contenu | Fichiers, lignes, % | Nouveautés, corrections |
+| Focus | Impact code | Bénéfice utilisateur |
+
+**Catégories :**
+- **Nouveautés** - Nouvelles fonctionnalités
+- **Améliorations** - Optimisations UX/performance
+- **Corrections** - Bugs résolus
+- **Sécurité** - Si applicable
+
+**Sortie :**
+```
+REPORT_PATH/release_notes_<nom-release>.html
+```
+
+**Format :**
+- HTML responsive (mobile-friendly)
+- Design moderne et accessible
+- Peut être envoyé par email
+- Aucune info technique sensible
+
+---
+
 ### `/git:pr`
 
 Crée une Pull Request optimisée avec workflow structuré.
@@ -239,6 +289,31 @@ Crée une Pull Request optimisée avec workflow structuré.
 
 🤖 Generated with Claude Code
 ```
+
+## Skills Disponibles
+
+### `release-notes`
+
+**Localisation :** `skills/release-notes/`
+
+Skill spécialisé pour générer des notes de release orientées utilisateurs finaux.
+
+**Fonctionnalités :**
+- Transformation commits techniques → descriptions accessibles
+- Catégorisation automatique (Nouveautés, Améliorations, Corrections, Sécurité)
+- Filtrage des commits internes (tests, CI, refactoring)
+- Génération HTML responsive avec CSS inline
+- Demande interactive des arguments manquants
+
+**Règles de rédaction :**
+- Zéro jargon technique
+- Bénéfice utilisateur en premier
+- Ton positif et professionnel
+- Phrases courtes (1-2 max)
+
+**Modèle :** sonnet
+
+**Outils :** Bash, Read, Write, Grep, Glob, AskUserQuestion
 
 ## Workflow Complet
 
