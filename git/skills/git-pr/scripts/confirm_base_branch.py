@@ -30,8 +30,8 @@ def get_remote_branches():
             # Ignorer HEAD
             if 'HEAD' in branch:
                 continue
-            # Filtrer develop/main/master/release/*
-            if branch in ['develop', 'main', 'master'] or branch.startswith('release/'):
+            # Filtrer develop/main/master/release/*/hotfix/*
+            if branch in ['develop', 'main', 'master'] or branch.startswith('release/') or branch.startswith('hotfix/'):
                 branches.append(branch)
 
         return sorted(set(branches))
@@ -57,7 +57,7 @@ def main():
     branches = get_remote_branches()
 
     if not branches:
-        print("❌ Aucune branche develop/main/master/release trouvée", file=sys.stderr)
+        print("❌ Aucune branche develop/main/master/release/hotfix trouvée", file=sys.stderr)
         sys.exit(1)
 
     # Si --branch fourni, valider et retourner
