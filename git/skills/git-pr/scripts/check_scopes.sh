@@ -4,6 +4,18 @@
 
 set -e
 
+# Cache pour éviter vérifications répétées (TTL: 1 heure)
+CACHE_FILE="/tmp/.gh_scopes_valid_$(whoami)"
+CACHE_TTL=3600
+
+if [ -f "$CACHE_FILE" ]; then
+    CACHE_AGE=$(($(date +%s) - $(stat -c %Y "$CACHE_FILE" 2>/dev/null || echo 0)))
+    if [ "$CACHE_AGE" -lt "$CACHE_TTL" ]; then
+        echo "✅ Scopes GitHub valides (cache)"
+        exit 0
+    fi
+fi
+
 REQUIRED_SCOPES=(repo read:org project gist)
 
 # Récupérer scopes actuels
@@ -33,4 +45,5 @@ if [ ${#MISSING_SCOPES[@]} -gt 0 ]; then
 fi
 
 echo "✅ Scopes GitHub valides"
+touch "$CACHE_FILE"
 exit 0

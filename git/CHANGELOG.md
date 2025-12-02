@@ -5,6 +5,15 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.11] - 2025-12-02
+
+### Changed
+- Skill `git-pr` : utilisation variable `${CLAUDE_PLUGIN_ROOT}` au lieu de chemins absolus (portabilité)
+- Skill `git-pr` : skip appel `confirm_base_branch.py` quand branche de base fournie en argument
+
+### Fixed
+- Cache scopes GitHub (TTL 1h) pour éviter vérifications répétées à chaque PR
+
 ## [1.4.10] - 2025-11-27
 
 ### Added

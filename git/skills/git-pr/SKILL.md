@@ -14,7 +14,7 @@ model: claude-sonnet-4-5-20250929
 ## Configuration
 
 ```bash
-SCRIPTS_DIR="/home/atournayre/.claude/plugins/marketplaces/atournayre-claude-plugin-marketplace/git/skills/git-pr/scripts"
+SCRIPTS_DIR="${CLAUDE_PLUGIN_ROOT}/git/skills/git-pr/scripts"
 PR_TEMPLATE_PATH=".github/pull_request_template.md"
 ```
 
@@ -140,10 +140,7 @@ bash $SCRIPTS_DIR/analyze_changes.sh
 
 - Marquer todo #4 in_progress
 
-Si BRANCH_BASE fourni :
-```bash
-python3 $SCRIPTS_DIR/confirm_base_branch.py --branch "$BRANCH_BASE"
-```
+Si BRANCH_BASE fourni → utiliser directement, passer à l'étape suivante.
 
 Sinon :
 ```bash
