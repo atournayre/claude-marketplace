@@ -14,7 +14,7 @@ model: claude-sonnet-4-5-20250929
 ## Configuration
 
 ```bash
-SCRIPTS_DIR="${CLAUDE_PLUGIN_ROOT}/git/skills/git-pr/scripts"
+SCRIPTS_DIR="${CLAUDE_PLUGIN_ROOT}/skills/git-pr/scripts"
 PR_TEMPLATE_PATH=".github/pull_request_template.md"
 ```
 
@@ -190,7 +190,12 @@ LIRE le template PR avec Read tool : `$PR_TEMPLATE_PATH`
    - **Tests** : indiquer si tests ajoutés/modifiés
    - **Checklist** : cocher ce qui s'applique
    - **Actions** : cocher ce qui est nécessaire
-3. Sauvegarder dans `/tmp/pr_body_generated.md` avec Write tool
+3. Sauvegarder avec Bash heredoc :
+```bash
+cat > /tmp/pr_body_generated.md << 'EOF'
+[CONTENU GÉNÉRÉ]
+EOF
+```
 
 ### 9. Création PR
 

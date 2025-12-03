@@ -5,6 +5,12 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.12] - 2025-12-03
+
+### Fixed
+- Skill `git-pr` : correction chemin `SCRIPTS_DIR` (suppression `/git/` dupliqué)
+- Skill `git-pr` : utilisation Bash heredoc au lieu de Write tool pour `/tmp/pr_body_generated.md` (évite échec Write + fallback)
+
 ## [1.4.11] - 2025-12-02
 
 ### Changed
