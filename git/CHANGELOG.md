@@ -5,6 +5,11 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.13] - 2025-12-08
+
+### Changed
+- Skill `git-pr` : exécution `/clear` en début de workflow pour nettoyer le contexte
+
 ## [1.4.12] - 2025-12-03
 
 ### Fixed
