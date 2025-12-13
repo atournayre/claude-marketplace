@@ -2,8 +2,8 @@
 name: cs-fixer
 description: >
   Analyse et corrige automatiquement le style de code PHP en utilisant les scripts
-  composer du projet. Détecte automatiquement les scripts CS-Fixer définis dans
-  composer.json et les utilise pour respecter les conventions du projet.
+  du projet (Makefile ou composer.json). Détecte automatiquement les commandes
+  CS-Fixer définies et les utilise pour respecter les conventions du projet.
 allowed-tools: [Bash, Read, Grep, Glob, TodoWrite]
 model: sonnet
 ---
@@ -12,13 +12,17 @@ model: sonnet
 
 ## Principe
 
-Ce skill respecte les conventions du projet en détectant et utilisant les scripts
-composer existants pour PHP-CS-Fixer. Il ne force jamais de règles arbitraires.
+Ce skill respecte les conventions du projet en détectant et utilisant les commandes
+existantes pour PHP-CS-Fixer. Il cherche d'abord dans le Makefile, puis dans
+composer.json. Il ne force jamais de règles arbitraires.
 
 ## Variables
 
 ```bash
 TARGET="$ARGUMENTS"  # Fichier/dossier spécifique ou vide pour tout le projet
+TOOL_TYPE=""         # "make" ou "composer"
+DRY_RUN_CMD=""       # Commande de vérification
+FIX_CMD=""           # Commande de correction
 ```
 
 ## Workflow
@@ -30,84 +34,183 @@ START_TIME=$(date +%s)
 date
 ```
 
-### Étape 1: Détection des Scripts Composer
+### Étape 1: Détection des Commandes du Projet
 
 ```bash
-echo "🔍 Détection des scripts PHP-CS-Fixer du projet..."
+echo "🔍 Détection des commandes CS-Fixer du projet..."
+echo ""
+
+MAKEFILE_FOUND=false
+COMPOSER_FOUND=false
+
+# Vérifier présence Makefile
+if [ -f "Makefile" ] || [ -f "makefile" ]; then
+    MAKEFILE_FOUND=true
+    echo "📄 Makefile détecté"
+fi
 
 # Vérifier présence composer.json
-if [ ! -f "composer.json" ]; then
-    echo "❌ Aucun composer.json trouvé"
-    exit 1
+if [ -f "composer.json" ]; then
+    COMPOSER_FOUND=true
+    echo "📄 composer.json détecté"
 fi
 
-# Lister tous les scripts disponibles
-echo ""
-echo "📋 Scripts composer disponibles:"
-jq -r '.scripts | keys[]' composer.json 2>/dev/null | while read script; do
-    echo "  - $script"
-done
+if [ "$MAKEFILE_FOUND" = false ] && [ "$COMPOSER_FOUND" = false ]; then
+    echo "❌ Aucun Makefile ni composer.json trouvé"
+    exit 1
+fi
 ```
 
-### Étape 2: Identification des Scripts CS-Fixer
+### Étape 2: Recherche dans le Makefile (prioritaire)
 
-Analyser le composer.json pour identifier les scripts liés au code style.
+Si un Makefile existe, chercher les targets liées au code style.
 
-**Patterns de scripts courants à détecter:**
+**Patterns de targets make courants:**
 
-Scripts dry-run (vérification):
-- `cs`, `cs:check`, `cs-check`, `check:cs`
-- `lint`, `lint:php`, `php:lint`
-- `style`, `style:check`
-- `phpcs`, `code-style`
-- `fix:dry`, `cs:dry`
+Vérification (dry-run):
+- `cs`, `cs-check`, `check-cs`, `lint`, `style`, `phpcs`, `code-style`
+- `cs.check`, `lint.php`, `style.check`
 
-Scripts fix (correction):
-- `cs:fix`, `cs-fix`, `fix:cs`, `fix`
-- `style:fix`, `lint:fix`
-- `phpcbf`, `code-style:fix`
+Correction:
+- `cs-fix`, `fix-cs`, `cs.fix`, `fix`, `style-fix`, `phpcbf`
 
 ```bash
-# Extraire les scripts et leur commande
-echo ""
-echo "🔎 Recherche des scripts CS-Fixer..."
-
-# Chercher scripts contenant php-cs-fixer ou phpcs
-CS_SCRIPTS=$(jq -r '.scripts | to_entries[] | select(.value | type == "string" and (contains("php-cs-fixer") or contains("phpcs"))) | .key' composer.json 2>/dev/null)
-
-if [ -z "$CS_SCRIPTS" ]; then
-    # Chercher par nom de script courant
-    CS_SCRIPTS=$(jq -r '.scripts | keys[] | select(test("^(cs|lint|style|phpcs|fix|code-style)"; "i"))' composer.json 2>/dev/null)
-fi
-
-if [ -z "$CS_SCRIPTS" ]; then
-    echo "⚠️ Aucun script CS-Fixer détecté dans composer.json"
+if [ "$MAKEFILE_FOUND" = true ]; then
     echo ""
-    echo "💡 Pour ajouter PHP-CS-Fixer au projet:"
-    echo "   1. composer require --dev friendsofphp/php-cs-fixer"
-    echo "   2. Créer .php-cs-fixer.dist.php avec vos règles"
-    echo "   3. Ajouter dans composer.json:"
-    echo '      "scripts": {'
-    echo '          "cs": "php-cs-fixer fix --dry-run --diff",'
-    echo '          "cs:fix": "php-cs-fixer fix"'
-    echo '      }'
-    exit 1
-fi
+    echo "🔎 Recherche des targets make CS-Fixer..."
 
-echo "✅ Scripts CS-Fixer détectés:"
-echo "$CS_SCRIPTS" | while read script; do
-    CMD=$(jq -r ".scripts[\"$script\"]" composer.json 2>/dev/null)
-    echo "  - $script: $CMD"
-done
+    # Extraire les targets du Makefile
+    MAKE_TARGETS=$(grep -E '^[a-zA-Z_-]+[a-zA-Z0-9_.-]*:' Makefile 2>/dev/null | sed 's/:.*//' | sort -u)
+
+    echo ""
+    echo "📋 Targets make disponibles:"
+    echo "$MAKE_TARGETS" | while read target; do
+        echo "  - $target"
+    done
+
+    # Chercher targets CS-Fixer par nom
+    CS_MAKE_TARGETS=$(echo "$MAKE_TARGETS" | grep -iE '^(cs|lint|style|phpcs|phpcbf|fix|code-style)' || true)
+
+    # Ou chercher targets contenant php-cs-fixer dans leur commande
+    if [ -z "$CS_MAKE_TARGETS" ]; then
+        CS_MAKE_TARGETS=$(grep -B1 'php-cs-fixer\|phpcs\|phpcbf' Makefile 2>/dev/null | grep -E '^[a-zA-Z_-]+:' | sed 's/:.*//' || true)
+    fi
+
+    if [ -n "$CS_MAKE_TARGETS" ]; then
+        TOOL_TYPE="make"
+        echo ""
+        echo "✅ Targets CS-Fixer détectées:"
+        echo "$CS_MAKE_TARGETS" | while read target; do
+            echo "  - make $target"
+        done
+
+        # Sélectionner dry-run target
+        for t in "cs" "cs-check" "check-cs" "lint" "style" "phpcs" "code-style" "cs.check"; do
+            if echo "$CS_MAKE_TARGETS" | grep -qx "$t"; then
+                DRY_RUN_CMD="make $t"
+                break
+            fi
+        done
+
+        # Sélectionner fix target
+        for t in "cs-fix" "fix-cs" "cs.fix" "fix" "style-fix" "phpcbf" "code-style-fix"; do
+            if echo "$CS_MAKE_TARGETS" | grep -qx "$t"; then
+                FIX_CMD="make $t"
+                break
+            fi
+        done
+    fi
+fi
 ```
 
-### Étape 3: TodoWrite Initialisation
+### Étape 3: Recherche dans composer.json (fallback)
+
+Si pas de targets make trouvées, chercher dans composer.json.
+
+```bash
+if [ -z "$TOOL_TYPE" ] && [ "$COMPOSER_FOUND" = true ]; then
+    echo ""
+    echo "🔎 Recherche des scripts composer CS-Fixer..."
+
+    # Lister tous les scripts disponibles
+    COMPOSER_SCRIPTS=$(jq -r '.scripts | keys[]' composer.json 2>/dev/null)
+
+    echo ""
+    echo "📋 Scripts composer disponibles:"
+    echo "$COMPOSER_SCRIPTS" | while read script; do
+        echo "  - $script"
+    done
+
+    # Chercher scripts contenant php-cs-fixer ou phpcs
+    CS_COMPOSER_SCRIPTS=$(jq -r '.scripts | to_entries[] | select(.value | type == "string" and (contains("php-cs-fixer") or contains("phpcs"))) | .key' composer.json 2>/dev/null)
+
+    if [ -z "$CS_COMPOSER_SCRIPTS" ]; then
+        # Chercher par nom de script courant
+        CS_COMPOSER_SCRIPTS=$(echo "$COMPOSER_SCRIPTS" | grep -iE '^(cs|lint|style|phpcs|phpcbf|fix|code-style)' || true)
+    fi
+
+    if [ -n "$CS_COMPOSER_SCRIPTS" ]; then
+        TOOL_TYPE="composer"
+        echo ""
+        echo "✅ Scripts CS-Fixer détectés:"
+        echo "$CS_COMPOSER_SCRIPTS" | while read script; do
+            CMD=$(jq -r ".scripts[\"$script\"]" composer.json 2>/dev/null)
+            echo "  - composer $script: $CMD"
+        done
+
+        # Sélectionner dry-run script
+        for s in "cs" "cs:check" "cs-check" "lint" "style" "phpcs" "code-style"; do
+            if echo "$CS_COMPOSER_SCRIPTS" | grep -qx "$s"; then
+                DRY_RUN_CMD="composer $s"
+                break
+            fi
+        done
+
+        # Sélectionner fix script
+        for s in "cs:fix" "cs-fix" "fix:cs" "fix" "style:fix" "phpcbf" "code-style:fix"; do
+            if echo "$CS_COMPOSER_SCRIPTS" | grep -qx "$s"; then
+                FIX_CMD="composer $s"
+                break
+            fi
+        done
+    fi
+fi
+```
+
+### Étape 4: Aucune Commande Trouvée
+
+```bash
+if [ -z "$TOOL_TYPE" ]; then
+    echo ""
+    echo "⚠️ Aucune commande CS-Fixer détectée"
+    echo ""
+    echo "💡 Pour ajouter PHP-CS-Fixer au projet:"
+    echo ""
+    echo "   Option 1 - Makefile:"
+    echo "   ─────────────────────"
+    echo "   cs:                                        ## Check code style"
+    echo "   	php-cs-fixer fix --dry-run --diff"
+    echo ""
+    echo "   cs-fix:                                    ## Fix code style"
+    echo "   	php-cs-fixer fix"
+    echo ""
+    echo "   Option 2 - composer.json:"
+    echo "   ──────────────────────────"
+    echo '   "scripts": {'
+    echo '       "cs": "php-cs-fixer fix --dry-run --diff",'
+    echo '       "cs:fix": "php-cs-fixer fix"'
+    echo '   }'
+    exit 1
+fi
+```
+
+### Étape 5: TodoWrite Initialisation
 
 ```yaml
 todos:
-  - content: "Détecter scripts CS-Fixer du projet"
+  - content: "Détecter commandes CS-Fixer du projet"
     status: "completed"
-    activeForm: "Détection des scripts CS-Fixer"
+    activeForm: "Détection des commandes CS-Fixer"
   - content: "Exécuter vérification (dry-run)"
     status: "pending"
     activeForm: "Exécution de la vérification"
@@ -119,60 +222,32 @@ todos:
     activeForm: "Affichage du rapport"
 ```
 
-### Étape 4: Sélection du Script
-
-Identifier le script de vérification (dry-run) et le script de correction.
+### Étape 6: Affichage des Commandes Sélectionnées
 
 ```bash
-# Priorité pour dry-run: cs, cs:check, lint, style, phpcs
-DRY_RUN_SCRIPT=""
-for s in "cs" "cs:check" "cs-check" "lint" "style" "phpcs" "code-style"; do
-    if echo "$CS_SCRIPTS" | grep -qx "$s"; then
-        DRY_RUN_SCRIPT="$s"
-        break
-    fi
-done
-
-# Priorité pour fix: cs:fix, fix, cs-fix, style:fix, phpcbf
-FIX_SCRIPT=""
-for s in "cs:fix" "fix" "cs-fix" "fix:cs" "style:fix" "phpcbf" "code-style:fix"; do
-    if echo "$CS_SCRIPTS" | grep -qx "$s"; then
-        FIX_SCRIPT="$s"
-        break
-    fi
-done
-
-# Si pas de dry-run trouvé, utiliser le premier script avec --dry-run si possible
-if [ -z "$DRY_RUN_SCRIPT" ] && [ -n "$FIX_SCRIPT" ]; then
-    echo "ℹ️ Utilisation de 'composer $FIX_SCRIPT -- --dry-run' pour vérification"
-    DRY_RUN_CMD="composer $FIX_SCRIPT -- --dry-run --diff"
-else
-    DRY_RUN_CMD="composer $DRY_RUN_SCRIPT"
-fi
-
-if [ -n "$FIX_SCRIPT" ]; then
-    FIX_CMD="composer $FIX_SCRIPT"
-else
-    echo "⚠️ Aucun script de correction trouvé"
-    echo "   La commande affichera uniquement les violations"
-fi
-
 echo ""
-echo "📌 Scripts sélectionnés:"
-echo "   Vérification: $DRY_RUN_CMD"
-[ -n "$FIX_SCRIPT" ] && echo "   Correction: $FIX_CMD"
+echo "📌 Commandes sélectionnées ($TOOL_TYPE):"
+[ -n "$DRY_RUN_CMD" ] && echo "   Vérification: $DRY_RUN_CMD"
+[ -n "$FIX_CMD" ] && echo "   Correction: $FIX_CMD"
+
+# Si pas de dry-run mais fix disponible, utiliser fix avec --dry-run
+if [ -z "$DRY_RUN_CMD" ] && [ -n "$FIX_CMD" ]; then
+    echo "ℹ️ Utilisation de '$FIX_CMD -- --dry-run' pour vérification"
+    DRY_RUN_CMD="$FIX_CMD -- --dry-run --diff"
+fi
 ```
 
-### Étape 5: Exécution Dry-Run
+### Étape 7: Exécution Dry-Run
 
 Marquer todo #2 `in_progress`.
 
 ```bash
 echo ""
 echo "🔍 Exécution de la vérification..."
+echo "   Commande: $DRY_RUN_CMD"
 echo ""
 
-# Exécuter le script de vérification
+# Exécuter la commande de vérification
 $DRY_RUN_CMD 2>&1 | tee /tmp/cs-fixer-output.txt
 
 # Vérifier le code de retour
@@ -191,10 +266,10 @@ echo "📊 Des violations de style ont été détectées"
 
 Marquer todo #2 `completed`.
 
-### Étape 6: Demande de Confirmation
+### Étape 8: Demande de Confirmation
 
 ```bash
-if [ -n "$FIX_SCRIPT" ]; then
+if [ -n "$FIX_CMD" ]; then
     echo ""
     echo "❓ Voulez-vous appliquer les corrections automatiquement?"
     echo "   Commande: $FIX_CMD"
@@ -202,26 +277,26 @@ if [ -n "$FIX_SCRIPT" ]; then
     echo "   Répondez 'oui' pour continuer ou 'non' pour annuler"
 else
     echo ""
-    echo "ℹ️ Aucun script de correction disponible"
-    echo "   Corrigez manuellement ou ajoutez un script 'cs:fix' dans composer.json"
+    echo "ℹ️ Aucune commande de correction disponible"
+    echo "   Ajoutez une target 'cs-fix' dans Makefile ou 'cs:fix' dans composer.json"
 fi
 ```
 
 **Note:** L'assistant doit demander confirmation à l'utilisateur avant de continuer.
-Si l'utilisateur refuse ou si pas de script fix, afficher le rapport et terminer.
+Si l'utilisateur refuse ou si pas de commande fix, afficher le rapport et terminer.
 
-### Étape 7: Application des Corrections
+### Étape 9: Application des Corrections
 
 Marquer todo #3 `in_progress`.
 
 ```bash
-if [ -n "$FIX_SCRIPT" ]; then
+if [ -n "$FIX_CMD" ]; then
     echo ""
     echo "🔧 Application des corrections..."
     echo "   Commande: $FIX_CMD"
     echo ""
 
-    # Exécuter le script de correction
+    # Exécuter la commande de correction
     $FIX_CMD 2>&1 | tee /tmp/cs-fixer-fix-output.txt
 
     EXIT_CODE=${PIPESTATUS[0]}
@@ -238,7 +313,7 @@ fi
 
 Marquer todo #3 `completed`.
 
-### Étape 8: Rapport Final
+### Étape 10: Rapport Final
 
 Marquer todo #4 `in_progress`.
 
@@ -264,12 +339,13 @@ echo "════════════════════════�
 echo "📋 Résumé PHP-CS-Fixer"
 echo "═══════════════════════════════════════════════"
 echo ""
-echo "   Script vérification: $DRY_RUN_CMD"
-[ -n "$FIX_SCRIPT" ] && echo "   Script correction: $FIX_CMD"
+echo "   Outil: $TOOL_TYPE"
+echo "   Vérification: $DRY_RUN_CMD"
+[ -n "$FIX_CMD" ] && echo "   Correction: $FIX_CMD"
 echo "   Durée: $DURATION_STR"
 echo ""
 
-if [ -n "$FIX_SCRIPT" ]; then
+if [ -n "$FIX_CMD" ]; then
     echo "💡 Conseil: Vérifiez les modifications avec 'git diff'"
     echo "   Puis committez avec: /git:commit \"style: apply PHP-CS-Fixer corrections\""
 fi
@@ -278,11 +354,12 @@ fi
 Marquer todo #4 `completed`.
 
 ```yaml
-task: "Correction de style PHP avec scripts composer"
+task: "Correction de style PHP"
 status: "terminé"
 details:
-  dry_run_script: "$DRY_RUN_CMD"
-  fix_script: "$FIX_CMD"
+  tool_type: "$TOOL_TYPE"
+  dry_run_cmd: "$DRY_RUN_CMD"
+  fix_cmd: "$FIX_CMD"
   execution_time: "$DURATION_STR"
 next_steps:
   - "Vérifier les modifications avec git diff"
@@ -290,36 +367,28 @@ next_steps:
   - "Committer les corrections de style"
 ```
 
-## Scripts Composer Courants
+## Exemples de Configuration
 
-### Patterns de nommage fréquents
+### Makefile
 
-**Vérification (dry-run):**
-```json
-{
-    "scripts": {
-        "cs": "php-cs-fixer fix --dry-run --diff",
-        "cs:check": "php-cs-fixer fix --dry-run --diff",
-        "lint": "php-cs-fixer fix --dry-run",
-        "phpcs": "phpcs --standard=PSR12 src/",
-        "style": "php-cs-fixer fix --dry-run --diff --verbose"
-    }
-}
+```makefile
+.PHONY: cs cs-fix
+
+cs:                                         ## Check code style
+	php-cs-fixer fix --dry-run --diff
+
+cs-fix:                                     ## Fix code style
+	php-cs-fixer fix
+
+# Ou avec phpcs/phpcbf
+lint:                                       ## Check code style (phpcs)
+	phpcs --standard=PSR12 src/
+
+fix:                                        ## Fix code style (phpcbf)
+	phpcbf --standard=PSR12 src/
 ```
 
-**Correction:**
-```json
-{
-    "scripts": {
-        "cs:fix": "php-cs-fixer fix",
-        "fix": "php-cs-fixer fix",
-        "phpcbf": "phpcbf --standard=PSR12 src/",
-        "style:fix": "php-cs-fixer fix --diff"
-    }
-}
-```
-
-### Configuration complète recommandée
+### composer.json
 
 ```json
 {
@@ -334,19 +403,35 @@ next_steps:
 }
 ```
 
+## Ordre de Priorité
+
+1. **Makefile** (prioritaire) - Si un Makefile existe avec des targets CS-Fixer
+2. **composer.json** (fallback) - Si pas de Makefile ou pas de targets trouvées
+
+## Patterns Détectés
+
+### Targets Make
+- Vérification: `cs`, `cs-check`, `check-cs`, `lint`, `style`, `phpcs`, `code-style`
+- Correction: `cs-fix`, `fix-cs`, `fix`, `style-fix`, `phpcbf`, `code-style-fix`
+
+### Scripts Composer
+- Vérification: `cs`, `cs:check`, `cs-check`, `lint`, `style`, `phpcs`, `code-style`
+- Correction: `cs:fix`, `cs-fix`, `fix:cs`, `fix`, `style:fix`, `phpcbf`, `code-style:fix`
+
 ## Error Handling
 
-- composer.json absent → ARRÊT avec message
-- Aucun script CS-Fixer → ARRÊT avec instructions d'installation
-- Script dry-run absent → Utilise script fix avec --dry-run
-- Script fix absent → Affiche violations sans correction
+- Ni Makefile ni composer.json → ARRÊT avec message
+- Aucune commande CS-Fixer → ARRÊT avec instructions d'installation
+- Commande dry-run absente → Utilise commande fix avec --dry-run
+- Commande fix absente → Affiche violations sans correction
 - Erreur d'exécution → Affiche sortie complète
 
 ## Notes
 
-- Respecte toujours les conventions du projet via composer.json
+- Respecte toujours les conventions du projet
+- Priorité au Makefile sur composer.json
 - Ne force jamais de règles arbitraires
-- Détecte automatiquement les scripts existants
+- Détecte automatiquement les commandes existantes
 - Demande confirmation avant modification des fichiers
 - Compatible avec php-cs-fixer et phpcs/phpcbf
 - Marquer CHAQUE todo completed immédiatement après succès

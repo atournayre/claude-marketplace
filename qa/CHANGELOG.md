@@ -8,15 +8,15 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [1.3.0] - 2025-12-13
 
 ### Added
-- Skill `cs-fixer` - Analyse et correction du style de code PHP via scripts composer
-  - Détection automatique des scripts CS-Fixer dans composer.json
+- Skill `cs-fixer` - Analyse et correction du style de code PHP via commandes projet
+  - Détection automatique des targets Makefile (prioritaire) et scripts composer.json
   - Respect des conventions du projet (ne force jamais de règles arbitraires)
-  - Support des patterns courants (cs, cs:fix, lint, style, phpcs, phpcbf)
+  - Support des patterns courants (cs, cs-fix, lint, style, phpcs, phpcbf)
   - Demande de confirmation avant correction
   - Compatible php-cs-fixer et phpcs/phpcbf
 - Commande `/qa:cs-fixer` - Délègue au skill `cs-fixer`
-  - Utilise les scripts composer du projet
-  - Guide d'installation si aucun script détecté
+  - Utilise les commandes make ou composer du projet
+  - Guide d'installation si aucune commande détectée
 
 ## [1.2.0] - 2025-11-25
 
