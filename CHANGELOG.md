@@ -7,6 +7,20 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+### Skills Added
+- **cs-fixer** (`qa` v1.3.0) - Skill spécialisé correction style code PHP avec PHP-CS-Fixer
+  - Analyse dry-run avant modification des fichiers
+  - Support des règles @Symfony, @PSR12, @PhpCsFixer
+  - Demande de confirmation avant correction
+  - Rapport détaillé des règles appliquées
+  - Statistiques des règles les plus utilisées
+  - Support configurations personnalisées (.php-cs-fixer.dist.php)
+
+### Commands Added
+- **qa** v1.3.0 - `/qa:cs-fixer` - Analyse et corrige le style de code PHP
+  - Cible fichier/dossier spécifique ou tout le projet
+  - Génère rapport avec fichiers modifiés et règles appliquées
+
 ## [2025.11.16] - 2025-11-16
 
 ### Skills Added

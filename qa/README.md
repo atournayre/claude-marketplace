@@ -10,6 +10,97 @@ Quality assurance : PHPStan, tests, linters.
 
 ## Commandes
 
+### `/qa:cs-fixer`
+
+**🔹 Skill disponible : `cs-fixer`**
+
+Analyse et corrige automatiquement le style de code PHP avec PHP-CS-Fixer.
+
+**Usage :**
+```bash
+# Analyser tout le projet
+/qa:cs-fixer
+
+# Analyser un fichier ou dossier spécifique
+/qa:cs-fixer src/Domain/
+```
+
+**Workflow :**
+1. Vérifie l'environnement (PHP-CS-Fixer installé, config présente)
+2. Exécute dry-run pour lister les violations
+3. Demande confirmation avant modification
+4. Applique les corrections automatiques
+5. Génère rapport détaillé des règles appliquées
+
+**Règles supportées :**
+- `@Symfony` - Règles officielles Symfony (par défaut)
+- `@PSR12` - Standard PSR-12
+- `@PhpCsFixer` - Règles supplémentaires PHP-CS-Fixer
+
+**Types de corrections :**
+
+**Imports :**
+```php
+// Avant
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
+
+// Après (triés alphabétiquement)
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+```
+
+**Syntaxe array :**
+```php
+// Avant
+$data = array('key' => 'value');
+
+// Après
+$data = ['key' => 'value'];
+```
+
+**Espacement :**
+```php
+// Avant
+function test($a,$b){return $a+$b;}
+
+// Après
+function test($a, $b)
+{
+    return $a + $b;
+}
+```
+
+**Rapport :**
+```
+📊 Rapport des corrections:
+
+📝 src/Entity/User.php
+   Règles appliquées: ordered_imports, array_syntax, trailing_comma_in_multiline
+
+📝 src/Service/UserService.php
+   Règles appliquées: single_quote, no_unused_imports
+
+📈 Règles les plus appliquées:
+  - ordered_imports: 15 fois
+  - trailing_comma_in_multiline: 12 fois
+  - no_unused_imports: 8 fois
+
+═══════════════════════════════════════════════
+📋 Résumé PHP-CS-Fixer
+═══════════════════════════════════════════════
+
+   Fichiers analysés: 45
+   Fichiers corrigés: 12
+   Durée: 3s
+
+💡 Conseil: Vérifiez les modifications avec 'git diff'
+```
+
+---
+
 ### `/qa:phpstan`
 
 **🔹 Skill disponible : `phpstan-resolver`**
@@ -192,6 +283,30 @@ Score global: 75/100
 
 ## Skills Disponibles
 
+### `cs-fixer`
+
+**Localisation :** `skills/cs-fixer/`
+
+Skill spécialisé pour l'analyse et la correction automatique du style de code PHP avec PHP-CS-Fixer.
+
+**Fonctionnalités :**
+- Analyse dry-run avant modification
+- Support des règles @Symfony, @PSR12, @PhpCsFixer
+- Demande de confirmation avant correction
+- Rapport détaillé des règles appliquées
+- Statistiques des règles les plus utilisées
+- Support des configurations personnalisées
+
+**Configuration :**
+- `CS_FIXER_BIN`: ./vendor/bin/php-cs-fixer
+- `CS_FIXER_CONFIG`: .php-cs-fixer.dist.php ou .php-cs-fixer.php
+
+**Modèle :** sonnet
+
+**Outils :** Bash, Read, Grep, Glob, TodoWrite
+
+---
+
 ### `phpstan-resolver`
 
 **Localisation :** `skills/phpstan-resolver/`
@@ -260,6 +375,37 @@ Agent proactif qui :
 - Glob
 - Bash (phpstan)
 
+## Configuration PHP-CS-Fixer
+
+`.php-cs-fixer.dist.php` recommandé :
+```php
+<?php
+
+$finder = (new PhpCsFixer\Finder())
+    ->in(__DIR__)
+    ->exclude('var')
+    ->exclude('vendor')
+    ->exclude('node_modules')
+;
+
+return (new PhpCsFixer\Config())
+    ->setRules([
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'declare_strict_types' => true,
+        'ordered_imports' => ['sort_algorithm' => 'alpha'],
+        'no_unused_imports' => true,
+        'trailing_comma_in_multiline' => true,
+        'phpdoc_order' => true,
+        'strict_param' => true,
+        'strict_comparison' => true,
+    ])
+    ->setFinder($finder)
+    ->setRiskyAllowed(true)
+;
+```
+
 ## Configuration PHPStan
 
 `phpstan.neon` recommandé :
@@ -313,7 +459,6 @@ vendor/bin/phpstan analyse
 ## Extensions Futures
 
 - PHPUnit coverage
-- PHP-CS-Fixer
 - Psalm integration
 - Rector suggestions
 

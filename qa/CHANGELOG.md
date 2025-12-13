@@ -5,6 +5,20 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.3.0] - 2025-12-13
+
+### Added
+- Skill `cs-fixer` - Analyse et correction automatique du style de code PHP avec PHP-CS-Fixer
+  - Analyse dry-run avant modification des fichiers
+  - Support des règles @Symfony, @PSR12, @PhpCsFixer
+  - Demande de confirmation avant correction
+  - Rapport détaillé des règles appliquées
+  - Statistiques des règles les plus utilisées
+  - Support des configurations personnalisées (.php-cs-fixer.dist.php)
+- Commande `/qa:cs-fixer` - Délègue au skill `cs-fixer`
+  - Cible fichier/dossier spécifique ou tout le projet
+  - Génère rapport avec fichiers modifiés et règles appliquées
+
 ## [1.2.0] - 2025-11-25
 
 ### Added
