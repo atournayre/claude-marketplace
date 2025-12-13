@@ -8,16 +8,15 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [1.3.0] - 2025-12-13
 
 ### Added
-- Skill `cs-fixer` - Analyse et correction automatique du style de code PHP avec PHP-CS-Fixer
-  - Analyse dry-run avant modification des fichiers
-  - Support des règles @Symfony, @PSR12, @PhpCsFixer
+- Skill `cs-fixer` - Analyse et correction du style de code PHP via scripts composer
+  - Détection automatique des scripts CS-Fixer dans composer.json
+  - Respect des conventions du projet (ne force jamais de règles arbitraires)
+  - Support des patterns courants (cs, cs:fix, lint, style, phpcs, phpcbf)
   - Demande de confirmation avant correction
-  - Rapport détaillé des règles appliquées
-  - Statistiques des règles les plus utilisées
-  - Support des configurations personnalisées (.php-cs-fixer.dist.php)
+  - Compatible php-cs-fixer et phpcs/phpcbf
 - Commande `/qa:cs-fixer` - Délègue au skill `cs-fixer`
-  - Cible fichier/dossier spécifique ou tout le projet
-  - Génère rapport avec fichiers modifiés et règles appliquées
+  - Utilise les scripts composer du projet
+  - Guide d'installation si aucun script détecté
 
 ## [1.2.0] - 2025-11-25
 

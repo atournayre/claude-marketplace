@@ -14,89 +14,89 @@ Quality assurance : PHPStan, tests, linters.
 
 **🔹 Skill disponible : `cs-fixer`**
 
-Analyse et corrige automatiquement le style de code PHP avec PHP-CS-Fixer.
+Analyse et corrige automatiquement le style de code PHP en utilisant les **scripts composer du projet**.
+
+**Principe :**
+La commande détecte et utilise les scripts CS-Fixer définis dans votre `composer.json`. Elle ne force jamais de règles arbitraires et respecte les conventions de votre projet.
 
 **Usage :**
 ```bash
-# Analyser tout le projet
 /qa:cs-fixer
-
-# Analyser un fichier ou dossier spécifique
-/qa:cs-fixer src/Domain/
 ```
 
 **Workflow :**
-1. Vérifie l'environnement (PHP-CS-Fixer installé, config présente)
-2. Exécute dry-run pour lister les violations
+1. Détecte les scripts CS-Fixer dans `composer.json`
+2. Exécute le script de vérification (dry-run)
 3. Demande confirmation avant modification
-4. Applique les corrections automatiques
-5. Génère rapport détaillé des règles appliquées
+4. Exécute le script de correction
+5. Affiche le rapport
 
-**Règles supportées :**
-- `@Symfony` - Règles officielles Symfony (par défaut)
-- `@PSR12` - Standard PSR-12
-- `@PhpCsFixer` - Règles supplémentaires PHP-CS-Fixer
+**Scripts détectés automatiquement :**
 
-**Types de corrections :**
+*Vérification (dry-run) :*
+- `cs`, `cs:check`, `cs-check`, `lint`, `style`, `phpcs`, `code-style`
 
-**Imports :**
-```php
-// Avant
-use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\UserRepository;
+*Correction :*
+- `cs:fix`, `fix`, `cs-fix`, `style:fix`, `phpcbf`, `code-style:fix`
 
-// Après (triés alphabétiquement)
-use App\Entity\User;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-```
-
-**Syntaxe array :**
-```php
-// Avant
-$data = array('key' => 'value');
-
-// Après
-$data = ['key' => 'value'];
-```
-
-**Espacement :**
-```php
-// Avant
-function test($a,$b){return $a+$b;}
-
-// Après
-function test($a, $b)
+**Exemple de configuration composer.json :**
+```json
 {
-    return $a + $b;
+    "scripts": {
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "php-cs-fixer fix --diff"
+    }
 }
 ```
 
 **Rapport :**
 ```
-📊 Rapport des corrections:
+🔍 Détection des scripts PHP-CS-Fixer du projet...
 
-📝 src/Entity/User.php
-   Règles appliquées: ordered_imports, array_syntax, trailing_comma_in_multiline
+📋 Scripts composer disponibles:
+  - cs
+  - cs:fix
+  - test
+  - phpstan
 
-📝 src/Service/UserService.php
-   Règles appliquées: single_quote, no_unused_imports
+✅ Scripts CS-Fixer détectés:
+  - cs: php-cs-fixer fix --dry-run --diff
+  - cs:fix: php-cs-fixer fix --diff
 
-📈 Règles les plus appliquées:
-  - ordered_imports: 15 fois
-  - trailing_comma_in_multiline: 12 fois
-  - no_unused_imports: 8 fois
+📌 Scripts sélectionnés:
+   Vérification: composer cs
+   Correction: composer cs:fix
+
+🔍 Exécution de la vérification...
+
+[Sortie de php-cs-fixer]
+
+❓ Voulez-vous appliquer les corrections automatiquement?
+   Commande: composer cs:fix
 
 ═══════════════════════════════════════════════
 📋 Résumé PHP-CS-Fixer
 ═══════════════════════════════════════════════
 
-   Fichiers analysés: 45
-   Fichiers corrigés: 12
+   Script vérification: composer cs
+   Script correction: composer cs:fix
    Durée: 3s
 
 💡 Conseil: Vérifiez les modifications avec 'git diff'
+```
+
+**Si aucun script n'est détecté :**
+```
+⚠️ Aucun script CS-Fixer détecté dans composer.json
+
+💡 Pour ajouter PHP-CS-Fixer au projet:
+   1. composer require --dev friendsofphp/php-cs-fixer
+   2. Créer .php-cs-fixer.dist.php avec vos règles
+   3. Ajouter dans composer.json:
+      "scripts": {
+          "cs": "php-cs-fixer fix --dry-run --diff",
+          "cs:fix": "php-cs-fixer fix"
+      }
 ```
 
 ---
@@ -287,19 +287,21 @@ Score global: 75/100
 
 **Localisation :** `skills/cs-fixer/`
 
-Skill spécialisé pour l'analyse et la correction automatique du style de code PHP avec PHP-CS-Fixer.
+Skill spécialisé pour l'analyse et la correction du style de code PHP en utilisant les scripts composer du projet.
+
+**Principe :**
+Respecte les conventions du projet en détectant et utilisant les scripts existants. Ne force jamais de règles arbitraires.
 
 **Fonctionnalités :**
-- Analyse dry-run avant modification
-- Support des règles @Symfony, @PSR12, @PhpCsFixer
-- Demande de confirmation avant correction
-- Rapport détaillé des règles appliquées
-- Statistiques des règles les plus utilisées
-- Support des configurations personnalisées
+- Détection automatique des scripts CS-Fixer dans composer.json
+- Support des patterns courants (cs, cs:fix, lint, style, phpcs, phpcbf)
+- Exécution du script de vérification puis de correction
+- Demande de confirmation avant modification
+- Compatible php-cs-fixer et phpcs/phpcbf
 
-**Configuration :**
-- `CS_FIXER_BIN`: ./vendor/bin/php-cs-fixer
-- `CS_FIXER_CONFIG`: .php-cs-fixer.dist.php ou .php-cs-fixer.php
+**Scripts détectés :**
+- Vérification: `cs`, `cs:check`, `lint`, `style`, `phpcs`, `code-style`
+- Correction: `cs:fix`, `fix`, `style:fix`, `phpcbf`, `code-style:fix`
 
 **Modèle :** sonnet
 
@@ -377,7 +379,23 @@ Agent proactif qui :
 
 ## Configuration PHP-CS-Fixer
 
-`.php-cs-fixer.dist.php` recommandé :
+La commande `/qa:cs-fixer` utilise les scripts définis dans votre `composer.json`.
+
+**Configuration composer.json recommandée :**
+```json
+{
+    "scripts": {
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "php-cs-fixer fix --diff",
+        "qa": [
+            "@cs",
+            "@phpstan"
+        ]
+    }
+}
+```
+
+**Exemple `.php-cs-fixer.dist.php` :**
 ```php
 <?php
 
@@ -391,18 +409,11 @@ $finder = (new PhpCsFixer\Finder())
 return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
-        '@Symfony:risky' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'declare_strict_types' => true,
         'ordered_imports' => ['sort_algorithm' => 'alpha'],
         'no_unused_imports' => true,
-        'trailing_comma_in_multiline' => true,
-        'phpdoc_order' => true,
-        'strict_param' => true,
-        'strict_comparison' => true,
     ])
     ->setFinder($finder)
-    ->setRiskyAllowed(true)
 ;
 ```
 

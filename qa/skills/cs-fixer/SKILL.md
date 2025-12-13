@@ -1,20 +1,23 @@
 ---
 name: cs-fixer
 description: >
-  Analyse et corrige automatiquement le style de code PHP avec PHP-CS-Fixer.
-  Détecte les violations de style, applique les corrections automatiques,
-  et génère un rapport détaillé des modifications effectuées.
+  Analyse et corrige automatiquement le style de code PHP en utilisant les scripts
+  composer du projet. Détecte automatiquement les scripts CS-Fixer définis dans
+  composer.json et les utilise pour respecter les conventions du projet.
 allowed-tools: [Bash, Read, Grep, Glob, TodoWrite]
 model: sonnet
 ---
 
 # PHP-CS-Fixer Skill
 
+## Principe
+
+Ce skill respecte les conventions du projet en détectant et utilisant les scripts
+composer existants pour PHP-CS-Fixer. Il ne force jamais de règles arbitraires.
+
 ## Variables
 
 ```bash
-CS_FIXER_BIN="./vendor/bin/php-cs-fixer"
-CS_FIXER_CONFIG=".php-cs-fixer.dist.php"  # ou .php-cs-fixer.php
 TARGET="$ARGUMENTS"  # Fichier/dossier spécifique ou vide pour tout le projet
 ```
 
@@ -27,154 +30,217 @@ START_TIME=$(date +%s)
 date
 ```
 
-### Étape 1: Vérification Environnement
+### Étape 1: Détection des Scripts Composer
 
 ```bash
-# Vérifier PHP-CS-Fixer installé
-if [ ! -f "$CS_FIXER_BIN" ]; then
-    # Essayer chemin global
-    if command -v php-cs-fixer &> /dev/null; then
-        CS_FIXER_BIN="php-cs-fixer"
-    else
-        echo "❌ PHP-CS-Fixer non trouvé"
-        echo "   Installation: composer require --dev friendsofphp/php-cs-fixer"
-        exit 1
-    fi
+echo "🔍 Détection des scripts PHP-CS-Fixer du projet..."
+
+# Vérifier présence composer.json
+if [ ! -f "composer.json" ]; then
+    echo "❌ Aucun composer.json trouvé"
+    exit 1
 fi
 
-# Vérifier config PHP-CS-Fixer
-if [ ! -f "$CS_FIXER_CONFIG" ] && [ ! -f ".php-cs-fixer.php" ]; then
-    echo "⚠️ Configuration PHP-CS-Fixer non trouvée"
-    echo "   Utilisation des règles par défaut (@Symfony)"
-    CS_FIXER_CONFIG=""
-else
-    # Utiliser .php-cs-fixer.php si .php-cs-fixer.dist.php absent
-    if [ ! -f "$CS_FIXER_CONFIG" ]; then
-        CS_FIXER_CONFIG=".php-cs-fixer.php"
-    fi
-    echo "✅ Configuration: $CS_FIXER_CONFIG"
-fi
-
-echo "✅ Environnement PHP-CS-Fixer valide"
+# Lister tous les scripts disponibles
+echo ""
+echo "📋 Scripts composer disponibles:"
+jq -r '.scripts | keys[]' composer.json 2>/dev/null | while read script; do
+    echo "  - $script"
+done
 ```
 
-### Étape 2: TodoWrite Initialisation
+### Étape 2: Identification des Scripts CS-Fixer
+
+Analyser le composer.json pour identifier les scripts liés au code style.
+
+**Patterns de scripts courants à détecter:**
+
+Scripts dry-run (vérification):
+- `cs`, `cs:check`, `cs-check`, `check:cs`
+- `lint`, `lint:php`, `php:lint`
+- `style`, `style:check`
+- `phpcs`, `code-style`
+- `fix:dry`, `cs:dry`
+
+Scripts fix (correction):
+- `cs:fix`, `cs-fix`, `fix:cs`, `fix`
+- `style:fix`, `lint:fix`
+- `phpcbf`, `code-style:fix`
+
+```bash
+# Extraire les scripts et leur commande
+echo ""
+echo "🔎 Recherche des scripts CS-Fixer..."
+
+# Chercher scripts contenant php-cs-fixer ou phpcs
+CS_SCRIPTS=$(jq -r '.scripts | to_entries[] | select(.value | type == "string" and (contains("php-cs-fixer") or contains("phpcs"))) | .key' composer.json 2>/dev/null)
+
+if [ -z "$CS_SCRIPTS" ]; then
+    # Chercher par nom de script courant
+    CS_SCRIPTS=$(jq -r '.scripts | keys[] | select(test("^(cs|lint|style|phpcs|fix|code-style)"; "i"))' composer.json 2>/dev/null)
+fi
+
+if [ -z "$CS_SCRIPTS" ]; then
+    echo "⚠️ Aucun script CS-Fixer détecté dans composer.json"
+    echo ""
+    echo "💡 Pour ajouter PHP-CS-Fixer au projet:"
+    echo "   1. composer require --dev friendsofphp/php-cs-fixer"
+    echo "   2. Créer .php-cs-fixer.dist.php avec vos règles"
+    echo "   3. Ajouter dans composer.json:"
+    echo '      "scripts": {'
+    echo '          "cs": "php-cs-fixer fix --dry-run --diff",'
+    echo '          "cs:fix": "php-cs-fixer fix"'
+    echo '      }'
+    exit 1
+fi
+
+echo "✅ Scripts CS-Fixer détectés:"
+echo "$CS_SCRIPTS" | while read script; do
+    CMD=$(jq -r ".scripts[\"$script\"]" composer.json 2>/dev/null)
+    echo "  - $script: $CMD"
+done
+```
+
+### Étape 3: TodoWrite Initialisation
 
 ```yaml
 todos:
-  - content: "Vérifier environnement PHP-CS-Fixer"
+  - content: "Détecter scripts CS-Fixer du projet"
     status: "completed"
-    activeForm: "Vérification de l'environnement"
-  - content: "Analyser violations de style (dry-run)"
+    activeForm: "Détection des scripts CS-Fixer"
+  - content: "Exécuter vérification (dry-run)"
     status: "pending"
-    activeForm: "Analyse des violations de style"
-  - content: "Appliquer corrections automatiques"
+    activeForm: "Exécution de la vérification"
+  - content: "Appliquer corrections si demandé"
     status: "pending"
     activeForm: "Application des corrections"
-  - content: "Générer rapport des modifications"
+  - content: "Afficher rapport"
     status: "pending"
-    activeForm: "Génération du rapport"
+    activeForm: "Affichage du rapport"
 ```
 
-### Étape 3: Analyse Dry-Run
+### Étape 4: Sélection du Script
+
+Identifier le script de vérification (dry-run) et le script de correction.
+
+```bash
+# Priorité pour dry-run: cs, cs:check, lint, style, phpcs
+DRY_RUN_SCRIPT=""
+for s in "cs" "cs:check" "cs-check" "lint" "style" "phpcs" "code-style"; do
+    if echo "$CS_SCRIPTS" | grep -qx "$s"; then
+        DRY_RUN_SCRIPT="$s"
+        break
+    fi
+done
+
+# Priorité pour fix: cs:fix, fix, cs-fix, style:fix, phpcbf
+FIX_SCRIPT=""
+for s in "cs:fix" "fix" "cs-fix" "fix:cs" "style:fix" "phpcbf" "code-style:fix"; do
+    if echo "$CS_SCRIPTS" | grep -qx "$s"; then
+        FIX_SCRIPT="$s"
+        break
+    fi
+done
+
+# Si pas de dry-run trouvé, utiliser le premier script avec --dry-run si possible
+if [ -z "$DRY_RUN_SCRIPT" ] && [ -n "$FIX_SCRIPT" ]; then
+    echo "ℹ️ Utilisation de 'composer $FIX_SCRIPT -- --dry-run' pour vérification"
+    DRY_RUN_CMD="composer $FIX_SCRIPT -- --dry-run --diff"
+else
+    DRY_RUN_CMD="composer $DRY_RUN_SCRIPT"
+fi
+
+if [ -n "$FIX_SCRIPT" ]; then
+    FIX_CMD="composer $FIX_SCRIPT"
+else
+    echo "⚠️ Aucun script de correction trouvé"
+    echo "   La commande affichera uniquement les violations"
+fi
+
+echo ""
+echo "📌 Scripts sélectionnés:"
+echo "   Vérification: $DRY_RUN_CMD"
+[ -n "$FIX_SCRIPT" ] && echo "   Correction: $FIX_CMD"
+```
+
+### Étape 5: Exécution Dry-Run
 
 Marquer todo #2 `in_progress`.
 
 ```bash
-echo "🔍 Analyse des violations de style..."
+echo ""
+echo "🔍 Exécution de la vérification..."
+echo ""
 
-# Déterminer la cible
-if [ -n "$TARGET" ]; then
-    TARGET_PATH="$TARGET"
-    echo "   Cible: $TARGET_PATH"
-else
-    TARGET_PATH="src"
-    echo "   Cible: $TARGET_PATH (par défaut)"
-fi
+# Exécuter le script de vérification
+$DRY_RUN_CMD 2>&1 | tee /tmp/cs-fixer-output.txt
 
-# Exécuter en mode dry-run pour voir les violations
-if [ -n "$CS_FIXER_CONFIG" ]; then
-    $CS_FIXER_BIN fix "$TARGET_PATH" --config="$CS_FIXER_CONFIG" --dry-run --diff --format=json > /tmp/cs-fixer-dry-run.json 2>&1
-else
-    $CS_FIXER_BIN fix "$TARGET_PATH" --rules=@Symfony --dry-run --diff --format=json > /tmp/cs-fixer-dry-run.json 2>&1
-fi
+# Vérifier le code de retour
+EXIT_CODE=${PIPESTATUS[0]}
 
-# Parser résultat
-TOTAL_FILES=$(jq '.files | length' /tmp/cs-fixer-dry-run.json 2>/dev/null || echo "0")
-
-if [ "$TOTAL_FILES" -eq 0 ]; then
+if [ $EXIT_CODE -eq 0 ]; then
+    echo ""
     echo "✅ Aucune violation de style détectée"
+    echo "   Le code respecte les conventions du projet"
     exit 0
 fi
 
-echo "📊 Fichiers avec violations: $TOTAL_FILES"
-
-# Lister fichiers affectés
 echo ""
-echo "📁 Fichiers à corriger:"
-jq -r '.files[].name' /tmp/cs-fixer-dry-run.json 2>/dev/null | while read file; do
-    echo "  - $file"
-done
+echo "📊 Des violations de style ont été détectées"
 ```
 
 Marquer todo #2 `completed`.
 
-### Étape 4: Demande de Confirmation
+### Étape 6: Demande de Confirmation
 
 ```bash
-echo ""
-echo "❓ Voulez-vous appliquer les corrections automatiquement?"
-echo "   (Les fichiers seront modifiés)"
-echo ""
-echo "   Répondez 'oui' pour continuer ou 'non' pour annuler"
+if [ -n "$FIX_SCRIPT" ]; then
+    echo ""
+    echo "❓ Voulez-vous appliquer les corrections automatiquement?"
+    echo "   Commande: $FIX_CMD"
+    echo ""
+    echo "   Répondez 'oui' pour continuer ou 'non' pour annuler"
+else
+    echo ""
+    echo "ℹ️ Aucun script de correction disponible"
+    echo "   Corrigez manuellement ou ajoutez un script 'cs:fix' dans composer.json"
+fi
 ```
 
 **Note:** L'assistant doit demander confirmation à l'utilisateur avant de continuer.
-Si l'utilisateur refuse, afficher le rapport dry-run et terminer.
+Si l'utilisateur refuse ou si pas de script fix, afficher le rapport et terminer.
 
-### Étape 5: Application des Corrections
+### Étape 7: Application des Corrections
 
 Marquer todo #3 `in_progress`.
 
 ```bash
-echo "🔧 Application des corrections..."
+if [ -n "$FIX_SCRIPT" ]; then
+    echo ""
+    echo "🔧 Application des corrections..."
+    echo "   Commande: $FIX_CMD"
+    echo ""
 
-# Exécuter PHP-CS-Fixer en mode correction
-if [ -n "$CS_FIXER_CONFIG" ]; then
-    $CS_FIXER_BIN fix "$TARGET_PATH" --config="$CS_FIXER_CONFIG" --diff --format=json > /tmp/cs-fixer-fix.json 2>&1
-else
-    $CS_FIXER_BIN fix "$TARGET_PATH" --rules=@Symfony --diff --format=json > /tmp/cs-fixer-fix.json 2>&1
+    # Exécuter le script de correction
+    $FIX_CMD 2>&1 | tee /tmp/cs-fixer-fix-output.txt
+
+    EXIT_CODE=${PIPESTATUS[0]}
+
+    if [ $EXIT_CODE -eq 0 ]; then
+        echo ""
+        echo "✅ Corrections appliquées avec succès"
+    else
+        echo ""
+        echo "⚠️ Corrections appliquées (certaines erreurs peuvent persister)"
+    fi
 fi
-
-# Compter fichiers corrigés
-FIXED_FILES=$(jq '.files | length' /tmp/cs-fixer-fix.json 2>/dev/null || echo "0")
-
-echo "✅ $FIXED_FILES fichier(s) corrigé(s)"
 ```
 
 Marquer todo #3 `completed`.
 
-### Étape 6: Génération du Rapport
+### Étape 8: Rapport Final
 
 Marquer todo #4 `in_progress`.
-
-```bash
-echo ""
-echo "📊 Rapport des corrections:"
-echo ""
-
-# Détailler les modifications par fichier
-jq -r '.files[] | "📝 \(.name)\n   Règles appliquées: \(.appliedFixers | join(", "))"' /tmp/cs-fixer-fix.json 2>/dev/null
-
-# Statistiques des règles
-echo ""
-echo "📈 Règles les plus appliquées:"
-jq -r '[.files[].appliedFixers[]] | group_by(.) | map({rule: .[0], count: length}) | sort_by(-.count) | .[:10][] | "  - \(.rule): \(.count) fois"' /tmp/cs-fixer-fix.json 2>/dev/null
-```
-
-Marquer todo #4 `completed`.
-
-### Étape 7: Rapport Final
 
 ```bash
 END_TIME=$(date +%s)
@@ -198,114 +264,89 @@ echo "════════════════════════�
 echo "📋 Résumé PHP-CS-Fixer"
 echo "═══════════════════════════════════════════════"
 echo ""
-echo "   Fichiers analysés: $(find "$TARGET_PATH" -name '*.php' 2>/dev/null | wc -l)"
-echo "   Fichiers corrigés: $FIXED_FILES"
+echo "   Script vérification: $DRY_RUN_CMD"
+[ -n "$FIX_SCRIPT" ] && echo "   Script correction: $FIX_CMD"
 echo "   Durée: $DURATION_STR"
 echo ""
 
-if [ "$FIXED_FILES" -gt 0 ]; then
+if [ -n "$FIX_SCRIPT" ]; then
     echo "💡 Conseil: Vérifiez les modifications avec 'git diff'"
     echo "   Puis committez avec: /git:commit \"style: apply PHP-CS-Fixer corrections\""
 fi
 ```
 
+Marquer todo #4 `completed`.
+
 ```yaml
-task: "Correction de style PHP avec PHP-CS-Fixer"
+task: "Correction de style PHP avec scripts composer"
 status: "terminé"
 details:
-  files_analyzed: "[Nombre de fichiers PHP]"
-  files_fixed: $FIXED_FILES
+  dry_run_script: "$DRY_RUN_CMD"
+  fix_script: "$FIX_CMD"
   execution_time: "$DURATION_STR"
-  config: "$CS_FIXER_CONFIG"
-rules_applied:
-  - [Liste des règles appliquées]
-files_modified:
-  - [Liste des fichiers modifiés]
 next_steps:
   - "Vérifier les modifications avec git diff"
   - "Exécuter les tests pour valider"
   - "Committer les corrections de style"
 ```
 
-## Règles PHP-CS-Fixer Courantes
+## Scripts Composer Courants
 
-### Règles @Symfony (par défaut)
-- `array_syntax` - Syntaxe array courte `[]`
-- `blank_line_after_namespace` - Ligne vide après namespace
-- `blank_line_after_opening_tag` - Ligne vide après `<?php`
-- `braces` - Position des accolades
-- `class_definition` - Espacement définition classe
-- `concat_space` - Espaces autour de concaténation
-- `declare_strict_types` - Ajout déclaration strict_types
-- `function_declaration` - Espacement déclaration fonction
-- `indentation_type` - Type d'indentation (spaces)
-- `line_ending` - Fin de ligne Unix
-- `lowercase_keywords` - Mots-clés en minuscules
-- `method_argument_space` - Espacement arguments
-- `no_closing_tag` - Pas de `?>` final
-- `no_empty_statement` - Pas de statements vides
-- `no_extra_blank_lines` - Pas de lignes vides superflues
-- `no_trailing_whitespace` - Pas d'espaces en fin de ligne
-- `no_unused_imports` - Pas d'imports non utilisés
-- `ordered_imports` - Imports triés
-- `phpdoc_align` - Alignement PHPDoc
-- `phpdoc_order` - Ordre des annotations PHPDoc
-- `phpdoc_scalar` - Types scalaires PHPDoc
-- `phpdoc_separation` - Séparation PHPDoc
-- `phpdoc_trim` - Trim PHPDoc
-- `single_blank_line_at_eof` - Ligne vide en fin de fichier
-- `single_class_element_per_statement` - Un élément par statement
-- `single_import_per_statement` - Un import par statement
-- `single_line_after_imports` - Ligne après imports
-- `single_quote` - Guillemets simples
-- `trailing_comma_in_multiline` - Virgule finale multiline
-- `trim_array_spaces` - Trim espaces array
-- `visibility_required` - Visibilité requise
-- `whitespace_after_comma_in_array` - Espace après virgule array
+### Patterns de nommage fréquents
 
-## Configuration Recommandée
+**Vérification (dry-run):**
+```json
+{
+    "scripts": {
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs:check": "php-cs-fixer fix --dry-run --diff",
+        "lint": "php-cs-fixer fix --dry-run",
+        "phpcs": "phpcs --standard=PSR12 src/",
+        "style": "php-cs-fixer fix --dry-run --diff --verbose"
+    }
+}
+```
 
-Exemple `.php-cs-fixer.dist.php`:
+**Correction:**
+```json
+{
+    "scripts": {
+        "cs:fix": "php-cs-fixer fix",
+        "fix": "php-cs-fixer fix",
+        "phpcbf": "phpcbf --standard=PSR12 src/",
+        "style:fix": "php-cs-fixer fix --diff"
+    }
+}
+```
 
-```php
-<?php
+### Configuration complète recommandée
 
-$finder = (new PhpCsFixer\Finder())
-    ->in(__DIR__)
-    ->exclude('var')
-    ->exclude('vendor')
-    ->exclude('node_modules')
-;
-
-return (new PhpCsFixer\Config())
-    ->setRules([
-        '@Symfony' => true,
-        '@Symfony:risky' => true,
-        'array_syntax' => ['syntax' => 'short'],
-        'declare_strict_types' => true,
-        'ordered_imports' => ['sort_algorithm' => 'alpha'],
-        'no_unused_imports' => true,
-        'trailing_comma_in_multiline' => true,
-        'phpdoc_order' => true,
-        'strict_param' => true,
-        'strict_comparison' => true,
-    ])
-    ->setFinder($finder)
-    ->setRiskyAllowed(true)
-;
+```json
+{
+    "scripts": {
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "php-cs-fixer fix --diff",
+        "qa": [
+            "@cs",
+            "@phpstan"
+        ]
+    }
+}
 ```
 
 ## Error Handling
 
-- PHP-CS-Fixer non trouvé → ARRÊT avec instructions d'installation
-- Config absente → Utilise règles @Symfony par défaut
-- Erreur d'analyse → Affiche erreur et continue autres fichiers
-- Permissions → Vérifie droits d'écriture avant correction
+- composer.json absent → ARRÊT avec message
+- Aucun script CS-Fixer → ARRÊT avec instructions d'installation
+- Script dry-run absent → Utilise script fix avec --dry-run
+- Script fix absent → Affiche violations sans correction
+- Erreur d'exécution → Affiche sortie complète
 
 ## Notes
 
+- Respecte toujours les conventions du projet via composer.json
+- Ne force jamais de règles arbitraires
+- Détecte automatiquement les scripts existants
 - Demande confirmation avant modification des fichiers
-- Support des règles @Symfony, @PSR12, @PhpCsFixer
-- Compatible avec configurations personnalisées
-- Génère rapport détaillé des règles appliquées
+- Compatible avec php-cs-fixer et phpcs/phpcbf
 - Marquer CHAQUE todo completed immédiatement après succès
