@@ -22,8 +22,6 @@ PR_TEMPLATE_PATH=".github/pull_request_template.md"
 
 ### 1. Initialisation
 
-EXÉCUTER SlashCommand /clear pour nettoyer le contexte.
-
 EXÉCUTER :
 ```bash
 START_TIME=$(date +%s)

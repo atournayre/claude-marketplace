@@ -1,5 +1,5 @@
 ---
-model: claude-sonnet-4-5-20250929
+model: claude-haiku-4-5-20251001
 allowed-tools: Bash
 argument-hint: <source-branch> [issue-number-or-text]
 description: Création de branche Git avec workflow structuré

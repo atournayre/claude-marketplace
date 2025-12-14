@@ -2,7 +2,7 @@
 allowed-tools: [Read, Grep, Glob, Bash]
 description: Interroger la documentation locale d'un framework pour répondre à une question
 argument-hint: <framework-name> [version] <question>
-model: claude-sonnet-4-5-20250929
+model: claude-haiku-4-5-20251001
 ---
 
 # Interrogation Documentation Framework

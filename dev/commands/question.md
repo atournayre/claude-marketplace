@@ -1,5 +1,5 @@
 ---
-model: claude-sonnet-4-5-20250929
+model: claude-haiku-4-5-20251001
 allowed-tools: Bash(git ls-files:*), Read
 description: Répondre aux questions sur la structure du projet et la documentation sans coder
 ---

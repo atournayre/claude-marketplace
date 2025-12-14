@@ -1,5 +1,5 @@
 ---
-model: claude-sonnet-4-5-20250929
+model: claude-haiku-4-5-20251001
 allowed-tools: Bash, WebFetch, WebSearch
 argument-hint: [url|doc-name]
 description: Lit la documentation technique - RTFM (Read The Fucking Manual)
