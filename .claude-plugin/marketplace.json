@@ -54,6 +54,11 @@
       "name": "framework",
       "source": "./framework",
       "description": "Plugin pour atournayre/framework avec commandes et intégrations"
+    },
+    {
+      "name": "gemini",
+      "source": "./gemini",
+      "description": "Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search temps réel"
     }
   ]
 }

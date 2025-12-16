@@ -1,0 +1,18 @@
+{
+  "name": "gemini",
+  "version": "1.0.0",
+  "description": "Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search temps réel",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "keywords": [
+    "gemini",
+    "llm",
+    "long-context",
+    "deep-think",
+    "google-search",
+    "ai-orchestration"
+  ],
+  "license": "MIT"
+}
