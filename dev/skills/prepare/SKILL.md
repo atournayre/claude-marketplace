@@ -16,21 +16,24 @@ PLAN_OUTPUT_DIRECTORY: `docs/specs/`
 ## Instructions
 - Carefully user's requirements provided in the USER_PROMPT variable
 - Think deeply about the best approach to implement the requested functionality or solve the problem
-- Create a concise implementation plan that includes:
+- Create a **highly detailed, executable** implementation plan that includes:
 - Clear problem statement and objectives
 - Technical approach and architecture decisions
-- Step-by-step implementation guide
+- **Explicit file list** with full paths for each file to create/modify
+- Step-by-step implementation guide with **concrete code** (not pseudo-code)
 - **Actionable todo list** with markdown checkboxes that can be tracked and updated during implementation
 - Potential challenges and solutions
 - Testing strategy
 - Success criteria
 - Generate a descriptive, kebab-case filename based on the main topic of the plan
 - Save the complete implementation plan to `PLAN_OUTPUT_DIRECTORY/<descriptive-name>.md`
-  - Ensure the plan is detailed enough that another developer could follow it to implement the solution
-  - Include code examples or pseudo-code where appropriate to clarify complex concepts
+  - **IMPORTANT**: The plan must be detailed enough for a fast model (haiku) to execute mechanically without interpretation
+  - Include **complete code snippets** with exact method signatures, imports, and dependencies
+  - Specify **exact file paths** for all files to create or modify
   - The todo list must use markdown checkboxes `- [ ]` with granular, actionable tasks in logical implementation order
+  - Each task should reference the specific file(s) and code to write
 - Consider edge cases, error handling, and scalability concerns
-  - Structure the document with clear sections and proper markdown formatting
+- Structure the document with clear sections and proper markdown formatting
 
 ## Workflow
 

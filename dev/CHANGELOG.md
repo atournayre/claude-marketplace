@@ -5,6 +5,17 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.1.2] - 2025-12-16
+
+### Changed
+- Commande `/dev:code` : modèle sonnet → haiku (exécution mécanique de plans détaillés)
+- Skill `prepare` : plans plus détaillés et exécutables (fichiers explicites, code concret, signatures exactes)
+
+## [1.1.1] - 2025-12-14
+
+### Changed
+- Commande `/dev:question` : modèle sonnet → haiku (recherche simple, plus rapide/économique)
+
 ## [1.1.0] - 2025-11-15
 
 ### Added

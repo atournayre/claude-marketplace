@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.14] - 2025-12-14
+
+### Changed
+- Commande `/git:branch` : modèle sonnet → haiku (création branche simple, plus rapide)
+- Commande `/git:commit` : modèle sonnet → haiku (message commit simple, plus rapide)
+- Skill `git-pr` : suppression `/clear` inutile (simplification workflow)
+
 ## [1.4.13] - 2025-12-08
 
 ### Changed
