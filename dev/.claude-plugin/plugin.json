@@ -1,7 +1,7 @@
 {
   "name": "dev",
   "description": "Toolkit complet de développement pour PHP avec debugging, documentation, et QA automatisée",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
