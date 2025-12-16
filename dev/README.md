@@ -12,17 +12,29 @@ Toolkit complet de développement pour PHP avec commandes Git, debugging, docume
 
 ### `/dev:prepare`
 
-Crée un plan d'implémentation concis basé sur les besoins utilisateur et le sauvegarde dans `specs/`.
+Crée un plan d'implémentation via le **Plan Mode natif** de Claude Code.
 
 **Usage :**
 ```bash
-/dev:prepare
+/dev:prepare <requirements>
 ```
 
-**Génère :**
-- Plan structuré avec étapes d'implémentation
-- Fichier sauvegardé dans `specs/`
-- Prêt pour `/dev:code`
+**Exemples :**
+```bash
+/dev:prepare Ajouter authentification OAuth
+/dev:prepare Refactorer le module de paiement
+```
+
+**Workflow :**
+1. Entre en Plan Mode (exploration interactive)
+2. Explore le codebase existant
+3. Conçoit la solution
+4. Sauvegarde le plan dans `docs/specs/`
+5. Demande approbation utilisateur
+6. Options après approbation :
+   - Lancer un swarm pour implémenter
+   - Utiliser `/dev:code` plus tard
+   - Implémenter manuellement
 
 ---
 
@@ -37,11 +49,11 @@ Code la codebase en suivant le plan d'implémentation.
 
 **Exemples :**
 ```bash
-/dev:code specs/feature-auth.md
+/dev:code docs/specs/feature-auth.md
 ```
 
 **Workflow :**
-- Lit le plan depuis `specs/`
+- Lit le plan depuis `docs/specs/`
 - Implémente chaque étape
 - Crée tests unitaires
 - Valide la conformité
@@ -195,8 +207,8 @@ dev/
 
 ## Workflow Recommandé
 
-1. **Planification** : `/dev:prepare`
-2. **Implémentation** : `/dev:code specs/plan.md`
+1. **Planification** : `/dev:prepare <requirements>` (Plan Mode interactif)
+2. **Implémentation** : `/dev:code docs/specs/plan.md` ou swarm
 3. **Debug si erreur** : `/dev:debug:error`
 4. **Questions** : `/dev:question`
 

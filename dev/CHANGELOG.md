@@ -5,11 +5,18 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
-## [1.1.2] - 2025-12-16
+## [1.2.0] - 2025-12-16
 
 ### Changed
+- Commande `/dev:prepare` : utilise désormais le **Plan Mode natif** de Claude Code
+  - Workflow interactif avec approbation utilisateur
+  - Exploration du codebase avant planification
+  - Option de lancer un swarm pour implémenter
+  - Sauvegarde du plan dans `docs/specs/`
 - Commande `/dev:code` : modèle sonnet → haiku (exécution mécanique de plans détaillés)
-- Skill `prepare` : plans plus détaillés et exécutables (fichiers explicites, code concret, signatures exactes)
+
+### Removed
+- Skill `prepare` (remplacé par Plan Mode natif)
 
 ## [1.1.1] - 2025-12-14
 
