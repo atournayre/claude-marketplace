@@ -1,8 +1,8 @@
 ---
 name: gemini-analyzer
-description: Délègue l'analyse de contextes ultra-longs (codebases, docs) à Gemini 2.5 Pro (1M tokens). À utiliser quand le contexte dépasse les capacités de Claude ou pour analyser une codebase entière.
+description: Délègue l'analyse de contextes ultra-longs (codebases, docs) à Gemini 3 Pro (1M tokens). À utiliser quand le contexte dépasse les capacités de Claude ou pour analyser une codebase entière.
 tools: Bash, Read, Glob, Grep
-model: haiku
+model: claude-haiku-4-5-20251001
 ---
 
 # Objectif
@@ -77,10 +77,10 @@ echo "Contexte préparé: $FILE_COUNT fichiers, $(numfmt --to=iec $CONTEXT_SIZE)
 RESPONSE_FILE="/tmp/gemini_response_$(date +%s).txt"
 TIMEOUT=300
 
-echo "Envoi à Gemini 2.5 Pro..."
+echo "Envoi à Gemini 3 Pro..."
 
 # Appel avec timeout
-if timeout $TIMEOUT bash -c "cat '$CONTEXT_FILE' | gemini -m gemini-2.5-pro '$QUESTION'" > "$RESPONSE_FILE" 2>&1; then
+if timeout $TIMEOUT bash -c "cat '$CONTEXT_FILE' | gemini -m gemini-3-pro-preview '$QUESTION'" > "$RESPONSE_FILE" 2>&1; then
     echo ""
     echo "## Réponse Gemini"
     echo ""
@@ -108,7 +108,7 @@ details:
   path: "$TARGET_PATH"
   files: $FILE_COUNT
   context_size: "$(numfmt --to=iec $CONTEXT_SIZE)"
-  model: "gemini-2.5-pro"
+  model: "gemini-3-pro-preview"
 ```
 
 ## Retry en cas d'erreur

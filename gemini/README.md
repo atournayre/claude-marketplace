@@ -7,13 +7,21 @@ Intégration Gemini CLI pour Claude Code. Permet de déléguer des tâches spéc
 - Gemini CLI installé et authentifié (`gemini --version`)
 - Accès API Gemini configuré
 
-## Cas d'usage
+## Commandes
 
-| Commande | Agent | Description |
-|----------|-------|-------------|
-| `/gemini:analyze` | gemini-analyzer | Analyse de contextes ultra-longs (codebases, docs) - jusqu'à 1M tokens |
-| `/gemini:think` | gemini-thinker | Problèmes complexes nécessitant réflexion approfondie (math, logique, architecture) |
-| `/gemini:search` | gemini-researcher | Recherche temps réel via Google Search intégré |
+| Commande | Description | Arguments |
+|----------|-------------|-----------|
+| `/gemini:analyze` | Analyse de contextes ultra-longs (codebases, docs) | `<path> <question>` |
+| `/gemini:think` | Problèmes complexes nécessitant réflexion approfondie | `<problem-description>` |
+| `/gemini:search` | Recherche temps réel via Google Search intégré | `<query>` |
+
+## Agents
+
+| Agent | Modèle Claude | Modèle Gemini | Cas d'usage |
+|-------|---------------|---------------|-------------|
+| `gemini-analyzer` | `claude-haiku-4-5-20251001` | `gemini-3-pro-preview` | Analyse codebase/docs (1M tokens) |
+| `gemini-thinker` | `claude-haiku-4-5-20251001` | `gemini-3-pro-preview` | Deep Think (math, logique, architecture) |
+| `gemini-researcher` | `claude-haiku-4-5-20251001` | `gemini-2.5-flash` | Recherche web temps réel |
 
 ## Utilisation
 
@@ -43,5 +51,7 @@ Intégration Gemini CLI pour Claude Code. Permet de déléguer des tâches spéc
 
 ## Modèles utilisés
 
-- `gemini-2.5-pro` : Contexte long, Deep Think
+- `gemini-3-pro-preview` : Contexte long, Deep Think
 - `gemini-2.5-flash` : Recherche rapide
+
+Voir [MODELS.md](MODELS.md) pour la liste complète des modèles disponibles.

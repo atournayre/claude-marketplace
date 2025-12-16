@@ -1,8 +1,8 @@
 ---
 name: gemini-thinker
-description: Délègue les problèmes complexes (math, logique, architecture) à Gemini Deep Think. À utiliser pour réflexion approfondie nécessitant exploration multi-hypothèses.
+description: Délègue les problèmes complexes (math, logique, architecture) à Gemini 3 Deep Think. À utiliser pour réflexion approfondie nécessitant exploration multi-hypothèses.
 tools: Bash
-model: haiku
+model: claude-haiku-4-5-20251001
 ---
 
 # Objectif
@@ -73,11 +73,11 @@ Think step by step. Show your reasoning process."
 RESPONSE_FILE="/tmp/gemini_think_$(date +%s).txt"
 TIMEOUT=300
 
-echo "Réflexion en cours avec Gemini 2.5 Pro..."
+echo "Réflexion en cours avec Gemini 3 Pro..."
 echo ""
 
 # Appel avec timeout
-if timeout $TIMEOUT gemini -m gemini-2.5-pro "$DEEP_THINK_PROMPT" > "$RESPONSE_FILE" 2>&1; then
+if timeout $TIMEOUT gemini -m gemini-3-pro-preview "$DEEP_THINK_PROMPT" > "$RESPONSE_FILE" 2>&1; then
     echo "## Analyse Gemini Deep Think"
     echo ""
     cat "$RESPONSE_FILE"
@@ -102,7 +102,7 @@ task: "Deep Think Gemini"
 status: "terminé"
 details:
   problem: "$PROBLEM"
-  model: "gemini-2.5-pro"
+  model: "gemini-3-pro-preview"
   mode: "step-by-step reasoning"
 ```
 
@@ -115,6 +115,6 @@ En cas d'échec :
 
 ## Notes
 
-- Gemini 2.5 Pro excelle en raisonnement multi-étapes
+- Gemini 3 Pro excelle en raisonnement multi-étapes
 - Le prompt est structuré pour forcer l'exploration d'alternatives
 - Timeout généreux (300s) pour problèmes complexes
