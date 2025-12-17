@@ -247,31 +247,73 @@ Si needs_user_input: true → utiliser AskUserQuestion avec projets disponibles
 
 - Marquer todo "Code review automatique" in_progress
 
+#### 12.1 Analyse historique git
+
+EXÉCUTER pour récupérer le contexte historique :
+```bash
+BRANCH_NAME=$(git branch --show-current)
+FILES=$(git diff --name-only $BRANCH_BASE...$BRANCH_NAME)
+
+echo "=== CONTEXTE HISTORIQUE ===" > /tmp/git_history_context.txt
+
+for file in $FILES; do
+    echo "--- $file ---" >> /tmp/git_history_context.txt
+
+    # Commits récents sur ce fichier
+    echo "Commits récents:" >> /tmp/git_history_context.txt
+    git log --oneline -5 -- "$file" 2>/dev/null >> /tmp/git_history_context.txt
+
+    # TODOs/FIXMEs existants
+    if [ -f "$file" ]; then
+        echo "TODOs/FIXMEs:" >> /tmp/git_history_context.txt
+        grep -n "TODO\|FIXME\|HACK\|XXX" "$file" 2>/dev/null >> /tmp/git_history_context.txt || echo "Aucun" >> /tmp/git_history_context.txt
+    fi
+
+    echo "" >> /tmp/git_history_context.txt
+done
+
+# PRs précédentes pertinentes
+echo "=== PRs PRECEDENTES ===" >> /tmp/git_history_context.txt
+for file in $(echo "$FILES" | head -3); do
+    gh pr list --state merged --search "$file" --limit 2 --json number,title 2>/dev/null >> /tmp/git_history_context.txt || true
+done
+
+cat /tmp/git_history_context.txt
+```
+
+#### 12.2 Récupération données PR
+
 EXÉCUTER pour récupérer les données :
 ```bash
 PR_DATA=$(bash $SCRIPTS_DIR/auto_review.sh $PR_NUMBER)
 ```
 
-**ANALYSER EN TANT QUE CLAUDE** les données JSON retournées et générer une review intelligente :
+**ANALYSER EN TANT QUE CLAUDE** les données JSON et le contexte historique pour générer une review intelligente :
 
 1. **Conformité template PR** :
    - Vérifier que toutes les sections requises sont remplies
    - Signaler les sections manquantes ou incomplètes
 
-2. **Qualité du code** :
+2. **Analyse historique** (NOUVEAU) :
+   - Patterns récurrents : le même code a-t-il été modifié plusieurs fois ?
+   - Régressions potentielles : les changements annulent-ils des corrections précédentes ?
+   - TODOs oubliés : les TODOs existants sont-ils adressés ou ignorés ?
+   - Contexte PRs précédentes : discussions pertinentes à considérer ?
+
+3. **Qualité du code** :
    - Patterns suspects (code dupliqué, fonctions trop longues)
    - Problèmes de sécurité potentiels (injections, données sensibles)
    - Respect des conventions du projet
 
-3. **Tests** :
+4. **Tests** :
    - Tests manquants pour les nouvelles fonctionnalités
    - Couverture des cas limites
 
-4. **Documentation** :
+5. **Documentation** :
    - Commentaires nécessaires absents
    - Mise à jour README si API modifiée
 
-5. **Suggestions d'amélioration** :
+6. **Suggestions d'amélioration** :
    - Refactorisation possible
    - Performance
    - Lisibilité
@@ -283,6 +325,11 @@ PR_DATA=$(bash $SCRIPTS_DIR/auto_review.sh $PR_NUMBER)
 ### ✅ Points positifs
 - [ce qui est bien fait]
 
+### 📜 Contexte historique
+- [insights de l'analyse git blame/history si pertinents]
+- [TODOs/FIXMEs existants à considérer]
+- [liens avec PRs précédentes si applicable]
+
 ### ⚠️ Points d'attention
 - [problèmes potentiels à vérifier]
 
@@ -293,6 +340,7 @@ PR_DATA=$(bash $SCRIPTS_DIR/auto_review.sh $PR_NUMBER)
 - [ ] Template PR complet
 - [ ] Tests présents
 - [ ] Documentation à jour
+- [ ] TODOs existants adressés
 
 ---
 *Review générée par git-pr skill*

@@ -315,6 +315,42 @@ Skill spécialisé pour générer des notes de release orientées utilisateurs f
 
 **Outils :** Bash, Read, Write, Grep, Glob, AskUserQuestion
 
+---
+
+## Agents Disponibles
+
+### `git-history-reviewer`
+
+**Localisation :** `agents/git-history-reviewer.md`
+
+Agent spécialisé pour analyser le contexte historique git et détecter des problèmes potentiels dans les changements actuels.
+
+**Analyse :**
+- Git blame des lignes modifiées
+- Historique des commits sur fichiers touchés
+- PRs précédentes pertinentes (via GitHub)
+- TODOs/FIXMEs existants dans les fichiers modifiés
+
+**Détection :**
+- Patterns récurrents (code modifié plusieurs fois)
+- Régressions potentielles (corrections annulées)
+- TODOs oubliés
+- Contexte perdu (ignoré dans blame)
+
+**Scoring :**
+- 0-25 : Faux positif probable
+- 26-50 : Mineur
+- 51-75 : Réel mais pas critique
+- 76-100 : Problème confirmé par l'historique
+
+Ne reporte que les problèmes avec score >= 70.
+
+**Modèle :** haiku
+
+**Outils :** Bash, Read, Grep
+
+---
+
 ## Workflow Complet
 
 ### Feature Standard

@@ -5,6 +5,23 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.15] - 2025-12-17
+
+### Added
+- Agent `git-history-reviewer` : analyse le contexte historique git pour détecter problèmes potentiels
+  - Git blame des lignes modifiées
+  - Historique commits sur fichiers touchés
+  - PRs précédentes pertinentes
+  - TODOs/FIXMEs existants
+  - Scoring de confiance (seuil 70)
+
+### Changed
+- Skill `git-pr` : intégration analyse historique dans review automatique
+  - Contexte historique git (blame, commits récents)
+  - Détection patterns récurrents et régressions potentielles
+  - Section "Contexte historique" dans rapport review
+  - Checklist "TODOs existants adressés"
+
 ## [1.4.14] - 2025-12-14
 
 ### Changed

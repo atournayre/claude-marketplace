@@ -7,6 +7,33 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2025.12.17] - 2025-12-17
+
+### Plugins Added
+- **gemini v1.0.0** - Plugin délégation Gemini CLI
+  - Agent `gemini-analyzer` : analyse contextes ultra-longs (1M tokens)
+  - Agent `gemini-thinker` : Deep Think pour problèmes complexes (math, logique, architecture)
+  - Agent `gemini-researcher` : recherche temps réel via Google Search intégré
+  - Commandes `/gemini:analyze`, `/gemini:think`, `/gemini:search`
+  - Filtrage automatique fichiers sensibles, limite 4MB
+
+### Plugins Updated
+- **dev v1.3.0** - Nouvelle commande logging
+  - Commande `/dev:log [FICHIER]` : ajoute `LoggableInterface` avec méthode `toLog()` aux classes PHP
+  - Détection automatique objets imbriqués implémentant `LoggableInterface`
+  - Annotations PHPDoc générées pour PHPStan
+
+- **dev v1.2.0** - Migration Plan Mode natif
+  - Commande `/dev:prepare` : utilise désormais Plan Mode natif Claude Code
+  - Workflow interactif avec approbation utilisateur
+  - Option swarm pour implémentation parallélisée
+  - Suppression skill `prepare` (remplacé par Plan Mode)
+
+- **git v1.4.15** - Analyse historique git
+  - Agent `git-history-reviewer` : analyse contexte historique (blame, commits, PRs, TODOs)
+  - Skill `git-pr` : intégration analyse historique dans review automatique
+  - Détection patterns récurrents, régressions potentielles, TODOs oubliés
+
 ## [2025.11.16] - 2025-11-16
 
 ### Skills Added
@@ -119,6 +146,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 Pour les détails complets de chaque plugin, voir les CHANGELOGs individuels:
 - [framework/CHANGELOG.md](framework/CHANGELOG.md)
+- [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
 - [git/CHANGELOG.md](git/CHANGELOG.md)
 - [symfony/CHANGELOG.md](symfony/CHANGELOG.md)
 - [dev/CHANGELOG.md](dev/CHANGELOG.md)
