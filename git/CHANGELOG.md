@@ -5,6 +5,18 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.4.16] - 2025-12-17
+
+### Changed
+- Skill `git-pr` : délégation review au plugin `review` avec 4 agents spécialisés
+  - Vérification automatique présence plugin review
+  - Invocation parallèle des 4 agents (code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer)
+  - Message d'incitation si plugin review non installé
+  - Agrégation des résultats avec filtrage score >= 80
+
+### Removed
+- Agent `git-history-reviewer` déplacé vers plugin `review`
+
 ## [1.4.15] - 2025-12-17
 
 ### Added

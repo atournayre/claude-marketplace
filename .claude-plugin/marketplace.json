@@ -59,6 +59,11 @@
       "name": "gemini",
       "source": "./gemini",
       "description": "Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search temps réel"
+    },
+    {
+      "name": "review",
+      "source": "./review",
+      "description": "Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer"
     }
   ]
 }

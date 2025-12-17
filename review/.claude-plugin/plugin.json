@@ -1,0 +1,6 @@
+{
+  "name": "review",
+  "version": "1.0.0",
+  "description": "Agents spécialisés pour la code review automatique des PRs. Inclut 4 agents : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer.",
+  "author": "Aurélien Tournayre <aurelien.tournayre@gmail.com>"
+}

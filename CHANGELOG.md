@@ -10,6 +10,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [2025.12.17] - 2025-12-17
 
 ### Plugins Added
+- **review v1.0.0** - Plugin agents spécialisés code review
+  - Agent `code-reviewer` : review complète (conformité CLAUDE.md, bugs, qualité code)
+  - Agent `silent-failure-hunter` : détection catch vides, erreurs silencieuses
+  - Agent `test-analyzer` : analyse couverture PHPUnit, tests manquants
+  - Agent `git-history-reviewer` : contexte historique git (blame, PRs, TODOs)
+  - Scoring 0-100 avec seuil >= 80
+  - Intégration automatique avec skill `/git:pr`
+
 - **gemini v1.0.0** - Plugin délégation Gemini CLI
   - Agent `gemini-analyzer` : analyse contextes ultra-longs (1M tokens)
   - Agent `gemini-thinker` : Deep Think pour problèmes complexes (math, logique, architecture)
@@ -29,10 +37,10 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - Option swarm pour implémentation parallélisée
   - Suppression skill `prepare` (remplacé par Plan Mode)
 
-- **git v1.4.15** - Analyse historique git
-  - Agent `git-history-reviewer` : analyse contexte historique (blame, commits, PRs, TODOs)
-  - Skill `git-pr` : intégration analyse historique dans review automatique
-  - Détection patterns récurrents, régressions potentielles, TODOs oubliés
+- **git v1.4.16** - Intégration plugin review
+  - Skill `git-pr` : délégation review au plugin `review` avec 4 agents parallèles
+  - Vérification automatique présence plugin review avec message d'incitation
+  - Agent `git-history-reviewer` déplacé vers plugin `review`
 
 ## [2025.11.16] - 2025-11-16
 
@@ -148,6 +156,7 @@ Pour les détails complets de chaque plugin, voir les CHANGELOGs individuels:
 - [framework/CHANGELOG.md](framework/CHANGELOG.md)
 - [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
 - [git/CHANGELOG.md](git/CHANGELOG.md)
+- [review/CHANGELOG.md](review/CHANGELOG.md)
 - [symfony/CHANGELOG.md](symfony/CHANGELOG.md)
 - [dev/CHANGELOG.md](dev/CHANGELOG.md)
 - [qa/CHANGELOG.md](qa/CHANGELOG.md)

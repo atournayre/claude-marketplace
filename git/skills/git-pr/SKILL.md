@@ -247,106 +247,104 @@ Si needs_user_input: true → utiliser AskUserQuestion avec projets disponibles
 
 - Marquer todo "Code review automatique" in_progress
 
-#### 12.1 Analyse historique git
+#### 12.1 Vérifier si le plugin review est installé
 
-EXÉCUTER pour récupérer le contexte historique :
+EXÉCUTER pour vérifier la présence du plugin review :
 ```bash
-BRANCH_NAME=$(git branch --show-current)
-FILES=$(git diff --name-only $BRANCH_BASE...$BRANCH_NAME)
-
-echo "=== CONTEXTE HISTORIQUE ===" > /tmp/git_history_context.txt
-
-for file in $FILES; do
-    echo "--- $file ---" >> /tmp/git_history_context.txt
-
-    # Commits récents sur ce fichier
-    echo "Commits récents:" >> /tmp/git_history_context.txt
-    git log --oneline -5 -- "$file" 2>/dev/null >> /tmp/git_history_context.txt
-
-    # TODOs/FIXMEs existants
-    if [ -f "$file" ]; then
-        echo "TODOs/FIXMEs:" >> /tmp/git_history_context.txt
-        grep -n "TODO\|FIXME\|HACK\|XXX" "$file" 2>/dev/null >> /tmp/git_history_context.txt || echo "Aucun" >> /tmp/git_history_context.txt
-    fi
-
-    echo "" >> /tmp/git_history_context.txt
-done
-
-# PRs précédentes pertinentes
-echo "=== PRs PRECEDENTES ===" >> /tmp/git_history_context.txt
-for file in $(echo "$FILES" | head -3); do
-    gh pr list --state merged --search "$file" --limit 2 --json number,title 2>/dev/null >> /tmp/git_history_context.txt || true
-done
-
-cat /tmp/git_history_context.txt
+REVIEW_PLUGIN_INSTALLED=false
+if [ -d "${CLAUDE_PLUGIN_ROOT}/../review/agents" ] || [ -d "$HOME/.claude/plugins/marketplaces/atournayre-claude-plugin-marketplace/review/agents" ]; then
+    REVIEW_PLUGIN_INSTALLED=true
+fi
+echo "REVIEW_PLUGIN_INSTALLED=$REVIEW_PLUGIN_INSTALLED"
 ```
 
-#### 12.2 Récupération données PR
+**Si le plugin review N'EST PAS installé** :
 
-EXÉCUTER pour récupérer les données :
-```bash
-PR_DATA=$(bash $SCRIPTS_DIR/auto_review.sh $PR_NUMBER)
+AFFICHER ce message à l'utilisateur :
+```
+⚠️ Plugin 'review' non détecté.
+
+Pour bénéficier de la code review automatique avec 4 agents spécialisés
+(code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer),
+installez le plugin review :
+
+   /plugin install review
+
+La PR a été créée sans review automatique.
 ```
 
-**ANALYSER EN TANT QUE CLAUDE** les données JSON et le contexte historique pour générer une review intelligente :
+→ Marquer todo "Code review automatique" completed et passer à l'étape 13.
 
-1. **Conformité template PR** :
-   - Vérifier que toutes les sections requises sont remplies
-   - Signaler les sections manquantes ou incomplètes
+**Si le plugin review EST installé** → continuer ci-dessous.
 
-2. **Analyse historique** (NOUVEAU) :
-   - Patterns récurrents : le même code a-t-il été modifié plusieurs fois ?
-   - Régressions potentielles : les changements annulent-ils des corrections précédentes ?
-   - TODOs oubliés : les TODOs existants sont-ils adressés ou ignorés ?
-   - Contexte PRs précédentes : discussions pertinentes à considérer ?
+#### 12.2 Lancer les agents de review en parallèle
 
-3. **Qualité du code** :
-   - Patterns suspects (code dupliqué, fonctions trop longues)
-   - Problèmes de sécurité potentiels (injections, données sensibles)
-   - Respect des conventions du projet
+**INVOQUER en parallèle via Task tool** les 4 agents suivants :
 
-4. **Tests** :
-   - Tests manquants pour les nouvelles fonctionnalités
-   - Couverture des cas limites
+1. **code-reviewer** (review/agents/code-reviewer.md)
+   - Prompt : "Review les changements de la PR #$PR_NUMBER. Fichiers : $(git diff --name-only $BRANCH_BASE...$BRANCH_NAME)"
+   - Focus : Conformité CLAUDE.md, bugs, qualité code
 
-5. **Documentation** :
-   - Commentaires nécessaires absents
-   - Mise à jour README si API modifiée
+2. **silent-failure-hunter** (review/agents/silent-failure-hunter.md)
+   - Prompt : "Analyse la gestion d'erreurs dans les fichiers modifiés de la branche actuelle"
+   - Focus : Catch vides, erreurs silencieuses, fallbacks
 
-6. **Suggestions d'amélioration** :
-   - Refactorisation possible
-   - Performance
-   - Lisibilité
+3. **test-analyzer** (review/agents/test-analyzer.md)
+   - Prompt : "Analyse la couverture de tests pour les changements de la branche actuelle vs $BRANCH_BASE"
+   - Focus : Tests manquants, qualité des tests, edge cases
 
-**GÉNÉRER le commentaire de review** avec structure :
+4. **git-history-reviewer** (review/agents/git-history-reviewer.md)
+   - Prompt : "Analyse le contexte historique des fichiers modifiés dans la branche actuelle"
+   - Focus : Blame, PRs précédentes, TODOs existants
+
+#### 12.3 Agréger les résultats
+
+Collecter les rapports des 4 agents et les fusionner.
+
+**Filtrer** : Ne garder que les issues avec score >= 80.
+
+#### 12.4 Générer le commentaire de review
+
+**GÉNÉRER le commentaire** en agrégeant les résultats :
+
 ```markdown
 ## 🔍 Code Review Automatique
 
 ### ✅ Points positifs
-- [ce qui est bien fait]
+- [ce qui est bien fait - agrégé des agents]
+
+### 🚨 Issues critiques (score >= 90)
+- [issues de code-reviewer]
+- [issues de silent-failure-hunter]
+
+### ⚠️ Points d'attention (score 80-89)
+- [issues des agents avec score 80-89]
+
+### 🧪 Couverture tests
+- [résumé de test-analyzer]
+- [tests manquants critiques]
 
 ### 📜 Contexte historique
-- [insights de l'analyse git blame/history si pertinents]
-- [TODOs/FIXMEs existants à considérer]
-- [liens avec PRs précédentes si applicable]
-
-### ⚠️ Points d'attention
-- [problèmes potentiels à vérifier]
+- [insights de git-history-reviewer]
+- [TODOs/FIXMEs existants]
+- [PRs précédentes pertinentes]
 
 ### 💡 Suggestions
-- [améliorations possibles]
+- [améliorations proposées par les agents]
 
 ### 📋 Checklist conformité
-- [ ] Template PR complet
-- [ ] Tests présents
-- [ ] Documentation à jour
-- [ ] TODOs existants adressés
+- [ ] CLAUDE.md respecté
+- [ ] Pas d'erreurs silencieuses
+- [ ] Tests suffisants
+- [ ] TODOs adressés
 
 ---
-*Review générée par git-pr skill*
+*Review générée par 4 agents spécialisés via git-pr skill*
 ```
 
-EXÉCUTER pour poster le commentaire :
+#### 12.5 Poster le commentaire
+
+EXÉCUTER pour poster :
 ```bash
 gh pr comment $PR_NUMBER --body "$REVIEW_COMMENT"
 ```

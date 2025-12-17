@@ -317,37 +317,20 @@ Skill spécialisé pour générer des notes de release orientées utilisateurs f
 
 ---
 
-## Agents Disponibles
+## Intégration Plugin Review
 
-### `git-history-reviewer`
+Le skill `/git:pr` utilise les agents du plugin `review` pour la code review automatique.
 
-**Localisation :** `agents/git-history-reviewer.md`
+**Si le plugin review est installé**, 4 agents sont invoqués en parallèle :
+- `code-reviewer` - Conformité CLAUDE.md, bugs, qualité
+- `silent-failure-hunter` - Erreurs silencieuses, catch vides
+- `test-analyzer` - Couverture PHPUnit, tests manquants
+- `git-history-reviewer` - Contexte historique git
 
-Agent spécialisé pour analyser le contexte historique git et détecter des problèmes potentiels dans les changements actuels.
-
-**Analyse :**
-- Git blame des lignes modifiées
-- Historique des commits sur fichiers touchés
-- PRs précédentes pertinentes (via GitHub)
-- TODOs/FIXMEs existants dans les fichiers modifiés
-
-**Détection :**
-- Patterns récurrents (code modifié plusieurs fois)
-- Régressions potentielles (corrections annulées)
-- TODOs oubliés
-- Contexte perdu (ignoré dans blame)
-
-**Scoring :**
-- 0-25 : Faux positif probable
-- 26-50 : Mineur
-- 51-75 : Réel mais pas critique
-- 76-100 : Problème confirmé par l'historique
-
-Ne reporte que les problèmes avec score >= 70.
-
-**Modèle :** haiku
-
-**Outils :** Bash, Read, Grep
+**Installation :**
+```bash
+/plugin install review@atournayre
+```
 
 ---
 

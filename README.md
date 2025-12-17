@@ -11,7 +11,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 🤖 **Claude** | 1.0.0 | Plugin de base pour Claude Code avec commandes essentielles | [README](claude/README.md) |
 | 🎨 **Customize** | 1.0.0 | Personnalise ton expérience avec hooks, output styles et status lines | [README](customize/README.md) |
 | ⚙️ **Dev** | 1.3.0 | Toolkit complet de développement pour PHP | [README](dev/README.md) |
-| 🔧 **Git** | 1.4.15 | Workflow Git complet : branches, commits, conflits, PR | [README](git/README.md) |
+| 🔧 **Git** | 1.4.16 | Workflow Git complet : branches, commits, conflits, PR | [README](git/README.md) |
 | 🐙 **GitHub** | 1.1.0 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
 | 📋 **QA** | 1.2.0 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
 | 📚 **Doc** | 1.1.1 | Documentation : ADR, RTFM, génération docs, framework docs | [README](doc/README.md) |
@@ -19,6 +19,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📊 **Output Styles** | 1.0.0 | Styles de sortie personnalisés pour formater les réponses | [README](output-styles/README.md) |
 | 🏗️ **Framework** | 1.0.0 | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
 | 🔮 **Gemini** | 1.0.0 | Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search | [README](gemini/README.md) |
+| 🔍 **Review** | 1.0.0 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
 
 ## 🚀 Installation
 
