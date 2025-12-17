@@ -64,6 +64,11 @@
       "name": "review",
       "source": "./review",
       "description": "Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer"
+    },
+    {
+      "name": "marketing",
+      "source": "./marketing",
+      "description": "Génération de contenu marketing : posts LinkedIn, annonces, communications"
     }
   ]
 }

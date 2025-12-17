@@ -20,6 +20,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 🏗️ **Framework** | 1.0.0 | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
 | 🔮 **Gemini** | 1.0.0 | Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search | [README](gemini/README.md) |
 | 🔍 **Review** | 1.0.0 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
+| 📱 **Marketing** | 1.0.0 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
 
 ## 🚀 Installation
 

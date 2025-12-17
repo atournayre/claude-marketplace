@@ -1,0 +1,10 @@
+{
+  "name": "marketing",
+  "version": "1.0.0",
+  "description": "Génération de contenu marketing : posts LinkedIn, annonces, communications",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "keywords": ["marketing", "linkedin", "social-media", "communication"]
+}

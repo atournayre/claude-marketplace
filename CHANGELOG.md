@@ -9,6 +9,11 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [2025.12.17] - 2025-12-17
 
+### Plugins Added
+- **marketing v1.0.0** - Génération de contenu marketing
+  - Commande `/linkedin` : posts LinkedIn optimisés
+  - Support tone et length personnalisés
+
 ### Plugins Updated
 - **dev v2.0.0** - Workflow structuré 8 phases
   - Orchestrateur `/dev:feature` avec 8 phases automatiques
