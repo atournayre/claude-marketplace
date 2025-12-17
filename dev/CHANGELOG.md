@@ -5,6 +5,15 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.3.0] - 2025-12-17
+
+### Added
+- Commande `/dev:log [FICHIER]` : ajoute des fonctionnalités de logging avec `LoggableInterface`
+  - Analyse les classes et propriétés du fichier PHP
+  - Ajoute l'interface `LoggableInterface` d'Atournayre
+  - Génère la méthode `toLog()` avec annotations PHPDoc pour PHPStan
+  - Détecte les objets implémentant déjà `LoggableInterface` pour appeler `->toLog()`
+
 ## [1.2.0] - 2025-12-16
 
 ### Changed

@@ -38,6 +38,34 @@ Crée un plan d'implémentation via le **Plan Mode natif** de Claude Code.
 
 ---
 
+### `/dev:log`
+
+Ajoute des fonctionnalités de logging avec `LoggableInterface` à un fichier PHP.
+
+**Arguments :**
+```bash
+/dev:log [FICHIER]
+```
+
+**Exemple :**
+```bash
+/dev:log src/Entity/User.php
+```
+
+**Workflow :**
+- Lit et analyse le fichier PHP cible
+- Vérifie si `LoggableInterface` est déjà implémentée
+- Cherche les dépendances qui implémentent `LoggableInterface`
+- Ajoute l'import, l'interface et la méthode `toLog()`
+- Génère les annotations PHPDoc pour PHPStan
+
+**Règles :**
+- Inclut : `id`, identifiants métier, états, dates clés
+- Exclut : mots de passe, tokens, données sensibles
+- Objets imbriqués : appelle `->toLog()` si disponible
+
+---
+
 ### `/dev:code`
 
 Code la codebase en suivant le plan d'implémentation.
@@ -195,6 +223,7 @@ dev/
 │   ├── prepare.md
 │   ├── code.md
 │   ├── docker.md
+│   ├── log.md
 │   ├── question.md
 │   ├── context/
 │   │   └── load.md
