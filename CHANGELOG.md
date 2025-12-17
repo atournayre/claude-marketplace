@@ -9,6 +9,13 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [2025.12.17] - 2025-12-17
 
+### Plugins Updated
+- **dev v2.0.0** - Workflow structuré 8 phases
+  - Orchestrateur `/dev:feature` avec 8 phases automatiques
+  - Phases individuelles : discover, explore, clarify, design, plan, code, review, summary
+  - Checkpoints utilisateur aux phases critiques
+  - Fichier `.dev-workflow-state.json` pour tracking
+
 ### Plugins Added
 - **review v1.0.0** - Plugin agents spécialisés code review
   - Agent `code-reviewer` : review complète (conformité CLAUDE.md, bugs, qualité code)

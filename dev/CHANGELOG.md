@@ -5,6 +5,40 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.0.0] - 2025-12-17
+
+### Added
+- Workflow structuré en 8 phases pour le développement de features
+- Commande `/dev:feature <desc>` : orchestrateur principal du workflow
+- Commande `/dev:status` : affiche l'état du workflow et les commandes disponibles
+- Commande `/dev:discover <desc>` : Phase 0 - comprendre le besoin
+- Commande `/dev:explore` : Phase 1 - explorer le codebase avec agents parallèles
+- Commande `/dev:clarify` : Phase 2 - questions de clarification
+- Commande `/dev:design` : Phase 3 - proposer 2-3 architectures
+- Commande `/dev:plan` : Phase 4 - générer plan dans `docs/specs/`
+- Commande `/dev:review` : Phase 6 - QA complète (PHPStan + Elegant Objects + review)
+- Commande `/dev:summary` : Phase 7 - résumé final
+- Fichier `.dev-workflow-state.json` pour tracker l'état du workflow
+- Checkpoints utilisateur aux phases critiques (0, 2, 3, 5, 6)
+
+### Changed
+- Commande `/dev:code` : Phase 5 - adaptée pour le nouveau workflow avec approbation explicite
+- Commande `/dev:debug:error` → `/dev:debug` : simplification du nom
+
+### Removed
+- Commande `/dev:prepare` : remplacée par `/dev:plan`
+- Commande `/dev:question` : peu utilisée
+- Commande `/dev:docker` : peu utilisée
+- Commande `/dev:context:load` : peu utilisée
+
+### Dependencies
+- Plugin `feature-dev@claude-code-plugins` recommandé pour les agents:
+  - `code-explorer` (exploration codebase)
+  - `code-architect` (design architecture)
+  - `code-reviewer` (review qualité)
+
+---
+
 ## [1.3.0] - 2025-12-17
 
 ### Added

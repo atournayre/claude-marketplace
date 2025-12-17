@@ -1,7 +1,7 @@
 {
   "name": "dev",
-  "description": "Toolkit complet de développement pour PHP avec debugging, documentation, et QA automatisée",
-  "version": "1.3.0",
+  "description": "Workflow structuré de développement de features en 8 phases avec agents spécialisés",
+  "version": "2.0.0",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
@@ -11,16 +11,12 @@
   "license": "MIT",
   "keywords": [
     "php",
-    "documentation",
-    "debugging",
-    "qa",
-    "phpstan",
-    "docker",
-    "meilisearch",
-    "api-platform",
-    "symfony",
     "workflow",
+    "feature-development",
+    "phpstan",
+    "elegant-objects",
+    "qa",
     "automation",
-    "elegant-objects"
+    "debugging"
   ]
 }

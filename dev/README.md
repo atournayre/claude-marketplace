@@ -1,245 +1,193 @@
-# Plugin Dev
+# Plugin Dev v2.0.0
 
-Toolkit complet de développement pour PHP avec commandes Git, debugging, documentation, et QA automatisée.
+Workflow structuré de développement de features en 8 phases avec agents spécialisés.
 
 ## Installation
 
 ```bash
-/plugin install dev@atournayre
+/plugin install dev@atournayre-claude-plugin-marketplace
 ```
 
-## Commandes
+### Dépendance recommandée
 
-### `/dev:prepare`
+Pour une expérience optimale, installe également le plugin `feature-dev` :
 
-Crée un plan d'implémentation via le **Plan Mode natif** de Claude Code.
-
-**Usage :**
 ```bash
-/dev:prepare <requirements>
+/plugin install feature-dev@claude-code-plugins
 ```
 
-**Exemples :**
+Ce plugin fournit les agents :
+- `code-explorer` (exploration codebase)
+- `code-architect` (design architecture)
+- `code-reviewer` (review qualité)
+
+## Workflow de développement
+
+### Commande principale
+
 ```bash
-/dev:prepare Ajouter authentification OAuth
-/dev:prepare Refactorer le module de paiement
+/dev:feature <description>
 ```
 
-**Workflow :**
-1. Entre en Plan Mode (exploration interactive)
-2. Explore le codebase existant
-3. Conçoit la solution
-4. Sauvegarde le plan dans `docs/specs/`
-5. Demande approbation utilisateur
-6. Options après approbation :
-   - Lancer un swarm pour implémenter
-   - Utiliser `/dev:code` plus tard
-   - Implémenter manuellement
+Lance un workflow complet en 8 phases :
 
----
+```
+🔄 Workflow de développement
 
-### `/dev:log`
+  ⬜ 0. Discover   - Comprendre le besoin
+  ⬜ 1. Explore    - Explorer codebase
+  ⬜ 2. Clarify    - Questions clarification
+  ⬜ 3. Design     - Proposer architectures
+  ⬜ 4. Plan       - Générer specs
+  ⬜ 5. Code       - Implémenter
+  ⬜ 6. Review     - QA complète
+  ⬜ 7. Summary    - Résumé final
+```
 
-Ajoute des fonctionnalités de logging avec `LoggableInterface` à un fichier PHP.
+### Voir le statut
 
-**Arguments :**
 ```bash
-/dev:log [FICHIER]
+/dev:status
 ```
 
-**Exemple :**
+Affiche l'état actuel du workflow et les commandes disponibles.
+
+## Phases individuelles
+
+Tu peux exécuter chaque phase individuellement :
+
+| Commande | Phase | Description |
+|----------|-------|-------------|
+| `/dev:discover <desc>` | 0 | Comprendre le besoin |
+| `/dev:explore` | 1 | Explorer le codebase avec agents |
+| `/dev:clarify` | 2 | Questions de clarification |
+| `/dev:design` | 3 | Proposer 2-3 architectures |
+| `/dev:plan` | 4 | Générer le plan dans `docs/specs/` |
+| `/dev:code [plan]` | 5 | Implémenter selon le plan |
+| `/dev:review` | 6 | QA complète (PHPStan + EO + review) |
+| `/dev:summary` | 7 | Résumé final |
+
+## Commandes utilitaires
+
+| Commande | Description |
+|----------|-------------|
+| `/dev:debug <error>` | Analyser et résoudre une erreur |
+| `/dev:log <fichier>` | Ajouter `LoggableInterface` à un fichier PHP |
+
+## Exemple d'utilisation
+
+### Workflow complet
+
 ```bash
-/dev:log src/Entity/User.php
+# Lancer le workflow
+/dev:feature Ajouter authentification OAuth
+
+# Le workflow guide à travers les 8 phases
+# avec des checkpoints pour validation
 ```
 
-**Workflow :**
-- Lit et analyse le fichier PHP cible
-- Vérifie si `LoggableInterface` est déjà implémentée
-- Cherche les dépendances qui implémentent `LoggableInterface`
-- Ajoute l'import, l'interface et la méthode `toLog()`
-- Génère les annotations PHPDoc pour PHPStan
+### Phases individuelles
 
-**Règles :**
-- Inclut : `id`, identifiants métier, états, dates clés
-- Exclut : mots de passe, tokens, données sensibles
-- Objets imbriqués : appelle `->toLog()` si disponible
-
----
-
-### `/dev:code`
-
-Code la codebase en suivant le plan d'implémentation.
-
-**Arguments :**
 ```bash
-/dev:code [path-to-plan]
+# Comprendre le besoin
+/dev:discover Refactorer le module de paiement
+
+# Explorer le codebase
+/dev:explore
+
+# Poser les questions
+/dev:clarify
+
+# Designer l'architecture
+/dev:design
+
+# Générer le plan
+/dev:plan
+
+# Implémenter
+/dev:code docs/specs/feature-paiement.md
+
+# Review
+/dev:review
+
+# Résumé
+/dev:summary
 ```
 
-**Exemples :**
+### Debug
+
 ```bash
-/dev:code docs/specs/feature-auth.md
+# Analyser une erreur PHP
+/dev:debug "Fatal error: Call to undefined method User::getName()"
+
+# Analyser un fichier log
+/dev:debug /var/log/app.log
 ```
 
-**Workflow :**
-- Lit le plan depuis `docs/specs/`
-- Implémente chaque étape
-- Crée tests unitaires
-- Valide la conformité
+## Agents spécialisés
 
----
+### QA & Review
 
-### `/dev:docker`
+| Agent | Description |
+|-------|-------------|
+| `phpstan-error-resolver` | Résout erreurs PHPStan niveau 9 (types stricts, generics, array shapes) |
+| `elegant-objects-reviewer` | Vérifie conformité Elegant Objects (final, immuable, pas de null) |
+| `meta-agent` | Génère configuration d'agents Claude Code |
 
-Exécute les actions définies via Docker.
+### Documentation Scrapers
 
-**Usage :**
-```bash
-/dev:docker [action]
-```
-
-**Cas d'usage :**
-- Lancer services Docker
-- Exécuter commandes dans conteneurs
-- Build d'images
-- Gestion environnements
-
----
-
-### `/dev:question`
-
-Répond aux questions sur la structure du projet et la documentation sans coder.
-
-**Usage :**
-```bash
-/dev:question [ta-question]
-```
-
-**Exemples :**
-```bash
-/dev:question "Comment fonctionne l'authentification ?"
-/dev:question "Où sont les tests ?"
-```
-
----
-
-### `/dev:context:load`
-
-Charge un preset de contexte pour la session.
-
-**Arguments :**
-```bash
-/dev:context:load <preset>
-```
-
-**Presets disponibles :**
-- `php` - Contexte PHP/Symfony
-- `frontend` - Contexte JS/CSS
-- `docker` - Contexte containers
-- `api` - Contexte API Platform
-
-**Exemple :**
-```bash
-/dev:context:load php
-```
-
-**Fonctionnalités :**
-- Charge fichiers de contexte pertinents
-- Configure outils appropriés
-- Définit conventions de code
-
----
-
-### `/dev:debug:error`
-
-Analyse et résout une erreur (message simple ou stack trace).
-
-**Arguments :**
-```bash
-/dev:debug:error <message-erreur-ou-fichier-log>
-```
-
-**Exemples :**
-```bash
-# Avec message d'erreur direct
-/dev:debug:error "Call to undefined method User::getName()"
-
-# Avec fichier de log
-/dev:debug:error var/log/dev.log
-```
-
-**Workflow :**
-- Parse l'erreur ou le stack trace
-- Identifie la cause racine
-- Localise le code problématique
-- Propose correction
-- Vérifie avec tests
-
-**Rapport :**
-```
-🐛 Analyse d'erreur
-
-Erreur : Call to undefined method
-Fichier : src/Entity/User.php:42
-Cause : Méthode getName() manquante
-
-Correction proposée :
-[code fix]
-
-Tests : [tests ajoutés]
-```
-
-## Agents Spécialisés
-
-Le plugin Dev inclut des agents spécialisés pour des tâches complexes :
-
-### `phpstan-error-resolver`
-
-Résout automatiquement les erreurs PHPStan niveau 9.
-
-**Spécialités :**
-- Types stricts
-- Annotations generics
-- Array shapes
-- Collections Doctrine
-
-### `elegant-objects-reviewer`
-
-Examine le code PHP pour conformité Elegant Objects.
-
-**Vérifie :**
-- Constructeurs uniquement avec affectations
-- Pas d'héritage d'implémentation
-- Objets immuables
-- Méthodes sans `null`
-- Classes `final`
+| Agent | Description |
+|-------|-------------|
+| `symfony-docs-scraper` | Extrait documentation Symfony |
+| `api-platform-docs-scraper` | Extrait documentation API Platform |
+| `claude-docs-scraper` | Extrait documentation Claude Code |
+| `meilisearch-docs-scraper` | Extrait documentation Meilisearch |
+| `atournayre-framework-docs-scraper` | Extrait documentation atournayre-framework |
 
 ## Structure
 
 ```
 dev/
-├── .claude-plugin/
-│   └── plugin.json
 ├── commands/
-│   ├── prepare.md
-│   ├── code.md
-│   ├── docker.md
-│   ├── log.md
-│   ├── question.md
-│   ├── context/
-│   │   └── load.md
-│   └── debug/
-│       └── error.md
-└── agents/
-    ├── phpstan-error-resolver.md
-    └── elegant-objects-reviewer.md
+│   ├── feature.md      # Orchestrateur
+│   ├── status.md       # Affiche plan
+│   ├── discover.md     # Phase 0
+│   ├── explore.md      # Phase 1
+│   ├── clarify.md      # Phase 2
+│   ├── design.md       # Phase 3
+│   ├── plan.md         # Phase 4
+│   ├── code.md         # Phase 5
+│   ├── review.md       # Phase 6
+│   ├── summary.md      # Phase 7
+│   ├── debug.md        # Utilitaire
+│   └── log.md          # Utilitaire
+├── agents/
+│   ├── phpstan-error-resolver.md
+│   ├── elegant-objects-reviewer.md
+│   ├── meta-agent.md
+│   ├── symfony-docs-scraper.md
+│   ├── api-platform-docs-scraper.md
+│   ├── claude-docs-scraper.md
+│   ├── meilisearch-docs-scraper.md
+│   └── atournayre-framework-docs-scraper.md
+├── README.md
+└── CHANGELOG.md
 ```
 
-## Workflow Recommandé
+## Checkpoints
 
-1. **Planification** : `/dev:prepare <requirements>` (Plan Mode interactif)
-2. **Implémentation** : `/dev:code docs/specs/plan.md` ou swarm
-3. **Debug si erreur** : `/dev:debug:error`
-4. **Questions** : `/dev:question`
+Le workflow inclut des checkpoints aux phases critiques :
+
+- **Phase 0** : Confirmation de la compréhension
+- **Phase 2** : Attente des réponses aux questions
+- **Phase 3** : Choix de l'architecture
+- **Phase 5** : Approbation avant implémentation
+- **Phase 6** : Décision sur les corrections (fix now / fix later / proceed)
+
+## Fichiers générés
+
+- `.dev-workflow-state.json` : État du workflow en cours
+- `docs/specs/feature-*.md` : Plans d'implémentation
 
 ## Licence
 

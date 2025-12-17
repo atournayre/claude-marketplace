@@ -5,15 +5,13 @@ description: Analyser et résoudre une erreur (message simple ou stack trace)
 argument-hint: <message-erreur-ou-fichier-log>
 ---
 
-# Debug Error - Analyse et Résolution
+# Debug - Analyse et Résolution d'Erreurs
 
 Analyser une erreur (message ou stack trace) et proposer/appliquer résolution.
 
-{{_templates/timing.md}}
-
 ## Variables
 
-- ERROR_INPUT: Message erreur ou chemin fichier log
+- ERROR_INPUT: $ARGUMENTS
 - ERROR_TYPE: Type détecté (simple message vs stack trace)
 - CONTEXT_FILES: Fichiers pertinents
 - RESOLUTION_PLAN: Plan structuré si résolution demandée
@@ -149,16 +147,16 @@ Si utilisateur demande résolution :
 
 ```bash
 # Stack trace PHP
-/debug:error "Fatal error: Call to undefined method User::getName()"
+/dev:debug "Fatal error: Call to undefined method User::getName()"
 
 # Fichier log
-/debug:error /var/log/app.log
+/dev:debug /var/log/app.log
 
 # Message NPM
-/debug:error "npm ERR! missing script: build"
+/dev:debug "npm ERR! missing script: build"
 
 # Stack trace JS
-/debug:error "TypeError: Cannot read property 'id' of undefined at main.js:156"
+/dev:debug "TypeError: Cannot read property 'id' of undefined at main.js:156"
 ```
 
 ## Best Practices
