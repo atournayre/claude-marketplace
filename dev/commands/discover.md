@@ -65,7 +65,7 @@ Prochaine étape : /dev:explore pour analyser le codebase
 
 # Mise à jour du workflow state
 
-Créer ou mettre à jour `.dev-workflow-state.json` :
+Créer ou mettre à jour `.claude/data/.dev-workflow-state.json` (créer le répertoire si nécessaire) :
 
 ```json
 {

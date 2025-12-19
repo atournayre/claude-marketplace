@@ -34,7 +34,7 @@ Continuer sans ces agents ? (Les phases 1, 3, 6 seront simplifiées)
 
 ## Initialisation
 
-1. Créer le fichier `.dev-workflow-state.json` :
+1. Créer le fichier `.claude/data/.dev-workflow-state.json` (créer le répertoire `.claude/data/` si nécessaire) :
 ```json
 {
   "feature": "$ARGUMENTS",
@@ -145,7 +145,7 @@ Exécuter le contenu de `/dev:summary` :
 
 - **Checkpoints obligatoires** aux phases 0, 2, 3, 5, 6
 - **Ne jamais sauter de phase**
-- **Mettre à jour** `.dev-workflow-state.json` après chaque phase
+- **Mettre à jour** `.claude/data/.dev-workflow-state.json` après chaque phase
 - **Afficher le statut** à chaque transition
 - Si l'utilisateur interrompt, il peut reprendre avec `/dev:status` + la commande de la phase suivante
 

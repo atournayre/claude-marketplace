@@ -5,6 +5,12 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.0.1] - 2025-12-19
+
+### Changed
+- Déplacement du fichier `.dev-workflow-state.json` vers `.claude/data/.dev-workflow-state.json` (non versionné)
+- Mise à jour de toutes les instructions pour utiliser le nouveau chemin
+
 ## [2.0.0] - 2025-12-17
 
 ### Added
@@ -18,7 +24,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 - Commande `/dev:plan` : Phase 4 - générer plan dans `docs/specs/`
 - Commande `/dev:review` : Phase 6 - QA complète (PHPStan + Elegant Objects + review)
 - Commande `/dev:summary` : Phase 7 - résumé final
-- Fichier `.dev-workflow-state.json` pour tracker l'état du workflow
+- Fichier `.claude/data/.dev-workflow-state.json` pour tracker l'état du workflow (non versionné)
 - Checkpoints utilisateur aux phases critiques (0, 2, 3, 5, 6)
 
 ### Changed

@@ -21,7 +21,7 @@ Si non installé :
 
 ## 1. Lire le contexte
 
-- Lire `.dev-workflow-state.json` pour la feature, les findings et les décisions
+- Lire `.claude/data/.dev-workflow-state.json` pour la feature, les findings et les décisions
 - Si phases précédentes non complétées, rediriger vers la phase manquante
 
 ## 2. Lancer les agents code-architect

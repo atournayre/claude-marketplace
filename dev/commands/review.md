@@ -21,7 +21,7 @@ Si non installé :
 
 ## 1. Lire le contexte
 
-- Lire `.dev-workflow-state.json` pour récupérer les fichiers modifiés
+- Lire `.claude/data/.dev-workflow-state.json` pour récupérer les fichiers modifiés
 - Si phase 5 (code) non complétée, rediriger vers `/dev:code`
 
 ## 2. Lancer les reviews en parallèle

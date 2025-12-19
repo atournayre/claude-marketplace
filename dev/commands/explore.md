@@ -21,7 +21,7 @@ Si non installé :
 
 ## 1. Lire le contexte
 
-- Lire `.dev-workflow-state.json` pour connaître la feature en cours
+- Lire `.claude/data/.dev-workflow-state.json` pour connaître la feature en cours
 - Si le fichier n'existe pas, demander à l'utilisateur de lancer `/dev:discover` d'abord
 
 ## 2. Lancer les agents code-explorer

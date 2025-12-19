@@ -12,7 +12,7 @@ Phase 4 du workflow de développement : générer un plan d'implémentation dét
 
 ## 1. Lire le contexte
 
-- Lire `.dev-workflow-state.json` pour récupérer :
+- Lire `.claude/data/.dev-workflow-state.json` pour récupérer :
   - La feature description
   - Les décisions de clarification
   - L'architecture choisie

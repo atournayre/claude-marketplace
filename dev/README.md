@@ -186,7 +186,7 @@ Le workflow inclut des checkpoints aux phases critiques :
 
 ## Fichiers générés
 
-- `.dev-workflow-state.json` : État du workflow en cours
+- `.claude/data/.dev-workflow-state.json` : État du workflow en cours (non versionné)
 - `docs/specs/feature-*.md` : Plans d'implémentation
 
 ## Licence

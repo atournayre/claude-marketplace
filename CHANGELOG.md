@@ -7,6 +7,13 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2025.12.19] - 2025-12-19
+
+### Plugins Updated
+- **dev v2.0.1** - Déplacement du workflow state
+  - Fichier `.dev-workflow-state.json` déplacé vers `.claude/data/.dev-workflow-state.json` (non versionné)
+  - Mise à jour de toutes les instructions des phases
+
 ## [2025.12.17] - 2025-12-17
 
 ### Plugins Added

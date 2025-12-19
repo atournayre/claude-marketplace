@@ -17,7 +17,7 @@ PATH_TO_PLAN: $ARGUMENTS
 
 ## 1. Vérifier le contexte
 
-- Si `PATH_TO_PLAN` non fourni, chercher dans `.dev-workflow-state.json` le `planPath`
+- Si `PATH_TO_PLAN` non fourni, chercher dans `.claude/data/.dev-workflow-state.json` le `planPath`
 - Si toujours pas de plan, demander à l'utilisateur :
   ```
   ⚠️ Aucun plan trouvé.

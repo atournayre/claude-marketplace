@@ -12,7 +12,7 @@ Phase 2 du workflow de développement : identifier et résoudre toutes les ambig
 
 ## 1. Lire le contexte
 
-- Lire `.dev-workflow-state.json` pour la feature et les findings de l'exploration
+- Lire `.claude/data/.dev-workflow-state.json` pour la feature et les findings de l'exploration
 - Si le fichier n'existe pas ou phase 1 non complétée, rediriger vers `/dev:explore`
 
 ## 2. Analyser les zones d'ombre

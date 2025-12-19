@@ -12,7 +12,7 @@ Phase 7 du workflow de développement : documenter ce qui a été accompli et su
 
 ## 1. Lire le contexte
 
-- Lire `.dev-workflow-state.json` pour récupérer toutes les informations du workflow
+- Lire `.claude/data/.dev-workflow-state.json` pour récupérer toutes les informations du workflow
 - Lister tous les fichiers créés/modifiés
 
 ## 2. Générer le résumé

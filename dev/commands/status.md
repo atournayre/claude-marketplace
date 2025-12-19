@@ -10,7 +10,7 @@ Afficher l'état actuel du workflow de développement pour que l'utilisateur sac
 
 # Instructions
 
-1. Chercher un fichier `.dev-workflow-state.json` dans le répertoire courant
+1. Chercher un fichier `.claude/data/.dev-workflow-state.json` dans le répertoire courant
 2. Si le fichier existe, lire l'état du workflow
 3. Afficher le plan avec les statuts de chaque phase
 
