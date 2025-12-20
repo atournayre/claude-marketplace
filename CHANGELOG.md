@@ -7,6 +7,28 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2025.12.20] - 2025-12-20
+
+### Plugins Updated
+- **doc v1.1.2** - Réduction tokens skills
+  - Skill `doc-loader` : optimisation SKILL.md (85→53 lignes)
+  - Externalisation workflow dans `references/workflow-scripts.md`
+- **framework v1.0.1** - Réduction tokens skills
+  - Skills `make-collection`, `make-entity`, `make-out`, `make-factory`, `make-story`, `make-urls`, `make-invalide`, `make-all` : optimisées
+  - Externalisation templates et exemples vers `references/usage.md`
+  - Économie tokens: ~16k (72% réduction)
+- **git v1.4.17** - Réduction tokens skills
+  - Skills `git-pr`, `release-notes` : optimisées
+  - Externalisation templates vers `references/`
+- **github v1.1.1** - Réduction tokens skills
+  - Skill `github-impact` : optimisation SKILL.md
+  - Externalisation report templates vers `references/`
+- **qa v1.2.1** - Réduction tokens skills
+  - Skills `elegant-objects`, `phpstan-resolver` : optimisées
+  - Externalisation patterns et workflows vers `references/`
+- **symfony v1.0.1** - Réduction tokens skills
+  - Skill `symfony-skill` : optimisation SKILL.md (495→83 lignes)
+
 ## [2025.12.19] - 2025-12-19
 
 ### Plugins Updated

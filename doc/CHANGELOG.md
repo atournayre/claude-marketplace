@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.1.2] - 2025-12-20
+
+### Changed
+- Skill `doc-loader` : réduction tokens SKILL.md (85→53 lignes)
+  - Externalisation workflow détaillé vers `references/workflow-scripts.md`
+  - Documentation progressive : essentials en SKILL.md, détails en références
+
 ## [1.1.1] - 2025-12-14
 
 ### Changed

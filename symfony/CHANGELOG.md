@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.0.1] - 2025-12-20
+
+### Changed
+- Skill `symfony-skill` : réduction tokens SKILL.md (495→83 lignes)
+  - Documentation progressive : essentials en SKILL.md
+  - Références existantes : 5 fichiers dans `references/` (doctrine-advanced, security-detailed, api-platform, testing-complete, performance-tuning)
+
 ## [1.0.0] - 2025-11-15
 
 ### Added

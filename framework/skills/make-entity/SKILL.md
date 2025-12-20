@@ -10,35 +10,19 @@ version: 1.0.0
 ## Description
 Génère une entité Doctrine complète avec son repository selon les principes Elegant Objects.
 
-L'entité générée inclut :
-- Constructeur privé avec factory statique `create()`
-- Traits Elegant Objects (DatabaseTrait, NullTrait, DependencyInjectionTrait)
-- Implémentation des interfaces de contrats
-- Repository avec interface
-
 ## Usage
 ```
 Use skill framework:make:entity
-
-Vous serez invité à fournir :
-- Le nom de l'entité (ex: Product, User, Order)
-- Les propriétés avec leurs types (ex: name:string, email:string, isActive:bool)
 ```
 
-## Templates
-- `Entity/Utilisateur.php` - Template d'entité
-- `Repository/UtilisateurRepository.php` - Template de repository
-- `Repository/UtilisateurRepositoryInterface.php` - Template d'interface repository
-
 ## Variables requises
-- **{EntityName}** - Nom de l'entité en PascalCase (ex: Utilisateur, Product)
-- **{entityName}** - Nom de l'entité en camelCase (ex: utilisateur, product)
+- **{EntityName}** - Nom de l'entité en PascalCase (ex: Product)
+- **{entityName}** - Nom de l'entité en camelCase (ex: product)
 - **{namespace}** - Namespace du projet (défaut: App)
-- **{properties}** - Liste des propriétés avec types (array)
+- **{properties}** - Liste des propriétés avec types (name:string, price:float)
 
 ## Dépendances
-- Requiert que les Contracts soient présents
-- Appelle automatiquement `framework:make:contracts` si les interfaces n'existent pas
+- Contracts présents (appelle `framework:make:contracts` si absent)
 
 ## Outputs
 - `src/Entity/{EntityName}.php`
@@ -49,60 +33,27 @@ Vous serez invité à fournir :
 
 1. Demander le nom de l'entité (EntityName)
 2. Demander les propriétés (nom, type, nullable)
-3. Vérifier si `src/Contracts/` existe
-   - Si non : appeler `framework:make:contracts`
-4. Générer l'entité depuis le template :
-   - Remplacer `{EntityName}` par le nom fourni
-   - Remplacer `{entityName}` par la version camelCase
-   - Générer les propriétés dans le constructeur
-   - Générer les méthodes getter pour chaque propriété
+3. Vérifier si `src/Contracts/` existe, sinon appeler `framework:make:contracts`
+4. Générer l'entité depuis le template `templates/Entity/`
 5. Générer le repository et son interface
 6. Afficher le résumé des fichiers créés
 
 ## Patterns appliqués
 
 ### Entité
-- Classe `final`
-- Constructeur privé
-- Factory statique `create()` pour instanciation
+- Classe `final`, constructeur privé, factory statique `create()`
 - Traits : DatabaseTrait, NullTrait, DependencyInjectionTrait
-- Attributs Doctrine ORM (#[ORM\Entity], #[ORM\Id], #[ORM\Column])
-- Implémentation des interfaces :
-  - LoggableInterface
-  - DatabaseEntityInterface
-  - NullableInterface
-  - DependencyInjectionAwareInterface
-  - OutInterface
-  - HasUrlsInterface
-  - InvalideInterface
+- Interfaces : LoggableInterface, DatabaseEntityInterface, NullableInterface, DependencyInjectionAwareInterface, OutInterface, HasUrlsInterface, InvalideInterface
 
 ### Repository
-- Classe `final`
-- Extends ServiceEntityRepository
-- Implémente l'interface du repository
-- Constructeur avec ManagerRegistry uniquement
+- Classe `final`, extends ServiceEntityRepository
+- Implémente interface du repository
 
-## Exemple
+## References
 
-```bash
-Use skill framework:make:entity
-
-# Saisies utilisateur :
-EntityName: Product
-Properties:
-  - id: Uuid
-  - name: string
-  - price: float
-  - isActive: bool
-
-# Résultat :
-✓ src/Entity/Product.php
-✓ src/Repository/ProductRepository.php
-✓ src/Repository/ProductRepositoryInterface.php
-```
+- [Usage](references/usage.md) - Exemples et détails de génération
 
 ## Notes
-- L'ID de type Uuid est ajouté automatiquement
-- Les propriétés sont toujours privées avec getters
-- Pas de setters (immutabilité)
-- La méthode `toLog()` inclut automatiquement toutes les propriétés
+- ID Uuid ajouté automatiquement
+- Propriétés privées avec getters (pas de setters)
+- Méthode `toLog()` inclut toutes les propriétés

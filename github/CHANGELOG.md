@@ -5,6 +5,15 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.1.1] - 2025-12-20
+
+### Changed
+- Skill `github-impact` : réduction tokens SKILL.md (443→67 lignes)
+  - Externalisation report templates vers `references/`
+  - `business-report-template.md` : structure rapport métier
+  - `technical-report-template.md` : structure rapport technique
+  - Pattern : essentials en SKILL.md, templates en références
+
 ## [1.1.0] - 2025-11-16
 
 ### Added

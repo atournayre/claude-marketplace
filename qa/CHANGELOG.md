@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.2.1] - 2025-12-20
+
+### Changed
+- Skills `elegant-objects`, `phpstan-resolver` : réduction tokens SKILL.md
+  - Externalisation patterns et workflows vers `references/`
+  - `elegant-objects` : detection patterns (lignes: 159→59)
+  - `phpstan-resolver` : workflow scripts (lignes: 250→63)
+
 ## [1.2.0] - 2025-11-25
 
 ### Added
