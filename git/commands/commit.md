@@ -1,7 +1,7 @@
 ---
 model: claude-haiku-4-5-20251001
 allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git push:*)
-argument-hint: [message] | --no-verify | --push
+argument-hint: [message] | --verify | --no-push
 description: Créer des commits bien formatés avec format conventional et emoji
 ---
 
@@ -11,7 +11,7 @@ Créer un commit bien formaté : $ARGUMENTS
 
 ## Ce Que Fait Cette Commande
 
-1. Sauf si spécifié avec --no-verify, exécute automatiquement les vérifications pre-commit :
+1. Si spécifié avec --verify, exécute les vérifications pre-commit :
     - make qa pour assurer la qualité du code
 2. Vérifie quels fichiers sont stagés avec git status
 3. Si 0 fichiers sont stagés, ajoute automatiquement tous les fichiers modifiés et nouveaux avec git add
@@ -19,7 +19,7 @@ Créer un commit bien formaté : $ARGUMENTS
 5. Analyse le diff pour déterminer si plusieurs changements logiques distincts sont présents
 6. Si plusieurs changements distincts sont détectés, suggère de diviser le commit en plusieurs commits plus petits
 7. Pour chaque commit (ou le commit unique si pas de division), crée un message de commit utilisant le format conventional avec emoji
-8. Si l'option --push est spécifiée, pousse automatiquement le(s) commit(s) vers le remote avec git push
+8. Sauf si l'option --no-push est spécifiée, pousse automatiquement le(s) commit(s) vers le remote avec git push
 
 ## Bonnes Pratiques pour les Commits
 
@@ -144,18 +144,19 @@ Exemple de division de commits :
 
 ## Options de Commande
 
-- --no-verify: Ignorer l'exécution des vérifications pre-commit (qa)
-- --push: Pousser automatiquement le(s) commit(s) vers le remote après création
+- --verify: Exécuter les vérifications pre-commit (qa) avant de commiter
+- --no-push: Ne pas pousser automatiquement le(s) commit(s) vers le remote après création
 
 ## Notes Importantes
 
-- Par défaut, les vérifications pre-commit (qa) s'exécuteront pour assurer la qualité du code
-- Si ces vérifications échouent, il vous sera demandé si vous voulez procéder au commit quand même ou corriger les problèmes d'abord
+- Par défaut, les vérifications pre-commit (qa) ne s'exécutent PAS pour permettre un workflow rapide
+- Si vous utilisez --verify et que les vérifications échouent, il vous sera demandé si vous voulez procéder au commit quand même ou corriger les problèmes d'abord
 - Si des fichiers spécifiques sont déjà stagés, la commande ne commitera que ces fichiers
 - Si aucun fichier n'est stagé, elle stagera automatiquement tous les fichiers modifiés et nouveaux
 - Le message de commit sera construit basé sur les changements détectés
 - Avant de commiter, la commande révisera le diff pour identifier si plusieurs commits seraient plus appropriés
 - Si elle suggère plusieurs commits, elle vous aidera à stager et commiter les changements séparément
 - Révise toujours le diff du commit pour s'assurer que le message correspond aux changements
-- Avec --push, le commit sera automatiquement poussé vers le remote après création
-- Les options peuvent être combinées : /git:commit --no-verify --push
+- Par défaut, le(s) commit(s) seront automatiquement poussés vers le remote après création
+- Avec --no-push, le commit ne sera pas poussé et restera local
+- Les options peuvent être combinées : /git:commit --verify --no-push
