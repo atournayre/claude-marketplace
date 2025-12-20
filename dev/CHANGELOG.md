@@ -5,6 +5,30 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.1.0] - 2025-12-20
+
+### Added
+- Support complet des **git worktrees** pour le développement parallèle de features
+- Commande `/dev:worktree` pour gérer les worktrees :
+  - `create <name> [base]` : Créer un worktree pour une feature
+  - `list` : Lister tous les worktrees actifs
+  - `status [name]` : Afficher le statut d'un worktree
+  - `remove <name>` : Supprimer un worktree
+  - `switch <name>` : Basculer vers un worktree
+- Fichier `.claude/data/.dev-worktrees.json` pour tracker les métadonnées des worktrees
+- Proposition automatique de création de worktree dans `/dev:feature` (Phase init)
+- Phase 8 (Cleanup) dans `/dev:feature` pour nettoyer les worktrees après merge
+
+### Changed
+- Workflow `/dev:feature` étendu à 9 phases (ajout de la Phase 8 : Cleanup)
+- Fichier `.dev-workflow-state.json` : ajout du champ `worktree` pour tracker le worktree associé
+
+### Benefits
+- **Développement parallèle** : Travailler sur plusieurs features simultanément
+- **Pas de stash** : Fini les `git stash` qui s'accumulent
+- **Contexte préservé** : IDE, serveur de dev et tests restent dans leur état
+- **Branche main propre** : Isolation complète de chaque feature
+
 ## [2.0.1] - 2025-12-19
 
 ### Changed

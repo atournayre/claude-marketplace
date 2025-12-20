@@ -34,18 +34,69 @@ Continuer sans ces agents ? (Les phases 1, 3, 6 seront simplifiées)
 
 ## Initialisation
 
-1. Créer le fichier `.claude/data/.dev-workflow-state.json` (créer le répertoire `.claude/data/` si nécessaire) :
+1. **Proposition de worktree** (optionnel)
+
+Demander à l'utilisateur s'il souhaite créer un worktree pour cette feature :
+
+```
+📂 Créer un worktree pour cette feature ?
+
+Avantages des worktrees :
+  • Garder votre branche main propre
+  • Travailler sur plusieurs features en parallèle
+  • Préserver le contexte de développement (IDE, serveur, tests)
+  • Pas besoin de stash ou de switcher de branche
+
+Le worktree sera créé dans : ../{repo-name}-{feature-slug}
+
+Créer le worktree ? (o/n)
+```
+
+Si oui :
+- Normaliser le nom de la feature en slug (kebab-case)
+- Créer le worktree avec `/dev:worktree create {feature-slug}`
+- Informer l'utilisateur du chemin et qu'il doit relancer Claude Code dans le worktree
+- **ARRÊTER le workflow** avec un message :
+  ```
+  ✅ Worktree créé : ../{repo-name}-{feature-slug}
+
+  Pour continuer le workflow :
+    1. cd ../{repo-name}-{feature-slug}
+    2. Relancer Claude Code
+    3. /dev:feature {description}
+  ```
+
+Si non : Continuer le workflow normalement.
+
+2. Créer le fichier `.claude/data/.dev-workflow-state.json` (créer le répertoire `.claude/data/` si nécessaire) :
 ```json
 {
   "feature": "$ARGUMENTS",
   "status": "in_progress",
   "startedAt": "{timestamp}",
   "currentPhase": 0,
+  "worktree": null,
   "phases": {}
 }
 ```
 
-2. Créer la todo list avec toutes les phases :
+Si un worktree a été créé, mettre à jour avec :
+```json
+{
+  "feature": "$ARGUMENTS",
+  "status": "in_progress",
+  "startedAt": "{timestamp}",
+  "currentPhase": 0,
+  "worktree": {
+    "name": "{feature-slug}",
+    "path": "../{repo-name}-{feature-slug}",
+    "branch": "feature/{feature-slug}"
+  },
+  "phases": {}
+}
+```
+
+3. Créer la todo list avec toutes les phases :
 ```
 🔄 Workflow de développement : {feature}
 
@@ -124,6 +175,40 @@ Exécuter le contenu de `/dev:summary` :
 - Documenter les décisions
 - Suggérer prochaines étapes
 
+## Phase 8 : Cleanup (optionnel)
+
+Si un worktree a été créé (vérifier dans `.claude/data/.dev-workflow-state.json`), proposer de le nettoyer :
+
+```
+🧹 Nettoyage du worktree
+
+La feature est terminée et prête à être mergée.
+Souhaitez-vous nettoyer le worktree ?
+
+Actions disponibles :
+  1. Nettoyer maintenant (supprimer worktree + branche)
+  2. Garder pour l'instant (vous pouvez le supprimer plus tard)
+  3. Voir le statut du worktree
+
+Votre choix ? (1/2/3)
+```
+
+**Option 1 : Nettoyer maintenant**
+- Exécuter `/dev:worktree remove {feature-name}`
+- Confirmer la suppression de la branche si elle a été mergée
+- Mettre à jour `.claude/data/.dev-workflow-state.json` (status: "completed", worktree: null)
+
+**Option 2 : Garder**
+- Informer comment nettoyer plus tard :
+  ```
+  Pour nettoyer plus tard :
+    /dev:worktree remove {feature-name}
+  ```
+
+**Option 3 : Voir le statut**
+- Exécuter `/dev:worktree status {feature-name}`
+- Puis reproposer les options 1 et 2
+
 # Affichage du statut
 
 À chaque transition de phase, afficher :
@@ -139,15 +224,19 @@ Exécuter le contenu de `/dev:summary` :
   ⬜ 5. Code       - Implémenter
   ⬜ 6. Review     - QA complète
   ⬜ 7. Summary    - Résumé final
+  ⬜ 8. Cleanup    - Nettoyer worktree (si créé)
 ```
 
 # Règles
 
+- **Proposition de worktree** à l'initialisation (optionnel)
 - **Checkpoints obligatoires** aux phases 0, 2, 3, 5, 6
-- **Ne jamais sauter de phase**
+- **Ne jamais sauter de phase** (0-7)
+- **Phase 8 (Cleanup)** uniquement si un worktree a été créé
 - **Mettre à jour** `.claude/data/.dev-workflow-state.json` après chaque phase
 - **Afficher le statut** à chaque transition
 - Si l'utilisateur interrompt, il peut reprendre avec `/dev:status` + la commande de la phase suivante
+- **Worktrees** : Toutes les métadonnées sont dans `.claude/data/.dev-worktrees.json`
 
 # Commande d'aide
 
@@ -162,7 +251,7 @@ Exemple :
   /dev:feature Ajouter authentification OAuth
   /dev:feature Refactorer le module de paiement
 
-Ce workflow exécute 8 phases :
+Ce workflow exécute jusqu'à 9 phases :
 0. Discover → Comprendre le besoin
 1. Explore  → Explorer le codebase
 2. Clarify  → Questions de clarification
@@ -171,6 +260,12 @@ Ce workflow exécute 8 phases :
 5. Code     → Implémenter
 6. Review   → QA complète
 7. Summary  → Résumé final
+8. Cleanup  → Nettoyer worktree (si créé)
+
+💡 Worktrees (optionnel) :
+Le workflow peut créer un git worktree pour isoler votre feature
+et permettre le développement parallèle. Voir /dev:worktree --help
 
 Pour voir le statut : /dev:status
+Pour gérer les worktrees : /dev:worktree
 ```
