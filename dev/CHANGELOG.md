@@ -5,6 +5,17 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.1.1] - 2025-12-20
+
+### Changed
+- Ajout du champ `output-style` dans le frontmatter des commandes pour formatage automatique
+  - `dev:status` → `ultra-concise`
+  - `dev:summary` → `ultra-concise`
+  - `dev:explore` → `bullet-points`
+  - `dev:discover` → `bullet-points`
+  - `dev:design` → `table-based`
+  - `dev:clarify` → `table-based`
+
 ## [2.1.0] - 2025-12-20
 
 ### Added

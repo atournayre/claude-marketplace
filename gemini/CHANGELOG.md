@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1] - 2025-12-20
+
+### Changed
+- Ajout du champ `output-style` dans le frontmatter des commandes pour formatage automatique
+  - `gemini:analyze` → `bullet-points`
+
 ## [1.0.0] - 2025-12-16
 
 ### Added

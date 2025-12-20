@@ -13,6 +13,19 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [2025.12.20] - 2025-12-20
 
 ### Plugins Updated
+- **dev v2.1.1** - Support output-style dans frontmatter
+  - Ajout champ `output-style` pour formatage automatique (6 commandes)
+  - Styles : `ultra-concise`, `bullet-points`, `table-based`
+- **doc v1.1.3** - Support output-style dans frontmatter
+  - Ajout champ `output-style` : `markdown-focused` (2 commandes)
+- **gemini v1.0.1** - Support output-style dans frontmatter
+  - Ajout champ `output-style` : `bullet-points` (1 commande)
+- **git v1.4.18** - Support output-style dans frontmatter
+  - Ajout champ `output-style` : `ultra-concise`, `html-structured` (2 commandes)
+- **github v1.1.2** - Support output-style dans frontmatter
+  - Ajout champ `output-style` : `bullet-points` (1 commande)
+- **marketing v1.0.1** - Support output-style dans frontmatter
+  - Ajout champ `output-style` : `markdown-focused` (1 commande)
 - **doc v1.1.2** - Réduction tokens skills
   - Skill `doc-loader` : optimisation SKILL.md (85→53 lignes)
   - Externalisation workflow dans `references/workflow-scripts.md`
