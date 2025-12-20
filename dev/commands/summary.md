@@ -2,7 +2,19 @@
 description: Résumé de ce qui a été construit (Phase 7)
 model: claude-haiku-4-5-20251001
 allowed-tools: Read, Glob
+output-style: ultra-concise
 ---
+
+# Configuration de sortie
+
+**IMPORTANT** : Cette commande génère un résumé concis et nécessite un format de sortie spécifique.
+
+Lis le frontmatter de cette commande. Si un champ `output-style` est présent, exécute immédiatement :
+```
+/output-style <valeur-du-champ>
+```
+
+*Note : Une fois que le champ `output-style` sera supporté nativement par Claude Code, cette instruction pourra être supprimée.*
 
 # Objectif
 

@@ -21,6 +21,56 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 🔍 **Review** | 1.0.0 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
 | 📱 **Marketing** | 1.0.0 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
 
+## 🎨 Convention Output Styles
+
+Certaines commandes du marketplace spécifient un **output-style** recommandé dans leur frontmatter pour optimiser le formatage de sortie.
+
+### Fonctionnement
+
+Chaque commande concernée inclut un champ `output-style` dans son frontmatter YAML :
+
+```yaml
+---
+description: Génère un rapport HTML d'analyse d'impact
+output-style: html-structured
+---
+```
+
+Lors de l'exécution, Claude détecte ce champ et bascule automatiquement vers le style approprié.
+
+### Styles Utilisés
+
+| Style | Usage | Commandes |
+|-------|-------|-----------|
+| `html-structured` | Rapports HTML complets | `git:release-report` |
+| `markdown-focused` | Documentation structurée | `doc:adr`, `marketing:linkedin`, `doc:rtfm` |
+| `ultra-concise` | Statuts et résumés courts | `dev:status`, `dev:summary`, `git:branch` |
+| `bullet-points` | Analyses et explorations | `dev:explore`, `dev:discover`, `gemini:analyze`, `github:impact` |
+| `table-based` | Comparaisons structurées | `dev:design`, `dev:clarify` |
+
+### Configuration des Styles
+
+Les output-styles sont définis dans `~/.claude/output-styles/`. Claude Code les charge automatiquement au démarrage.
+
+Pour créer un style personnalisé, crée un fichier `~/.claude/output-styles/mon-style.md` :
+
+```markdown
+---
+name: Mon Style Custom
+description: Description du style
+---
+
+Instructions de formatage pour Claude...
+```
+
+### Feature Request
+
+Le champ `output-style` dans le frontmatter n'est **pas encore supporté nativement** par Claude Code. Nous avons soumis une [feature request](FEATURE_REQUEST.md) pour ajouter ce support.
+
+En attendant, les commandes incluent une instruction manuelle pour que Claude lise et applique le style automatiquement.
+
+**Voir** : [FEATURE_REQUEST.md](FEATURE_REQUEST.md) pour les détails techniques et la proposition complète.
+
 ## 🚀 Installation
 
 ### Ajouter le Marketplace

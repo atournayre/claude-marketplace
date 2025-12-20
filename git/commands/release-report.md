@@ -2,6 +2,7 @@
 name: git:release-report
 description: Génère un rapport HTML d'analyse d'impact entre deux branches
 argument-hint: [branch-source, branche-cible, nom-release]
+output-style: html-structured
 arguments:
   - name: branche-source
     description: Branche source à analyser (ex release/v27.0.0)
@@ -13,6 +14,17 @@ arguments:
     description: Nom de la release pour le fichier (optionnel)
     required: false
 ---
+
+# Configuration de sortie
+
+**IMPORTANT** : Cette commande génère un rapport HTML et nécessite un format de sortie spécifique.
+
+Lis le frontmatter de cette commande. Si un champ `output-style` est présent, exécute immédiatement :
+```
+/output-style <valeur-du-champ>
+```
+
+*Note : Une fois que le champ `output-style` sera supporté nativement par Claude Code, cette instruction pourra être supprimée.*
 
 # Générer rapport d'analyse de release
 

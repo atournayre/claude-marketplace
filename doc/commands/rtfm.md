@@ -3,7 +3,19 @@ model: claude-haiku-4-5-20251001
 allowed-tools: Bash, WebFetch, WebSearch
 argument-hint: [url|doc-name]
 description: Lit la documentation technique - RTFM (Read The Fucking Manual)
+output-style: markdown-focused
 ---
+
+# Configuration de sortie
+
+**IMPORTANT** : Cette commande génère une synthèse de documentation structurée et nécessite un format de sortie spécifique.
+
+Lis le frontmatter de cette commande. Si un champ `output-style` est présent, exécute immédiatement :
+```
+/output-style <valeur-du-champ>
+```
+
+*Note : Une fois que le champ `output-style` sera supporté nativement par Claude Code, cette instruction pourra être supprimée.*
 
 # Documentation Reader - RTFM
 
