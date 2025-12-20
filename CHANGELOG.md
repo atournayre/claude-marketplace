@@ -20,6 +20,8 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - Skills `make-collection`, `make-entity`, `make-out`, `make-factory`, `make-story`, `make-urls`, `make-invalide`, `make-all` : optimisées
   - Externalisation templates et exemples vers `references/usage.md`
   - Économie tokens: ~16k (72% réduction)
+- **git v1.4.18** - Réoptimisation commande git:commit
+  - Commande `git:commit` : meilleure organisation des options
 - **git v1.4.17** - Réduction tokens skills
   - Skills `git-pr`, `release-notes` : optimisées
   - Externalisation templates vers `references/`

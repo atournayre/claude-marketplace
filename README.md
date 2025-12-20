@@ -11,7 +11,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 🤖 **Claude** | 1.0.0 | Plugin de base pour Claude Code avec commandes essentielles | [README](claude/README.md) |
 | 🎨 **Customize** | 1.0.0 | Personnalise ton expérience avec hooks, output styles et status lines | [README](customize/README.md) |
 | ⚙️ **Dev** | 2.0.1 | Workflow structuré 8 phases + toolkit complet | [README](dev/README.md) |
-| 🔧 **Git** | 1.4.17 | Workflow Git complet : branches, commits, conflits, PR | [README](git/README.md) |
+| 🔧 **Git** | 1.4.18 | Workflow Git complet : branches, commits, conflits, PR | [README](git/README.md) |
 | 🐙 **GitHub** | 1.1.1 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
 | 📋 **QA** | 1.2.1 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
 | 📚 **Doc** | 1.1.2 | Documentation : ADR, RTFM, génération docs, framework docs | [README](doc/README.md) |
