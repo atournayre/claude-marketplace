@@ -67,12 +67,80 @@ Tu peux exécuter chaque phase individuellement :
 | `/dev:review` | 6 | QA complète (PHPStan + EO + review) |
 | `/dev:summary` | 7 | Résumé final |
 
+## Git Worktrees
+
+Le plugin supporte les git worktrees pour permettre le développement de plusieurs features en parallèle.
+
+### Qu'est-ce qu'un worktree ?
+
+Un git worktree permet d'avoir plusieurs répertoires de travail pour un même dépôt. Au lieu de faire des `git checkout` qui changent les fichiers dans votre dossier actuel, vous avez plusieurs dossiers, chacun sur une branche différente.
+
+**Avantages :**
+- Travailler sur plusieurs features simultanément
+- Pas besoin de stash ou de switcher de branche
+- Préserver le contexte (IDE, serveur de dev, tests)
+- Garder la branche main propre
+
+### Commande /dev:worktree
+
+Gestion complète des worktrees :
+
+| Commande | Description |
+|----------|-------------|
+| `/dev:worktree create <name> [base]` | Créer un worktree pour une feature |
+| `/dev:worktree list` | Lister tous les worktrees actifs |
+| `/dev:worktree status [name]` | Afficher le statut d'un worktree |
+| `/dev:worktree remove <name>` | Supprimer un worktree |
+| `/dev:worktree switch <name>` | Basculer vers un worktree |
+
+**Exemple :**
+```bash
+# Créer un worktree pour une feature OAuth
+/dev:worktree create oauth-auth
+
+# Le worktree est créé dans : ../claude-marketplace-oauth-auth
+# Branche créée : feature/oauth-auth
+
+# Basculer vers le worktree
+cd ../claude-marketplace-oauth-auth
+
+# Travailler sur la feature...
+
+# Supprimer le worktree une fois mergé
+/dev:worktree remove oauth-auth
+```
+
+### Intégration avec /dev:feature
+
+Le workflow `/dev:feature` propose automatiquement de créer un worktree à l'initialisation :
+
+```bash
+/dev:feature Ajouter OAuth
+
+# 📂 Créer un worktree pour cette feature ?
+#
+# Avantages des worktrees :
+#   • Garder votre branche main propre
+#   • Travailler sur plusieurs features en parallèle
+#   • Préserver le contexte de développement
+#
+# Créer le worktree ? (o/n)
+```
+
+Si vous acceptez :
+1. Un worktree est créé automatiquement
+2. Vous êtes invité à changer de répertoire
+3. Le workflow continue dans le nouveau worktree
+
+À la fin du workflow (Phase 8), le nettoyage du worktree est proposé.
+
 ## Commandes utilitaires
 
 | Commande | Description |
 |----------|-------------|
 | `/dev:debug <error>` | Analyser et résoudre une erreur |
 | `/dev:log <fichier>` | Ajouter `LoggableInterface` à un fichier PHP |
+| `/dev:worktree <action>` | Gérer les git worktrees (voir section ci-dessus) |
 
 ## Exemple d'utilisation
 
