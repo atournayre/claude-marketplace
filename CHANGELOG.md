@@ -20,6 +20,12 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - Ajout champ `output-style` : `markdown-focused` (2 commandes)
 - **gemini v1.0.1** - Support output-style dans frontmatter
   - Ajout champ `output-style` : `bullet-points` (1 commande)
+- **git v1.5.0** - Script centralisé emoji + PR titles Conventional Commits
+  - Nouveau script `scripts/commit-emoji.sh` : source de vérité unique pour mapping type → emoji
+  - Support 16 types (feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert, wip, hotfix, security, deps, breaking)
+  - Skill `git-pr` : utilisation script centralisé pour titres PR
+  - Titres PR au format `emoji type(scope): description` conforme aux conventions
+  - Détection automatique type et scope optionnel depuis nom de branche
 - **git v1.4.18** - Support output-style dans frontmatter
   - Ajout champ `output-style` : `ultra-concise`, `html-structured` (2 commandes)
 - **github v1.1.2** - Support output-style dans frontmatter

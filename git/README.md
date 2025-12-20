@@ -290,6 +290,44 @@ Crée une Pull Request optimisée avec workflow structuré.
 🤖 Generated with Claude Code
 ```
 
+## Scripts Utilitaires
+
+### `scripts/commit-emoji.sh`
+
+Script centralisé pour le mapping type → emoji. Source de vérité unique utilisée par les autres scripts.
+
+**Usage :**
+```bash
+# Sourcer pour utiliser la fonction
+source scripts/commit-emoji.sh
+emoji=$(get_commit_emoji "feat")  # ✨
+
+# Ou appel direct
+./scripts/commit-emoji.sh feat  # ✨
+```
+
+**Types supportés :**
+| Type | Emoji | Description |
+|------|-------|-------------|
+| `feat` | ✨ | Nouvelle fonctionnalité |
+| `fix` | 🐛 | Correction de bug |
+| `docs` | 📝 | Documentation |
+| `style` | 💄 | Formatage/style |
+| `refactor` | ♻️ | Refactorisation |
+| `perf` | ⚡️ | Performance |
+| `test` | ✅ | Tests |
+| `build` | 📦️ | Build |
+| `ci` | 🚀 | CI/CD |
+| `chore` | 🔧 | Maintenance |
+| `revert` | ⏪️ | Annulation |
+| `wip` | 🚧 | Travail en cours |
+| `hotfix` | 🚑️ | Hotfix critique |
+| `security` | 🔒️ | Sécurité |
+| `deps` | ➕ | Dépendances |
+| `breaking` | 💥 | Breaking change |
+
+---
+
 ## Skills Disponibles
 
 ### `release-notes`

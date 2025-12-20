@@ -57,6 +57,38 @@ Si un scope manque :
 - 📋 Liste des scopes manquants affichée
 - 🔄 Commande de renouvellement suggérée
 
+## Format du Titre (Conventional Commits)
+
+Le titre de la PR respecte le format [Conventional Commits](https://www.conventionalcommits.org/) avec emoji, conforme à `git/commands/commit.md`.
+
+### Format Généré
+
+```
+emoji type(scope): description
+```
+
+### Détection Automatique
+
+| Nom de branche | Titre généré |
+|----------------|--------------|
+| `feat/add-login` | `✨ feat: add login` |
+| `fix/123-button-bug` | `🐛 fix: [titre issue #123]` |
+| `feat/auth/oauth-support` | `✨ feat(auth): oauth support` |
+| `refactor/api/cleanup` | `♻️ refactor(api): cleanup` |
+| `random-branch` | `🔧 chore: random branch` |
+
+### Types et Emojis
+
+Le mapping type → emoji utilise le script centralisé `${CLAUDE_PLUGIN_ROOT}/scripts/commit-emoji.sh`.
+
+Voir la documentation complète dans le [README principal](../../README.md#scriptscommit-emojish).
+
+### Scope Optionnel
+
+Le scope est détecté si la branche suit le format `type/scope/description` :
+- `feat/auth/login` → `✨ feat(auth): login`
+- `fix/api/endpoint` → `🐛 fix(api): endpoint`
+
 ## Utilisation
 
 ### Via Slash Command

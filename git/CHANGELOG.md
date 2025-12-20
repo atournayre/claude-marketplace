@@ -5,6 +5,22 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.5.0] - 2025-12-20
+
+### Added
+- Script utilitaire `scripts/commit-emoji.sh` : source de vérité unique pour le mapping type → emoji
+  - Support 16 types de commits (feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert, wip, hotfix, security, deps, breaking)
+  - Réutilisable par tous les scripts et skills du plugin
+  - Peut être sourcé ou appelé directement
+
+### Changed
+- Skill `git-pr` : utilisation du script centralisé `commit-emoji.sh` pour la génération des titres PR
+  - Titres PR au format `emoji type(scope): description` conforme aux conventions
+  - Détection automatique du type depuis le nom de branche
+  - Scope optionnel détecté (format `type/scope/description`)
+  - Description depuis issue #N ou nom de branche
+  - Fallback sur `chore` si type non reconnu
+
 ## [1.4.18] - 2025-12-20
 
 ### Changed

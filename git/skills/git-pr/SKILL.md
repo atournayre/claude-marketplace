@@ -29,7 +29,7 @@ PR_TEMPLATE_PATH=".github/pull_request_template.md"
 4. Analyser changements git (`scripts/analyze_changes.sh`)
 5. Confirmer branche de base (ou `AskUserQuestion`)
 6. Générer description PR intelligente
-7. Push et créer PR (`scripts/create_pr.sh`)
+7. Push et créer PR avec titre Conventional Commits (`scripts/create_pr.sh`)
 8. Assigner milestone (`scripts/assign_milestone.py`)
 9. Assigner projet GitHub (`scripts/assign_project.py`)
 10. Code review automatique (si plugin review installé)
