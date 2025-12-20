@@ -9,6 +9,9 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ### Changed
 - Commande `git:commit` : réoptimisation options pour meilleur workflow
+- Ajout du champ `output-style` dans le frontmatter des commandes pour formatage automatique
+  - `git:branch` → `ultra-concise`
+  - `git:release-report` → `html-structured`
 
 ## [1.4.17] - 2025-12-20
 

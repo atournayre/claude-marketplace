@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.1.3] - 2025-12-20
+
+### Changed
+- Ajout du champ `output-style` dans le frontmatter des commandes pour formatage automatique
+  - `doc:adr` → `markdown-focused`
+  - `doc:rtfm` → `markdown-focused`
+
 ## [1.1.2] - 2025-12-20
 
 ### Changed

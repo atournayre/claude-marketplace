@@ -1,7 +1,21 @@
 ---
 description: Analyse une codebase ou documentation avec Gemini (1M tokens)
 argument-hint: <path> <question>
+output-style: bullet-points
 ---
+
+# Configuration de sortie
+
+**IMPORTANT** : Cette commande génère une analyse structurée et nécessite un format de sortie spécifique.
+
+Lis le frontmatter de cette commande. Si un champ `output-style` est présent, exécute immédiatement :
+```
+/output-style <valeur-du-champ>
+```
+
+*Note : Une fois que le champ `output-style` sera supporté nativement par Claude Code, cette instruction pourra être supprimée.*
+
+# Analyse avec Gemini
 
 Délègue l'analyse de contextes ultra-longs à Gemini 2.5 Pro.
 

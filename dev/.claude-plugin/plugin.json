@@ -1,7 +1,7 @@
 {
   "name": "dev",
   "description": "Workflow structuré de développement de features en 8 phases avec agents spécialisés et support git worktrees",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"

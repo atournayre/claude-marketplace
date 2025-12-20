@@ -2,7 +2,19 @@
 description: Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace
 argument-hint: "[nombre-de-jours]"
 model: claude-sonnet-4-20250514
+output-style: markdown-focused
 ---
+
+# Configuration de sortie
+
+**IMPORTANT** : Cette commande génère du contenu marketing structuré et nécessite un format de sortie spécifique.
+
+Lis le frontmatter de cette commande. Si un champ `output-style` est présent, exécute immédiatement :
+```
+/output-style <valeur-du-champ>
+```
+
+*Note : Une fois que le champ `output-style` sera supporté nativement par Claude Code, cette instruction pourra être supprimée.*
 
 # Génération de post LinkedIn pour le marketplace Claude Plugins
 

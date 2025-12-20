@@ -3,7 +3,19 @@ description: Comprendre le besoin avant développement (Phase 0)
 argument-hint: <description-feature>
 model: claude-sonnet-4-5-20250929
 allowed-tools: Read, AskUserQuestion, Glob, Grep
+output-style: bullet-points
 ---
+
+# Configuration de sortie
+
+**IMPORTANT** : Cette commande génère un résumé de compréhension structuré et nécessite un format de sortie spécifique.
+
+Lis le frontmatter de cette commande. Si un champ `output-style` est présent, exécute immédiatement :
+```
+/output-style <valeur-du-champ>
+```
+
+*Note : Une fois que le champ `output-style` sera supporté nativement par Claude Code, cette instruction pourra être supprimée.*
 
 # Objectif
 
