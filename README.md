@@ -16,7 +16,6 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📋 **QA** | 1.2.1 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
 | 📚 **Doc** | 1.1.2 | Documentation : ADR, RTFM, génération docs, framework docs | [README](doc/README.md) |
 | 🎯 **Symfony** | 1.0.1 | Plugin Symfony avec commandes make, documentation et intégrations | [README](symfony/README.md) |
-| 📊 **Output Styles** | 1.0.0 | Styles de sortie personnalisés pour formater les réponses | [README](output-styles/README.md) |
 | 🏗️ **Framework** | 1.0.1 | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
 | 🔮 **Gemini** | 1.0.0 | Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search | [README](gemini/README.md) |
 | 🔍 **Review** | 1.0.0 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |

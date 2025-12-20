@@ -7,6 +7,9 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+### Plugins Removed
+- **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
+
 ## [2025.12.20] - 2025-12-20
 
 ### Plugins Updated
@@ -180,9 +183,6 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 - **github v1.0.0** - Intégration GitHub
   - Commandes `/github:fix`, `/github:impact`
 
-- **output-styles v1.0.0** - Styles sortie
-  - 7 commandes styles (bullet-points, genui, html, markdown, table, ultra-concise, yaml)
-
 - **claude v1.0.0** - Meta Claude Code
   - Commandes `/claude:alias:add`, `/claude:challenge`, `/claude:doc:load`, `/claude:make:command`
 
@@ -203,6 +203,5 @@ Pour les détails complets de chaque plugin, voir les CHANGELOGs individuels:
 - [qa/CHANGELOG.md](qa/CHANGELOG.md)
 - [doc/CHANGELOG.md](doc/CHANGELOG.md)
 - [github/CHANGELOG.md](github/CHANGELOG.md)
-- [output-styles/CHANGELOG.md](output-styles/CHANGELOG.md)
 - [claude/CHANGELOG.md](claude/CHANGELOG.md)
 - [customize/CHANGELOG.md](customize/CHANGELOG.md)
