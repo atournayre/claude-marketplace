@@ -1,13 +1,15 @@
 #!/bin/bash
 # Applique les labels CD (version:major/minor/patch, feature flag) à une PR
-# Usage: apply_cd_labels.sh <pr_number> <base_branch>
+# Usage: apply_cd_labels.sh <pr_number> <base_branch> [issue_number]
 # Détection CD : présence des labels version:* dans le repo
 # Output: Labels appliqués ou skip si pas en CD
+# Exit codes: 0=OK, 1=erreur, 2=besoin input utilisateur (VERSION_TYPE non déterminé)
 
 set -euo pipefail
 
 PR_NUMBER="${1:-}"
 BASE_BRANCH="${2:-main}"
+ISSUE_NUMBER="${3:-}"
 
 if [ -z "$PR_NUMBER" ]; then
     echo "❌ Numéro de PR requis" >&2
@@ -17,7 +19,11 @@ fi
 # Labels CD attendus
 CD_LABELS=("version:major" "version:minor" "version:patch")
 FEATURE_FLAG_LABEL="🚩 Feature flag"
-FEATURE_FLAG_COMPONENT="templates/components/Feature/Flag.html.twig"
+
+# Patterns de détection (insensibles à la casse, ignorent emojis/préfixes)
+# Ces patterns matchent si le label CONTIENT le mot clé
+MINOR_PATTERNS="enhancement|feature|feat|nouvelle|new"
+PATCH_PATTERNS="bug|fix|bugfix|correction|patch"
 
 # Fonction pour vérifier si un label existe dans le repo
 label_exists() {
@@ -33,6 +39,11 @@ create_label() {
 
     echo "📝 Création du label '$name'..." >&2
     gh label create "$name" --color "$color" --description "$description" 2>/dev/null || true
+}
+
+# Fonction pour nettoyer un label (retirer emojis, lowercase)
+normalize_label() {
+    echo "$1" | sed 's/[^a-zA-Z0-9 ]//g' | tr '[:upper:]' '[:lower:]' | xargs
 }
 
 # Vérifier si le projet est en CD (présence d'au moins un label version:*)
@@ -81,7 +92,7 @@ if [ ${#LABELS_CREATED[@]} -gt 0 ]; then
     echo "✅ Labels créés: ${LABELS_CREATED[*]}" >&2
 fi
 
-# Déterminer le type de version basé sur la branche et les breaking changes
+# Déterminer le type de version
 echo "🔍 Analyse du type de version..." >&2
 
 BRANCH_NAME=$(git branch --show-current)
@@ -92,35 +103,84 @@ if [ -z "$COMMITS" ]; then
     exit 0
 fi
 
-# Déterminer le type de version
 VERSION_LABEL=""
+DETECTION_SOURCE=""
 
-# 1. Check pour breaking change (major) - prioritaire sur tout
+# 1. Check pour breaking change (major) - TOUJOURS prioritaire
 if echo "$COMMITS" | grep -qiE '!:|BREAKING CHANGE|breaking:'; then
     VERSION_LABEL="version:major"
-    echo "  → Breaking change détecté dans commits → version:major" >&2
-# 2. Basé sur le type de branche (pas les commits individuels)
-elif echo "$BRANCH_NAME" | grep -qE '^feat/'; then
-    VERSION_LABEL="version:minor"
-    echo "  → Branche feat/* → version:minor" >&2
-# 3. Tout le reste = patch (fix, hotfix, chore, refactor, etc.)
-else
-    VERSION_LABEL="version:patch"
-    echo "  → Branche non-feat → version:patch" >&2
+    DETECTION_SOURCE="breaking change dans commits"
+fi
+
+# 2. Si pas major, chercher dans les labels de l'issue liée
+if [ -z "$VERSION_LABEL" ] && [ -n "$ISSUE_NUMBER" ]; then
+    ISSUE_LABELS=$(gh issue view "$ISSUE_NUMBER" --json labels -q '.labels[].name' 2>/dev/null || echo "")
+
+    if [ -n "$ISSUE_LABELS" ]; then
+        # Normaliser et chercher les patterns
+        while IFS= read -r label; do
+            NORMALIZED=$(normalize_label "$label")
+
+            if echo "$NORMALIZED" | grep -qiE "$MINOR_PATTERNS"; then
+                VERSION_LABEL="version:minor"
+                DETECTION_SOURCE="label issue '$label'"
+                break
+            elif echo "$NORMALIZED" | grep -qiE "$PATCH_PATTERNS"; then
+                VERSION_LABEL="version:patch"
+                DETECTION_SOURCE="label issue '$label'"
+                # Continue chercher, minor a priorité sur patch
+            fi
+        done <<< "$ISSUE_LABELS"
+    fi
+fi
+
+# 3. Si toujours pas déterminé, regarder le nom de branche
+if [ -z "$VERSION_LABEL" ]; then
+    if echo "$BRANCH_NAME" | grep -qiE '^(feat|feature)/'; then
+        VERSION_LABEL="version:minor"
+        DETECTION_SOURCE="branche feat/*"
+    elif echo "$BRANCH_NAME" | grep -qiE '^(fix|hotfix|bugfix)/'; then
+        VERSION_LABEL="version:patch"
+        DETECTION_SOURCE="branche fix/*"
+    fi
+fi
+
+# 4. Si toujours pas déterminé, regarder le premier commit
+if [ -z "$VERSION_LABEL" ]; then
+    FIRST_COMMIT=$(git log --oneline --reverse "origin/$BASE_BRANCH..HEAD" 2>/dev/null | head -1 || echo "")
+
+    if echo "$FIRST_COMMIT" | grep -qiE '(✨ )?feat(\(|:)'; then
+        VERSION_LABEL="version:minor"
+        DETECTION_SOURCE="premier commit feat"
+    elif echo "$FIRST_COMMIT" | grep -qiE '(🐛 )?fix(\(|:)'; then
+        VERSION_LABEL="version:patch"
+        DETECTION_SOURCE="premier commit fix"
+    fi
+fi
+
+# 5. Si toujours indéterminé → signaler besoin d'input utilisateur
+if [ -z "$VERSION_LABEL" ]; then
+    echo "⚠️ NEED_USER_INPUT: Impossible de déterminer le type de version" >&2
+    echo "  - Branche: $BRANCH_NAME" >&2
+    echo "  - Issue: ${ISSUE_NUMBER:-aucune}" >&2
+    echo "  - Veuillez spécifier: minor (nouvelle fonctionnalité) ou patch (correction)" >&2
+    # On continue sans label version, feature flag sera quand même appliqué si détecté
+fi
+
+if [ -n "$VERSION_LABEL" ]; then
+    echo "  → $DETECTION_SOURCE → $VERSION_LABEL" >&2
 fi
 
 # Détecter feature flag dans les fichiers modifiés
 echo "🔍 Détection feature flags..." >&2
 FEATURE_FLAG_DETECTED=false
 
-# Vérifier si le composant Feature/Flag est utilisé dans les fichiers modifiés
 MODIFIED_FILES=$(git diff --name-only "origin/$BASE_BRANCH..HEAD" 2>/dev/null || echo "")
 
 if [ -n "$MODIFIED_FILES" ]; then
-    # Chercher les références au composant dans les fichiers twig modifiés
     for file in $MODIFIED_FILES; do
         if [[ "$file" == *.twig ]] && [ -f "$file" ]; then
-            if grep -q "Feature:Flag\|Feature/Flag\|component('Feature:Flag')\|component('Feature/Flag')" "$file" 2>/dev/null; then
+            if grep -qE "Feature:Flag|Feature/Flag|component\(['\"]Feature" "$file" 2>/dev/null; then
                 FEATURE_FLAG_DETECTED=true
                 echo "  → Feature flag détecté dans $file" >&2
                 break
@@ -141,6 +201,10 @@ if [ "$FEATURE_FLAG_DETECTED" = true ]; then
 fi
 
 if [ ${#LABELS_TO_APPLY[@]} -eq 0 ]; then
+    if [ -z "$VERSION_LABEL" ]; then
+        echo "⚠️ Aucun label version appliqué (détection impossible)"
+        exit 2  # Code spécial: besoin input utilisateur
+    fi
     echo "ℹ️ Aucun label CD à appliquer"
     exit 0
 fi
@@ -157,3 +221,8 @@ echo "✅ Labels CD appliqués à PR #$PR_NUMBER:"
 for label in "${LABELS_TO_APPLY[@]}"; do
     echo "  - $label"
 done
+
+# Si version indéterminée mais feature flag appliqué
+if [ -z "$VERSION_LABEL" ]; then
+    exit 2
+fi
