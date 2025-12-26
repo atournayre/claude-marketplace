@@ -30,6 +30,8 @@ PR_TEMPLATE_PATH=".github/pull_request_template.md"
 5. Confirmer branche de base (ou `AskUserQuestion`)
 6. Générer description PR intelligente
 7. Push et créer PR avec titre Conventional Commits (`scripts/create_pr.sh`)
+   - Copie automatique des labels depuis l'issue liée
+   - Labels CD si projet en CD (`scripts/apply_cd_labels.sh`)
 8. Assigner milestone (`scripts/assign_milestone.py`)
 9. Assigner projet GitHub (`scripts/assign_project.py`)
 10. Code review automatique (si plugin review installé)
@@ -56,6 +58,29 @@ Agrège résultats (score >= 80) dans commentaire PR.
 
 - [Template review](references/review-template.md) - Format commentaire et agents
 - [Todos template](references/todos-template.md) - TodoWrite et génération description
+
+## Labels CD (Continuous Delivery)
+
+Détection automatique si le repo contient des labels `version:*`.
+
+**Ordre de détection du type de version :**
+1. `BREAKING CHANGE` ou `!:` dans commits → `version:major`
+2. Labels de l'issue liée (insensible casse, ignore emojis) :
+   - Patterns minor : `enhancement`, `feature`, `feat`, `nouvelle`, `new`
+   - Patterns patch : `bug`, `fix`, `bugfix`, `correction`, `patch`
+3. Nom de branche : `feat/*`, `feature/*` → minor / `fix/*`, `hotfix/*` → patch
+4. Premier commit de la branche : `feat:` → minor / `fix:` → patch
+5. Si indéterminé → message `CD_NEED_USER_INPUT`
+
+**Si `CD_NEED_USER_INPUT` apparaît :** Utiliser `AskUserQuestion` pour demander :
+> "Cette PR est une nouvelle fonctionnalité (minor) ou une correction (patch) ?"
+Puis appliquer le label manuellement : `gh pr edit <PR> --add-label "version:minor|patch"`
+
+**Feature flag :**
+- Détecté si fichiers `.twig` modifiés contiennent `Feature:Flag` ou `Feature/Flag`
+- Applique le label `🚩 Feature flag`
+
+**Création labels :** Si labels absents, ils sont créés automatiquement avec couleurs appropriées.
 
 ## Error Handling
 

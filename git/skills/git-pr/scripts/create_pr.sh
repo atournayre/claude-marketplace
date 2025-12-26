@@ -94,4 +94,17 @@ if [ $EXIT_CODE -ne 0 ]; then
     exit 1
 fi
 
+# Copier les labels depuis l'issue liée vers la PR
+if [ -n "$ISSUE_NUMBER" ]; then
+    bash "$SCRIPTS_DIR/copy_issue_labels.sh" "$ISSUE_NUMBER" "$PR_NUMBER"
+fi
+
+# Appliquer les labels CD (version:major/minor/patch, feature flag) si projet en CD
+CD_EXIT_CODE=0
+bash "$SCRIPTS_DIR/apply_cd_labels.sh" "$PR_NUMBER" "$BRANCH_BASE" "$ISSUE_NUMBER" || CD_EXIT_CODE=$?
+
+if [ "$CD_EXIT_CODE" -eq 2 ]; then
+    echo "⚠️ CD_NEED_USER_INPUT" >&2
+fi
+
 echo "$PR_NUMBER"
