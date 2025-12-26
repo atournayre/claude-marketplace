@@ -10,6 +10,18 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2025.12.26] - 2025-12-26
+
+### Plugins Updated
+- **git v1.6.0** - Labels CD + copie labels issue
+  - Nouveau script `copy_issue_labels.sh` : copie automatique labels issue → PR
+  - Nouveau script `apply_cd_labels.sh` : labels CD (version:major/minor/patch, 🚩 Feature flag)
+    - Détection CD via présence labels `version:*`
+    - Détection intelligente du type de version : breaking change, labels issue, branche, commit, fallback utilisateur
+    - Detection feature flag si composant `Feature:Flag` dans fichiers Twig modifiés
+    - Création automatique des labels manquants
+  - Skill `git-pr` : intégration nouvelle logique dans workflow création PR
+
 ## [2025.12.20] - 2025-12-20
 
 ### Plugins Updated
