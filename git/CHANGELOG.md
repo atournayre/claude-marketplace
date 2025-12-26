@@ -5,6 +5,30 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.6.0] - 2025-12-26
+
+### Added
+- Script `copy_issue_labels.sh` : copie automatique des labels d'une issue liée vers la PR
+  - Extraction des labels via `gh issue view`
+  - Application à la PR via `gh pr edit`
+  - Messages informatifs si issue sans labels ou introuvable
+
+- Script `apply_cd_labels.sh` : labels CD (Continuous Delivery) automatiques
+  - Détection CD via présence des labels `version:*` dans le repo
+  - Détection intelligente du type de version avec 5 stratégies de fallback :
+    1. Breaking change dans commits (`!:` ou `BREAKING CHANGE`)
+    2. Labels de l'issue liée (insensible casse, ignore emojis/préfixes)
+    3. Nom de branche (`feat/*` → minor, `fix/*` → patch)
+    4. Premier commit de la branche
+    5. Demande utilisateur si indéterminé (exit code 2)
+  - Label `🚩 Feature flag` si composant `Feature:Flag` détecté dans fichiers Twig modifiés
+  - Création automatique des labels manquants avec couleurs appropriées
+
+### Changed
+- Skill `git-pr` : intégration des nouveaux scripts de labels dans le workflow
+  - Copie labels issue après création PR
+  - Application labels CD si projet en CD
+
 ## [1.5.0] - 2025-12-20
 
 ### Added
