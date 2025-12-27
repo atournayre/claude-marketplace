@@ -26,8 +26,8 @@ DIFF=$(gh pr diff "$PR_NUMBER" 2>/dev/null || echo "")
 
 # Récupérer le template PR s'il existe
 PR_TEMPLATE=""
-if [ -f ".github/pull_request_template.md" ]; then
-    PR_TEMPLATE=$(cat .github/pull_request_template.md)
+if [ -f ".github/PULL_REQUEST_TEMPLATE/default.md" ]; then
+    PR_TEMPLATE=$(cat .github/PULL_REQUEST_TEMPLATE/default.md)
 fi
 
 # Générer sortie JSON pour Claude

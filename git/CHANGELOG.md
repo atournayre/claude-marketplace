@@ -5,6 +5,26 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.7.0] - 2025-12-27
+
+### Added
+- **git-pr-core skill** : centralisation du workflow PR standard
+  - Scripts core partagés : `safe_push_pr.sh`, `create_pr.sh`, `final_report.sh`, etc.
+  - Support assignation milestone et projet GitHub
+  - Code review automatique multi-agents
+  - Templates références (review et todos)
+
+- **git-cd-pr skill** : workflow PR optimisé pour Continuous Delivery
+  - Héritage des fonctionnalités core
+  - Copie automatique des labels d'issue (`copy_issue_labels.sh`)
+  - Détection intelligente du type de version CD (`apply_cd_labels.sh`)
+  - Labels version (major/minor/patch) et feature flags automatiques
+
+### Changed
+- Refactoring : migration du skill `git-pr` vers architecture modulaire (core + variants)
+- Dépendances entre skills sont maintenant explicites et testées
+- Structure : skills spécialisés hériten du core pour éviter duplication
+
 ## [1.6.0] - 2025-12-26
 
 ### Added

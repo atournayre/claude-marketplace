@@ -10,6 +10,23 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2025.12.27] - 2025-12-27
+
+### Plugins Updated
+- **git v1.7.0** - Refactoring architecture core + CD variant
+  - Nouveau skill `git-pr-core` : centralisation du workflow PR standard
+    - Scripts core partagés : `safe_push_pr.sh`, `create_pr.sh`, `final_report.sh`, etc.
+    - Support assignation milestone et projet GitHub
+    - Code review automatique multi-agents
+    - Templates références (review et todos)
+  - Nouveau skill `git-cd-pr` : workflow PR optimisé pour Continuous Delivery
+    - Héritage des fonctionnalités core
+    - Copie automatique des labels d'issue
+    - Détection intelligente du type de version CD
+    - Labels version (major/minor/patch) et feature flags automatiques
+  - Architecture modulaire : skills spécialisés héritent du core pour éviter duplication
+  - Permissions exécution corrigées : scripts `.sh` et `.py` maintenant exécutables
+
 ## [2025.12.26] - 2025-12-26
 
 ### Plugins Updated

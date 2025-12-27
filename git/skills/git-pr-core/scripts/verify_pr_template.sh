@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-TEMPLATE_PATH="${1:-.github/pull_request_template.md}"
+TEMPLATE_PATH="${1:-.github/PULL_REQUEST_TEMPLATE/default.md}"
 
 if [ ! -f "$TEMPLATE_PATH" ]; then
     echo "❌ Template PR absent: $TEMPLATE_PATH" >&2
