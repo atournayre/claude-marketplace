@@ -64,6 +64,22 @@ Phase 7 du workflow de développement : documenter ce qui a été accompli et su
 
 ---
 
+## ⏱️ Temps de développement
+
+| Phase | Durée |
+|-------|-------|
+| 0. Discover | {duration} |
+| 1. Explore | {duration} |
+| 2. Clarify | {duration} |
+| 3. Design | {duration} |
+| 4. Plan | {duration} |
+| 5. Code | {duration} |
+| 6. Review | {duration} |
+| 7. Summary | {duration} |
+| **Total** | **{total_duration}** |
+
+---
+
 ## Prochaines étapes suggérées
 
 1. [ ] {suggestion 1}
@@ -86,6 +102,13 @@ make before-pr-back
 ```
 ```
 
+## Format de durée
+
+Formater les durées de manière lisible :
+- `< 60s` → `{X}s` (ex: `45s`)
+- `< 60min` → `{X}m {Y}s` (ex: `2m 30s`)
+- `>= 60min` → `{X}h {Y}m` (ex: `1h 15m`)
+
 ## 3. Nettoyer le workflow state
 
 Marquer le workflow comme terminé :
@@ -93,8 +116,11 @@ Marquer le workflow comme terminé :
 ```json
 {
   "status": "completed",
-  "completedAt": "{timestamp}",
-  "currentPhase": 7
+  "completedAt": "{ISO timestamp}",
+  "currentPhase": 7,
+  "timing": {
+    "totalDurationMs": {somme de tous les durationMs des phases}
+  }
 }
 ```
 

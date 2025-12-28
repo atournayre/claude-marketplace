@@ -31,18 +31,33 @@ Afficher l'état actuel du workflow de développement pour que l'utilisateur sac
 ```
 🔄 Workflow de développement
 
-  {status} 0. Discover   - Comprendre le besoin
-  {status} 1. Explore    - Explorer codebase
-  {status} 2. Clarify    - Questions clarification
-  {status} 3. Design     - Proposer architectures
-  {status} 4. Plan       - Générer specs
-  {status} 5. Code       - Implémenter
-  {status} 6. Review     - QA complète
-  {status} 7. Summary    - Résumé final
+  {status} 0. Discover   - Comprendre le besoin     {duration}
+  {status} 1. Explore    - Explorer codebase        {duration}
+  {status} 2. Clarify    - Questions clarification  {duration}
+  {status} 3. Design     - Proposer architectures   {duration}
+  {status} 4. Plan       - Générer specs            {duration}
+  {status} 5. Code       - Implémenter              {duration}
+  {status} 6. Review     - QA complète              {duration}
+  {status} 7. Summary    - Résumé final             {duration}
 
 📋 Feature: "{feature_description}"
 📁 Plan: {plan_path}
+⏱️ Temps total: {total_duration}
 ```
+
+# Affichage des durées
+
+Pour chaque phase :
+- Si `completed` avec `durationMs` → afficher `({formatted_duration})`
+- Si `in_progress` avec `startedAt` → afficher `(en cours depuis {elapsed})`
+- Si pas de timing → ne rien afficher
+
+## Format de durée
+
+Formater les durées de manière lisible :
+- `< 60s` → `{X}s` (ex: `45s`)
+- `< 60min` → `{X}m {Y}s` (ex: `2m 30s`)
+- `>= 60min` → `{X}h {Y}m` (ex: `1h 15m`)
 
 # Légende des statuts
 

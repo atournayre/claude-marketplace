@@ -73,9 +73,12 @@ Si non : Continuer le workflow normalement.
 {
   "feature": "$ARGUMENTS",
   "status": "in_progress",
-  "startedAt": "{timestamp}",
+  "startedAt": "{ISO timestamp}",
   "currentPhase": 0,
   "worktree": null,
+  "timing": {
+    "totalDurationMs": null
+  },
   "phases": {}
 }
 ```
@@ -85,12 +88,15 @@ Si un worktree a été créé, mettre à jour avec :
 {
   "feature": "$ARGUMENTS",
   "status": "in_progress",
-  "startedAt": "{timestamp}",
+  "startedAt": "{ISO timestamp}",
   "currentPhase": 0,
   "worktree": {
     "name": "{feature-slug}",
     "path": "../{repo-name}-{feature-slug}",
     "branch": "feature/{feature-slug}"
+  },
+  "timing": {
+    "totalDurationMs": null
   },
   "phases": {}
 }
@@ -110,55 +116,109 @@ Si un worktree a été créé, mettre à jour avec :
 ⬜ 7. Summary    - Résumé final
 ```
 
+## Gestion du timing des phases
+
+**Avant chaque phase :**
+1. Enregistrer le timestamp de début dans `.claude/data/.dev-workflow-state.json` :
+```json
+{
+  "phases": {
+    "{N}": { "status": "in_progress", "startedAt": "{ISO timestamp}" }
+  }
+}
+```
+
+**Après chaque phase :**
+1. Calculer la durée : `durationMs = Date.now() - startedAt`
+2. Mettre à jour le fichier d'état :
+```json
+{
+  "phases": {
+    "{N}": {
+      "status": "completed",
+      "startedAt": "{ISO timestamp}",
+      "completedAt": "{ISO timestamp}",
+      "durationMs": {durée en millisecondes}
+    }
+  }
+}
+```
+
 ## Phase 0 : Discover
+
+**⏱️ Démarrer le timer** (enregistrer startedAt pour phase 0)
 
 Exécuter le contenu de `/dev:discover` :
 - Clarifier la demande si ambiguë
 - Identifier le problème résolu
 - Résumer et confirmer compréhension
 
+**⏱️ Arrêter le timer** (enregistrer completedAt et durationMs)
+
 **Checkpoint :** Confirmer que la compréhension est correcte.
 
 ## Phase 1 : Explore
+
+**⏱️ Démarrer le timer** (phase 1)
 
 Exécuter le contenu de `/dev:explore` :
 - Lancer agents `code-explorer` si disponibles
 - Sinon, exploration manuelle avec Glob/Grep/Read
 - Identifier les patterns et fichiers clés
 
+**⏱️ Arrêter le timer** (phase 1)
+
 ## Phase 2 : Clarify
+
+**⏱️ Démarrer le timer** (phase 2)
 
 Exécuter le contenu de `/dev:clarify` :
 - Poser les questions de clarification
 - Documenter les décisions
 
+**⏱️ Arrêter le timer** (phase 2)
+
 **Checkpoint :** Attendre toutes les réponses.
 
 ## Phase 3 : Design
+
+**⏱️ Démarrer le timer** (phase 3)
 
 Exécuter le contenu de `/dev:design` :
 - Lancer agents `code-architect` si disponibles
 - Sinon, proposer 2-3 approches manuellement
 - Présenter comparaison et recommandation
 
+**⏱️ Arrêter le timer** (phase 3)
+
 **Checkpoint :** Attendre le choix de l'architecture.
 
 ## Phase 4 : Plan
+
+**⏱️ Démarrer le timer** (phase 4)
 
 Exécuter le contenu de `/dev:plan` :
 - Générer le plan dans `docs/specs/`
 - Détailler les étapes d'implémentation
 
+**⏱️ Arrêter le timer** (phase 4)
+
 ## Phase 5 : Code
+
+**Checkpoint :** Demander approbation avant de commencer.
+
+**⏱️ Démarrer le timer** (phase 5)
 
 Exécuter le contenu de `/dev:code` :
 - Implémenter selon le plan
 - Créer les tests
 - Vérifier PHPStan
 
-**Checkpoint :** Demander approbation avant de commencer.
+**⏱️ Arrêter le timer** (phase 5)
 
 ## Phase 6 : Review
+
+**⏱️ Démarrer le timer** (phase 6)
 
 Exécuter le contenu de `/dev:review` :
 - Lancer agent `code-reviewer` si disponible
@@ -166,14 +226,26 @@ Exécuter le contenu de `/dev:review` :
 - Lancer `elegant-objects-reviewer`
 - Consolider les résultats
 
+**⏱️ Arrêter le timer** (phase 6)
+
 **Checkpoint :** Demander action (fix now / fix later / proceed).
 
 ## Phase 7 : Summary
+
+**⏱️ Démarrer le timer** (phase 7)
 
 Exécuter le contenu de `/dev:summary` :
 - Résumer ce qui a été construit
 - Documenter les décisions
 - Suggérer prochaines étapes
+
+**⏱️ Arrêter le timer** (phase 7)
+
+**⏱️ Calculer le temps total** :
+1. Lire `.claude/data/.dev-workflow-state.json`
+2. Calculer `totalDurationMs` = somme de tous les `durationMs` des phases
+3. Mettre à jour le fichier avec `timing.totalDurationMs`
+4. Afficher le récapitulatif des temps (voir section "Affichage du timing")
 
 ## Phase 8 : Cleanup (optionnel)
 
@@ -216,8 +288,8 @@ Votre choix ? (1/2/3)
 ```
 🔄 Workflow de développement : {feature}
 
-  ✅ 0. Discover   - Comprendre le besoin
-  ✅ 1. Explore    - Explorer codebase
+  ✅ 0. Discover   - Comprendre le besoin        (1m 23s)
+  ✅ 1. Explore    - Explorer codebase           (2m 45s)
   🔵 2. Clarify    - Questions clarification  ← En cours
   ⬜ 3. Design     - Proposer architectures
   ⬜ 4. Plan       - Générer specs
@@ -225,6 +297,34 @@ Votre choix ? (1/2/3)
   ⬜ 6. Review     - QA complète
   ⬜ 7. Summary    - Résumé final
   ⬜ 8. Cleanup    - Nettoyer worktree (si créé)
+```
+
+# Affichage du timing
+
+## Format de durée
+
+Formater les durées de manière lisible :
+- `< 60s` → `{X}s` (ex: `45s`)
+- `< 60min` → `{X}m {Y}s` (ex: `2m 30s`)
+- `>= 60min` → `{X}h {Y}m` (ex: `1h 15m`)
+
+## Récapitulatif final
+
+À la fin du workflow (après phase 7), afficher :
+
+```
+⏱️ Récapitulatif des temps
+
+  Phase 0. Discover   :  1m 23s
+  Phase 1. Explore    :  2m 45s
+  Phase 2. Clarify    :  0m 30s
+  Phase 3. Design     :  3m 12s
+  Phase 4. Plan       :  1m 05s
+  Phase 5. Code       : 15m 30s
+  Phase 6. Review     :  4m 20s
+  Phase 7. Summary    :  0m 45s
+  ─────────────────────────────
+  Total               : 29m 30s
 ```
 
 # Règles

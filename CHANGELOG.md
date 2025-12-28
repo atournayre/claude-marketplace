@@ -10,6 +10,17 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2025.12.28] - 2025-12-28
+
+### Plugins Updated
+- **dev v2.1.2** - Timing complet du workflow de développement
+  - Enregistrement automatique des timestamps `startedAt` et `completedAt` pour chaque phase (0-7)
+  - Calcul des durées en millisecondes par phase
+  - Affichage formé des durées (s, m, h) à côté du statut de chaque phase
+  - Récapitulatif final avec temps total de développement dans `/dev:summary`
+  - Intégration timing dans `/dev:status` et `/dev:feature`
+  - Format du fichier d'état étendu : `timing.totalDurationMs`
+
 ## [2025.12.27] - 2025-12-27
 
 ### Plugins Updated
