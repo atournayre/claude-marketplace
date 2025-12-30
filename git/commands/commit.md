@@ -5,21 +5,52 @@ argument-hint: [message] | --verify | --no-push
 description: Créer des commits bien formatés avec format conventional et emoji
 ---
 
-# Commit Git Intelligent
+# Workflow Git Commit
 
-Créer un commit bien formaté : $ARGUMENTS
+Tu dois créer un commit bien formaté avec les arguments : $ARGUMENTS
 
-## Ce Que Fait Cette Commande
+## Instructions à Exécuter
 
-1. Si spécifié avec --verify, exécute les vérifications pre-commit :
-    - make qa pour assurer la qualité du code
-2. Vérifie quels fichiers sont stagés avec git status
-3. Si 0 fichiers sont stagés, ajoute automatiquement tous les fichiers modifiés et nouveaux avec git add
-4. Effectue un git diff pour comprendre les changements à commiter
-5. Analyse le diff pour déterminer si plusieurs changements logiques distincts sont présents
-6. Si plusieurs changements distincts sont détectés, suggère de diviser le commit en plusieurs commits plus petits
-7. Pour chaque commit (ou le commit unique si pas de division), crée un message de commit utilisant le format conventional avec emoji
-8. Sauf si l'option --no-push est spécifiée, pousse automatiquement le(s) commit(s) vers le remote avec git push
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+1. **Vérifications pre-commit (optionnel)**
+   - Si l'utilisateur a passé `--verify`, exécute `make qa` d'abord
+   - Si ça échoue, demande confirmation avant de continuer
+
+2. **Vérifier les fichiers stagés**
+   - Exécute `git status` pour voir ce qui est stagé
+   - Exécute `git diff --cached` pour voir les changements stagés
+
+3. **Stager automatiquement si nécessaire**
+   - Si 0 fichiers stagés : exécute `git add .` pour tout ajouter
+   - Puis re-vérifie avec `git status`
+
+4. **Analyser les changements**
+   - Exécute `git diff --cached` pour voir TOUS les changements
+   - Analyse le diff pour détecter si plusieurs préoccupations distinctes sont mélangées
+
+5. **Diviser si nécessaire**
+   - Si plusieurs types de changements détectés (feat + docs + fix...), propose de diviser
+   - Utilise `git add -p` ou `git reset` pour séparer les commits
+   - Crée plusieurs commits atomiques successifs
+
+6. **Créer le(s) commit(s)**
+   - Analyse les changements pour déterminer le type (feat, fix, docs, etc.)
+   - Choisis l'emoji approprié selon la table de référence ci-dessous
+   - Construis un message format : `<emoji> <type>(<scope>): <description>`
+   - **IMPORTANT : Utilise TOUJOURS un HEREDOC pour le message :**
+   ```bash
+   git commit -m "$(cat <<'EOF'
+   <emoji> <type>: <description courte>
+
+   <détails optionnels>
+   EOF
+   )"
+   ```
+
+7. **Push automatique**
+   - Si l'utilisateur n'a PAS passé `--no-push`, exécute `git push`
+   - Sinon, informe que le commit est local uniquement
 
 ## Bonnes Pratiques pour les Commits
 

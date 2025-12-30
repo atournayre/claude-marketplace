@@ -10,6 +10,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2025.12.30] - 2025-12-30
+
+### Plugins Updated
+- **git v1.7.1** - Reformulation commande commit pour fiabilité
+  - Commande `/git:commit` : instructions reformatées en format impératif
+  - Utilisation HEREDOC pour éviter problèmes permissions bash
+  - Clarification étapes workflow pour comportement stable jour après jour
+
 ## [2025.12.28] - 2025-12-28
 
 ### Plugins Updated

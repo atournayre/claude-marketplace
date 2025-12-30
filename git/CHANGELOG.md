@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.7.1] - 2025-12-30
+
+### Changed
+- Commande `/git:commit` : reformulation instructions en format impératif pour exécution fiable
+  - Format documentaire → instructions explicites ("Exécute", "Analyse", "Crée")
+  - Utilisation HEREDOC pour éviter problèmes permissions bash sur `git commit -m`
+  - Clarification étapes workflow pour comportement stable
+
 ## [1.7.0] - 2025-12-27
 
 ### Added
