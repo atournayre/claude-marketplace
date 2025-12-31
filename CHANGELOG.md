@@ -10,6 +10,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2025.12.31] - 2025-12-31
+
+### Plugins Updated
+- **git v1.7.2** - Confirmation initiale pour skills PR
+  - Skills `git:pr` et `git:cd-pr` : ajout d'étape de confirmation avant exécution
+  - Affichage du nom de la skill lancée avec résumé des paramètres (branche, milestone, projet, flags)
+  - Demande de confirmation explicite pour valider le lancement du workflow
+
 ## [2025.12.30] - 2025-12-30
 
 ### Plugins Updated

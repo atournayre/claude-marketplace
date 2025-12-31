@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.7.2] - 2025-12-31
+
+### Changed
+- Skills `git:pr` et `git:cd-pr` : ajout d'étape de confirmation initiale avant exécution
+  - Affichage du nom de la skill lancée
+  - Résumé de tous les paramètres reçus (branche, milestone, projet, flags)
+  - Demande de confirmation explicite avant de continuer le workflow
+
 ## [1.7.1] - 2025-12-30
 
 ### Changed
