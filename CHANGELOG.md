@@ -13,6 +13,12 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [2025.12.31] - 2025-12-31
 
 ### Plugins Updated
+- **git v1.7.3** - Détection fiable du mode CD
+  - Nouveau script `detect_cd_mode.sh` : analyse TOUS les labels du repo sans troncature
+  - Commande `/git:pr` utilise désormais le script dédié pour la détection du mode
+  - Meilleure fiabilité avec repos ayant 20+ labels
+  - Prévient les modifications ad-hoc de la commande de détection
+
 - **git v1.7.2** - Confirmation initiale pour skills PR
   - Skills `git:pr` et `git:cd-pr` : ajout d'étape de confirmation avant exécution
   - Affichage du nom de la skill lancée avec résumé des paramètres (branche, milestone, projet, flags)

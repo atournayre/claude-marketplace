@@ -5,6 +5,19 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.7.3] - 2025-12-31
+
+### Added
+- **Script `detect_cd_mode.sh`** : détection fiable du mode CD
+  - Analyse TOUS les labels du repo sans troncature
+  - Empêche les modifications ad-hoc de la commande de détection
+  - Exit codes : 0 (CD détecté) / 1 (mode standard)
+
+### Changed
+- Commande `/git:pr` : utilise désormais le script dédié pour la détection du mode
+  - Meilleure fiabilité avec repos ayant 20+ labels
+  - Instructions claires d'exécution sans modifications
+
 ## [1.7.2] - 2025-12-31
 
 ### Changed

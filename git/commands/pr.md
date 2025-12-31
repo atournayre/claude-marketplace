@@ -14,14 +14,16 @@ Analyser les arguments fournis :
 
 ## Étape 2 : Détection automatique
 
-Exécuter la commande suivante pour détecter si le repo est en mode Continuous Delivery :
+Exécuter le script de détection (NE PAS modifier ou tronquer la commande) :
 
 ```bash
-gh label list --json name -q '.[].name' | grep -q "^version:" && echo "CD_DETECTED" || echo "STANDARD"
+bash "${CLAUDE_PLUGIN_ROOT}/git/commands/scripts/detect_cd_mode.sh"
 ```
 
-- Si `CD_DETECTED` → Utiliser skill `git-cd-pr`
-- Si `STANDARD` → Utiliser skill `git-pr`
+Le script analyse TOUS les labels du repo (pas de troncature avec head/tail).
+
+- Si output = `CD_DETECTED` → Utiliser skill `git-cd-pr`
+- Si output = `STANDARD` → Utiliser skill `git-pr`
 
 ## Étape 3 : Invoquer le skill approprié
 
