@@ -23,17 +23,26 @@ PR_TEMPLATE_PATH=".github/PULL_REQUEST_TEMPLATE/default.md"
 
 ## Workflow
 
-1. Vérifier scopes GitHub (`$CORE_SCRIPTS/check_scopes.sh`)
-2. Vérifier template PR (`$CORE_SCRIPTS/verify_pr_template.sh`)
-3. Lancer QA intelligente (`$CORE_SCRIPTS/smart_qa.sh`)
-4. Analyser changements git (`$CORE_SCRIPTS/analyze_changes.sh`)
-5. Confirmer branche de base (ou `AskUserQuestion`)
-6. Générer description PR intelligente
-7. Push et créer PR avec titre Conventional Commits (`$CORE_SCRIPTS/create_pr.sh`)
-8. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py`)
-9. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py`)
-10. Code review automatique (si plugin review installé)
-11. Nettoyage branche (`$CORE_SCRIPTS/cleanup_branch.sh`)
+1. **Confirmation initiale** :
+   - Confirmer à l'utilisateur que la skill `git:pr` est lancée
+   - Résumer tous les paramètres reçus :
+     - Branche de base (si fournie)
+     - Milestone (si fourni)
+     - Projet (si fourni)
+     - Flags : `--delete`, `--no-review` (si présents)
+   - Demander confirmation explicite avant de continuer
+
+2. Vérifier scopes GitHub (`$CORE_SCRIPTS/check_scopes.sh`)
+3. Vérifier template PR (`$CORE_SCRIPTS/verify_pr_template.sh`)
+4. Lancer QA intelligente (`$CORE_SCRIPTS/smart_qa.sh`)
+5. Analyser changements git (`$CORE_SCRIPTS/analyze_changes.sh`)
+6. Confirmer branche de base (ou `AskUserQuestion`)
+7. Générer description PR intelligente
+8. Push et créer PR avec titre Conventional Commits (`$CORE_SCRIPTS/create_pr.sh`)
+9. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py`)
+10. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py`)
+11. Code review automatique (si plugin review installé)
+12. Nettoyage branche (`$CORE_SCRIPTS/cleanup_branch.sh`)
 
 ## Code Review
 

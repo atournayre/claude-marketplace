@@ -24,19 +24,29 @@ PR_TEMPLATE_PATH=".github/PULL_REQUEST_TEMPLATE/cd_pull_request_template.md"
 
 ## Workflow
 
-1. Vérifier scopes GitHub (`$CORE_SCRIPTS/check_scopes.sh`)
-2. Vérifier template PR CD (`$CORE_SCRIPTS/verify_pr_template.sh`)
-3. Lancer QA intelligente (`$CORE_SCRIPTS/smart_qa.sh`)
-4. Analyser changements git (`$CORE_SCRIPTS/analyze_changes.sh`)
-5. Confirmer branche de base (ou `AskUserQuestion`)
-6. Générer description PR intelligente
-7. Push et créer PR avec titre Conventional Commits (`scripts/create_pr.sh`)
-8. **Copier labels depuis issue liée** (`scripts/copy_issue_labels.sh`)
-9. **Appliquer labels CD** (`scripts/apply_cd_labels.sh`)
-10. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py`)
-11. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py`)
-12. Code review automatique (si plugin review installé)
-13. Nettoyage branche (`$CORE_SCRIPTS/cleanup_branch.sh`)
+1. **Confirmation initiale** :
+   - Confirmer à l'utilisateur que la skill `git:cd-pr` est lancée
+   - Résumer tous les paramètres reçus :
+     - Mode : Continuous Delivery (`--cd`)
+     - Branche de base (si fournie)
+     - Milestone (si fourni)
+     - Projet (si fourni)
+     - Flags : `--delete`, `--no-review` (si présents)
+   - Demander confirmation explicite avant de continuer
+
+2. Vérifier scopes GitHub (`$CORE_SCRIPTS/check_scopes.sh`)
+3. Vérifier template PR CD (`$CORE_SCRIPTS/verify_pr_template.sh`)
+4. Lancer QA intelligente (`$CORE_SCRIPTS/smart_qa.sh`)
+5. Analyser changements git (`$CORE_SCRIPTS/analyze_changes.sh`)
+6. Confirmer branche de base (ou `AskUserQuestion`)
+7. Générer description PR intelligente
+8. Push et créer PR avec titre Conventional Commits (`scripts/create_pr.sh`)
+9. **Copier labels depuis issue liée** (`scripts/copy_issue_labels.sh`)
+10. **Appliquer labels CD** (`scripts/apply_cd_labels.sh`)
+11. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py`)
+12. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py`)
+13. Code review automatique (si plugin review installé)
+14. Nettoyage branche (`$CORE_SCRIPTS/cleanup_branch.sh`)
 
 ## Labels CD (Continuous Delivery)
 
