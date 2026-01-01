@@ -10,6 +10,17 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.02] - 2026-01-02
+
+### Plugins Updated
+- **git v1.7.4** - Détection automatique du préfixe de branche
+  - Commande `/git:branch` : détection intelligente du type de branche
+  - Analyse prioritaire : labels GitHub → description → titre de l'issue
+  - Préfixes supportés : `feature/`, `fix/`, `hotfix/`, `chore/`, `docs/`, `test/`
+  - Détection automatique pour texte : analyse du préfixe explicite au début
+  - Améliore la cohérence du nommage sans intervention manuelle
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 ## [2025.12.31] - 2025-12-31
 
 ### Plugins Updated

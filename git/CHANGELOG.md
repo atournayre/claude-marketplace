@@ -5,6 +5,17 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.7.4] - 2026-01-02
+
+### Changed
+- Commande `/git:branch` : détection automatique du préfixe de branche
+  - Basée sur les labels de l'issue GitHub (priorité haute)
+  - Basée sur les mots-clés dans la description de l'issue
+  - Basée sur les mots-clés dans le titre de l'issue (dernier recours)
+  - Préfixes supportés : `feature/`, `fix/`, `hotfix/`, `chore/`, `docs/`, `test/`
+  - Détection pour texte descriptif : analyse du préfixe explicite au début du texte
+  - Améliore la cohérence du nommage des branches sans intervention manuelle
+
 ## [1.7.3] - 2025-12-31
 
 ### Added
