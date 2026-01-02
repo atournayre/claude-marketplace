@@ -13,6 +13,13 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [2026.01.02] - 2026-01-02
 
 ### Plugins Updated
+- **dev v2.2.1** - Refactorisation chemins git worktrees
+  - Migration de chemins parallèles `../<repo>-<name>` vers structure standard `.worktrees/<name>`
+  - Maintient tous les worktrees dans le repo (plus propre que polluer parent)
+  - Découverte simplifiée (`.worktrees/` visible à la racine)
+  - Suit les conventions habituelles des git worktrees
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+
 - **dev v2.2.0** - Mode automatisé complet `/dev:auto:feature`
   - 10 phases entièrement non-interactives : fetch issue → design → code → review → cleanup → PR
   - Récupération automatique spec GitHub issue

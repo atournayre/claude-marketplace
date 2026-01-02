@@ -5,6 +5,15 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.2.1] - 2026-01-02
+
+### Changed
+- **Git worktree paths** : migré de chemins parallèles `../<repo>-<name>` vers structure standard `.worktrees/<name>`
+  - Permet de garder tous les worktrees dans le repo au lieu de polluer le répertoire parent
+  - Suit la convention habituelle des git worktrees
+  - Chemins plus simples et découverte plus facile (`.worktrees/` visible à la racine)
+  - Mise à jour dans `/dev:worktree`, `/dev:feature`, `/dev:auto:feature` et documentation
+
 ## [2.2.0] - 2026-01-02
 
 ### Added
