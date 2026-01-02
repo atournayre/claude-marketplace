@@ -1,6 +1,6 @@
 ---
 description: Crée une Pull Request optimisée avec workflow structuré
-argument-hint: [branch-base, milestone, project, --cd, --no-cd, --delete, --no-review]
+argument-hint: [branch-base, milestone, project, --cd, --no-cd, --no-interaction, --delete, --no-review]
 ---
 
 # Détection automatique du mode (Standard vs CD)
