@@ -1,6 +1,13 @@
 {
   "name": "review",
-  "version": "1.0.0",
   "description": "Agents spécialisés pour la code review automatique des PRs. Inclut 4 agents : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer.",
-  "author": "Aurélien Tournayre <aurelien.tournayre@gmail.com>"
+  "version": "1.0.0",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["review", "code-review", "pr", "pull-request", "qa", "automation"]
 }
