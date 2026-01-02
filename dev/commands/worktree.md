@@ -34,7 +34,7 @@ Créer un nouveau worktree pour une feature.
 1. Détecter la branche principale (main/master)
 2. Normaliser le nom de la feature (kebab-case)
 3. Créer la branche `feature/<feature-name>` ou `hotfix/<feature-name>`
-4. Créer le worktree dans `../<repo-name>-<feature-name>`
+4. Créer le worktree dans `.worktrees/<feature-name>`
 5. Mettre à jour `.claude/data/.dev-worktrees.json` avec les métadonnées
 6. Afficher les instructions pour basculer vers le worktree
 
@@ -45,7 +45,7 @@ Créer un nouveau worktree pour une feature.
     {
       "name": "oauth-auth",
       "branch": "feature/oauth-auth",
-      "path": "../claude-marketplace-oauth-auth",
+      "path": ".worktrees/oauth-auth",
       "createdAt": "2025-12-20T10:30:00Z",
       "status": "active"
     }
@@ -68,12 +68,12 @@ Lister tous les worktrees actifs.
 
   ✓ oauth-auth
     Branche: feature/oauth-auth
-    Path: ../claude-marketplace-oauth-auth
+    Path: .worktrees/oauth-auth
     Créé: 2025-12-20 10:30
 
   ✓ hotfix-payment
     Branche: hotfix/payment
-    Path: ../claude-marketplace-hotfix-payment
+    Path: .worktrees/hotfix-payment
     Créé: 2025-12-20 14:15
 
 💡 Pour basculer : cd <path>
@@ -137,15 +137,15 @@ Afficher les commandes pour changer de répertoire :
 ```
 Pour basculer vers le worktree 'oauth-auth' :
 
-  cd ../claude-marketplace-oauth-auth
+  cd .worktrees/oauth-auth
 
 Puis relancer Claude Code dans ce répertoire.
 ```
 
 # Règles de nommage
 
-- **Features** : `feature/<name>` → worktree dans `../<repo>-<name>`
-- **Hotfixes** : `hotfix/<name>` → worktree dans `../<repo>-<name>`
+- **Features** : `feature/<name>` → worktree dans `.worktrees/<name>`
+- **Hotfixes** : `hotfix/<name>` → worktree dans `.worktrees/<name>`
 - **Nom normalisé** : kebab-case uniquement (convertir espaces et caractères spéciaux)
 
 # Sécurité
@@ -172,7 +172,7 @@ Avantages :
 Créer le worktree ? (o/n)
 ```
 
-Si oui, exécuter :
+Si oui, exécuter (depuis le répertoire principal du repo) :
 ```
 /dev:worktree create oauth-auth
 ```
@@ -226,9 +226,11 @@ fi
 ```bash
 # Normaliser le nom
 FEATURE_NAME=$(echo "$1" | tr '[:upper:]' '[:lower:]' | tr ' _' '-')
-REPO_NAME=$(basename $(git rev-parse --show-toplevel))
-WORKTREE_PATH="../${REPO_NAME}-${FEATURE_NAME}"
+WORKTREE_PATH=".worktrees/${FEATURE_NAME}"
 BRANCH_NAME="feature/${FEATURE_NAME}"
+
+# Créer le répertoire parent si nécessaire
+mkdir -p .worktrees
 
 # Créer la branche et le worktree
 git worktree add -b "$BRANCH_NAME" "$WORKTREE_PATH" "$BASE_BRANCH"

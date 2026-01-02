@@ -153,11 +153,11 @@ Gestion complète des worktrees :
 # Créer un worktree pour une feature OAuth
 /dev:worktree create oauth-auth
 
-# Le worktree est créé dans : ../claude-marketplace-oauth-auth
+# Le worktree est créé dans : .worktrees/oauth-auth
 # Branche créée : feature/oauth-auth
 
 # Basculer vers le worktree
-cd ../claude-marketplace-oauth-auth
+cd .worktrees/oauth-auth
 
 # Travailler sur la feature...
 

@@ -47,7 +47,7 @@ Avantages des worktrees :
   • Préserver le contexte de développement (IDE, serveur, tests)
   • Pas besoin de stash ou de switcher de branche
 
-Le worktree sera créé dans : ../{repo-name}-{feature-slug}
+Le worktree sera créé dans : .worktrees/{feature-slug}
 
 Créer le worktree ? (o/n)
 ```
@@ -58,10 +58,10 @@ Si oui :
 - Informer l'utilisateur du chemin et qu'il doit relancer Claude Code dans le worktree
 - **ARRÊTER le workflow** avec un message :
   ```
-  ✅ Worktree créé : ../{repo-name}-{feature-slug}
+  ✅ Worktree créé : .worktrees/{feature-slug}
 
   Pour continuer le workflow :
-    1. cd ../{repo-name}-{feature-slug}
+    1. cd .worktrees/{feature-slug}
     2. Relancer Claude Code
     3. /dev:feature {description}
   ```
@@ -92,7 +92,7 @@ Si un worktree a été créé, mettre à jour avec :
   "currentPhase": 0,
   "worktree": {
     "name": "{feature-slug}",
-    "path": "../{repo-name}-{feature-slug}",
+    "path": ".worktrees/{feature-slug}",
     "branch": "feature/{feature-slug}"
   },
   "timing": {

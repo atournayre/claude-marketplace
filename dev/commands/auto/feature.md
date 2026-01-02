@@ -109,6 +109,7 @@ Lancement du workflow...
 
 **Processus :**
 - Normaliser le nom de la feature en slug (kebab-case, minuscules, tirets)
+- Créer le répertoire `.worktrees/` s'il n'existe pas
 - Créer le worktree avec `/dev:worktree create {feature-slug}`
 - Mettre à jour `.claude/data/workflows/issue-${issue_number}-dev-workflow-state.json`
 
@@ -138,7 +139,7 @@ Mettre à jour le fichier pour ajouter les infos du worktree :
   "currentPhase": 1,
   "worktree": {
     "name": "{feature-slug}",
-    "path": "../{repo-name}-{feature-slug}",
+    "path": ".worktrees/{feature-slug}",
     "branch": "feature/{feature-slug}",
     "cleaned": false,
     "branchDeleted": false
@@ -499,10 +500,10 @@ Exit code: 1
 
 ```
 Nom feature : "oauth-auth"
-Worktree ../projet-oauth-auth existe déjà
+Worktree .worktrees/oauth-auth existe déjà
 
 Action : Suffixe automatique
-→ ../projet-oauth-auth-2
+→ .worktrees/oauth-auth-2
 Et logger warning dans workflow state
 ```
 
