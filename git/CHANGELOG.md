@@ -5,6 +5,21 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.7.5] - 2026-01-02
+
+### Added
+- Support `.env.claude` pour configuration defaults dans `/git:pr` et `/git:cd-pr`
+  - Lecture automatique de `MAIN_BRANCH`, `REPO`, `PROJECT` depuis `.env.claude`
+  - Fallback sur valeurs par défaut si variables absentes
+  - Utilisé automatiquement si arguments non fournis
+
+### Changed
+- Skills `git:pr` et `git:cd-pr` : ajout support flag `--no-interaction`
+  - Permet d'automatiser création PR sans demandes de confirmation
+  - Utilise valeurs pré-remplies (arguments + `.env.claude`)
+  - Essentiel pour workflows entièrement automatisés
+- Commande `/git:pr` : argument-hint mis à jour pour inclure `--no-interaction`
+
 ## [1.7.4] - 2026-01-02
 
 ### Changed

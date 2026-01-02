@@ -23,6 +23,13 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - Configuration `.env.claude` (MAIN_BRANCH, REPO, PROJECT)
   - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
 
+- **git v1.7.5** - Support `.env.claude` et `--no-interaction` pour automation
+  - Skills `git:pr` et `git:cd-pr` : chargement config depuis `.env.claude`
+  - Support flag `--no-interaction` pour workflows automatisés
+  - Lecture automatique MAIN_BRANCH, REPO, PROJECT si présents
+  - Essentiel pour `/dev:auto:feature` phase création PR
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 - **git v1.7.4** - Détection automatique du préfixe de branche
   - Commande `/git:branch` : détection intelligente du type de branche
   - Analyse prioritaire : labels GitHub → description → titre de l'issue
