@@ -239,7 +239,7 @@ Crée une Pull Request optimisée avec workflow structuré.
 
 **Arguments :**
 ```bash
-/git:pr [branch-base] [milestone] [project] [--delete] [--no-review]
+/git:pr [branch-base] [milestone] [project] [--delete] [--no-review] [--no-interaction]
 ```
 
 **Exemples :**
@@ -258,7 +258,27 @@ Crée une Pull Request optimisée avec workflow structuré.
 
 # PR avec suppression branche après merge
 /git:pr --delete
+
+# PR automatisée (depuis config .env.claude)
+/git:pr --no-interaction
 ```
+
+**Configuration Automation (`.env.claude`) :**
+
+Pour automatiser la création de PR sans interaction :
+
+```bash
+# .env.claude
+MAIN_BRANCH=main
+REPO=atournayre/claude-marketplace
+PROJECT=
+```
+
+**Comportement avec `--no-interaction` :**
+- Charge automatiquement `MAIN_BRANCH`, `REPO`, `PROJECT` depuis `.env.claude`
+- Utilise les arguments fournis en ligne de commande (priorité haute)
+- Ignore les demandes interactives (confirmations, choix)
+- Essentiiel pour workflows entièrement automatisés (ex: `/dev:auto:feature`)
 
 **Prérequis :**
 - Branche avec commits

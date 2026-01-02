@@ -1,4 +1,4 @@
-# Plugin Dev v2.2.0
+# Plugin Dev
 
 Workflow structuré de développement de features avec **deux modes** :
 - **Mode interactif** : 8 phases avec checkpoints utilisateur
