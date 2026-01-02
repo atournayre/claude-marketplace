@@ -1,6 +1,8 @@
-# Plugin Dev v2.0.0
+# Plugin Dev v2.2.0
 
-Workflow structuré de développement de features en 8 phases avec agents spécialisés.
+Workflow structuré de développement de features avec **deux modes** :
+- **Mode interactif** : 8 phases avec checkpoints utilisateur
+- **Mode automatisé** : 10 phases entièrement non-interactives (depuis GitHub issues)
 
 ## Installation
 
@@ -23,13 +25,15 @@ Ce plugin fournit les agents :
 
 ## Workflow de développement
 
-### Commande principale
+### Mode Interactif
+
+#### Commande principale
 
 ```bash
 /dev:feature <description>
 ```
 
-Lance un workflow complet en 8 phases :
+Lance un workflow interactif en 8 phases avec checkpoints :
 
 ```
 🔄 Workflow de développement
@@ -44,7 +48,7 @@ Lance un workflow complet en 8 phases :
   ⬜ 7. Summary    - Résumé final
 ```
 
-### Voir le statut
+#### Voir le statut
 
 ```bash
 /dev:status
@@ -52,7 +56,58 @@ Lance un workflow complet en 8 phases :
 
 Affiche l'état actuel du workflow et les commandes disponibles.
 
-## Phases individuelles
+### Mode Automatisé
+
+#### Commande principale
+
+```bash
+/dev:auto:feature <issue-number>
+```
+
+Lance un workflow **entièrement automatisé** en 10 phases :
+
+```
+🤖 Workflow automatique
+
+  ⬜ 0. Prérequis  - Vérifier les outils
+  ⬜ 1. Fetch      - Récupérer l'issue GitHub
+  ⬜ 2. Discover   - Validation spec automatique
+  ⬜ 3. Explore    - Explorer codebase
+  ⬜ 4. Clarify    - Appliquer heuristiques
+  ⬜ 5. Design     - Sélectionner architecture (Pragmatic Balance)
+  ⬜ 6. Plan       - Générer specs
+  ⬜ 7. Code       - Implémenter
+  ⬜ 8. Review     - QA + auto-fix loop (3x max)
+  ⬜ 9. Cleanup    - Nettoyer worktree
+  ⬜ 10. Create PR - Créer la Pull Request
+```
+
+**Caractéristiques :**
+- ✅ **Zéro interaction** : toutes les décisions automatisées
+- ✅ **Spec depuis GitHub** : récupération automatique depuis issue
+- ✅ **Multi-langage** : détection PHP/JavaScript/Go avec QA tools spécifiques
+- ✅ **Auto-fix loop** : PHPStan level 9 blocker avec max 3 tentatives
+- ✅ **Git worktree obligatoire** : création automatique, cleanup systématique
+- ✅ **Rollback automatique** : en cas d'échec bloquant
+- ✅ **PR automatique** : création en fin de workflow
+
+**Configuration via `.env.claude` :**
+```bash
+MAIN_BRANCH=main
+REPO=atournayre/claude-marketplace
+PROJECT=
+```
+
+**Exemple :**
+```bash
+# Lancer le workflow auto pour issue #123
+/dev:auto:feature 123
+
+# Laisse le workflow s'exécuter jusqu'au bout
+# Une PR sera créée automatiquement à la fin
+```
+
+## Phases individuelles (Mode Interactif)
 
 Tu peux exécuter chaque phase individuellement :
 
@@ -217,18 +272,29 @@ Si vous acceptez :
 ```
 dev/
 ├── commands/
-│   ├── feature.md      # Orchestrateur
+│   ├── feature.md      # Orchestrateur mode interactif
 │   ├── status.md       # Affiche plan
-│   ├── discover.md     # Phase 0
-│   ├── explore.md      # Phase 1
-│   ├── clarify.md      # Phase 2
-│   ├── design.md       # Phase 3
-│   ├── plan.md         # Phase 4
-│   ├── code.md         # Phase 5
-│   ├── review.md       # Phase 6
-│   ├── summary.md      # Phase 7
+│   ├── discover.md     # Phase 0 (interactif)
+│   ├── explore.md      # Phase 1 (interactif)
+│   ├── clarify.md      # Phase 2 (interactif)
+│   ├── design.md       # Phase 3 (interactif)
+│   ├── plan.md         # Phase 4 (interactif)
+│   ├── code.md         # Phase 5 (interactif)
+│   ├── review.md       # Phase 6 (interactif)
+│   ├── summary.md      # Phase 7 (interactif)
 │   ├── debug.md        # Utilitaire
-│   └── log.md          # Utilitaire
+│   ├── log.md          # Utilitaire
+│   └── auto/           # Mode automatisé
+│       ├── feature.md         # Orchestrateur (Phases 0-9)
+│       ├── check-prerequisites.md  # Phase 0
+│       ├── fetch-issue.md     # Phase 1
+│       ├── discover.md        # Phase 2
+│       ├── explore.md         # Phase 3
+│       ├── clarify.md         # Phase 4
+│       ├── design.md          # Phase 5
+│       ├── plan.md            # Phase 6
+│       ├── code.md            # Phase 7
+│       └── review.md          # Phase 8
 ├── agents/
 │   ├── phpstan-error-resolver.md
 │   ├── elegant-objects-reviewer.md
@@ -242,9 +308,9 @@ dev/
 └── CHANGELOG.md
 ```
 
-## Checkpoints
+## Checkpoints (Mode Interactif Uniquement)
 
-Le workflow inclut des checkpoints aux phases critiques :
+Le workflow interactif inclut des checkpoints aux phases critiques :
 
 - **Phase 0** : Confirmation de la compréhension
 - **Phase 2** : Attente des réponses aux questions
@@ -252,10 +318,17 @@ Le workflow inclut des checkpoints aux phases critiques :
 - **Phase 5** : Approbation avant implémentation
 - **Phase 6** : Décision sur les corrections (fix now / fix later / proceed)
 
-## Fichiers générés
+**Note :** Le mode automatisé `/dev:auto:feature` n'a aucun checkpoint - toutes les décisions sont prises automatiquement via heuristiques.
 
+## Fichiers Générés
+
+### Mode Interactif
 - `.claude/data/.dev-workflow-state.json` : État du workflow en cours (non versionné)
 - `docs/specs/feature-*.md` : Plans d'implémentation
+
+### Mode Automatisé
+- `.claude/data/workflows/issue-{number}-dev-workflow-state.json` : État complet du workflow avec timing et décisions (non versionné)
+- `docs/specs/feature-*.md` : Plans d'implémentation générés automatiquement
 
 ## Licence
 
