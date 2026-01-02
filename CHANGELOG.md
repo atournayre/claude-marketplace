@@ -13,6 +13,16 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [2026.01.02] - 2026-01-02
 
 ### Plugins Updated
+- **dev v2.2.0** - Mode automatisé complet `/dev:auto:feature`
+  - 10 phases entièrement non-interactives : fetch issue → design → code → review → cleanup → PR
+  - Récupération automatique spec GitHub issue
+  - Détection multi-langage QA (PHP/JavaScript/Go) avec auto-fix loop (3x max)
+  - Git worktree obligatoire avec cleanup automatique
+  - Workflow state JSON complet avec timing détaillé
+  - Rollback automatique en cas d'échec bloquant
+  - Configuration `.env.claude` (MAIN_BRANCH, REPO, PROJECT)
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+
 - **git v1.7.4** - Détection automatique du préfixe de branche
   - Commande `/git:branch` : détection intelligente du type de branche
   - Analyse prioritaire : labels GitHub → description → titre de l'issue

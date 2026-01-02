@@ -5,6 +5,36 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.2.0] - 2026-01-02
+
+### Added
+- **Mode automatisé complet** : `/dev:auto:feature <issue-number>`
+  - 10 phases non-interactives (0-9) : fetch → design → code → review → cleanup → PR
+  - Récupération automatique des spécifications depuis GitHub issues
+  - Détection multi-langage (PHP, JavaScript, Go) avec QA tools appropriés
+  - Boucle auto-fix max 3 tentatives par langage (PHPStan L9 blocker)
+  - Git worktree automatique (création, branchage, cleanup)
+  - Workflow state JSON pour tracking complet (timing, décisions, erreurs)
+  - Rollback automatique en cas d'échec
+- Nouveaux skills du workflow auto:
+  - `/dev:auto:check-prerequisites` (Phase 0) - Vérification prérequis
+  - `/dev:auto:fetch-issue` (Phase 1) - Récupération issue GitHub
+  - `/dev:auto:discover` (Phase 2) - Validation spec automatique
+  - `/dev:auto:explore` (Phase 3) - Exploration codebase
+  - `/dev:auto:clarify` (Phase 4) - Heuristiques automatiques
+  - `/dev:auto:design` (Phase 5) - Sélection architecture (Pragmatic Balance)
+  - `/dev:auto:plan` (Phase 6) - Génération plan
+  - `/dev:auto:code` (Phase 7) - Implémentation directe
+  - `/dev:auto:review` (Phase 8) - QA multi-langage + auto-fix
+  - `/dev:auto:feature` (orchestrateur) - Coordination 10 phases
+- Fichier `.env.claude` pour configuration defaults (MAIN_BRANCH, REPO, PROJECT)
+- Support `--no-interaction` dans `/git:pr` et `/git:cd-pr` pour automation
+
+### Changed
+- `/dev:feature` reste inchangé (mode interactif)
+- `/git:pr` et `/git:cd-pr` : chargement configuration depuis `.env.claude` + flag `--no-interaction`
+- Description plugin : ajout de "automation" aux keywords
+
 ## [2.1.2] - 2025-12-28
 
 ### Changed
