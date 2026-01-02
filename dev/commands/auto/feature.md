@@ -7,7 +7,7 @@ allowed-tools: Read, Write, Edit, Grep, Glob, Task, TodoWrite, Bash
 
 # Objectif
 
-Orchestrateur du workflow de développement en 11 phases **SANS interaction utilisateur**.
+Orchestrateur du workflow de développement en 10 phases **SANS interaction utilisateur**.
 
 Exécution automatique complète : récupérer issue → phases 1-8 → cleanup → créer PR.
 Objectif : PR créée et prête pour review, CI passe.
@@ -169,9 +169,8 @@ Mettre à jour le fichier pour ajouter les infos du worktree :
   ⬜ 6. Plan       - Générer specs
   ⬜ 7. Code       - Implémenter
   ⬜ 8. Review     - Auto-fix × 3
-  ⬜ 9. Summary    - Résumé final
-  ⬜ 10. Cleanup    - Nettoyer worktree
-  ⬜ 11. Create PR - Créer la Pull Request
+  ⬜ 9. Cleanup    - Nettoyer worktree
+  ⬜ 10. Create PR - Créer la Pull Request
 ```
 
 ## Gestion du timing des phases
@@ -281,20 +280,12 @@ Exécuter `/dev:auto:review` (boucle auto-fix max 3 tentatives)
 **Si succès :**
 - Continuer à Phase 8
 
-## Phase 9 : Summary
-
-**⏱️ Démarrer le timer**
-
-Exécuter `/dev:auto:summary` (résumé final)
-
-**⏱️ Arrêter le timer**
-
 **⏱️ Calculer le temps total :**
 1. Lire `.claude/data/workflows/issue-${issue_number}-dev-workflow-state.json`
 2. Calculer `totalDurationMs` = somme de tous les `durationMs` des phases
 3. Mettre à jour le fichier avec `timing.totalDurationMs`
 
-## Phase 10 : Cleanup (OBLIGATOIRE)
+## Phase 9 : Cleanup (OBLIGATOIRE)
 
 **⏱️ Démarrer le timer**
 
@@ -328,7 +319,7 @@ Exécuter `/dev:auto:summary` (résumé final)
 🔵 Phase 10 : Create PR en cours
 ```
 
-## Phase 11 : Create PR (AUTOMATISÉE)
+## Phase 10 : Create PR (AUTOMATISÉE)
 
 **⏱️ Démarrer le timer**
 
@@ -391,9 +382,8 @@ Affichage du récapitulatif des temps (voir section "Récapitulatif final")
   ⬜ 6. Plan       - Générer specs
   ⬜ 7. Code       - Implémenter
   ⬜ 8. Review     - Auto-fix × 3
-  ⬜ 9. Summary    - Résumé final
-  ⬜ 10. Cleanup    - Nettoyer worktree
-  ⬜ 11. Create PR - Créer la Pull Request
+  ⬜ 9. Cleanup    - Nettoyer worktree
+  ⬜ 10. Create PR - Créer la Pull Request
 ```
 
 Pas d'arrêt : exécution continue jusqu'à fin ou échec.
@@ -423,11 +413,10 @@ Formater les durées de manière lisible :
   Phase 6. Plan      :  50s
   Phase 7. Code      :  8m 20s
   Phase 8. Review    :  2m 45s
-  Phase 9. Summary   :  30s
-  Phase 10. Cleanup  :  5s
-  Phase 11. Create PR:  10s
+  Phase 9. Cleanup   :  5s
+  Phase 10. Create PR:  10s
   ────────────────────────────
-  Total              : 17m 53s
+  Total              : 17m 23s
 ```
 
 # Gestion des erreurs bloquantes
@@ -489,7 +478,7 @@ Exit code: 1
 - **PR créée automatiquement** via `/git:pr`
 - **Mettre à jour** `.claude/data/workflows/issue-{issue_number}-dev-workflow-state.json` après chaque phase
 - **Afficher le statut** à chaque transition
-- **Ne jamais sauter de phase** (0 à 10 obligatoires)
+- **Ne jamais sauter de phase** (0 à 9 obligatoires)
 
 # Cas limites
 
@@ -533,7 +522,7 @@ Si existe → FAIL dans initialisation.
 | **Phase 4** | Choix utilisateur | **Auto Pragmatic** |
 | **Phase 6** | Approbation requise | **Immédiat** |
 | **Phase 7** | Fix now/later/proceed | **Auto-fix × 3** |
-| **Phase 9** | Proposer nettoyage | **Toujours** |
-| **Phase 10** | Manuel : `/git:pr` | **Auto : `/git:pr` + params** |
+| **Phase 8** | Proposer nettoyage | **Cleanup auto** |
+| **Phase 9** | Manuel : `/git:pr` | **Auto : `/git:pr` + params** |
 | **Erreurs** | Demander aide | **Rollback auto** |
 | **Objectif** | Collaboration | **Automation** |
