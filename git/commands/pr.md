@@ -17,7 +17,7 @@ Analyser les arguments fournis :
 Exécuter le script de détection (NE PAS modifier ou tronquer la commande) :
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/git/commands/scripts/detect_cd_mode.sh"
+bash "${CLAUDE_PLUGIN_ROOT}/commands/scripts/detect_cd_mode.sh"
 ```
 
 Le script analyse TOUS les labels du repo (pas de troncature avec head/tail).

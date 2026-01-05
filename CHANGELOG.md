@@ -10,6 +10,13 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.05] - 2026-01-05
+
+### Plugins Updated
+- **git v1.7.6** - Correction du chemin script de détection CD
+  - Correction du chemin du script dans la commande `/git:pr` (chemin incorrect introduit en v1.7.5)
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 ## [2026.01.02] - 2026-01-02
 
 ### Plugins Updated

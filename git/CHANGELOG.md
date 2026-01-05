@@ -5,6 +5,11 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.7.6] - 2026-01-05
+
+### Fixed
+- Correction du chemin du script de détection de mode CD dans la commande `/git:pr`
+
 ## [1.7.5] - 2026-01-02
 
 ### Added
