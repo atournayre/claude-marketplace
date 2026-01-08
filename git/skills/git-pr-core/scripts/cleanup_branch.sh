@@ -2,6 +2,9 @@
 # Proposer/exécuter suppression branche locale
 # Usage: cleanup_branch.sh <branch_base> <branch_name> [--delete]
 # Exit: 0=supprimée, 1=conservée
+#
+# IMPORTANT: Ce script ne supprime QUE la branche LOCALE.
+# La branche remote ne doit JAMAIS être supprimée (fermerait la PR automatiquement).
 
 set -euo pipefail
 

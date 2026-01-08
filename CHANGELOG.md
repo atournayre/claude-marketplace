@@ -10,6 +10,15 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.08] - 2026-01-08
+
+### Plugins Updated
+- **git v1.7.7** - Documentation clarifiée pour flag `--delete`
+  - Documentation explicite : `--delete` ne supprime que la branche LOCALE (jamais remote)
+  - Règles critiques ajoutées dans skills `git:pr` et `git:cd-pr`
+  - Commentaire renforcé dans `cleanup_branch.sh` expliquant pourquoi remote ne doit pas être supprimée
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 ## [2026.01.05] - 2026-01-05
 
 ### Plugins Updated

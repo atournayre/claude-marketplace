@@ -61,7 +61,7 @@ ENV_FILE_PATH=".env.claude"
 12. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py`)
 13. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py`)
 14. Code review automatique (si plugin review installé)
-15. Nettoyage branche (`$CORE_SCRIPTS/cleanup_branch.sh`)
+15. Nettoyage branche locale (`$CORE_SCRIPTS/cleanup_branch.sh` - branche remote préservée)
 
 ## Labels CD (Continuous Delivery)
 
@@ -96,13 +96,20 @@ Agrège résultats (score >= 80) dans commentaire PR.
 | Flag | Description |
 |------|-------------|
 | `--no-interaction` | Mode automatique : passer confirmations, utiliser defaults |
-| `--delete` | Supprimer branche après création PR |
+| `--delete` | Supprimer branche LOCALE uniquement après création PR (JAMAIS la branche remote) |
 | `--no-review` | Désactiver code review automatique |
 
 ## References
 
 - [Template review](../git-pr-core/references/review-template.md) - Format commentaire et agents
 - [Todos template](../git-pr-core/references/todos-template.md) - TodoWrite et génération description
+
+## Règles critiques
+
+⚠️ **INTERDICTION ABSOLUE** :
+- Ne JAMAIS exécuter `git push origin --delete <branche>` ou `git push -d origin <branche>`
+- Ne JAMAIS supprimer la branche remote (fermerait automatiquement la PR)
+- Le flag `--delete` ne concerne QUE la branche locale
 
 ## Error Handling
 
