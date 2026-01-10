@@ -5,6 +5,23 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.8.0] - 2026-01-10
+
+### Added
+- **Script QA externe** : `git/commands/scripts/qa-before-pr.sh`
+  - Détection automatique des outils QA disponibles (PHPStan, PHPUnit, PHP-CS-Fixer)
+  - Fallbacks multiples : make → vendor/bin → composer
+  - Pas d'échec si outil manque, feedback clair sur exécution
+  - Réutilisable par n'importe quelle commande
+
+### Changed
+- **Hooks pour commandes** : Validation et automatisation ajoutées
+  - `/git:commit` : Validation QA avec `--verify`, vérification workspace propre, push automatique avec tracking intelligent
+  - `/git:branch` : Blocage si modifications non commitées, validation branche source, feedback création
+  - `/git:pr` : Vérification branche à jour, QA complète avant création PR
+- **Corrections** : `argument-hint` au format correct pour toutes les commandes (`argument-hint: <requis> [optionnel]`)
+  - `/git:pr`, `/git:commit`, `/git:release-notes`, `/git:release-report` normalisés
+
 ## [1.7.7] - 2026-01-08
 
 ### Fixed

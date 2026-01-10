@@ -1,8 +1,59 @@
 ---
 model: claude-haiku-4-5-20251001
 allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git push:*)
-argument-hint: [message] | --verify | --no-push
+argument-hint: [message] [--verify] [--no-push]
 description: Créer des commits bien formatés avec format conventional et emoji
+hooks:
+  PreToolUse:
+    - matcher: "Bash(git commit:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook 1: Vérifier si --verify est passé en argument
+            if echo "$ARGUMENTS" | grep -q -- "--verify"; then
+              echo "🔍 Exécution de make qa..."
+              make qa || {
+                echo "❌ QA échouée. Voulez-vous continuer quand même ?"
+                exit 1
+              }
+            fi
+          once: false
+    - matcher: "Bash(git status:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook 2: Vérifier qu'il y a des changements à committer
+            if git diff --cached --quiet && git diff --quiet; then
+              echo "❌ Aucun changement détecté (stagé ou non stagé)"
+              exit 1
+            fi
+          once: true
+  PostToolUse:
+    - matcher: "Bash(git commit:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook 3: Push automatique avec tracking intelligent
+            BRANCH=$(git branch --show-current)
+            echo "✅ Commit créé : $(git log -1 --oneline)"
+
+            # Vérifier si --no-push est passé
+            if echo "$ARGUMENTS" | grep -q -- "--no-push"; then
+              echo "📝 Commit local uniquement (--no-push)"
+              exit 0
+            fi
+
+            # Vérifier si la branche a un tracking remote
+            if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
+              echo "🚀 Premier commit sur $BRANCH - configuration du tracking..."
+              git push -u origin "$BRANCH"
+              echo "✅ Branche pushée et tracking configuré"
+            else
+              echo "🚀 Push vers origin/$BRANCH..."
+              git push
+              echo "✅ Commit pushé"
+            fi
+          once: false
 ---
 
 # Workflow Git Commit

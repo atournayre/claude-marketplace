@@ -1,7 +1,7 @@
 ---
 name: git:release-report
 description: Génère un rapport HTML d'analyse d'impact entre deux branches
-argument-hint: [branch-source, branche-cible, nom-release]
+argument-hint: <branche-source> <branche-cible> [nom-release]
 output-style: html-structured
 arguments:
   - name: branche-source

@@ -183,6 +183,23 @@ REPORT_PATH/impact_<nom-release>.html
 
 ---
 
+### `/git:pr`
+
+Crée une Pull Request optimisée avec workflow structuré.
+
+**Arguments :**
+```bash
+/git:pr [branch-base] [milestone] [project] [--cd | --no-cd] [--no-interaction] [--delete] [--no-review]
+```
+
+**Features :**
+- Détection automatique mode Standard vs CD
+- QA complète avant création (PHPStan, tests, linting)
+- Vérification branche à jour avec origin
+- Templates PR adaptés
+
+---
+
 ### `/git:release-notes`
 
 **🔹 Skill disponible : `release-notes`**
@@ -311,6 +328,34 @@ PROJECT=
 ```
 
 ## Scripts Utilitaires
+
+### `scripts/qa-before-pr.sh`
+
+Script de validation QA avant création de Pull Request. Détection automatique des outils disponibles.
+
+**Features :**
+- Détection auto des outils QA (PHPStan, PHPUnit, PHP-CS-Fixer)
+- Fallbacks multiples : make → vendor/bin → composer
+- Pas d'échec si outil manque (feedback clair sur exécution)
+- Réutilisable par n'importe quelle commande
+
+**Usage :**
+```bash
+bash git/commands/scripts/qa-before-pr.sh
+```
+
+**Exemple de sortie :**
+```
+🔍 Exécution QA complète avant création PR...
+▶️  PHPStan (via vendor/bin)...
+✅ PHPStan OK
+▶️  Tests (via PHPUnit)...
+✅ Tests OK
+⚠️  Lint non détecté, ignoré
+✅ QA passée avec succès
+```
+
+---
 
 ### `scripts/commit-emoji.sh`
 

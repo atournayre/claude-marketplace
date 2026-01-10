@@ -4,6 +4,47 @@ allowed-tools: Bash
 argument-hint: <source-branch> [issue-number-or-text]
 description: Création de branche Git avec workflow structuré
 output-style: ultra-concise
+hooks:
+  PreToolUse:
+    - matcher: "Bash(git checkout:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook 1: Bloquer si modifications non commitées
+            if ! git diff --quiet || ! git diff --cached --quiet; then
+              echo "❌ ERREUR : Modifications non commitées détectées"
+              echo ""
+              echo "Fichiers modifiés :"
+              git status --short
+              echo ""
+              echo "Vous devez commit ou stash avant de créer une branche"
+              exit 1
+            fi
+          once: true
+    - matcher: "Bash(git branch:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook 2: Validation branche source existe (détection du premier argument)
+            SOURCE_BRANCH=$(echo "$ARGUMENTS" | awk '{print $1}')
+            if [ -n "$SOURCE_BRANCH" ] && ! git rev-parse --verify "$SOURCE_BRANCH" >/dev/null 2>&1; then
+              echo "❌ ERREUR : La branche source '$SOURCE_BRANCH' n'existe pas"
+              echo ""
+              echo "Branches disponibles :"
+              git branch -a
+              exit 1
+            fi
+          once: true
+  PostToolUse:
+    - matcher: "Bash(git checkout -b:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook 3: Feedback création
+            BRANCH=$(git branch --show-current)
+            echo "✅ Branche créée : $BRANCH"
+            echo "📝 Le tracking sera configuré automatiquement au premier commit"
+          once: false
 ---
 
 # Configuration de sortie

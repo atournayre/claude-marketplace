@@ -1,6 +1,30 @@
 ---
 description: Crée une Pull Request optimisée avec workflow structuré
-argument-hint: [branch-base, milestone, project, --cd, --no-cd, --no-interaction, --delete, --no-review]
+argument-hint: [branch-base] [milestone] [project] [--cd | --no-cd] [--no-interaction] [--delete] [--no-review]
+hooks:
+  PreToolUse:
+    - matcher: "Bash(gh pr:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook 1: Vérification branche à jour avec origin
+            BRANCH=$(git branch --show-current)
+            echo "🔍 Vérification que $BRANCH est à jour avec origin..."
+
+            git fetch origin "$BRANCH" 2>/dev/null || true
+
+            LOCAL=$(git rev-parse "$BRANCH")
+            REMOTE=$(git rev-parse "origin/$BRANCH" 2>/dev/null || echo "")
+
+            if [ -n "$REMOTE" ] && [ "$LOCAL" != "$REMOTE" ]; then
+              echo "⚠️  Attention : ta branche n'est pas à jour avec origin"
+              echo "Lance : git pull origin $BRANCH"
+              exit 1
+            fi
+          once: true
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/git/commands/scripts/qa-before-pr.sh"
+          once: true
 ---
 
 # Détection automatique du mode (Standard vs CD)
