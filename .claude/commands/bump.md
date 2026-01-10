@@ -3,6 +3,62 @@ model: claude-haiku-4-5-20251001
 description: Automatise les mises à jour de version des plugins avec détection automatique du type de version
 argument-hint: [plugin-name]
 allowed-tools: Read, Edit, Bash, Glob, Grep, TodoWrite
+hooks:
+  PreToolUse:
+    - matcher: "Bash(git diff:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook 1: Validation workspace clean
+            if ! git diff --quiet; then
+              echo "⚠️  Attention : modifications non stagées détectées"
+              echo "Les fichiers suivants seront inclus dans le bump :"
+              git diff --name-only
+            fi
+          once: true
+    - matcher: "Read"
+      hooks:
+        - type: command
+          command: |
+            # Hook 3: Validation fichiers requis
+            PLUGIN_FILE=$(echo "$CLAUDE_TOOL_ARGS" | grep -oP '(?<=file_path: ).*?plugin\.json' || echo "")
+            if [ -n "$PLUGIN_FILE" ]; then
+              PLUGIN_DIR=$(dirname $(dirname "$PLUGIN_FILE"))
+              for file in "$PLUGIN_DIR/.claude-plugin/plugin.json" "$PLUGIN_DIR/CHANGELOG.md" "$PLUGIN_DIR/README.md"; do
+                if [ ! -f "$file" ]; then
+                  echo "❌ Fichier manquant : $file"
+                  exit 1
+                fi
+              done
+            fi
+          once: true
+  PostToolUse:
+    - matcher: "Edit"
+      hooks:
+        - type: command
+          command: |
+            # Hook 2: Auto-commit après bump (suggéré)
+            if ! git diff --quiet; then
+              # Détecter le plugin et la version depuis le dernier fichier édité
+              if echo "$CLAUDE_TOOL_ARGS" | grep -q "plugin.json"; then
+                PLUGIN_JSON=$(echo "$CLAUDE_TOOL_ARGS" | grep -oP '(?<=file_path: ).*?plugin\.json' || echo "")
+                if [ -n "$PLUGIN_JSON" ] && [ -f "$PLUGIN_JSON" ]; then
+                  PLUGIN=$(basename $(dirname $(dirname "$PLUGIN_JSON")))
+                  NEW_VERSION=$(grep '"version"' "$PLUGIN_JSON" | sed 's/.*"\([0-9.]*\)".*/\1/')
+                  OLD_VERSION=$(git show HEAD:"$PLUGIN_JSON" 2>/dev/null | grep '"version"' | sed 's/.*"\([0-9.]*\)".*/\1/' || echo "unknown")
+
+                  echo ""
+                  echo "📝 Bump détecté : $PLUGIN $OLD_VERSION → $NEW_VERSION"
+                  echo ""
+                  echo "Prêt pour commit. Tu peux lancer :"
+                  echo "   /git:commit"
+                  echo ""
+                  echo "Message suggéré :"
+                  echo "   🔖 chore(git): bump version $OLD_VERSION → $NEW_VERSION (PATCH)"
+                fi
+              fi
+            fi
+          once: false
 ---
 
 # Bump Version Plugin

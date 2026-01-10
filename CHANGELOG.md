@@ -10,6 +10,34 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.10] - 2026-01-10
+
+### Plugins Updated
+- **marketing v1.0.2** - Correction format argument-hint
+  - Conformité avec documentation officielle Claude Code
+  - Dépôt : [marketing/CHANGELOG.md](marketing/CHANGELOG.md)
+
+- **github v1.1.3** - Correction format argument-hint
+  - Conformité avec documentation officielle Claude Code
+  - Dépôt : [github/CHANGELOG.md](github/CHANGELOG.md)
+
+- **git v1.8.0** - Script QA et hooks pour commandes : validation et automatisation
+  - Nouveau script `qa-before-pr.sh` : détection auto outils QA (PHPStan, PHPUnit, php-cs-fixer)
+  - `/git:commit` : Validation QA `--verify`, vérification workspace, push auto avec tracking intelligent
+  - `/git:branch` : Blocage si modifs non commitées, validation branche source
+  - `/git:pr` : Vérification branche à jour, QA avant création
+  - Corrections `argument-hint` au format officiel
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
+- **dev v2.2.2** - Hooks pour commandes : validation et automatisation
+  - `/dev:code` : PHPStan en temps réel après chaque Edit, auto-formatage PSR-12, validation plan existe
+  - `/dev:review` : Tests automatiques avant review, suggestion commit après fixes
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+
+- **qa v1.2.2** - Correction format argument-hint
+  - Conformité avec documentation officielle Claude Code
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+
 ## [2026.01.08] - 2026-01-08
 
 ### Plugins Updated
