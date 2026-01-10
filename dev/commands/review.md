@@ -1,7 +1,47 @@
 ---
 description: Review qualité complète - PHPStan + Elegant Objects + code review (Phase 6)
 model: claude-sonnet-4-5-20250929
-allowed-tools: Task, Bash, Read, Grep, Glob
+allowed-tools: Task, Bash, Read, Grep, Glob, Edit
+hooks:
+  PreToolUse:
+    - matcher: "Task"
+      hooks:
+        - type: command
+          command: |
+            # Hook 1: Tests avant review
+            echo "🧪 Exécution des tests avant review..."
+
+            # Détection méthode tests disponible
+            if [ -f "Makefile" ] && grep -q "^test:" Makefile; then
+              make test || {
+                echo "❌ Tests échoués - corrige-les avant la review"
+                exit 1
+              }
+            elif [ -f "vendor/bin/phpunit" ]; then
+              vendor/bin/phpunit || {
+                echo "❌ Tests échoués - corrige-les avant la review"
+                exit 1
+              }
+            else
+              echo "⚠️  Tests non détectés, review sans validation tests"
+            fi
+          once: true
+  PostToolUse:
+    - matcher: "Edit"
+      hooks:
+        - type: command
+          command: |
+            # Hook 2: Auto-commit après fixes
+            if ! git diff --quiet; then
+              echo ""
+              echo "📝 Corrections appliquées. Prêt pour :"
+              echo "   git add ."
+              echo "   /git:commit"
+              echo ""
+              echo "Message suggéré :"
+              echo "   🚨 fix: corrections suite à review"
+            fi
+          once: false
 ---
 
 # Objectif
