@@ -1,6 +1,6 @@
 ---
 description: Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace
-argument-hint: "[nombre-de-jours]"
+argument-hint: [nombre-de-jours]
 model: claude-sonnet-4-20250514
 output-style: markdown-focused
 ---

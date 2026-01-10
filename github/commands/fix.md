@@ -2,7 +2,7 @@
 model: claude-sonnet-4-5-20250929
 allowed-tools: [Bash, Read, Write, Edit, Grep, Glob, Task]
 description: "Corriger une issue GitHub avec workflow simplifié et efficace"
-argument-hint: "[issue-number]"
+argument-hint: [issue-number]
 ---
 
 # Correction d'Issue GitHub

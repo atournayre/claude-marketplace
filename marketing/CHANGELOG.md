@@ -2,6 +2,11 @@
 
 Tous les changements notables de ce projet sont documentés dans ce fichier.
 
+## [1.0.2] - 2026-01-10
+
+### Fixed
+- Correction du format `argument-hint` dans `/marketing:linkedin` pour conformité avec documentation officielle Claude Code
+
 ## [1.0.1] - 2025-12-20
 
 ### Changed
