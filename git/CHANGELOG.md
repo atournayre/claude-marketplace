@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.8.1] - 2026-01-15
+
+### Fixed
+- Script `detect_cd_mode.sh` : ajout du flag `--limit 1000` pour lister tous les labels
+  - Évite la limite par défaut de 30 labels qui causait des faux négatifs
+  - Améliore la fiabilité de la détection du mode CD sur repos avec 30+ labels
+
 ## [1.8.0] - 2026-01-10
 
 ### Added

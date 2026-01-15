@@ -10,6 +10,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.15] - 2026-01-15
+
+### Plugins Updated
+- **git v1.8.1** - Script de détection CD amélioré
+  - Flag `--limit 1000` ajouté pour lister tous les labels (évite limite 30 par défaut)
+  - Améliore fiabilité détection mode CD sur repos avec 30+ labels
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 ## [2026.01.10] - 2026-01-10
 
 ### Plugins Updated

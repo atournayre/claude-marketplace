@@ -9,7 +9,8 @@
 set -euo pipefail
 
 # Récupérer TOUS les labels et chercher ceux qui commencent par "version:"
-if gh label list --json name -q '.[].name' | grep -q "^version:"; then
+# IMPORTANT: --limit 1000 car la limite par défaut est 30 labels seulement
+if gh label list --limit 1000 --json name -q '.[].name' | grep -q "^version:"; then
     echo "CD_DETECTED"
     exit 0
 else
