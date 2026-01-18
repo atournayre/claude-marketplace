@@ -54,8 +54,8 @@ ENV_FILE_PATH=".env.claude"
 7. Confirmer branche de base (ou `AskUserQuestion`)
 8. Générer description PR intelligente
 9. Push et créer PR avec titre Conventional Commits (`$CORE_SCRIPTS/create_pr.sh`)
-10. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py`)
-11. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py`)
+10. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py` - voir [git-pr-core/SKILL.md](../git-pr-core/SKILL.md) pour usage)
+11. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py` - voir [git-pr-core/SKILL.md](../git-pr-core/SKILL.md) pour usage)
 12. Code review automatique (si plugin review installé)
 13. Nettoyage branche locale (`$CORE_SCRIPTS/cleanup_branch.sh` - branche remote préservée)
 

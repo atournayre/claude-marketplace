@@ -13,29 +13,37 @@ Ce skill fournit les scripts partagés pour la création de PR. Il ne doit pas �
 
 ## Scripts disponibles
 
-| Script | Description |
-|--------|-------------|
-| `check_scopes.sh` | Vérifie les scopes GitHub |
-| `verify_pr_template.sh` | Vérifie le template PR |
-| `smart_qa.sh` | Lance la QA intelligente |
-| `analyze_changes.sh` | Analyse les changements git |
-| `confirm_base_branch.py` | Confirme la branche de base |
-| `create_pr.sh` | Crée la PR (push + gh pr create) |
-| `safe_push_pr.sh` | Push sécurisé avec création PR |
-| `assign_milestone.py` | Assigne un milestone |
-| `assign_project.py` | Assigne un projet GitHub |
-| `auto_review.sh` | Lance la code review automatique |
-| `cleanup_branch.sh` | Nettoie la branche locale |
-| `final_report.sh` | Génère le rapport final |
+| Script | Description | Usage |
+|--------|-------------|-------|
+| `check_scopes.sh` | Vérifie les scopes GitHub | `bash "$CORE_SCRIPTS/check_scopes.sh"` |
+| `verify_pr_template.sh` | Vérifie le template PR | `bash "$CORE_SCRIPTS/verify_pr_template.sh" "$PR_TEMPLATE_PATH"` |
+| `smart_qa.sh` | Lance la QA intelligente | `bash "$CORE_SCRIPTS/smart_qa.sh"` |
+| `analyze_changes.sh` | Analyse les changements git | `bash "$CORE_SCRIPTS/analyze_changes.sh"` |
+| `confirm_base_branch.py` | Confirme la branche de base | `python3 "$CORE_SCRIPTS/confirm_base_branch.py"` |
+| `create_pr.sh` | Crée la PR (push + gh pr create) | `bash "$CORE_SCRIPTS/create_pr.sh" "$BRANCH_BASE" "$PR_TEMPLATE_PATH"` |
+| `safe_push_pr.sh` | Push sécurisé avec création PR | `bash "$CORE_SCRIPTS/safe_push_pr.sh"` |
+| `assign_milestone.py` | Assigne un milestone | `python3 "$CORE_SCRIPTS/assign_milestone.py" <pr_number> --milestone "<milestone_name>"` |
+| `assign_project.py` | Assigne un projet GitHub | `python3 "$CORE_SCRIPTS/assign_project.py" <pr_number> --project "<project_name>"` |
+| `auto_review.sh` | Lance la code review automatique | `bash "$CORE_SCRIPTS/auto_review.sh" <pr_number>` |
+| `cleanup_branch.sh` | Nettoie la branche locale | `bash "$CORE_SCRIPTS/cleanup_branch.sh" [--delete]` |
+| `final_report.sh` | Génère le rapport final | `bash "$CORE_SCRIPTS/final_report.sh"` |
 
 ## Usage par les skills enfants
 
 ```bash
 CORE_SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/git-pr-core/scripts"
 
-# Exemple d'utilisation
+# Exemples d'utilisation
 bash "$CORE_SCRIPTS/check_scopes.sh"
 bash "$CORE_SCRIPTS/create_pr.sh" "$BRANCH_BASE" "$PR_TEMPLATE_PATH"
+
+# IMPORTANT : Pour assign_milestone.py et assign_project.py, utiliser --milestone et --project
+# ❌ INCORRECT : python3 "$CORE_SCRIPTS/assign_milestone.py" 1234 "Continuous Delivery"
+# ✅ CORRECT   : python3 "$CORE_SCRIPTS/assign_milestone.py" 1234 --milestone "Continuous Delivery"
+
+PR_NUMBER=$(gh pr view --json number -q .number)
+python3 "$CORE_SCRIPTS/assign_milestone.py" "$PR_NUMBER" --milestone "Continuous Delivery"
+python3 "$CORE_SCRIPTS/assign_project.py" "$PR_NUMBER" --project "MyProject"
 ```
 
 ## Workflow standard

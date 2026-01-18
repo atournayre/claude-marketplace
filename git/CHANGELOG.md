@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.8.2] - 2026-01-18
+
+### Fixed
+- Documentation des scripts `assign_milestone.py` et `assign_project.py` dans `git-pr-core/SKILL.md`
+  - Clarification de la syntaxe requise : `--milestone "<name>"` et `--project "<name>"`
+  - Ajout d'exemples corrects/incorrects pour éviter les erreurs d'appel
+  - Références croisées dans les skills `git-pr` et `git-cd-pr`
+
 ## [1.8.1] - 2026-01-15
 
 ### Fixed

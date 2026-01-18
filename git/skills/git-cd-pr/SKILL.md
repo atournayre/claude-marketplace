@@ -58,8 +58,8 @@ ENV_FILE_PATH=".env.claude"
 9. Push et créer PR avec titre Conventional Commits (`scripts/create_pr.sh`)
 10. **Copier labels depuis issue liée** (`scripts/copy_issue_labels.sh`)
 11. **Appliquer labels CD** (`scripts/apply_cd_labels.sh`)
-12. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py`)
-13. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py`)
+12. Assigner milestone (`$CORE_SCRIPTS/assign_milestone.py` - voir [git-pr-core/SKILL.md](../git-pr-core/SKILL.md) pour usage)
+13. Assigner projet GitHub (`$CORE_SCRIPTS/assign_project.py` - voir [git-pr-core/SKILL.md](../git-pr-core/SKILL.md) pour usage)
 14. Code review automatique (si plugin review installé)
 15. Nettoyage branche locale (`$CORE_SCRIPTS/cleanup_branch.sh` - branche remote préservée)
 

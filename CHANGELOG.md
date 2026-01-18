@@ -10,6 +10,15 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.18] - 2026-01-18
+
+### Plugins Updated
+- **git v1.8.2** - Documentation des scripts assign_milestone et assign_project
+  - Clarification de la syntaxe requise : `--milestone` et `--project` comme flags
+  - Ajout d'exemples corrects/incorrects pour éviter les erreurs d'appel
+  - Références croisées dans les skills `git-pr` et `git-cd-pr`
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 ## [2026.01.15] - 2026-01-15
 
 ### Plugins Updated
