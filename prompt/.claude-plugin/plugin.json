@@ -1,0 +1,20 @@
+{
+  "name": "prompt",
+  "description": "Générateur de prompts structurés pour développement - Templates DDD/CQRS, refactoring, webhooks, architecture",
+  "version": "1.0.0",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "prompt",
+    "templates",
+    "ddd",
+    "cqrs",
+    "planning",
+    "architecture"
+  ]
+}
