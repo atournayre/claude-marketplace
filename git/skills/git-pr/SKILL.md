@@ -114,7 +114,7 @@ Agrège résultats (score >= 80) dans commentaire PR.
 ## References
 
 - [Template review](../git-pr-core/references/review-template.md) - Format commentaire et agents
-- [Todos template](../git-pr-core/references/todos-template.md) - TodoWrite et génération description
+- [Todos template](../git-pr-core/references/todos-template.md) - TaskCreate, TaskUpdate, TaskList et génération description
 
 ## Task Management
 

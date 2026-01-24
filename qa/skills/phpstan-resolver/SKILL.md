@@ -3,7 +3,7 @@ name: phpstan-resolver
 description: >
   Résout automatiquement les erreurs PHPStan en analysant et corrigeant
   les problèmes de types. Boucle jusqu'à zéro erreur ou stagnation.
-allowed-tools: [Task, Bash, Read, Edit, Grep, Glob, TodoWrite]
+allowed-tools: [Task, Bash, Read, Edit, Grep, Glob]
 model: claude-opus-4-1-20250805
 ---
 
@@ -98,7 +98,7 @@ details:
 
 ## References
 
-- [Scripts de workflow](references/workflow-scripts.md) - Scripts bash détaillés et TodoWrite
+- [Scripts de workflow](references/workflow-scripts.md) - Scripts bash détaillés
 
 ## Error Handling
 

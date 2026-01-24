@@ -234,7 +234,7 @@ Skill spécialisé pour la résolution automatique des erreurs PHPStan. Utilisé
 
 **Modèle :** opus-4
 
-**Outils :** Task, Bash, Read, Edit, Grep, Glob, TodoWrite
+**Outils :** Task, Bash, Read, Edit, Grep, Glob
 
 ---
 

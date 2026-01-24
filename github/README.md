@@ -242,7 +242,7 @@ Skill spécialisé pour l'analyse d'impact des PR. Utilisé automatiquement par 
 
 **Modèle :** opus-4
 
-**Outils :** Bash, Read, Write, TodoWrite, Grep, Glob
+**Outils :** Bash, Read, Write, Grep, Glob
 
 ## Licence
 

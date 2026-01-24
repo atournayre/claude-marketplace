@@ -131,20 +131,18 @@ if [ $ERRORS_CURRENT -gt 0 ]; then
 fi
 ```
 
-## TodoWrite template
+## Task Management (TaskCreate/TaskUpdate)
 
-```yaml
-todos:
-  - content: "Analyser erreurs PHPStan"
-    status: "completed"
-    activeForm: "Analyse des erreurs PHPStan"
-  - content: "Grouper erreurs par fichier"
-    status: "pending"
-    activeForm: "Groupement des erreurs par fichier"
-  - content: "Résoudre erreurs (itération 1)"
-    status: "pending"
-    activeForm: "Résolution des erreurs (itération 1)"
-  - content: "Vérifier résolution"
-    status: "pending"
-    activeForm: "Vérification de la résolution"
+Les tâches doivent être créées à l'initialisation du workflow avec `TaskCreate` :
+
 ```
+TaskCreate #1: Vérifier environnement PHPStan
+TaskCreate #2: Exécuter analyse initiale (--error-format=json)
+TaskCreate #3: Grouper erreurs par fichier
+TaskCreate #4: Boucle de résolution (max 10 itérations)
+TaskCreate #5: Générer rapport final
+```
+
+**Pattern d'exécution :**
+- `TaskUpdate` → tâche en `in_progress` → exécution → `TaskUpdate` → tâche en `completed`
+- La tâche #4 (boucle) reste `in_progress` pendant toutes les itérations

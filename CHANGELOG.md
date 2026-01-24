@@ -373,7 +373,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 - Pattern commande → skill pour tâches complexes orchestrées
 - Réduction taille commandes (406 → 6 lignes pour github:impact)
 - Meilleure séparation des responsabilités
-- TodoWrite systématique dans skills pour suivi progression
+- Task Management System (TaskCreate/TaskUpdate) pour suivi progression dans skills complexes
 
 ## [2025.11.15] - 2025-11-15
 
