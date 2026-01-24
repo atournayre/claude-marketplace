@@ -10,6 +10,36 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.24] - 2026-01-24
+
+### Plugins Updated
+- **dev v2.3.2** - Intégration task management system
+  - 5 skills modifiés : `dev:feature` (9 tâches), `dev:auto:feature` (11 tâches), `dev:review` (4 tâches), `dev:explore` (4 tâches), `dev:plan` (5 tâches)
+  - TaskCreate/TaskUpdate pour suivi progression workflows en temps réel
+  - Support des dépendances entre tâches (addBlockedBy)
+  - Documentation patterns task management et agents parallèles
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+- **git v1.9.1** - Intégration task management system
+  - 3 skills modifiés : `git-pr` (13 tâches), `git-cd-pr` (15 tâches), `git:release-notes` (5 tâches)
+  - Suivi détaillé workflows création PR (QA → création → review)
+  - Tâches conditionnelles (review automatique si plugin installé)
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+- **framework v1.0.2** - Intégration task management system
+  - 1 skill modifié : `framework:make:all` (10 tâches)
+  - Orchestration séquentielle de 8 skills avec dépendances
+  - Suivi progression génération complète (contracts → tests)
+  - Dépôt : [framework/CHANGELOG.md](framework/CHANGELOG.md)
+- **qa v1.2.4** - Intégration task management system
+  - 1 skill modifié : `qa:phpstan` (5 tâches avec boucle itérative)
+  - Suivi boucle auto-fix PHPStan (max 10 itérations)
+  - Tâche longue durée restant `in_progress` pendant la boucle
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+- **github v1.2.1** - Intégration task management system
+  - 1 skill modifié : `github:fix` (6 tâches)
+  - Workflow structuré résolution issue (analyse → implémentation → tests)
+  - Validation qualité intégrée au workflow
+  - Dépôt : [github/CHANGELOG.md](github/CHANGELOG.md)
+
 ## [2026.01.22] - 2026-01-22
 
 ### Plugins Updated

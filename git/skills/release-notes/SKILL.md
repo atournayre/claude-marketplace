@@ -17,6 +17,31 @@ Si arguments manquants : `AskUserQuestion` pour demander.
 
 ## Workflow
 
+### Initialisation
+
+**Créer les tâches du workflow :**
+
+Utiliser `TaskCreate` pour chaque étape :
+
+```
+TaskCreate #1: Parser et valider arguments (branches source/cible)
+TaskCreate #2: Collecter commits via git log
+TaskCreate #3: Catégoriser par impact utilisateur
+TaskCreate #4: Rédiger descriptions sans jargon
+TaskCreate #5: Générer HTML dans .claude/reports/
+```
+
+**Important :**
+- Utiliser `activeForm` (ex: "Validant les arguments", "Collectant les commits")
+- Chaque tâche doit être marquée `in_progress` puis `completed`
+
+**Pattern d'exécution pour chaque étape :**
+1. `TaskUpdate` → tâche en `in_progress`
+2. Exécuter l'étape
+3. `TaskUpdate` → tâche en `completed`
+
+### Étapes
+
 1. Parser et valider arguments (branches source/cible)
 2. Collecter commits via `git log`
 3. Catégoriser par impact utilisateur
@@ -55,6 +80,14 @@ Si arguments manquants : `AskUserQuestion` pour demander.
 ## Output
 
 `{REPORT_PATH}/release_notes_{RELEASE_NAME}.html`
+
+## Task Management
+
+**Progression du workflow :**
+- 5 tâches créées à l'initialisation
+- Chaque étape suit le pattern : `in_progress` → exécution → `completed`
+- Utiliser `TaskList` pour voir la progression
+- Les tâches permettent à l'utilisateur de suivre la génération des release notes
 
 ## References
 

@@ -12,6 +12,25 @@ Quality assurance : PHPStan, tests, linters.
 
 Le plugin qa fournit 2 skills (format natif Claude Code) :
 
+## Task Management System
+
+**Nouveauté v1.2.4** : Le skill PHPStan intègre le task management system pour suivre la boucle de résolution.
+
+### Skill avec task management
+
+| Skill | Nombre de tâches | Type de workflow |
+|-------|------------------|------------------|
+| `qa:phpstan` | 5 tâches | Boucle itérative avec auto-fix (max 10 itérations) |
+
+### Fonctionnalités
+
+- **Progression visible** : Suivi de chaque phase (vérification → analyse → boucle → rapport)
+- **Statuts clairs** : pending → in_progress → completed
+- **Boucle longue durée** : La tâche #4 reste `in_progress` pendant toutes les itérations
+- **Rapport détaillé** : Nombre d'erreurs corrigées, taux de succès, itérations effectuées
+
+---
+
 ### `/qa:phpstan`
 
 **🔹 Skill disponible : `phpstan-resolver`**

@@ -1,7 +1,7 @@
 {
   "name": "framework",
   "description": "Plugin pour atournayre/framework avec commandes et intégrations",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"

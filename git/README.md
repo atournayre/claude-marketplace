@@ -12,6 +12,27 @@ Workflow Git complet : branches, commits, conflits, PR.
 
 Le plugin git fournit 8 skills (format natif Claude Code) :
 
+## Task Management System
+
+**Nouveauté v1.9.1** : Les skills de workflow PR intègrent le task management system pour un suivi détaillé.
+
+### Skills avec task management
+
+| Skill | Nombre de tâches | Type de workflow |
+|-------|------------------|------------------|
+| `git-pr` | 13 tâches | Workflow création PR standard |
+| `git-cd-pr` | 15 tâches | Workflow CD avec labels version |
+| `git:release-notes` | 5 tâches | Génération notes de release |
+
+### Fonctionnalités
+
+- **Progression visible** : Suivi étape par étape de la création de PR
+- **Statuts clairs** : pending → in_progress → completed
+- **Workflow complet** : De la QA à la création de PR en passant par le code review
+- **Tâches conditionnelles** : Review automatique seulement si plugin installé
+
+---
+
 ### `/git:branch`
 
 Création de branche Git avec workflow structuré.

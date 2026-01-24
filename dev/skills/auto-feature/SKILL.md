@@ -48,6 +48,8 @@ Exit code 1 et arrêt si quelque chose manque.
 
 ## Phase 0 : Vérifier les prérequis
 
+**🔄 Progression :** `TaskUpdate` → tâche #0 en `in_progress`
+
 **⏱️ Démarrer le timer**
 
 Exécuter `/dev:auto:check-prerequisites`
@@ -55,6 +57,8 @@ Exécuter `/dev:auto:check-prerequisites`
 Si la skill exit 1, arrêter immédiatement.
 
 **⏱️ Arrêter le timer**
+
+**🔄 Progression :** `TaskUpdate` → tâche #0 en `completed`
 
 **Affichage :**
 ```
@@ -167,7 +171,29 @@ Mettre à jour le fichier pour ajouter les infos du worktree :
 }
 ```
 
-### 3. Afficher le statut initial
+### 3. Créer les tâches du workflow
+
+Utiliser `TaskCreate` pour chaque phase :
+
+```
+TaskCreate #0: Prérequis - Vérifier les outils
+TaskCreate #1: Fetch - Récupérer l'issue GitHub
+TaskCreate #2: Discover - Comprendre le besoin
+TaskCreate #3: Explore - Explorer codebase
+TaskCreate #4: Clarify - Heuristiques automatiques
+TaskCreate #5: Design - Architecture (Pragmatic)
+TaskCreate #6: Plan - Générer specs
+TaskCreate #7: Code - Implémenter
+TaskCreate #8: Review - Auto-fix × 3
+TaskCreate #9: Cleanup - Nettoyer worktree
+TaskCreate #10: Create PR - Créer la Pull Request
+```
+
+**Important :**
+- Utiliser `activeForm` (ex: "Vérifiant les outils", "Récupérant l'issue GitHub")
+- Toutes les tâches sont créées d'office (mode automatique)
+
+### 4. Afficher le statut initial
 
 ```
 🤖 Workflow automatique : {feature}
@@ -185,10 +211,17 @@ Mettre à jour le fichier pour ajouter les infos du worktree :
   ⬜ 10. Create PR - Créer la Pull Request
 ```
 
-## Gestion du timing des phases
+## Gestion du timing et progression
+
+**⚠️ IMPORTANT :** Chaque phase suit ce pattern :
+1. `TaskUpdate` → tâche en `in_progress`
+2. ⏱️ Démarrer le timer + exécuter la phase
+3. ⏱️ Arrêter le timer
+4. `TaskUpdate` → tâche en `completed`
 
 **Avant chaque phase :**
-Enregistrer le timestamp de début :
+1. Utiliser `TaskUpdate` pour marquer la tâche comme `in_progress`
+2. Enregistrer le timestamp de début :
 ```json
 {
   "phases": {
@@ -198,7 +231,7 @@ Enregistrer le timestamp de début :
 ```
 
 **Après chaque phase :**
-Calculer la durée et mettre à jour :
+1. Calculer la durée et mettre à jour :
 ```json
 {
   "phases": {
@@ -211,6 +244,9 @@ Calculer la durée et mettre à jour :
   }
 }
 ```
+2. Utiliser `TaskUpdate` pour marquer la tâche comme `completed`
+
+**Pattern illustré dans Phase 0 - À reproduire pour toutes les phases 1-10.**
 
 ## Phase 1 : Discover
 
@@ -380,7 +416,11 @@ Affichage du récapitulatif des temps (voir section "Récapitulatif final")
 
 # Affichage du statut
 
-À chaque transition de phase, afficher le statut mis à jour avec timing :
+**Deux systèmes complémentaires :**
+
+1. **Task Management System** : Les tâches sont automatiquement mises à jour, `TaskList` peut être consulté
+
+2. **Affichage manuel avec timings** : À chaque transition de phase, afficher le statut mis à jour avec timing :
 
 ```
 🤖 Workflow automatique : {feature}
@@ -397,6 +437,8 @@ Affichage du récapitulatif des temps (voir section "Récapitulatif final")
   ⬜ 9. Cleanup    - Nettoyer worktree
   ⬜ 10. Create PR - Créer la Pull Request
 ```
+
+**Note :** Le task system ne gère pas les timings, donc l'affichage manuel reste nécessaire pour montrer les durées.
 
 Pas d'arrêt : exécution continue jusqu'à fin ou échec.
 
@@ -483,14 +525,18 @@ Exit code: 1
 
 - **Worktree OBLIGATOIRE** en mode auto (création et cleanup)
 - **0 checkpoints utilisateur** (aucune interaction)
-- **Timing enregistré** pour chaque phase
+- **Task Management** :
+  - Créer les 11 tâches (0-10) à l'initialisation
+  - Mettre à jour le statut avant/après chaque phase (in_progress → completed)
+  - Les tâches se mettent à jour automatiquement en mode auto
+- **Timing enregistré** pour chaque phase dans workflow state JSON
 - **CI DOIT PASSER** (PHPStan niveau 9, tests)
 - **Rollback automatique** en cas d'erreur bloquante
 - **Cleanup automatique** avant création PR
 - **PR créée automatiquement** via `/git:pr`
 - **Mettre à jour** `.claude/data/workflows/issue-{issue_number}-dev-workflow-state.json` après chaque phase
-- **Afficher le statut** à chaque transition
-- **Ne jamais sauter de phase** (0 à 9 obligatoires)
+- **Afficher le statut** à chaque transition (task system + timings)
+- **Ne jamais sauter de phase** (0 à 10 obligatoires)
 
 # Cas limites
 

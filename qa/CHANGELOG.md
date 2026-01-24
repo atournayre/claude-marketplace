@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.2.4] - 2026-01-24
+
+### Changed
+- Intégration du task management system dans skill qa/ :
+  - `qa:phpstan` - 5 tâches (avec boucle itérative et auto-fix)
+- Ajout de TaskCreate/TaskUpdate pour suivi progression
+- Documentation patterns task management et gestion boucles longues
+
 ## [1.2.3] - 2026-01-24
 
 ### Fixed

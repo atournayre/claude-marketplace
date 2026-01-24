@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.0.2] - 2026-01-24
+
+### Changed
+- Intégration du task management system dans skill framework/ :
+  - `framework:make-all` - 10 tâches (orchestration 8 skills séquentiels)
+- Ajout de TaskCreate/TaskUpdate pour suivi progression
+- Documentation patterns task management et dépendances séquentielles
+
 ## [1.0.1] - 2025-12-20
 
 ### Changed

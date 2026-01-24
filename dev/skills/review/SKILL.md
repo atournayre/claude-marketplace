@@ -66,7 +66,28 @@ Si non installé :
 - Lire `.claude/data/.dev-workflow-state.json` pour récupérer les fichiers modifiés
 - Si phase 5 (code) non complétée, rediriger vers `/dev:code`
 
-## 2. Lancer les reviews en parallèle
+## 2. Créer les tâches de review
+
+Utiliser `TaskCreate` pour chaque review :
+
+```
+TaskCreate #1: Code Review - Simplicité/bugs/conventions (feature-dev)
+TaskCreate #2: PHPStan - Résoudre erreurs niveau 9
+TaskCreate #3: Elegant Objects - Conformité principes
+TaskCreate #4: Consolider - Agréger résultats et décider
+```
+
+**Important :**
+- Utiliser `activeForm` (ex: "Reviewing code quality", "Résolvant erreurs PHPStan")
+- Les 3 premières tâches peuvent se lancer en parallèle
+- La tâche #4 dépend des 3 premières (utiliser `addBlockedBy`)
+
+## 3. Lancer les reviews en parallèle
+
+**⚠️ Avant de lancer les agents :** Marquer les 3 tâches en `in_progress` :
+- `TaskUpdate` → tâche #1 en `in_progress`
+- `TaskUpdate` → tâche #2 en `in_progress`
+- `TaskUpdate` → tâche #3 en `in_progress`
 
 ### Review 1 : Code Review (feature-dev)
 
@@ -75,17 +96,27 @@ Lancer l'agent `code-reviewer` avec le focus sur :
 - Bugs / Correction fonctionnelle
 - Conventions du projet
 
+**Quand terminé :** `TaskUpdate` → tâche #1 en `completed`
+
 ### Review 2 : PHPStan
 
 Lancer l'agent `phpstan-error-resolver` (local)
+
+**Quand terminé :** `TaskUpdate` → tâche #2 en `completed`
 
 ### Review 3 : Elegant Objects
 
 Lancer l'agent `elegant-objects-reviewer` (local)
 
-## 3. Consolider les résultats
+**Quand terminé :** `TaskUpdate` → tâche #3 en `completed`
 
-## 4. Demander l'action utilisateur
+## 4. Consolider les résultats
+
+**🔄 Progression :** `TaskUpdate` → tâche #4 en `in_progress`
+
+Agréger les résultats des 3 reviews.
+
+## 5. Demander l'action utilisateur
 
 ```
 Que souhaites-tu faire ?
@@ -97,13 +128,17 @@ Que souhaites-tu faire ?
 
 ⚠️ **Attendre la décision avant de continuer.**
 
-## 5. Si "Fix now" choisi
+## 6. Si "Fix now" choisi
 
 - Appliquer les corrections PHPStan en priorité (bloquent la CI)
 - Appliquer les corrections Elegant Objects
 - Relancer une review pour vérifier
 
-## 6. Mettre à jour le workflow state
+## 7. Finaliser
+
+**🔄 Progression :** `TaskUpdate` → tâche #4 en `completed`
+
+Mettre à jour le workflow state
 
 # Prochaine étape
 
@@ -115,6 +150,11 @@ Prochaine étape : /dev:summary pour le résumé final
 
 # Règles
 
+- **Task Management** :
+  - Créer 4 tâches au démarrage (3 reviews + 1 consolidation)
+  - Marquer les 3 reviews en `in_progress` avant lancement parallèle
+  - La tâche de consolidation est bloquée par les 3 reviews (`addBlockedBy`)
+  - Utiliser `TaskList` pour afficher la progression
 - **PHPStan erreurs = BLOQUANT** (font échouer la CI)
 - Confiance minimum 80% pour les issues code review
 - Respecter le choix utilisateur (ne pas forcer les corrections)

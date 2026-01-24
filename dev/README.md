@@ -107,6 +107,45 @@ PROJECT=
 # Une PR sera créée automatiquement à la fin
 ```
 
+## Task Management System
+
+**Nouveauté v2.3.2** : Les skills de workflow intègrent le task management system de Claude Code pour un suivi en temps réel.
+
+### Skills avec task management
+
+| Skill | Nombre de tâches | Type de workflow |
+|-------|------------------|------------------|
+| `dev:feature` | 9 tâches | Phases séquentielles avec checkpoints |
+| `dev:auto:feature` | 11 tâches | Phases automatiques complètes |
+| `dev:review` | 4 tâches | 3 reviews parallèles + consolidation |
+| `dev:explore` | 4 tâches | 3 agents parallèles + consolidation |
+| `dev:plan` | 5 tâches | Étapes séquentielles de planification |
+
+### Fonctionnalités
+
+- **Progression visible** : Utilise `TaskList` pour voir l'état en temps réel
+- **Statuts clairs** : pending → in_progress → completed
+- **Dépendances** : Certaines tâches bloquent d'autres (ex: consolidation bloquée par agents)
+- **Agents parallèles** : Suivi des agents qui s'exécutent en parallèle
+- **Spinner actif** : Affichage du nom de la tâche en cours via `activeForm`
+
+### Exemple d'utilisation
+
+```bash
+# Lancer un workflow
+/dev:feature "Ajouter authentication"
+
+# Dans un autre terminal/session, voir la progression
+TaskList
+
+# Output:
+# #1 [completed] Discover - Comprendre le besoin
+# #2 [completed] Explore - Explorer codebase
+# #3 [in_progress] Clarify - Questions clarification
+# #4 [pending] Design - Proposer architectures
+# ...
+```
+
 ## Phases individuelles (Mode Interactif)
 
 Tu peux exécuter chaque phase individuellement :

@@ -73,67 +73,105 @@ Si non : Continuer le workflow normalement.
 
 2. Créer le fichier `.claude/data/.dev-workflow-state.json` (créer le répertoire `.claude/data/` si nécessaire)
 
-3. Créer la todo list avec toutes les phases
+3. **Créer les tâches du workflow**
 
-## Gestion du timing des phases
+Utiliser `TaskCreate` pour chaque phase :
+
+```
+TaskCreate #0: Discover - Comprendre le besoin
+TaskCreate #1: Explore - Explorer codebase
+TaskCreate #2: Clarify - Questions clarification
+TaskCreate #3: Design - Proposer architectures
+TaskCreate #4: Plan - Générer specs
+TaskCreate #5: Code - Implémenter
+TaskCreate #6: Review - QA complète
+TaskCreate #7: Summary - Résumé final
+TaskCreate #8: Cleanup - Nettoyer worktree (si créé)
+```
+
+**Important :**
+- Utiliser `activeForm` (ex: "Comprenant le besoin", "Explorant le codebase")
+- Ne créer la tâche #8 que si worktree créé
+- Les tâches suivent l'ordre d'exécution (0→7 ou 0→8)
+
+## Gestion du timing et progression
 
 **Avant chaque phase :**
-Enregistrer le timestamp de début dans `.claude/data/.dev-workflow-state.json`
+1. Utiliser `TaskUpdate` pour marquer la tâche comme `in_progress`
+2. Enregistrer le timestamp de début dans `.claude/data/.dev-workflow-state.json`
 
 **Après chaque phase :**
-Calculer la durée et mettre à jour le fichier d'état
+1. Calculer la durée et mettre à jour le fichier d'état
+2. Utiliser `TaskUpdate` pour marquer la tâche comme `completed`
 
 ## Phase 0 : Discover
 
-Exécuter le contenu de `/dev:discover`
-
-**Checkpoint :** Confirmer que la compréhension est correcte.
+1. `TaskUpdate` → tâche #0 en `in_progress`
+2. Exécuter le contenu de `/dev:discover`
+3. **Checkpoint :** Confirmer que la compréhension est correcte
+4. `TaskUpdate` → tâche #0 en `completed`
 
 ## Phase 1 : Explore
 
-Exécuter le contenu de `/dev:explore`
+1. `TaskUpdate` → tâche #1 en `in_progress`
+2. Exécuter le contenu de `/dev:explore`
+3. `TaskUpdate` → tâche #1 en `completed`
 
 ## Phase 2 : Clarify
 
-Exécuter le contenu de `/dev:clarify`
-
-**Checkpoint :** Attendre toutes les réponses.
+1. `TaskUpdate` → tâche #2 en `in_progress`
+2. Exécuter le contenu de `/dev:clarify`
+3. **Checkpoint :** Attendre toutes les réponses
+4. `TaskUpdate` → tâche #2 en `completed`
 
 ## Phase 3 : Design
 
-Exécuter le contenu de `/dev:design`
-
-**Checkpoint :** Attendre le choix de l'architecture.
+1. `TaskUpdate` → tâche #3 en `in_progress`
+2. Exécuter le contenu de `/dev:design`
+3. **Checkpoint :** Attendre le choix de l'architecture
+4. `TaskUpdate` → tâche #3 en `completed`
 
 ## Phase 4 : Plan
 
-Exécuter le contenu de `/dev:plan`
+1. `TaskUpdate` → tâche #4 en `in_progress`
+2. Exécuter le contenu de `/dev:plan`
+3. `TaskUpdate` → tâche #4 en `completed`
 
 ## Phase 5 : Code
 
-**Checkpoint :** Demander approbation avant de commencer.
-
-Exécuter le contenu de `/dev:code`
+1. **Checkpoint :** Demander approbation avant de commencer
+2. `TaskUpdate` → tâche #5 en `in_progress`
+3. Exécuter le contenu de `/dev:code`
+4. `TaskUpdate` → tâche #5 en `completed`
 
 ## Phase 6 : Review
 
-Exécuter le contenu de `/dev:review`
-
-**Checkpoint :** Demander action (fix now / fix later / proceed).
+1. `TaskUpdate` → tâche #6 en `in_progress`
+2. Exécuter le contenu de `/dev:review`
+3. **Checkpoint :** Demander action (fix now / fix later / proceed)
+4. `TaskUpdate` → tâche #6 en `completed`
 
 ## Phase 7 : Summary
 
-Exécuter le contenu de `/dev:summary`
-
-Calculer le temps total et afficher le récapitulatif des temps
+1. `TaskUpdate` → tâche #7 en `in_progress`
+2. Exécuter le contenu de `/dev:summary`
+3. Calculer le temps total et afficher le récapitulatif des temps
+4. `TaskUpdate` → tâche #7 en `completed`
 
 ## Phase 8 : Cleanup (optionnel)
 
-Si un worktree a été créé, proposer de le nettoyer
+1. Si un worktree a été créé :
+   - `TaskUpdate` → tâche #8 en `in_progress`
+   - Proposer de nettoyer le worktree
+   - `TaskUpdate` → tâche #8 en `completed`
 
 # Affichage du statut
 
-À chaque transition de phase, afficher :
+**Deux systèmes complémentaires :**
+
+1. **Task Management System** : Utiliser `TaskList` pour afficher l'état des tâches (pending/in_progress/completed)
+
+2. **Affichage manuel avec timings** : À chaque transition de phase, afficher :
 
 ```
 🔄 Workflow de développement : {feature}
@@ -149,14 +187,20 @@ Si un worktree a été créé, proposer de le nettoyer
   ⬜ 8. Cleanup    - Nettoyer worktree (si créé)
 ```
 
+**Note :** Le task system ne gère pas les timings, donc l'affichage manuel reste nécessaire pour montrer les durées.
+
 # Règles
 
 - **Proposition de worktree** à l'initialisation (optionnel)
 - **Checkpoints obligatoires** aux phases 0, 2, 3, 5, 6
 - **Ne jamais sauter de phase** (0-7)
 - **Phase 8 (Cleanup)** uniquement si un worktree a été créé
-- **Mettre à jour** `.claude/data/.dev-workflow-state.json` après chaque phase
-- **Afficher le statut** à chaque transition
+- **Task Management** :
+  - Créer toutes les tâches à l'initialisation
+  - Mettre à jour le statut avant/après chaque phase
+  - Utiliser `TaskList` pour afficher la progression
+- **Mettre à jour** `.claude/data/.dev-workflow-state.json` après chaque phase (pour les timings)
+- **Afficher le statut** à chaque transition (task system + timings)
 - Si l'utilisateur interrompt, il peut reprendre avec `/dev:status` + la commande de la phase suivante
 - **Worktrees** : Toutes les métadonnées sont dans `.claude/data/.dev-worktrees.json`
 

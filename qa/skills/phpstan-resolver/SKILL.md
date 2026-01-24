@@ -25,6 +25,37 @@ MAX_ITERATIONS=10
 
 ## Workflow
 
+### Initialisation
+
+**Créer les tâches du workflow :**
+
+Utiliser `TaskCreate` pour chaque phase :
+
+```
+TaskCreate #1: Vérifier environnement PHPStan
+TaskCreate #2: Exécuter analyse initiale (--error-format=json)
+TaskCreate #3: Grouper erreurs par fichier
+TaskCreate #4: Boucle de résolution (max 10 itérations)
+TaskCreate #5: Générer rapport final
+```
+
+**Important :**
+- Utiliser `activeForm` (ex: "Vérifiant environnement PHPStan", "Résolvant erreurs")
+- La tâche #4 peut prendre du temps (boucle jusqu'à 10 itérations)
+- Chaque tâche doit être marquée `in_progress` puis `completed`
+
+**Pattern d'exécution pour chaque étape :**
+1. `TaskUpdate` → tâche en `in_progress`
+2. Exécuter l'étape
+3. `TaskUpdate` → tâche en `completed`
+
+**Spécial pour la boucle de résolution (tâche #4) :**
+- Marquer en `in_progress` au début de la boucle
+- Ne marquer en `completed` qu'à la fin (0 erreur, stagnation, ou max itérations)
+- Le statut reste `in_progress` pendant toutes les itérations
+
+### Étapes
+
 1. Vérifier environnement PHPStan
 2. Exécuter analyse initiale (`--error-format=json`)
 3. Grouper erreurs par fichier
@@ -50,6 +81,15 @@ details:
   success_rate: "X%"
   iterations: N
 ```
+
+## Task Management
+
+**Progression du workflow :**
+- 5 tâches créées à l'initialisation
+- La tâche #4 (boucle) reste `in_progress` pendant toutes les itérations
+- Chaque tâche suit le pattern : `in_progress` → exécution → `completed`
+- Utiliser `TaskList` pour voir la progression (notamment pour la boucle longue)
+- Les tâches permettent à l'utilisateur de suivre la résolution progressive des erreurs
 
 ## References
 

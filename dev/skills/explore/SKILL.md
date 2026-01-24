@@ -40,7 +40,29 @@ Si non installé :
 - Lire `.claude/data/.dev-workflow-state.json` pour connaître la feature en cours
 - Si le fichier n'existe pas, demander à l'utilisateur de lancer `/dev:discover` d'abord
 
-## 2. Lancer les agents code-explorer
+## 2. Créer les tâches d'exploration
+
+Utiliser `TaskCreate` pour chaque agent :
+
+```
+TaskCreate #1: Explorer features similaires (code-explorer)
+TaskCreate #2: Mapper architecture et abstractions (code-explorer)
+TaskCreate #3: Analyser intégrations (code-explorer) - optionnel
+TaskCreate #4: Consolider résultats et présenter résumé
+```
+
+**Important :**
+- Utiliser `activeForm` (ex: "Explorant features similaires", "Mappant l'architecture")
+- Tâche #3 optionnelle selon pertinence de la feature
+- Tâche #4 bloquée par les agents 1-3 (utiliser `addBlockedBy`)
+- Les agents 1-3 se lancent en parallèle
+
+## 3. Lancer les agents code-explorer
+
+**⚠️ Avant de lancer les agents :** Marquer les tâches en `in_progress` :
+- `TaskUpdate` → tâche #1 en `in_progress`
+- `TaskUpdate` → tâche #2 en `in_progress`
+- `TaskUpdate` → tâche #3 en `in_progress` (si créée)
 
 Lancer **2-3 agents `code-explorer` en parallèle** avec des focus différents :
 
@@ -51,12 +73,16 @@ Trace leur implémentation de bout en bout.
 Retourne les 5-10 fichiers clés à lire.
 ```
 
+**Quand terminé :** `TaskUpdate` → tâche #1 en `completed`
+
 ### Agent 2 : Architecture
 ```
 Mappe l'architecture et les abstractions pour la zone concernée par "{feature}".
 Identifie les patterns utilisés (repositories, services, events, etc.).
 Retourne les 5-10 fichiers clés à lire.
 ```
+
+**Quand terminé :** `TaskUpdate` → tâche #2 en `completed`
 
 ### Agent 3 : Intégrations (si pertinent)
 ```
@@ -65,13 +91,17 @@ Identifie comment les features communiquent entre elles.
 Retourne les 5-10 fichiers clés à lire.
 ```
 
-## 3. Consolider les résultats
+**Quand terminé :** `TaskUpdate` → tâche #3 en `completed`
+
+## 4. Consolider les résultats
+
+**🔄 Progression :** `TaskUpdate` → tâche #4 en `in_progress`
 
 - Fusionner les listes de fichiers identifiés
 - Lire les fichiers clés pour construire une compréhension profonde
 - Identifier les patterns récurrents
 
-## 4. Présenter le résumé
+## 5. Présenter le résumé
 
 ```
 🔍 Exploration du codebase
@@ -94,9 +124,21 @@ Retourne les 5-10 fichiers clés à lire.
 - {observation 2}
 ```
 
-## 5. Mettre à jour le workflow state
+## 6. Finaliser
+
+**🔄 Progression :** `TaskUpdate` → tâche #4 en `completed`
 
 Mettre à jour `.claude/data/.dev-workflow-state.json`
+
+# Task Management
+
+**Progression du workflow :**
+- 4 tâches créées à l'initialisation (3 ou 4 selon pertinence)
+- Les 3 premières tâches (agents) se lancent en parallèle
+- La tâche #4 (consolidation) est bloquée par les 3 agents (`addBlockedBy`)
+- Chaque agent marque sa tâche comme `completed` indépendamment
+- Utiliser `TaskList` pour voir la progression des agents parallèles
+- Les tâches permettent à l'utilisateur de suivre l'exploration multi-agents
 
 # Prochaine étape
 

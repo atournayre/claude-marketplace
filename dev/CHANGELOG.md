@@ -5,6 +5,19 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.3.2] - 2026-01-24
+
+### Changed
+- Intégration du task management system dans 5 skills dev/ :
+  - `dev:feature` - 9 tâches (phases 0-8)
+  - `dev:auto:feature` - 11 tâches (phases 0-10 automatiques)
+  - `dev:review` - 4 tâches (3 reviews parallèles + consolidation)
+  - `dev:explore` - 4 tâches (3 agents parallèles + consolidation)
+  - `dev:plan` - 5 tâches (étapes séquentielles)
+- Ajout de TaskCreate/TaskUpdate pour suivi progression workflows
+- Documentation patterns task management dans chaque skill
+- Support des dépendances entre tâches (addBlockedBy)
+
 ## [2.3.1] - 2026-01-24
 
 ### Fixed
