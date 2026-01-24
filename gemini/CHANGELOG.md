@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.0] - 2026-01-22
+
+### Changed
+- Migration de 3 commands vers le format skills (analyze, search, think)
+- Format natif Claude Code avec support complet frontmatter YAML
+
+### Removed
+- Répertoire /commands/ - complètement migré en /skills/
+
 ## [1.0.1] - 2025-12-20
 
 ### Changed

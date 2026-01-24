@@ -5,6 +5,16 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.9.0] - 2026-01-22
+
+### Changed
+- Migration de 4 commands vers le format skills (branch, commit, conflit, release-report)
+- Préservation des hooks avancés (validation, push automatique, feedback)
+- Format natif Claude Code avec support complet frontmatter YAML
+
+### Removed
+- Répertoire /commands/ - complètement migré en /skills/
+
 ## [1.8.2] - 2026-01-18
 
 ### Fixed

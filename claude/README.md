@@ -8,7 +8,9 @@ Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration
 /plugin install claude@atournayre
 ```
 
-## Commandes
+## Skills Disponibles
+
+Le plugin claude fournit 5 skills (format natif Claude Code) :
 
 ### `/claude:challenge`
 
@@ -149,8 +151,8 @@ Crée un alias de commande qui délègue à une autre slash command.
 ```
 
 **Génère :**
-- Fichier dans `commands/alias/`
-- Délégation automatique via SlashCommand
+- Skill dans `skills/alias-add/`
+- Délégation automatique via Skill
 - Mise à jour du README
 
 ## Licence

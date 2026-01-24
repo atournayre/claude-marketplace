@@ -5,6 +5,12 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.1.0] - 2026-01-22
+
+### Changed
+- Skills elegant-objects et phpstan-resolver maintenues et validées
+- Support complet du format skills natif Claude Code
+
 ## [1.2.2] - 2026-01-10
 
 ### Fixed

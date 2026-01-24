@@ -8,7 +8,9 @@ Quality assurance : PHPStan, tests, linters.
 /plugin install qa@atournayre
 ```
 
-## Commandes
+## Skills Disponibles
+
+Le plugin qa fournit 2 skills (format natif Claude Code) :
 
 ### `/qa:phpstan`
 

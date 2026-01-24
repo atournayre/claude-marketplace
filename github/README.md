@@ -14,7 +14,9 @@ Gestion GitHub : issues, PR, analyse d'impact.
 - Repository GitHub
 - Token d'accès GitHub configuré
 
-## Commandes
+## Skills Disponibles
+
+Le plugin github fournit 2 skills (format natif Claude Code) :
 
 ### `/github:fix`
 

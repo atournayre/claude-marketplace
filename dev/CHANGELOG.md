@@ -5,6 +5,21 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.3.0] - 2026-01-22
+
+### Changed
+- Migration de tous les commands vers le format skills
+- Conversion de 23 commands en 23 skills avec support natif Claude Code
+  - 13 skills racine : status, feature, discover, explore, clarify, design, plan, code, review, summary, debug, log, worktree
+  - 10 skills auto : check-prerequisites, fetch-issue, discover, explore, clarify, design, plan, code, review, feature
+
+### Added
+- Préservation complète des hooks complexes (PreToolUse/PostToolUse)
+- Support output-style avec workaround pour skills concernées
+
+### Removed
+- Répertoire /commands/ - complètement migré en /skills/
+
 ## [2.2.2] - 2026-01-10
 
 ### Changed

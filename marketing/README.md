@@ -2,9 +2,11 @@
 
 Génération de contenu marketing pour réseaux sociaux et communications.
 
-## Commandes
+## Skills Disponibles
 
-### `/linkedin [nombre-de-jours]`
+Le plugin marketing fournit 1 skill (format natif Claude Code) :
+
+### `/marketing:linkedin [nombre-de-jours]`
 
 Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace.
 

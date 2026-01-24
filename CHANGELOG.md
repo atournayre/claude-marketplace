@@ -10,6 +10,35 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.22] - 2026-01-22
+
+### Plugins Updated
+- **claude v1.1.0** - Migration commands → skills
+  - 5 skills créés (alias-add, challenge, doc-load, doc-question, make-command)
+  - Format natif Claude Code avec support complet frontmatter YAML
+  - Remplacement "SlashCommand" → "Skill" dans toute la documentation
+  - Suppression complète du répertoire /commands/
+  - Dépôt : [claude/CHANGELOG.md](claude/CHANGELOG.md)
+- **dev v1.9.0** - Migration 23 commands dev → skills (incluant 10 auto)
+  - Préservation des 3 hooks complexes (PreToolUse/PostToolUse)
+  - Support complet workaround output-style via instructions explicites
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+- **git v1.9.0** - Migration 4 commands git → skills
+  - Préservation des hooks avancés (validation, push automatique, feedback)
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+- **doc v1.5.0** - Migration 3 commands doc → skills
+  - Dépôt : [doc/CHANGELOG.md](doc/CHANGELOG.md)
+- **symfony v1.2.0** - Migration 3 commands symfony → skills
+  - Dépôt : [symfony/CHANGELOG.md](symfony/CHANGELOG.md)
+- **gemini v1.3.0** - Migration 3 commands gemini → skills
+  - Dépôt : [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
+- **github v1.2.0** - Migration github:fix vers skill
+  - Dépôt : [github/CHANGELOG.md](github/CHANGELOG.md)
+- **marketing v1.1.0** - Migration linkedin vers skill
+  - Dépôt : [marketing/CHANGELOG.md](marketing/CHANGELOG.md)
+- **qa v1.1.0** - Skills elegant-objects et phpstan-resolver maintenues
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+
 ## [2026.01.18] - 2026-01-18
 
 ### Plugins Updated

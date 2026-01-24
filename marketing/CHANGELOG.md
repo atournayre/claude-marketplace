@@ -2,6 +2,15 @@
 
 Tous les changements notables de ce projet sont documentés dans ce fichier.
 
+## [1.1.0] - 2026-01-22
+
+### Changed
+- Migration de 1 command vers le format skill (marketing:linkedin)
+- Format natif Claude Code avec support complet frontmatter YAML
+
+### Removed
+- Répertoire /commands/ - complètement migré en /skills/
+
 ## [1.0.2] - 2026-01-10
 
 ### Fixed

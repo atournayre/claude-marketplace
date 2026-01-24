@@ -271,39 +271,32 @@ Si vous acceptez :
 
 ```
 dev/
-├── commands/
-│   ├── feature.md      # Orchestrateur mode interactif
-│   ├── status.md       # Affiche plan
-│   ├── discover.md     # Phase 0 (interactif)
-│   ├── explore.md      # Phase 1 (interactif)
-│   ├── clarify.md      # Phase 2 (interactif)
-│   ├── design.md       # Phase 3 (interactif)
-│   ├── plan.md         # Phase 4 (interactif)
-│   ├── code.md         # Phase 5 (interactif)
-│   ├── review.md       # Phase 6 (interactif)
-│   ├── summary.md      # Phase 7 (interactif)
-│   ├── debug.md        # Utilitaire
-│   ├── log.md          # Utilitaire
-│   └── auto/           # Mode automatisé
-│       ├── feature.md         # Orchestrateur (Phases 0-9)
-│       ├── check-prerequisites.md  # Phase 0
-│       ├── fetch-issue.md     # Phase 1
-│       ├── discover.md        # Phase 2
-│       ├── explore.md         # Phase 3
-│       ├── clarify.md         # Phase 4
-│       ├── design.md          # Phase 5
-│       ├── plan.md            # Phase 6
-│       ├── code.md            # Phase 7
-│       └── review.md          # Phase 8
-├── agents/
-│   ├── phpstan-error-resolver.md
-│   ├── elegant-objects-reviewer.md
-│   ├── meta-agent.md
-│   ├── symfony-docs-scraper.md
-│   ├── api-platform-docs-scraper.md
-│   ├── claude-docs-scraper.md
-│   ├── meilisearch-docs-scraper.md
-│   └── atournayre-framework-docs-scraper.md
+├── skills/                    # Skills au format Claude Code natif
+│   ├── feature/              # Orchestrateur mode interactif
+│   ├── status/               # Affiche plan
+│   ├── discover/             # Phase 0 (interactif)
+│   ├── explore/              # Phase 1 (interactif)
+│   ├── clarify/              # Phase 2 (interactif)
+│   ├── design/               # Phase 3 (interactif)
+│   ├── plan/                 # Phase 4 (interactif)
+│   ├── code/                 # Phase 5 (interactif)
+│   ├── review/               # Phase 6 (interactif)
+│   ├── summary/              # Phase 7 (interactif)
+│   ├── debug/                # Utilitaire
+│   ├── log/                  # Utilitaire
+│   ├── worktree/             # Gestion worktrees
+│   └── auto-*/               # Skills mode automatisé (10 skills)
+│       ├── auto-feature/              # Orchestrateur (Phases 0-10)
+│       ├── auto-check-prerequisites/  # Phase 0
+│       ├── auto-fetch-issue/          # Phase 1
+│       ├── auto-discover/             # Phase 2
+│       ├── auto-explore/              # Phase 3
+│       ├── auto-clarify/              # Phase 4
+│       ├── auto-design/               # Phase 5
+│       ├── auto-plan/                 # Phase 6
+│       ├── auto-code/                 # Phase 7
+│       └── auto-review/               # Phase 8
+├── agents/                   # Agents spécialisés (deprecated - voir skills)
 ├── README.md
 └── CHANGELOG.md
 ```

@@ -7,7 +7,9 @@ Intégration Gemini CLI pour Claude Code. Permet de déléguer des tâches spéc
 - Gemini CLI installé et authentifié (`gemini --version`)
 - Accès API Gemini configuré
 
-## Commandes
+## Skills Disponibles
+
+Le plugin gemini fournit 3 skills (format natif Claude Code) :
 
 | Commande | Description | Arguments |
 |----------|-------------|-----------|
