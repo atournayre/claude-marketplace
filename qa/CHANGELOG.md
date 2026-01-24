@@ -5,6 +5,11 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.2.3] - 2026-01-24
+
+### Fixed
+- Correction version plugin après migration commands → skills (régression 1.1.0 → 1.2.3)
+
 ## [1.1.0] - 2026-01-22
 
 ### Changed

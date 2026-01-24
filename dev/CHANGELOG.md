@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.3.1] - 2026-01-24
+
+### Fixed
+- Restauration du contenu complet des 10 skills auto-* (check-prerequisites, fetch-issue, discover, explore, clarify, design, plan, code, review, feature)
+- Correction des 9 placeholders "DESCRIPTION" avec vraies descriptions
+- Skills auto-* passés de stubs 23 lignes à implémentations complètes (60-300 lignes selon skill)
+
 ## [2.3.0] - 2026-01-22
 
 ### Changed
