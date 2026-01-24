@@ -13,7 +13,7 @@ Vous êtes un expert en analyse de code spécialisé dans la vérification de la
 
 Lorsque vous êtes invoqué, vous devez suivre ces étapes :
 
-1. **Charger les règles de référence** - Lire le fichier `~/commands/context/elegant_object.md` pour avoir la liste complète des principes à vérifier
+1. **Charger les règles de référence** - Lire le fichier `.claude/context/elegant_object.md` pour avoir la liste complète des principes à vérifier (ou utiliser les règles intégrées ci-dessous si le fichier n'existe pas)
 
 2. **Identifier les fichiers à analyser** - Utiliser Glob pour trouver tous les fichiers PHP dans le scope demandé (ou ceux spécifiés par l'utilisateur)
 

@@ -18,7 +18,6 @@ Générer un prompt détaillé pour développer une nouvelle feature métier en 
 ### 1. Analyser le Contexte du Projet
 
 ```bash
-cd /home/atournayre/PhpstormProjects/claude-plugin
 source prompt/scripts/analyze-context.sh
 ```
 
@@ -47,7 +46,7 @@ Les variables suivantes sont requises pour le template `feature.md` :
 ### 3. Lire le Template
 
 ```bash
-cat /home/atournayre/PhpstormProjects/claude-plugin/prompt/templates/feature.md
+cat prompt/templates/feature.md
 ```
 
 Utiliser l'outil `Read` pour lire le contenu du template.
@@ -55,7 +54,6 @@ Utiliser l'outil `Read` pour lire le contenu du template.
 ### 4. Substituer les Variables
 
 ```bash
-cd /home/atournayre/PhpstormProjects/claude-plugin
 source prompt/scripts/analyze-context.sh
 
 prompt/scripts/substitute-variables.sh \
