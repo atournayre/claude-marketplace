@@ -3,7 +3,7 @@ name: dev:code
 description: Implémenter selon le plan (Phase 5)
 argument-hint: [path-to-plan]
 model: claude-sonnet-4-5-20250929
-allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, TodoWrite]
+allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, TaskCreate, TaskUpdate, TaskList]
 version: 1.0.0
 license: MIT
 hooks:
@@ -70,14 +70,19 @@ Phase 5 du workflow de développement : implémenter la feature selon le plan g�
 
 PATH_TO_PLAN: $ARGUMENTS
 
-# Instructions
+## Instructions à Exécuter
 
-## 1. Vérifier le contexte
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
-- Si `PATH_TO_PLAN` non fourni, chercher dans `.claude/data/.dev-workflow-state.json` le `planPath`
-- Si toujours pas de plan, demander à l'utilisateur
+### 1. Vérifier le contexte et charger le plan
 
-## 2. Demander approbation
+- Extrais PATH_TO_PLAN depuis $ARGUMENTS
+- Si PATH_TO_PLAN n'est pas fourni :
+  - Lis `.claude/data/.dev-workflow-state.json` avec Read
+  - Extrais `planPath` du JSON
+- Si toujours pas de plan, affiche une erreur et arrête
+
+### 2. Demander approbation avant implémentation
 
 ⚠️ **CRITIQUE : Ne PAS commencer l'implémentation sans approbation explicite.**
 

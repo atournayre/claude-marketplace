@@ -9,6 +9,11 @@ model: claude-sonnet-4-5-20250929
 
 # Git PR Core (Internal)
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Ce skill fournit les scripts partagés pour la création de PR. Il ne doit pas être appelé directement.
 
 ## Scripts disponibles

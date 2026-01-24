@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make Story Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Génère une Story Foundry pour créer des fixtures de tests avec scénarios prédéfinis.
 

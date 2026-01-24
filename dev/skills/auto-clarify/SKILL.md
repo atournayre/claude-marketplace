@@ -13,6 +13,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Phase 3 du workflow automatisé : identifier et résoudre les ambiguïtés **avec heuristiques prédéfinies**.
 
 Zéro question, zéro AskUserQuestion. Décisions automatiques basées sur les patterns existants.

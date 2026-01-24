@@ -13,6 +13,10 @@ Phase 4 du workflow de développement : générer un plan d'implémentation dét
 
 # Instructions
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
 ## 1. Créer les tâches de planification
 
 Utiliser `TaskCreate` pour chaque étape :

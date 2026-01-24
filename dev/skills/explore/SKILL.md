@@ -22,6 +22,10 @@ Lis le frontmatter de cette skill. Si un champ `output-style` est présent, exé
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
 Phase 1 du workflow de développement : explorer le codebase pour comprendre les patterns existants.
 
 # Prérequis

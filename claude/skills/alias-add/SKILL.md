@@ -10,6 +10,11 @@ license: MIT
 
 # Générateur d'Alias de Slash Commands
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Créer un alias de slash command qui délègue l'exécution à une autre commande existante via l'outil Skill.
 
 ## Purpose

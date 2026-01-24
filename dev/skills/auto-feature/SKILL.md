@@ -18,6 +18,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Orchestrateur du workflow de développement en 10 phases **SANS interaction utilisateur**.
 
 Exécution automatique complète : récupérer issue → phases 1-8 → cleanup → créer PR.

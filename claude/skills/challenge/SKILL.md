@@ -10,6 +10,11 @@ license: MIT
 
 # Challenge - Auto-évaluation des réponses Claude
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Analyse critique de ma dernière réponse fournie et proposition d'une version améliorée.
 
 ## Purpose

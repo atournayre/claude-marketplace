@@ -14,6 +14,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Phase 2 du workflow automatisé : explorer le codebase pour comprendre les patterns existants **SANS interaction**.
 
 # Instructions

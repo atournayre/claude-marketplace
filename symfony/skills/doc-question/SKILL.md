@@ -10,6 +10,11 @@ license: MIT
 
 # Interrogation de la Documentation Symfony
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Répondre à une question technique sur Symfony en utilisant la documentation locale présente dans `docs/symfony/`.
 
 ## Purpose

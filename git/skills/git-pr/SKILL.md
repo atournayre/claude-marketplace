@@ -3,7 +3,7 @@ name: git-pr
 description: >
   Crée une Pull Request GitHub standard avec workflow complet :
   QA, commits, assignation milestone/projet, code review automatique.
-allowed-tools: [Bash, Read, Write, TodoWrite, AskUserQuestion]
+allowed-tools: [Bash, Read, Write, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
 model: claude-sonnet-4-5-20250929
 ---
 
@@ -22,13 +22,13 @@ PR_TEMPLATE_PATH=".github/PULL_REQUEST_TEMPLATE/default.md"
 ENV_FILE_PATH=".env.claude"
 ```
 
-## Workflow
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
 ### Initialisation
 
-**Créer les tâches du workflow :**
-
-Utiliser `TaskCreate` pour chaque étape :
+**Créer les tâches du workflow avec TaskCreate :**
 
 ```
 TaskCreate #1: Charger config .env.claude

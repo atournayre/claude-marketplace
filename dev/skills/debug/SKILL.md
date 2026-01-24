@@ -10,6 +10,11 @@ license: MIT
 
 # Debug - Analyse et Résolution d'Erreurs
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Analyser une erreur (message ou stack trace) et proposer/appliquer résolution.
 
 ## Variables

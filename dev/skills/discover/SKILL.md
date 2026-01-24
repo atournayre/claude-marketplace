@@ -3,7 +3,7 @@ name: dev:discover
 description: Comprendre le besoin avant développement (Phase 0)
 argument-hint: <description-feature>
 model: claude-sonnet-4-5-20250929
-allowed-tools: [Read, AskUserQuestion, Glob, Grep]
+allowed-tools: [TaskCreate, TaskUpdate, TaskList, Read, AskUserQuestion, Glob, Grep]
 version: 1.0.0
 license: MIT
 ---
@@ -22,6 +22,10 @@ Lis le frontmatter de cette skill. Si un champ `output-style` est présent, exé
 **Output-style requis** : `bullet-points`
 
 # Objectif
+
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
 Phase 0 du workflow de développement : comprendre le besoin utilisateur avant de coder.
 

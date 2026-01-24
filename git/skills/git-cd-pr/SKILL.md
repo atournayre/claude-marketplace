@@ -3,11 +3,15 @@ name: git-cd-pr
 description: >
   Crée une Pull Request en mode Continuous Delivery avec workflow complet :
   QA, labels version (major/minor/patch), feature flags, code review automatique.
-allowed-tools: [Bash, Read, Write, TodoWrite, AskUserQuestion]
+allowed-tools: [Bash, Read, Write, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
 model: claude-sonnet-4-5-20250929
 ---
 
 # Git CD PR Skill (Continuous Delivery)
+
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
 ## Usage
 ```
@@ -138,7 +142,7 @@ Agrège résultats (score >= 80) dans commentaire PR.
 ## References
 
 - [Template review](../git-pr-core/references/review-template.md) - Format commentaire et agents
-- [Todos template](../git-pr-core/references/todos-template.md) - TodoWrite et génération description
+- [Todos template](../git-pr-core/references/todos-template.md) - TaskCreate, TaskUpdate, TaskList et génération description
 
 ## Task Management
 

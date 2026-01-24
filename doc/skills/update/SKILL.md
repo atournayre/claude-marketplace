@@ -9,6 +9,11 @@ license: MIT
 
 # Documentation de fonctionnalité
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Génère ou met à jour la documentation pour la fonctionnalité en cours de développement, en s'assurant que tous les documents sont liés et que le README principal est à jour.
 
 ## Purpose

@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make Urls Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Génère une classe Urls pour la génération d'URLs d'une entité avec pattern CQRS (Message + Handler).
 

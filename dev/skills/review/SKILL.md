@@ -2,7 +2,7 @@
 name: dev:review
 description: Review qualité complète - PHPStan + Elegant Objects + code review (Phase 6)
 model: claude-sonnet-4-5-20250929
-allowed-tools: [Task, Bash, Read, Grep, Glob, Edit]
+allowed-tools: [Task, TaskCreate, TaskUpdate, TaskList, Bash, Read, Grep, Glob, Edit]
 version: 1.0.0
 license: MIT
 hooks:
@@ -59,16 +59,25 @@ Si non installé :
 /plugin install feature-dev@claude-code-plugins
 ```
 
-# Instructions
+## Instructions à Exécuter
 
-## 1. Lire le contexte
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
-- Lire `.claude/data/.dev-workflow-state.json` pour récupérer les fichiers modifiés
-- Si phase 5 (code) non complétée, rediriger vers `/dev:code`
+### 1. Vérifier le contexte
 
-## 2. Créer les tâches de review
+- Lis `.claude/data/.dev-workflow-state.json` avec Read
+- Extrais les fichiers modifiés et l'état de la phase 5 (code)
+- Si phase 5 non complétée, affiche :
+  ```
+  ❌ La phase d'implémentation (code) n'est pas terminée
 
-Utiliser `TaskCreate` pour chaque review :
+  Lance d'abord : /dev:code
+  ```
+  - Arrête le workflow
+
+### 2. Créer les tâches de review
+
+- Utilise TaskCreate pour chaque tâche de review :
 
 ```
 TaskCreate #1: Code Review - Simplicité/bugs/conventions (feature-dev)

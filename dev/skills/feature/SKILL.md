@@ -3,7 +3,7 @@ name: dev:feature
 description: Workflow complet de développement de feature
 argument-hint: <description-feature>
 model: claude-sonnet-4-5-20250929
-allowed-tools: [Read, Write, Edit, Grep, Glob, Task, TodoWrite, AskUserQuestion, Bash]
+allowed-tools: [Read, Write, Edit, Grep, Glob, Task, TaskCreate, TaskUpdate, TaskList, AskUserQuestion, Bash, Skill]
 version: 1.0.0
 license: MIT
 ---
@@ -33,13 +33,15 @@ Ce plugin fournit les agents :
 Continuer sans ces agents ? (Les phases 1, 3, 6 seront simplifiées)
 ```
 
-# Workflow
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
 ## Initialisation
 
-1. **Proposition de worktree** (optionnel)
+### 1. Proposition de worktree (optionnel)
 
-Demander à l'utilisateur s'il souhaite créer un worktree pour cette feature :
+- Utilise AskUserQuestion pour demander à l'utilisateur s'il souhaite créer un worktree pour cette feature :
 
 ```
 📂 Créer un worktree pour cette feature ?

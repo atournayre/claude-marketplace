@@ -12,6 +12,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Phase 0 (Initialisation) du workflow automatisé : récupérer la specification depuis une issue GitHub.
 
 Exécuté au démarrage du workflow avant Phase 1.

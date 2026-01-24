@@ -14,6 +14,11 @@ license: MIT
 
 # Configuration de sortie
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 **IMPORTANT** : Cette commande génère une architecture choisie automatiquement et nécessite un format de sortie structuré.
 
 Lis le frontmatter de cette commande. Si un champ `output-style` est présent, exécute immédiatement :

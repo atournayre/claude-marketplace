@@ -10,6 +10,19 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.24.2] - 2026-01-24
+
+### Plugins Updated
+- **claude v1.1.1** - Stabilisation suite à migration commands → skills
+- **dev v2.3.3** - Stabilisation suite à migration commands → skills
+- **doc v1.5.1** - Stabilisation suite à migration commands → skills
+- **framework v1.0.3** - Stabilisation suite à migration commands → skills
+- **git v1.9.2** - Stabilisation suite à migration commands → skills
+- **github v1.2.2** - Stabilisation suite à migration commands → skills
+- **marketing v1.1.1** - Stabilisation suite à migration commands → skills
+- **qa v1.2.5** - Stabilisation suite à migration commands → skills
+- **symfony v1.2.1** - Stabilisation suite à migration commands → skills
+
 ## [2026.01.24] - 2026-01-24
 
 ### Plugins Updated

@@ -9,6 +9,11 @@ license: MIT
 
 # Ajout de logging avec LoggableInterface
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Fichier cible : $ARGUMENTS
 
 ## Workflow

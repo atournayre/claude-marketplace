@@ -3,7 +3,7 @@ name: bump
 description: Automatise les mises à jour de version des plugins avec détection automatique du type de version
 model: claude-haiku-4-5-20251001
 argument-hint: [plugin-name]
-allowed-tools: [Read, Edit, Bash, Glob, Grep, TodoWrite]
+allowed-tools: [Read, Edit, Bash, Glob, Grep, TaskCreate, TaskUpdate, TaskList]
 version: 1.0.0
 license: MIT
 hooks:
@@ -66,203 +66,198 @@ hooks:
 
 # Bump Version Plugin
 
-Mettre à jour la version d'un ou plusieurs plugins avec détection automatique du type de version.
+Mettre à jour automatiquement la version d'un ou plusieurs plugins avec détection du type de version.
 
 ## Arguments
+- `plugin-name` : Nom du plugin (optionnel, détection automatique depuis git)
+- `--major` : Forcer une version MAJOR (rare)
 
-```
-/bump [plugin-name]
-```
+## Instructions à Exécuter
 
-- `plugin-name` : Nom du plugin (optionnel, détecte automatiquement depuis git diff)
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
-## Règles de versioning automatique
+### 1. Identifier les plugins modifiés
 
-### MINOR (X.Y.0 → X.Y+1.0)
-Nouveaux fichiers détectés :
-- `agents/*.md` - Nouvel agent
-- `commands/*.md` - Nouvelle commande
-- `skills/*/` - Nouveau skill
-- Nouveau plugin (répertoire non existant dans marketplace.json)
+- Exécute `git diff --name-only HEAD` pour obtenir les fichiers modifiés (non stagés)
+- Exécute `git diff --staged --name-only` pour obtenir les fichiers stagés
+- Combine les deux listes et filtre pour extraire les noms de plugins uniques (premier répertoire du chemin)
+- **Ignore** : fichiers dans `.claude/` et fichiers à la racine (`README.md`, `CHANGELOG.md`)
+- Si un plugin-name est fourni en argument, utilise uniquement celui-ci
 
-### PATCH (X.Y.Z → X.Y.Z+1)
-- Modifications de fichiers existants
-- Corrections de bugs
-- Mises à jour de documentation
-- Refactoring
+### 2. Pour chaque plugin détecté, détecter le type de version
 
-### MAJOR (X.0.0 → X+1.0.0)
-- Uniquement si explicitement demandé via `BREAKING:` dans les changements
-- Ou si argument `--major` fourni
+**Exécute :**
+- `git diff --staged --name-only --diff-filter=A` pour lister les nouveaux fichiers stagés du plugin
 
-## Workflow
+**Analyse les patterns suivants :**
+- Nouveaux agents : fichiers `{plugin}/agents/*.md`
+- Nouvelles commandes : fichiers `{plugin}/commands/*.md` (legacy)
+- Nouveaux skills : répertoires `{plugin}/skills/*/`
+- Nouveau plugin : le plugin n'existe pas dans `.claude-plugin/marketplace.json`
 
-### Étape 1: Identifier les plugins modifiés
+**Détermine le type de version :**
+- Si nouveaux agents OU nouvelles commandes OU nouveaux skills OU nouveau plugin → **MINOR** (X.Y.0 → X.Y+1.0)
+- Si `--major` passé en argument → **MAJOR** (X.0.0 → X+1.0.0)
+- Sinon → **PATCH** (X.Y.Z → X.Y.Z+1)
 
-```bash
-# Fichiers modifiés (stagés + non stagés)
-MODIFIED=$(git diff --name-only HEAD)
-STAGED=$(git diff --staged --name-only)
-ALL_CHANGES=$(echo -e "$MODIFIED\n$STAGED" | sort -u | grep -v "^$")
-echo "$ALL_CHANGES"
-```
+### 3. Lire la version actuelle et calculer la nouvelle version
 
-Extraire les noms de plugins uniques depuis les chemins (premier répertoire).
-Ignorer : `.claude/`, fichiers à la racine (`README.md`, `CHANGELOG.md`).
+- Lis le fichier `{plugin}/.claude-plugin/plugin.json`
+- Extrais la version actuelle (champ `version`)
+- Calcule la nouvelle version selon le type détecté :
+  - PATCH : `1.2.3` → `1.2.4`
+  - MINOR : `1.2.3` → `1.3.0`
+  - MAJOR : `1.2.3` → `2.0.0`
 
-### Étape 2: Pour chaque plugin, détecter le type de version
+### 4. Créer les tâches avec TaskCreate
 
-```bash
-PLUGIN_CHANGES=$(echo "$ALL_CHANGES" | grep "^{plugin}/")
-echo "$PLUGIN_CHANGES"
-```
+Utilise TaskCreate pour créer les tâches suivantes pour chaque plugin :
 
-**Analyser les changements :**
+1. **Bump version du plugin**
+   - subject: `Bump version {plugin}/.claude-plugin/plugin.json ({OLD} → {NEW})`
+   - activeForm: `Bumping version {plugin}`
 
-```bash
-# Nouveaux fichiers ?
-NEW_FILES=$(git diff --staged --name-only --diff-filter=A | grep "^{plugin}/")
-echo "Nouveaux fichiers: $NEW_FILES"
+2. **Mettre à jour CHANGELOG du plugin**
+   - subject: `Mettre à jour {plugin}/CHANGELOG.md`
+   - activeForm: `Updating {plugin} changelog`
 
-# Nouveaux agents ?
-NEW_AGENTS=$(echo "$NEW_FILES" | grep "/agents/.*\.md$")
+3. **Mettre à jour README du plugin** (si nouvelles fonctionnalités)
+   - subject: `Mettre à jour {plugin}/README.md`
+   - activeForm: `Updating {plugin} readme`
 
-# Nouvelles commandes ?
-NEW_COMMANDS=$(echo "$NEW_FILES" | grep "/commands/.*\.md$")
+4. **Mettre à jour README global**
+   - subject: `Mettre à jour README.md global (tableau versions)`
+   - activeForm: `Updating global README`
 
-# Nouveaux skills ?
-NEW_SKILLS=$(echo "$NEW_FILES" | grep "/skills/.*/")
-```
+5. **Mettre à jour CHANGELOG global**
+   - subject: `Mettre à jour CHANGELOG.md global`
+   - activeForm: `Updating global changelog`
 
-**Déterminer le type :**
-- SI `NEW_AGENTS` ou `NEW_COMMANDS` ou `NEW_SKILLS` non vides → **MINOR**
-- SINON → **PATCH**
+6. **Mettre à jour marketplace.json** (si nouveau plugin)
+   - subject: `Mettre à jour .claude-plugin/marketplace.json`
+   - activeForm: `Updating marketplace.json`
 
-### Étape 3: Vérifier si nouveau plugin
+**Au fur et à mesure que tu complètes chaque tâche, utilise TaskUpdate pour marquer la tâche comme `completed`.**
 
-```bash
-grep -q "\"$PLUGIN\"" .claude-plugin/marketplace.json && echo "EXISTS" || echo "NEW"
-```
+### 5. Analyser les changements pour le CHANGELOG
 
-SI nouveau plugin → **MINOR** (au minimum)
+**Exécute :**
+- `git diff {plugin}/` pour voir tous les changements du plugin
+- `git diff --staged {plugin}/` pour voir les changements stagés
 
-### Étape 4: Lire la version actuelle et calculer
+**Analyse les changements et catégorise-les :**
+- Nouveaux agents/skills/commandes → `### Added`
+- Modifications de code/logique → `### Changed`
+- Corrections de bugs → `### Fixed`
+- Suppressions → `### Removed`
 
-```bash
-CURRENT=$(cat {plugin}/.claude-plugin/plugin.json | grep '"version"' | sed 's/.*"\([0-9.]*\)".*/\1/')
-echo "Version actuelle: $CURRENT"
-```
+**Lis les nouveaux fichiers** pour extraire leurs descriptions (titre, description) depuis le frontmatter YAML.
 
-**Calcul :**
-- PATCH : `1.2.3` → `1.2.4`
-- MINOR : `1.2.3` → `1.3.0`
-- MAJOR : `1.2.3` → `2.0.0`
+### 6. Mettre à jour plugin.json
 
-### Étape 5: Créer TodoWrite
-
-Pour chaque plugin identifié :
-- [ ] Bump version `{plugin}/.claude-plugin/plugin.json` (X.Y.Z → nouvelle)
-- [ ] Mettre à jour `{plugin}/CHANGELOG.md`
-- [ ] Mettre à jour `{plugin}/README.md` si nouvelles fonctionnalités
-- [ ] Mettre à jour `README.md` global (tableau versions)
-- [ ] Mettre à jour `CHANGELOG.md` global
-- [ ] Mettre à jour `.claude-plugin/marketplace.json` si nouveau plugin
-
-### Étape 6: Analyser les changements pour le CHANGELOG
-
-Lire les fichiers modifiés pour comprendre ce qui a changé :
-- Nouveaux agents ? → `### Added` + description agent
-- Nouvelles commandes ? → `### Added` + description commande
-- Nouveaux skills ? → `### Added` + description skill
-- Modifications ? → `### Changed` + description
-- Corrections ? → `### Fixed` + description
-- Suppressions ? → `### Removed` + description
-
-### Étape 7: Mettre à jour plugin.json
-
-Éditer `{plugin}/.claude-plugin/plugin.json` :
+Édite `{plugin}/.claude-plugin/plugin.json` et remplace la version :
 ```json
 "version": "NOUVELLE_VERSION"
 ```
 
-### Étape 8: Mettre à jour CHANGELOG du plugin
+**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
 
-Ajouter en haut de `{plugin}/CHANGELOG.md` (après le header) :
+### 7. Mettre à jour CHANGELOG du plugin
+
+Lis `{plugin}/CHANGELOG.md` et ajoute **en haut** (après le titre) une nouvelle section :
 
 ```markdown
 ## [NOUVELLE_VERSION] - YYYY-MM-DD
 
 ### Added
-- [nouvelles fonctionnalités avec descriptions]
+- Description des nouvelles fonctionnalités
 
 ### Changed
-- [modifications avec descriptions]
+- Description des modifications
 
 ### Fixed
-- [corrections avec descriptions]
+- Description des corrections
 
 ### Removed
-- [suppressions avec descriptions]
+- Description des suppressions
 ```
 
-Supprimer les sections vides. Date du jour.
+**Règles :**
+- Utilise la date du jour (format YYYY-MM-DD)
+- Supprime les sections vides (sans contenu)
+- Garde les sections dans l'ordre : Added, Changed, Fixed, Removed
 
-### Étape 9: Mettre à jour README du plugin
+**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
 
-SI nouvelles commandes, agents, ou skills :
-- Ajouter documentation dans `{plugin}/README.md`
-- Mettre à jour la section structure si fichiers ajoutés
+### 8. Mettre à jour README du plugin (si applicable)
 
-### Étape 10: Mettre à jour README global
+**Si** nouveaux agents, skills ou commandes ont été ajoutés :
+- Lis `{plugin}/README.md`
+- Ajoute la documentation pour les nouvelles fonctionnalités dans la section appropriée
+- Mets à jour la section structure si nécessaire
 
-Éditer `README.md` à la racine :
-- Mettre à jour la version dans le tableau : `| ... **{Plugin}** | NOUVELLE_VERSION |`
+**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
 
-### Étape 11: Mettre à jour CHANGELOG global
+### 9. Mettre à jour README global
 
-Éditer `CHANGELOG.md` à la racine.
+Lis `README.md` à la racine et mets à jour la ligne du plugin dans le tableau des versions :
+```markdown
+| ... | **{Plugin}** | NOUVELLE_VERSION |
+```
 
-**Vérifier si section du jour existe :**
+**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
+
+### 10. Mettre à jour CHANGELOG global
+
+Lis `CHANGELOG.md` à la racine.
+
+**Vérifie si une section avec la date du jour existe :**
 ```markdown
 ## [YYYY.MM.DD] - YYYY-MM-DD
 ```
 
-SI n'existe pas, créer après `## [Unreleased]`.
-
-**SI nouveau plugin :**
+**Si elle n'existe pas**, crée-la juste après `## [Unreleased]` :
 ```markdown
-### Plugins Added
-- **{plugin} vX.Y.Z** - Description courte
-  - Détails des fonctionnalités
+## [YYYY.MM.DD] - YYYY-MM-DD
 ```
 
-**SI plugin existant :**
-```markdown
-### Plugins Updated
-- **{plugin} vX.Y.Z** - Titre court du changement
-  - Détails des modifications
-```
+**Ajoute l'entrée du plugin :**
+- Si **nouveau plugin** :
+  ```markdown
+  ### Plugins Added
+  - **{plugin} vNOUVELLE_VERSION** - Description courte
+    - Liste des fonctionnalités
+  ```
+- Si **plugin existant** :
+  ```markdown
+  ### Plugins Updated
+  - **{plugin} vNOUVELLE_VERSION** - Résumé des changements
+    - Détails des modifications
+  ```
 
-### Étape 12: Vérifier marketplace.json (si nouveau plugin)
+**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
 
-SI nouveau plugin, ajouter dans `.claude-plugin/marketplace.json` :
-```json
-{
-  "name": "{plugin}",
-  "source": "./{plugin}",
-  "description": "Description du plugin"
-}
-```
+### 11. Mettre à jour marketplace.json (si nouveau plugin)
 
-### Étape 13: Ajouter lien CHANGELOG (si nouveau plugin)
+**Si** le plugin est nouveau (n'existe pas dans `.claude-plugin/marketplace.json`) :
+- Lis `.claude-plugin/marketplace.json`
+- Ajoute une entrée pour le nouveau plugin :
+  ```json
+  {
+    "name": "{plugin}",
+    "source": "./{plugin}",
+    "description": "Description du plugin"
+  }
+  ```
+- Ajoute aussi un lien vers le CHANGELOG dans la section "Notes de version" du `CHANGELOG.md` global
 
-SI nouveau plugin, ajouter dans la section "Notes de version" de `CHANGELOG.md` :
-```markdown
-- [{plugin}/CHANGELOG.md]({plugin}/CHANGELOG.md)
-```
+**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
 
-### Étape 14: Résumé final
+### 12. Vérification et résumé final
 
+**Vérifie avec TaskList que toutes les tâches sont marquées comme `completed`.**
+
+Affiche un résumé avec :
 ```
 ✅ Plugin {plugin} : v{OLD} → v{NEW} ({TYPE})
 
@@ -277,28 +272,21 @@ Fichiers modifiés :
 - CHANGELOG.md
 - .claude-plugin/marketplace.json (si nouveau)
 
+✅ Toutes les tâches complétées
+
 Prochaine étape : /git:commit
 ```
 
-## Exemples
+## Règles de versioning
 
-```bash
-# Détection automatique plugins et versions
-/bump
+- **MINOR** (X.Y.0 → X.Y+1.0) : Nouveaux agents, skills, commandes, ou nouveau plugin
+- **PATCH** (X.Y.Z → X.Y.Z+1) : Modifications, corrections, refactoring, documentation
+- **MAJOR** (X.0.0 → X+1.0.0) : Uniquement si `--major` passé en argument (breaking changes)
 
-# Plugin spécifique
-/bump git
-
-# Forcer major version (rare)
-/bump git --major
-```
-
-## Checklist
-
-1. `{plugin}/.claude-plugin/plugin.json` - version
-2. `{plugin}/CHANGELOG.md` - nouvelle entrée
-3. `{plugin}/README.md` - si nouvelles fonctionnalités
-4. `README.md` - tableau versions
-5. `CHANGELOG.md` - section du jour
-6. `.claude-plugin/marketplace.json` - si nouveau plugin
-7. Lien CHANGELOG dans notes de version - si nouveau plugin
+## Relevant Files
+- @.claude-plugin/marketplace.json
+- @README.md
+- @CHANGELOG.md
+- @{plugin}/.claude-plugin/plugin.json
+- @{plugin}/CHANGELOG.md
+- @{plugin}/README.md

@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make Collection Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Génère une classe Collection typée pour gérer des ensembles d'entités avec les traits et interfaces Atournayre.
 

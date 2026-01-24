@@ -12,6 +12,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Phase 5 du workflow automatisé : générer un plan d'implémentation détaillé basé sur l'architecture choisie **SANS interaction**.
 
 # Instructions

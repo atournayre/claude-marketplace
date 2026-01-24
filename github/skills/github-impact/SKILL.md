@@ -9,6 +9,11 @@ model: claude-opus-4-1-20250805
 
 # GitHub PR Impact Analysis Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Usage
 ```
 /github:impact <pr-number>

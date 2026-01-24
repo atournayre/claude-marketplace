@@ -9,6 +9,11 @@ license: MIT
 
 # Configuration de sortie
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 **IMPORTANT** : Cette skill génère une comparaison d'architectures et nécessite un format de sortie spécifique.
 
 Lis le frontmatter de cette skill. Si un champ `output-style` est présent, exécute immédiatement :

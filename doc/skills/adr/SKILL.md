@@ -2,7 +2,7 @@
 name: doc:adr
 description: Génère un Architecture Decision Record (ADR) formaté et structuré
 model: claude-sonnet-4-5-20250929
-allowed-tools: [Read, Write, Edit, Bash]
+allowed-tools: [TaskCreate, TaskUpdate, TaskList, Read, Write, Edit, Bash]
 argument-hint: [titre]
 version: 1.0.0
 license: MIT
@@ -22,6 +22,10 @@ Lis le frontmatter de cette skill. Si un champ `output-style` est présent, exé
 **Output-style requis** : `markdown-focused`
 
 # Génération d'ADR
+
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
 ## Purpose
 Génère un Architecture Decision Record (ADR) complet et structuré pour documenter les décisions architecturales importantes du projet.
@@ -113,9 +117,17 @@ docs/
 ## Examples
 ```bash
 # Génération d'un ADR pour l'adoption d'un nouveau framework
+
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
 /adr "Adoption du framework Symfony pour l'API"
 
 # Génération d'un ADR pour une décision de base de données
+
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
 /adr "Migration vers PostgreSQL pour les performances"
 ```
 

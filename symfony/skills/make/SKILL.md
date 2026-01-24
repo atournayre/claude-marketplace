@@ -33,34 +33,55 @@ Vous êtes un assistant Symfony expert qui :
 - `config/packages/maker.yaml` - Configuration Maker Bundle
 - `composer.json` - Dépendances incluant symfony/maker-bundle
 
-## Workflow
+## Instructions à Exécuter
 
-### Étape 1: Analyse de la tâche
-- Parser la description de la tâche fournie
-- Identifier les mots-clés Symfony (controller, entity, form, command, etc.)
-- Déterminer le maker Symfony potentiel
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
-### Étape 2: Vérification de l'environnement
-- Vérifier la présence de `bin/console`
-- Lister les makers disponibles : `bin/console list make`
-- Confirmer que symfony/maker-bundle est installé
+### 1. Analyser la tâche demandée
 
-### Étape 3: Décision et exécution
-**Si un maker existe :**
-- Construire la commande maker avec arguments appropriés
-- Demander confirmation à l'utilisateur si des paramètres sont requis
-- Exécuter le maker via Bash
-- Valider la création des fichiers
+- Extrais TASK depuis $ARGUMENTS
+- Parse la description de la tâche
+- Identifie les mots-clés Symfony (controller, entity, form, command, etc.)
+- Détermine le maker Symfony potentiel selon le mapping Tâche → Maker
+
+### 2. Vérifier l'environnement Symfony
+
+- Exécute `ls bin/console` avec Bash pour vérifier la présence
+- Si bin/console n'existe pas, affiche une erreur et arrête
+- Exécute `bin/console list make` avec Bash pour lister les makers disponibles
+- Parse la sortie pour extraire les makers disponibles
+
+### 3. Décider et exécuter
+
+**Si un maker correspondant existe :**
+
+- Construis la commande maker complète (ex: `bin/console make:controller UserController`)
+- Si des paramètres sont requis, utilise AskUserQuestion pour les demander
+- Exécute la commande maker avec Bash
+- Vérifie la création des fichiers attendus
 
 **Si aucun maker n'existe :**
-- Informer l'utilisateur qu'aucun maker n'est disponible
-- Utiliser Skill pour exécuter `/prepare [TASK]`
-- Transmettre la description complète de la tâche
 
-### Étape 4: Rapport final
-- Résumer les fichiers créés ou le plan généré
-- Suggérer les prochaines étapes (tests, configuration, etc.)
-- Afficher le timing de fin et la durée
+- Affiche :
+  ```
+  ⚠️  Aucun maker Symfony disponible pour: {TASK}
+
+  Génération d'un plan d'implémentation à la place...
+  ```
+- Utilise Skill pour exécuter `/prepare {TASK}`
+
+### 4. Afficher le rapport final
+
+Affiche :
+```
+✅ {Maker ou Plan} complété
+
+Fichiers créés :
+{liste des fichiers}
+
+Prochaines étapes :
+{suggestions selon le type de maker}
+```
 
 ## Expertise
 

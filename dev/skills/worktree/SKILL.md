@@ -10,6 +10,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Gérer les git worktrees pour permettre le développement de plusieurs features en parallèle sans conflits.
 
 # Actions disponibles

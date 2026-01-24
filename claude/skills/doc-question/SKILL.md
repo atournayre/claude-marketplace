@@ -10,6 +10,11 @@ license: MIT
 
 # Interrogation de la Documentation Claude Code
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Répondre à une question technique sur Claude Code en utilisant la documentation locale présente dans `docs/claude/`.
 
 ## Purpose

@@ -10,6 +10,11 @@ license: MIT
 
 # Résolution Interactive de Conflits Git
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Résoudre les conflits git de manière interactive : $ARGUMENTS
 
 ## Purpose

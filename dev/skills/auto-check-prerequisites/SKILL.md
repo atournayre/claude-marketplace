@@ -10,6 +10,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Vérifier que TOUS les prérequis système, PHP et Claude Code sont présents avant de lancer le workflow.
 
 Exit code 1 et message d'erreur détaillé si quelque chose manque.

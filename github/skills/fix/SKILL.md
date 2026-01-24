@@ -10,6 +10,11 @@ license: MIT
 
 # Correction d'Issue GitHub
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Purpose
 Corriger une issue GitHub de manière structurée et efficace, en se concentrant sur l'essentiel.
 

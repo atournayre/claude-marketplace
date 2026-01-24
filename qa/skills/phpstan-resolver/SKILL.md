@@ -9,6 +9,11 @@ model: claude-opus-4-1-20250805
 
 # PHPStan Error Resolver Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Usage
 ```
 /qa:phpstan

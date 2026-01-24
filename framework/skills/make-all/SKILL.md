@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make All Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Orchestrateur générant une stack complète Elegant Objects + DDD pour une entité.
 

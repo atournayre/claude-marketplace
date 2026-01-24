@@ -14,6 +14,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Phase 7 du workflow automatisé : review de qualité **avec correction automatique**.
 
 Boucle auto-fix max 3 tentatives. Si ça échoue → ROLLBACK + CLEANUP + EXIT 1.

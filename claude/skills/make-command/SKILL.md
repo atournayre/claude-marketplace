@@ -10,6 +10,11 @@ license: MIT
 
 # Générateur de Slash Commands
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Créer une nouvelle slash command Claude Code : $ARGUMENTS
 
 ## Purpose

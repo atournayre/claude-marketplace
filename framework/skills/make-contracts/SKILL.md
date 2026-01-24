@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make Contracts Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Génère l'ensemble des interfaces de contrats nécessaires pour une architecture respectant les principes Elegant Objects et DDD.
 

@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make Out Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Génère une classe Out (DTO readonly) pour représenter les données de sortie d'une entité.
 

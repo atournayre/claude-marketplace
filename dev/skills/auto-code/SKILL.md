@@ -16,6 +16,11 @@ license: MIT
 
 # Objectif
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 Phase 6 du workflow automatisé : implémenter selon le plan **SANS demander d'approbation**.
 
 Démarrage immédiat de l'implémentation.

@@ -18,6 +18,11 @@ arguments:
 
 # Configuration de sortie
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 **IMPORTANT** : Cette skill génère un rapport HTML et nécessite un format de sortie spécifique.
 
 Lis le frontmatter de cette skill. Si un champ `output-style` est présent, exécute immédiatement :

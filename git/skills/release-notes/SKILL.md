@@ -9,6 +9,11 @@ model: sonnet
 
 # Release Notes Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Usage
 ```
 /git:release-notes <branche-source> <branche-cible> [nom-release]

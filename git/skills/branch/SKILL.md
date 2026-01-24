@@ -2,7 +2,7 @@
 name: git:branch
 description: Création de branche Git avec workflow structuré
 model: claude-haiku-4-5-20251001
-allowed-tools: [Bash]
+allowed-tools: [Bash, AskUserQuestion]
 argument-hint: <source-branch> [issue-number-or-text]
 version: 1.0.0
 license: MIT
@@ -62,94 +62,150 @@ Lis le frontmatter de cette skill. Si un champ `output-style` est présent, exé
 
 # Création de branche Git
 
-## Purpose
 Créer une nouvelle branche Git de manière structurée avec support des issues GitHub.
 
 ## Variables
-SOURCE_BRANCH: $1
-ISSUE_OR_TEXT: $2
-
-## Instructions
-- Utilise les outils Bash pour les opérations Git
-- Valide que la branche source existe
-- Génère un nom de branche basé sur l'issue si fournie
-- Applique les conventions de nommage du projet
+- SOURCE_BRANCH: Premier argument ($1) - branche source depuis laquelle créer
+- ISSUE_OR_TEXT: Second argument ($2) - numéro d'issue GitHub ou texte descriptif
 
 ## Relevant Files
 - @.git/config
 - @.gitignore
 - @docs/README.md
 
-## Workflow
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
 
 **🚨 ÉTAPE CRITIQUE : CHECKOUT VERS SOURCE D'ABORD 🚨**
 
-1. **Vérifier SOURCE_BRANCH obligatoire**
-   - Si `SOURCE_BRANCH` n'est pas fourni → ARRÊTER et demander à l'utilisateur
+### 1. Vérifier que SOURCE_BRANCH est fourni
 
-2. **Valider SOURCE_BRANCH existe localement**
-   - `git branch --list "$SOURCE_BRANCH"`
-   - Si n'existe pas → ARRÊTER avec erreur
+- Extrais SOURCE_BRANCH depuis $ARGUMENTS (premier argument)
+- Si SOURCE_BRANCH n'est pas fourni, utilise AskUserQuestion pour demander :
+  ```
+  Question: "Depuis quelle branche veux-tu créer la nouvelle branche ?"
+  Options: ["main", "master", "develop", "Autre"]
+  ```
 
-3. **🔴 CHECKOUT VERS SOURCE_BRANCH AVANT TOUT 🔴**
-   - `git checkout $SOURCE_BRANCH`
-   - Vérifier qu'on est bien dessus : `git branch --show-current`
-   - **CRITIQUE** : Cette étape garantit qu'on crée depuis un point propre
+### 2. Valider que SOURCE_BRANCH existe localement
 
-4. **🔴 PULL POUR METTRE À JOUR SOURCE_BRANCH 🔴**
-   - `git pull origin $SOURCE_BRANCH`
-   - Garantit qu'on part du dernier commit de origin
-   - **CRITIQUE** : Évite de créer depuis un point obsolète
+- Exécute `git branch --list "$SOURCE_BRANCH"` avec Bash
+- Si le résultat est vide, affiche :
+  ```
+  ❌ ERREUR : La branche source '$SOURCE_BRANCH' n'existe pas localement
 
-5. **Générer nom de la nouvelle branche**
-   - Si `ISSUE_OR_TEXT` est fourni :
-     - Détecte si c'est un numéro (entier) ou du texte
-     - Si c'est un numéro :
-       - Récupère les informations de l'issue via GitHub CLI (`gh issue view ${ISSUE_OR_TEXT} --json title,labels,body`)
-       - **Détermine le préfixe de branche (dans cet ordre de priorité)** :
-         1. **Labels de l'issue** (priorité haute) :
-            - Labels `bug`, `fix`, `bugfix` → préfixe `fix/`
-            - Labels `hotfix`, `critical`, `urgent` → préfixe `hotfix/`
-            - Labels `feature`, `enhancement`, `new-feature` → préfixe `feature/`
-            - Labels `chore`, `maintenance`, `refactor` → préfixe `chore/`
-            - Labels `documentation`, `docs` → préfixe `docs/`
-            - Labels `test`, `tests` → préfixe `test/`
-         2. **Description de l'issue** (si pas de labels pertinents) :
-            - Cherche des mots-clés dans la description (case-insensitive)
-            - Mots-clés `fix`, `bug`, `error`, `crash` → `fix/`
-            - Mots-clés `hotfix`, `critical`, `urgent`, `production` → `hotfix/`
-            - Mots-clés `feature`, `add`, `implement`, `new` → `feature/`
-            - Mots-clés `refactor`, `cleanup`, `improve` → `chore/`
-         3. **Titre de l'issue** (dernier recours) :
-            - Même logique de recherche de mots-clés que pour la description
-         4. **Défaut** : Si aucun préfixe détecté → `feature/`
-       - Génère le nom complet : `{prefixe}{ISSUE_OR_TEXT}-{titre-simplifie}`
-       - Le titre est nettoyé (espaces -> tirets, caractères spéciaux supprimés, minuscules)
-     - Si c'est du texte :
-       - Analyse le texte pour détecter le type d'action :
-         - Commence par `fix`, `bug` → `fix/`
-         - Commence par `hotfix` → `hotfix/`
-         - Commence par `chore`, `refactor` → `chore/`
-         - Commence par `docs`, `doc` → `docs/`
-         - Commence par `test` → `test/`
-         - Sinon → `feature/`
-       - Génère un nom de branche : `{prefixe}{texte-simplifie}`
-       - Le texte est nettoyé (préfixe détecté retiré, espaces -> tirets, caractères spéciaux supprimés, minuscules)
-   - Si pas de `ISSUE_OR_TEXT`, demande le nom de branche à l'utilisateur
+  Branches disponibles :
+  ```
+  - Puis exécute `git branch -a` pour lister les branches
+  - Arrête le workflow
 
-6. **Vérifier que la nouvelle branche n'existe pas déjà**
-   - `git branch --list "$NEW_BRANCH"`
-   - Si existe déjà → ARRÊTER avec erreur
+### 3. 🔴 CHECKOUT VERS SOURCE_BRANCH AVANT TOUT 🔴
 
-7. **Créer et checkout la nouvelle branche**
-   - `git checkout -b $NEW_BRANCH`
-   - La branche est créée depuis SOURCE_BRANCH (car on est dessus)
+- Exécute `git checkout $SOURCE_BRANCH` avec Bash
+- Exécute `git branch --show-current` pour vérifier qu'on est bien dessus
+- **CRITIQUE** : Cette étape garantit qu'on crée depuis un point propre
 
-8. **NE PAS configurer de tracking automatiquement**
-   - ❌ **INTERDIT** : `git branch --set-upstream-to=origin/$SOURCE_BRANCH $NEW_BRANCH`
-   - ✅ Le tracking sera configuré automatiquement lors du premier push avec `-u`
-   - ✅ Lors du push : `git push -u origin $NEW_BRANCH`
-   - **RAISON** : Configurer le tracking vers SOURCE_BRANCH pousse les commits sur la branche parente au lieu de créer une nouvelle branche distante
+### 4. 🔴 PULL POUR METTRE À JOUR SOURCE_BRANCH 🔴
+
+- Exécute `git pull origin $SOURCE_BRANCH` avec Bash
+- **CRITIQUE** : Garantit qu'on part du dernier commit de origin
+- Évite de créer depuis un point obsolète
+
+### 5. Générer le nom de la nouvelle branche
+
+- Extrais ISSUE_OR_TEXT depuis $ARGUMENTS (second argument)
+
+**Si ISSUE_OR_TEXT est fourni :**
+
+A. **Détecter le type (numéro ou texte)**
+   - Si ISSUE_OR_TEXT est un entier → c'est un numéro d'issue
+   - Sinon → c'est du texte descriptif
+
+B. **Si c'est un numéro d'issue :**
+   - Exécute `gh issue view ${ISSUE_OR_TEXT} --json title,labels,body` avec Bash
+   - Si l'issue n'existe pas, affiche une erreur et arrête
+
+   **Détermine le préfixe (dans cet ordre de priorité) :**
+
+   1. **Vérifie les labels de l'issue** (priorité haute) :
+      - Labels `bug`, `fix`, `bugfix` → préfixe = `fix/`
+      - Labels `hotfix`, `critical`, `urgent` → préfixe = `hotfix/`
+      - Labels `feature`, `enhancement`, `new-feature` → préfixe = `feature/`
+      - Labels `chore`, `maintenance`, `refactor` → préfixe = `chore/`
+      - Labels `documentation`, `docs` → préfixe = `docs/`
+      - Labels `test`, `tests` → préfixe = `test/`
+
+   2. **Si aucun label pertinent, vérifie la description** (case-insensitive) :
+      - Contient `fix`, `bug`, `error`, `crash` → préfixe = `fix/`
+      - Contient `hotfix`, `critical`, `urgent`, `production` → préfixe = `hotfix/`
+      - Contient `feature`, `add`, `implement`, `new` → préfixe = `feature/`
+      - Contient `refactor`, `cleanup`, `improve` → préfixe = `chore/`
+
+   3. **Si toujours rien, vérifie le titre de l'issue** :
+      - Même logique que pour la description
+
+   4. **Si aucun indicateur trouvé** → préfixe = `feature/` (défaut)
+
+   - Nettoie le titre de l'issue :
+     - Convertis en minuscules
+     - Remplace espaces par tirets
+     - Supprime caractères spéciaux
+     - Limite à 50 caractères
+   - Génère le nom : `{prefixe}{ISSUE_OR_TEXT}-{titre-nettoyé}`
+
+C. **Si c'est du texte descriptif :**
+   - Analyse le début du texte pour détecter le préfixe :
+     - Commence par `fix`, `bug` → préfixe = `fix/`
+     - Commence par `hotfix` → préfixe = `hotfix/`
+     - Commence par `chore`, `refactor` → préfixe = `chore/`
+     - Commence par `docs`, `doc` → préfixe = `docs/`
+     - Commence par `test` → préfixe = `test/`
+     - Sinon → préfixe = `feature/` (défaut)
+
+   - Nettoie le texte :
+     - Retire le préfixe détecté du début
+     - Convertis en minuscules
+     - Remplace espaces par tirets
+     - Supprime caractères spéciaux
+   - Génère le nom : `{prefixe}{texte-nettoyé}`
+
+**Si ISSUE_OR_TEXT n'est pas fourni :**
+   - Utilise AskUserQuestion pour demander le nom de branche
+
+### 6. Vérifier que la nouvelle branche n'existe pas
+
+- Exécute `git branch --list "$NEW_BRANCH"` avec Bash
+- Si le résultat n'est pas vide, affiche :
+  ```
+  ❌ ERREUR : La branche '$NEW_BRANCH' existe déjà
+
+  Choisis un autre nom de branche
+  ```
+  - Arrête le workflow
+
+### 7. Créer et checkout la nouvelle branche
+
+- Exécute `git checkout -b $NEW_BRANCH` avec Bash
+- La branche est créée depuis SOURCE_BRANCH (car on est dessus)
+
+### 8. Afficher le résumé
+
+Affiche :
+```
+✅ Branche créée : $NEW_BRANCH
+📝 Préfixe détecté : {source du préfixe (label/description/titre/défaut/texte)}
+📍 Depuis : $SOURCE_BRANCH
+{Si issue} 🔗 Issue associée : #{ISSUE_OR_TEXT}
+
+📝 Le tracking sera configuré automatiquement au premier commit avec :
+   git push -u origin $NEW_BRANCH
+```
+
+**⚠️ IMPORTANT - NE PAS configurer de tracking automatiquement :**
+- ❌ **INTERDIT** : `git branch --set-upstream-to=origin/$SOURCE_BRANCH $NEW_BRANCH`
+- ✅ Le tracking sera configuré lors du premier push avec `-u`
+- **RAISON** : Configurer le tracking vers SOURCE_BRANCH pousse les commits sur la branche parente au lieu de créer une nouvelle branche distante
 
 ## Expertise
 Conventions de nommage des branches (préfixe détecté automatiquement) :

@@ -9,6 +9,11 @@ model: claude-sonnet-4-5-20250929
 
 # Documentation Loader Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Usage
 ```
 /doc:framework-load <framework> [version]

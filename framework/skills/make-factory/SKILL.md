@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make Factory Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Génère une Factory Foundry pour créer des instances d'entités dans les tests.
 
