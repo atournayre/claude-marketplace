@@ -7,6 +7,16 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.01.26.1] - 2026-01-26
+
+### Plugins Updated
+- **notifications v1.0.2** - Correction structure manifest plugin.json
+  - Conformité avec validation Claude Code
+  - `author` : string → objet
+  - `repository` : objet → string
+  - Suppression clés invalides (`hooks`, `scripts`, `requirements`, `features`)
+  - Dépôt : [notifications/CHANGELOG.md](notifications/CHANGELOG.md)
+
 ## [2026.01.26] - 2026-01-26
 
 ### Plugins Added

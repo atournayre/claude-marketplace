@@ -18,7 +18,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 🔧 **Git** | 1.10.2 | Workflow Git complet : branches, commits, conflits, PR avec automation + 4 skills | [README](git/README.md) |
 | 🐙 **GitHub** | 1.3.1 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
 | 📱 **Marketing** | 1.2.1 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
-| 🔔 **Notifications** | 1.0.1 | Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète | [README](notifications/README.md) |
+| 🔔 **Notifications** | 1.0.2 | Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète | [README](notifications/README.md) |
 | 📝 **Prompt** | 1.1.1 | Générateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture | [README](prompt/README.md) |
 | 📋 **QA** | 1.3.1 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
 | 🔍 **Review** | 1.0.0 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |

@@ -5,6 +5,14 @@ Toutes les modifications notables du plugin notifications seront documentées ic
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
+## [1.0.2] - 2026-01-26
+
+### Fixed
+- Correction structure `plugin.json` pour conformité manifest Claude Code
+  - `author` : conversion string → objet avec `name` et `email`
+  - `repository` : conversion objet → string simple
+  - Suppression clés invalides : `hooks`, `scripts`, `requirements`, `features`
+
 ## [1.0.1] - 2026-01-25
 
 ### Fixed
