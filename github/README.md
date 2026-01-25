@@ -14,7 +14,28 @@ Gestion GitHub : issues, PR, analyse d'impact.
 - Repository GitHub
 - Token d'accès GitHub configuré
 
-## Commandes
+## Skills Disponibles
+
+Le plugin github fournit 2 skills (format natif Claude Code) :
+
+## Task Management System
+
+**Nouveauté v1.2.1** : Le skill de résolution d'issue intègre le task management system.
+
+### Skill avec task management
+
+| Skill | Nombre de tâches | Type de workflow |
+|-------|------------------|------------------|
+| `github:fix` | 6 tâches | Workflow résolution d'issue GitHub |
+
+### Fonctionnalités
+
+- **Progression visible** : Suivi étape par étape (analyse → branche → investigation → implémentation → tests → finalisation)
+- **Statuts clairs** : pending → in_progress → completed
+- **Workflow structuré** : De l'analyse de l'issue à la solution testée
+- **Validation qualité** : Tests et PHPStan intégrés au workflow
+
+---
 
 ### `/github:fix`
 
@@ -221,7 +242,7 @@ Skill spécialisé pour l'analyse d'impact des PR. Utilisé automatiquement par 
 
 **Modèle :** opus-4
 
-**Outils :** Bash, Read, Write, TodoWrite, Grep, Glob
+**Outils :** Bash, Read, Write, Grep, Glob
 
 ## Licence
 

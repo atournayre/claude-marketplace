@@ -10,6 +10,78 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.24.2] - 2026-01-24
+
+### Plugins Updated
+- **claude v1.1.1** - Stabilisation suite à migration commands → skills
+- **dev v2.3.3** - Stabilisation suite à migration commands → skills
+- **doc v1.5.1** - Stabilisation suite à migration commands → skills
+- **framework v1.0.3** - Stabilisation suite à migration commands → skills
+- **git v1.9.2** - Stabilisation suite à migration commands → skills
+- **github v1.2.2** - Stabilisation suite à migration commands → skills
+- **marketing v1.1.1** - Stabilisation suite à migration commands → skills
+- **qa v1.2.5** - Stabilisation suite à migration commands → skills
+- **symfony v1.2.1** - Stabilisation suite à migration commands → skills
+
+## [2026.01.24] - 2026-01-24
+
+### Plugins Updated
+- **dev v2.3.2** - Intégration task management system
+  - 5 skills modifiés : `dev:feature` (9 tâches), `dev:auto:feature` (11 tâches), `dev:review` (4 tâches), `dev:explore` (4 tâches), `dev:plan` (5 tâches)
+  - TaskCreate/TaskUpdate pour suivi progression workflows en temps réel
+  - Support des dépendances entre tâches (addBlockedBy)
+  - Documentation patterns task management et agents parallèles
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+- **git v1.9.1** - Intégration task management system
+  - 3 skills modifiés : `git-pr` (13 tâches), `git-cd-pr` (15 tâches), `git:release-notes` (5 tâches)
+  - Suivi détaillé workflows création PR (QA → création → review)
+  - Tâches conditionnelles (review automatique si plugin installé)
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+- **framework v1.0.2** - Intégration task management system
+  - 1 skill modifié : `framework:make:all` (10 tâches)
+  - Orchestration séquentielle de 8 skills avec dépendances
+  - Suivi progression génération complète (contracts → tests)
+  - Dépôt : [framework/CHANGELOG.md](framework/CHANGELOG.md)
+- **qa v1.2.4** - Intégration task management system
+  - 1 skill modifié : `qa:phpstan` (5 tâches avec boucle itérative)
+  - Suivi boucle auto-fix PHPStan (max 10 itérations)
+  - Tâche longue durée restant `in_progress` pendant la boucle
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+- **github v1.2.1** - Intégration task management system
+  - 1 skill modifié : `github:fix` (6 tâches)
+  - Workflow structuré résolution issue (analyse → implémentation → tests)
+  - Validation qualité intégrée au workflow
+  - Dépôt : [github/CHANGELOG.md](github/CHANGELOG.md)
+
+## [2026.01.22] - 2026-01-22
+
+### Plugins Updated
+- **claude v1.1.0** - Migration commands → skills
+  - 5 skills créés (alias-add, challenge, doc-load, doc-question, make-command)
+  - Format natif Claude Code avec support complet frontmatter YAML
+  - Remplacement "SlashCommand" → "Skill" dans toute la documentation
+  - Suppression complète du répertoire /commands/
+  - Dépôt : [claude/CHANGELOG.md](claude/CHANGELOG.md)
+- **dev v1.9.0** - Migration 23 commands dev → skills (incluant 10 auto)
+  - Préservation des 3 hooks complexes (PreToolUse/PostToolUse)
+  - Support complet workaround output-style via instructions explicites
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+- **git v1.9.0** - Migration 4 commands git → skills
+  - Préservation des hooks avancés (validation, push automatique, feedback)
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+- **doc v1.5.0** - Migration 3 commands doc → skills
+  - Dépôt : [doc/CHANGELOG.md](doc/CHANGELOG.md)
+- **symfony v1.2.0** - Migration 3 commands symfony → skills
+  - Dépôt : [symfony/CHANGELOG.md](symfony/CHANGELOG.md)
+- **gemini v1.3.0** - Migration 3 commands gemini → skills
+  - Dépôt : [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
+- **github v1.2.0** - Migration github:fix vers skill
+  - Dépôt : [github/CHANGELOG.md](github/CHANGELOG.md)
+- **marketing v1.1.0** - Migration linkedin vers skill
+  - Dépôt : [marketing/CHANGELOG.md](marketing/CHANGELOG.md)
+- **qa v1.1.0** - Skills elegant-objects et phpstan-resolver maintenues
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+
 ## [2026.01.18] - 2026-01-18
 
 ### Plugins Updated
@@ -301,7 +373,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 - Pattern commande → skill pour tâches complexes orchestrées
 - Réduction taille commandes (406 → 6 lignes pour github:impact)
 - Meilleure séparation des responsabilités
-- TodoWrite systématique dans skills pour suivi progression
+- Task Management System (TaskCreate/TaskUpdate) pour suivi progression dans skills complexes
 
 ## [2025.11.15] - 2025-11-15
 

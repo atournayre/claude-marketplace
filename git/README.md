@@ -8,7 +8,30 @@ Workflow Git complet : branches, commits, conflits, PR.
 /plugin install git@atournayre
 ```
 
-## Commandes
+## Skills Disponibles
+
+Le plugin git fournit 8 skills (format natif Claude Code) :
+
+## Task Management System
+
+**Nouveauté v1.9.1** : Les skills de workflow PR intègrent le task management system pour un suivi détaillé.
+
+### Skills avec task management
+
+| Skill | Nombre de tâches | Type de workflow |
+|-------|------------------|------------------|
+| `git-pr` | 13 tâches | Workflow création PR standard |
+| `git-cd-pr` | 15 tâches | Workflow CD avec labels version |
+| `git:release-notes` | 5 tâches | Génération notes de release |
+
+### Fonctionnalités
+
+- **Progression visible** : Suivi étape par étape de la création de PR
+- **Statuts clairs** : pending → in_progress → completed
+- **Workflow complet** : De la QA à la création de PR en passant par le code review
+- **Tâches conditionnelles** : Review automatique seulement si plugin installé
+
+---
 
 ### `/git:branch`
 
@@ -329,7 +352,7 @@ PROJECT=
 
 ## Scripts Utilitaires
 
-### `scripts/qa-before-pr.sh`
+### `skills/git-pr-core/scripts/smart_qa.sh`
 
 Script de validation QA avant création de Pull Request. Détection automatique des outils disponibles.
 
@@ -337,11 +360,11 @@ Script de validation QA avant création de Pull Request. Détection automatique 
 - Détection auto des outils QA (PHPStan, PHPUnit, PHP-CS-Fixer)
 - Fallbacks multiples : make → vendor/bin → composer
 - Pas d'échec si outil manque (feedback clair sur exécution)
-- Réutilisable par n'importe quelle commande
+- Réutilisable par n'importe quelle skill
 
 **Usage :**
 ```bash
-bash git/commands/scripts/qa-before-pr.sh
+bash git/skills/git-pr-core/scripts/smart_qa.sh
 ```
 
 **Exemple de sortie :**

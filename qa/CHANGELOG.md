@@ -5,6 +5,30 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.2.5] - 2026-01-24
+
+### Changed
+- Stabilisation des skills suite à migration commands → skills
+
+## [1.2.4] - 2026-01-24
+
+### Changed
+- Intégration du task management system dans skill qa/ :
+  - `qa:phpstan` - 5 tâches (avec boucle itérative et auto-fix)
+- Ajout de TaskCreate/TaskUpdate pour suivi progression
+- Documentation patterns task management et gestion boucles longues
+
+## [1.2.3] - 2026-01-24
+
+### Fixed
+- Correction version plugin après migration commands → skills (régression 1.1.0 → 1.2.3)
+
+## [1.1.0] - 2026-01-22
+
+### Changed
+- Skills elegant-objects et phpstan-resolver maintenues et validées
+- Support complet du format skills natif Claude Code
+
 ## [1.2.2] - 2026-01-10
 
 ### Fixed

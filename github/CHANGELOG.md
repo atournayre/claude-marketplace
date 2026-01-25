@@ -5,6 +5,28 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.2.2] - 2026-01-24
+
+### Changed
+- Stabilisation des skills suite à migration commands → skills
+
+## [1.2.1] - 2026-01-24
+
+### Changed
+- Intégration du task management system dans skill github/ :
+  - `github:fix` - 6 tâches (workflow résolution issue)
+- Ajout de TaskCreate/TaskUpdate pour suivi progression
+- Documentation patterns task management et workflows structurés
+
+## [1.2.0] - 2026-01-22
+
+### Changed
+- Migration de 1 command vers le format skill (github:fix)
+- Format natif Claude Code avec support complet frontmatter YAML
+
+### Removed
+- Répertoire /commands/ - complètement migré en /skills/
+
 ## [1.1.3] - 2026-01-10
 
 ### Fixed

@@ -26,6 +26,23 @@ Le plugin est automatiquement disponible via le marketplace atournayre-claude-pl
 
 Voir `/framework/skills/` pour documentation détaillée de chaque skill.
 
+## Task Management System
+
+**Nouveauté v1.0.2** : Le skill orchestrateur intègre le task management system.
+
+### Skill avec task management
+
+| Skill | Nombre de tâches | Type de workflow |
+|-------|------------------|------------------|
+| `framework:make:all` | 10 tâches | Orchestration séquentielle de 8 skills |
+
+### Fonctionnalités
+
+- **Progression visible** : Suivi de chaque skill généré (contracts, entity, out, etc.)
+- **Statuts clairs** : pending → in_progress → completed
+- **Dépendances respectées** : Ordre d'exécution garanti (contracts → entity → out/invalide → etc.)
+- **Workflow complet** : De la création des contracts jusqu'aux tests (factory + story)
+
 ## Usage
 
 ```bash

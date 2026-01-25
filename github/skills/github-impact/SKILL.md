@@ -3,11 +3,16 @@ name: github-impact
 description: >
   Génère automatiquement deux rapports d'impact (métier et technique) pour une PR GitHub
   et les intègre dans la description.
-allowed-tools: [Bash, Read, Write, TodoWrite, Grep, Glob]
+allowed-tools: [Bash, Read, Write, Grep, Glob]
 model: claude-opus-4-1-20250805
 ---
 
 # GitHub PR Impact Analysis Skill
+
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
 
 ## Usage
 ```

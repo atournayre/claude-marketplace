@@ -3,11 +3,16 @@ name: git-pr-core
 description: >
   Skill interne fournissant les scripts communs pour la création de Pull Requests.
   Ne pas appeler directement - utilisé par git-pr et git-cd-pr.
-allowed-tools: [Bash, Read, Write, TodoWrite, AskUserQuestion]
+allowed-tools: [Bash, Read, Write, AskUserQuestion]
 model: claude-sonnet-4-5-20250929
 ---
 
 # Git PR Core (Internal)
+
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
 
 Ce skill fournit les scripts partagés pour la création de PR. Il ne doit pas être appelé directement.
 

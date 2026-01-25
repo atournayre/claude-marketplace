@@ -14,7 +14,9 @@ Plugin Symfony avec commandes make, documentation et intégrations framework.
 - `symfony` CLI (optionnel mais recommandé)
 - Maker Bundle installé
 
-## Commandes
+## Skills Disponibles
+
+Le plugin symfony fournit 4 skills (format natif Claude Code) :
 
 ### `/symfony:make`
 

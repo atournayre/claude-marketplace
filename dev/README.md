@@ -107,6 +107,45 @@ PROJECT=
 # Une PR sera créée automatiquement à la fin
 ```
 
+## Task Management System
+
+**Nouveauté v2.3.2** : Les skills de workflow intègrent le task management system de Claude Code pour un suivi en temps réel.
+
+### Skills avec task management
+
+| Skill | Nombre de tâches | Type de workflow |
+|-------|------------------|------------------|
+| `dev:feature` | 9 tâches | Phases séquentielles avec checkpoints |
+| `dev:auto:feature` | 11 tâches | Phases automatiques complètes |
+| `dev:review` | 4 tâches | 3 reviews parallèles + consolidation |
+| `dev:explore` | 4 tâches | 3 agents parallèles + consolidation |
+| `dev:plan` | 5 tâches | Étapes séquentielles de planification |
+
+### Fonctionnalités
+
+- **Progression visible** : Utilise `TaskList` pour voir l'état en temps réel
+- **Statuts clairs** : pending → in_progress → completed
+- **Dépendances** : Certaines tâches bloquent d'autres (ex: consolidation bloquée par agents)
+- **Agents parallèles** : Suivi des agents qui s'exécutent en parallèle
+- **Spinner actif** : Affichage du nom de la tâche en cours via `activeForm`
+
+### Exemple d'utilisation
+
+```bash
+# Lancer un workflow
+/dev:feature "Ajouter authentication"
+
+# Dans un autre terminal/session, voir la progression
+TaskList
+
+# Output:
+# #1 [completed] Discover - Comprendre le besoin
+# #2 [completed] Explore - Explorer codebase
+# #3 [in_progress] Clarify - Questions clarification
+# #4 [pending] Design - Proposer architectures
+# ...
+```
+
 ## Phases individuelles (Mode Interactif)
 
 Tu peux exécuter chaque phase individuellement :
@@ -271,39 +310,32 @@ Si vous acceptez :
 
 ```
 dev/
-├── commands/
-│   ├── feature.md      # Orchestrateur mode interactif
-│   ├── status.md       # Affiche plan
-│   ├── discover.md     # Phase 0 (interactif)
-│   ├── explore.md      # Phase 1 (interactif)
-│   ├── clarify.md      # Phase 2 (interactif)
-│   ├── design.md       # Phase 3 (interactif)
-│   ├── plan.md         # Phase 4 (interactif)
-│   ├── code.md         # Phase 5 (interactif)
-│   ├── review.md       # Phase 6 (interactif)
-│   ├── summary.md      # Phase 7 (interactif)
-│   ├── debug.md        # Utilitaire
-│   ├── log.md          # Utilitaire
-│   └── auto/           # Mode automatisé
-│       ├── feature.md         # Orchestrateur (Phases 0-9)
-│       ├── check-prerequisites.md  # Phase 0
-│       ├── fetch-issue.md     # Phase 1
-│       ├── discover.md        # Phase 2
-│       ├── explore.md         # Phase 3
-│       ├── clarify.md         # Phase 4
-│       ├── design.md          # Phase 5
-│       ├── plan.md            # Phase 6
-│       ├── code.md            # Phase 7
-│       └── review.md          # Phase 8
-├── agents/
-│   ├── phpstan-error-resolver.md
-│   ├── elegant-objects-reviewer.md
-│   ├── meta-agent.md
-│   ├── symfony-docs-scraper.md
-│   ├── api-platform-docs-scraper.md
-│   ├── claude-docs-scraper.md
-│   ├── meilisearch-docs-scraper.md
-│   └── atournayre-framework-docs-scraper.md
+├── skills/                    # Skills au format Claude Code natif
+│   ├── feature/              # Orchestrateur mode interactif
+│   ├── status/               # Affiche plan
+│   ├── discover/             # Phase 0 (interactif)
+│   ├── explore/              # Phase 1 (interactif)
+│   ├── clarify/              # Phase 2 (interactif)
+│   ├── design/               # Phase 3 (interactif)
+│   ├── plan/                 # Phase 4 (interactif)
+│   ├── code/                 # Phase 5 (interactif)
+│   ├── review/               # Phase 6 (interactif)
+│   ├── summary/              # Phase 7 (interactif)
+│   ├── debug/                # Utilitaire
+│   ├── log/                  # Utilitaire
+│   ├── worktree/             # Gestion worktrees
+│   └── auto-*/               # Skills mode automatisé (10 skills)
+│       ├── auto-feature/              # Orchestrateur (Phases 0-10)
+│       ├── auto-check-prerequisites/  # Phase 0
+│       ├── auto-fetch-issue/          # Phase 1
+│       ├── auto-discover/             # Phase 2
+│       ├── auto-explore/              # Phase 3
+│       ├── auto-clarify/              # Phase 4
+│       ├── auto-design/               # Phase 5
+│       ├── auto-plan/                 # Phase 6
+│       ├── auto-code/                 # Phase 7
+│       └── auto-review/               # Phase 8
+├── agents/                   # Agents spécialisés (deprecated - voir skills)
 ├── README.md
 └── CHANGELOG.md
 ```

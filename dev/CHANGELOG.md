@@ -5,6 +5,46 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.3.3] - 2026-01-24
+
+### Changed
+- Stabilisation des skills du plugin dev suite à migration commands → skills
+
+## [2.3.2] - 2026-01-24
+
+### Changed
+- Intégration du task management system dans 5 skills dev/ :
+  - `dev:feature` - 9 tâches (phases 0-8)
+  - `dev:auto:feature` - 11 tâches (phases 0-10 automatiques)
+  - `dev:review` - 4 tâches (3 reviews parallèles + consolidation)
+  - `dev:explore` - 4 tâches (3 agents parallèles + consolidation)
+  - `dev:plan` - 5 tâches (étapes séquentielles)
+- Ajout de TaskCreate/TaskUpdate pour suivi progression workflows
+- Documentation patterns task management dans chaque skill
+- Support des dépendances entre tâches (addBlockedBy)
+
+## [2.3.1] - 2026-01-24
+
+### Fixed
+- Restauration du contenu complet des 10 skills auto-* (check-prerequisites, fetch-issue, discover, explore, clarify, design, plan, code, review, feature)
+- Correction des 9 placeholders "DESCRIPTION" avec vraies descriptions
+- Skills auto-* passés de stubs 23 lignes à implémentations complètes (60-300 lignes selon skill)
+
+## [2.3.0] - 2026-01-22
+
+### Changed
+- Migration de tous les commands vers le format skills
+- Conversion de 23 commands en 23 skills avec support natif Claude Code
+  - 13 skills racine : status, feature, discover, explore, clarify, design, plan, code, review, summary, debug, log, worktree
+  - 10 skills auto : check-prerequisites, fetch-issue, discover, explore, clarify, design, plan, code, review, feature
+
+### Added
+- Préservation complète des hooks complexes (PreToolUse/PostToolUse)
+- Support output-style avec workaround pour skills concernées
+
+### Removed
+- Répertoire /commands/ - complètement migré en /skills/
+
 ## [2.2.2] - 2026-01-10
 
 ### Changed

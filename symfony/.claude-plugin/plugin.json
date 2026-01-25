@@ -1,7 +1,7 @@
 {
   "name": "symfony",
   "description": "Plugin Symfony avec commandes make, documentation et intégrations framework",
-  "version": "1.0.1",
+  "version": "1.2.1",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"

@@ -3,7 +3,7 @@ name: git-pr
 description: >
   Crée une Pull Request GitHub standard avec workflow complet :
   QA, commits, assignation milestone/projet, code review automatique.
-allowed-tools: [Bash, Read, Write, TodoWrite, AskUserQuestion]
+allowed-tools: [Bash, Read, Write, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
 model: claude-sonnet-4-5-20250929
 ---
 
@@ -22,7 +22,41 @@ PR_TEMPLATE_PATH=".github/PULL_REQUEST_TEMPLATE/default.md"
 ENV_FILE_PATH=".env.claude"
 ```
 
-## Workflow
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+### Initialisation
+
+**Créer les tâches du workflow avec TaskCreate :**
+
+```
+TaskCreate #1: Charger config .env.claude
+TaskCreate #2: Confirmation initiale (si --no-interaction absent)
+TaskCreate #3: Vérifier scopes GitHub
+TaskCreate #4: Vérifier template PR
+TaskCreate #5: Lancer QA intelligente
+TaskCreate #6: Analyser changements git
+TaskCreate #7: Confirmer branche de base
+TaskCreate #8: Générer description PR
+TaskCreate #9: Push et créer PR
+TaskCreate #10: Assigner milestone
+TaskCreate #11: Assigner projet GitHub
+TaskCreate #12: Code review automatique (si plugin installé)
+TaskCreate #13: Nettoyage branche locale
+```
+
+**Important :**
+- Utiliser `activeForm` (ex: "Chargeant config", "Vérifiant scopes GitHub")
+- Ne créer la tâche #12 que si plugin review installé ET `--no-review` absent
+- Chaque tâche doit être marquée `in_progress` puis `completed`
+
+**Pattern d'exécution pour chaque étape :**
+1. `TaskUpdate` → tâche en `in_progress`
+2. Exécuter l'étape
+3. `TaskUpdate` → tâche en `completed`
+
+### Étapes
 
 1. **Charger configuration depuis `.env.claude`** :
    - Vérifier si le fichier `.env.claude` existe à la racine du projet
@@ -80,7 +114,15 @@ Agrège résultats (score >= 80) dans commentaire PR.
 ## References
 
 - [Template review](../git-pr-core/references/review-template.md) - Format commentaire et agents
-- [Todos template](../git-pr-core/references/todos-template.md) - TodoWrite et génération description
+- [Todos template](../git-pr-core/references/todos-template.md) - TaskCreate, TaskUpdate, TaskList et génération description
+
+## Task Management
+
+**Progression du workflow :**
+- 13 tâches créées à l'initialisation (ou 12 si `--no-review` ou pas de plugin review)
+- Chaque étape suit le pattern : `in_progress` → exécution → `completed`
+- Utiliser `TaskList` pour voir la progression globale
+- Les tâches permettent à l'utilisateur de suivre l'avancement de la création de PR
 
 ## Règles critiques
 

@@ -5,6 +5,21 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.5.1] - 2026-01-24
+
+### Changed
+- Stabilisation des skills suite à migration commands → skills
+
+## [1.5.0] - 2026-01-22
+
+### Changed
+- Migration de 3 commands vers le format skills (adr, rtfm, update)
+- Format natif Claude Code avec support complet frontmatter YAML
+- Support output-style avec workaround pour skills concernées
+
+### Removed
+- Répertoire /commands/ - complètement migré en /skills/
+
 ## [1.1.3] - 2025-12-20
 
 ### Changed

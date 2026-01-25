@@ -8,7 +8,9 @@ Documentation : ADR, RTFM, génération docs, framework docs.
 /plugin install doc@atournayre
 ```
 
-## Commandes
+## Skills Disponibles
+
+Le plugin doc fournit 4 skills (format natif Claude Code) :
 
 ### `/doc:adr`
 

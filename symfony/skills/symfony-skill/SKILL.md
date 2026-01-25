@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Symfony Framework Development Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Quick Start
 
 ```bash

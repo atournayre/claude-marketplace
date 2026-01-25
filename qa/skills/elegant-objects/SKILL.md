@@ -9,6 +9,11 @@ model: sonnet
 
 # Elegant Objects Reviewer Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Usage
 ```
 /qa:elegant-objects [fichier.php]

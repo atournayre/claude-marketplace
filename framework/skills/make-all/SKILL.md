@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make All Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Orchestrateur générant une stack complète Elegant Objects + DDD pour une entité.
 
@@ -41,6 +46,37 @@ Use skill framework:make:all
 
 ## Workflow
 
+### Initialisation
+
+**Créer les tâches du workflow :**
+
+Utiliser `TaskCreate` pour chaque phase :
+
+```
+TaskCreate #1: Demander EntityName et propriétés
+TaskCreate #2: Vérifier/créer Contracts
+TaskCreate #3: Générer Entity (framework:make:entity)
+TaskCreate #4: Générer Out (framework:make:out)
+TaskCreate #5: Générer Invalide (framework:make:invalide)
+TaskCreate #6: Générer Urls (framework:make:urls)
+TaskCreate #7: Générer Collection (framework:make:collection)
+TaskCreate #8: Générer Factory (framework:make:factory)
+TaskCreate #9: Générer Story (framework:make:story)
+TaskCreate #10: Afficher résumé + prochaines étapes
+```
+
+**Important :**
+- Utiliser `activeForm` (ex: "Demandant EntityName", "Générant Entity")
+- Respecter l'ordre d'exécution (dépendances entre skills)
+- Chaque tâche doit être marquée `in_progress` puis `completed`
+
+**Pattern d'exécution pour chaque étape :**
+1. `TaskUpdate` → tâche en `in_progress`
+2. Exécuter l'étape
+3. `TaskUpdate` → tâche en `completed`
+
+### Étapes
+
 1. Demander EntityName et propriétés
 2. Vérifier/créer Contracts
 3. Exécuter séquentiellement les 8 skills
@@ -51,6 +87,15 @@ Use skill framework:make:all
 ```
 contracts → entity → out/invalide → urls/collection → factory → story
 ```
+
+## Task Management
+
+**Progression du workflow :**
+- 10 tâches créées à l'initialisation
+- Chaque skill orchestré correspond à une tâche (tâches #3 à #9)
+- Respecter l'ordre séquentiel (dépendances entre skills)
+- Chaque tâche suit le pattern : `in_progress` → exécution → `completed`
+- Utiliser `TaskList` pour voir la progression globale
 
 ## Notes
 - Orchestrateur sans templates propres

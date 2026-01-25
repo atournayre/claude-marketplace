@@ -1,40 +1,28 @@
-# Template TodoWrite pour git-pr
+# Template Task Management pour git-pr
 
-## Todos initiaux
+## Tâches initiales (avec TaskCreate)
 
-```yaml
-todos:
-  - content: "Vérifier template PR"
-    status: "pending"
-    activeForm: "Vérification du template PR"
-  - content: "Lancer QA intelligente"
-    status: "pending"
-    activeForm: "Lancement de la QA intelligente"
-  - content: "Analyser changements git"
-    status: "pending"
-    activeForm: "Analyse des changements git"
-  - content: "Confirmer branche de base"
-    status: "pending"
-    activeForm: "Confirmation de la branche de base"
-  - content: "Générer description PR intelligente"
-    status: "pending"
-    activeForm: "Génération de la description PR intelligente"
-  - content: "Push et création PR"
-    status: "pending"
-    activeForm: "Push et création de la PR"
-  - content: "Assigner milestone"
-    status: "pending"
-    activeForm: "Assignation du milestone"
-  - content: "Assigner projet GitHub"
-    status: "pending"
-    activeForm: "Assignation du projet GitHub"
-  - content: "Code review automatique"
-    status: "pending"
-    activeForm: "Code review automatique"
-  - content: "Nettoyage branche locale"
-    status: "pending"
-    activeForm: "Nettoyage de la branche locale"
+Les tâches doivent être créées à l'initialisation du workflow avec `TaskCreate` :
+
 ```
+TaskCreate #1: Charger config .env.claude
+TaskCreate #2: Confirmation initiale (si --no-interaction absent)
+TaskCreate #3: Vérifier scopes GitHub
+TaskCreate #4: Vérifier template PR
+TaskCreate #5: Lancer QA intelligente
+TaskCreate #6: Analyser changements git
+TaskCreate #7: Confirmer branche de base
+TaskCreate #8: Générer description PR
+TaskCreate #9: Push et créer PR
+TaskCreate #10: Assigner milestone
+TaskCreate #11: Assigner projet GitHub
+TaskCreate #12: Code review automatique (si plugin installé)
+TaskCreate #13: Nettoyage branche locale
+```
+
+**Important :**
+- Utiliser `activeForm` avec forme progressive (ex: "Chargeant config", "Vérifiant scopes GitHub")
+- Pattern d'exécution : `TaskUpdate` → `in_progress` → exécution → `TaskUpdate` → `completed`
 
 ## Génération description PR intelligente
 

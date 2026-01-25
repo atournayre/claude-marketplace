@@ -7,6 +7,11 @@ version: 1.0.0
 
 # Framework Make Invalide Skill
 
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+
 ## Description
 Génère une classe Invalide pour gérer les exceptions métier d'une entité avec factory methods.
 
