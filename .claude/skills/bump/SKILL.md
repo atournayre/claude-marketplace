@@ -79,9 +79,9 @@ Utilise TaskCreate pour créer les tâches suivantes :
    - description: Exécuter git diff pour identifier les plugins avec modifications
 
 2. **Sélectionner plugins à bumper**
-   - subject: `Sélectionner les plugins à bumper (vérification bumps + AskUserQuestion)`
+   - subject: `Sélectionner les plugins à bumper (AskUserQuestion)`
    - activeForm: `Selecting plugins to bump`
-   - description: Vérifier bumps du jour + demander sélection utilisateur
+   - description: Demander sélection utilisateur des plugins à bumper
 
 3. **Bumper les plugins sélectionnés**
    - subject: `Exécuter bump pour chaque plugin sélectionné`
@@ -109,12 +109,7 @@ Pour chaque plugin, compte le nombre de fichiers modifiés.
 
 **Marque ensuite la tâche "Détecter plugins modifiés" comme `completed` avec TaskUpdate.**
 
-### 2. Vérifier les bumps existants et sélection interactive
-
-**Pour chaque plugin détecté :**
-- Lis `{plugin}/CHANGELOG.md` (premières 20 lignes)
-- Vérifie si la première version est datée d'aujourd'hui (format `## [X.Y.Z] - YYYY-MM-DD`)
-- Si oui, marque le plugin comme "⚠️ Déjà bumpé aujourd'hui"
+### 2. Sélection interactive des plugins
 
 **Utilise AskUserQuestion pour demander la sélection :**
 - Question : "Quels plugins veux-tu bumper ?"
@@ -122,7 +117,7 @@ Pour chaque plugin, compte le nombre de fichiers modifiés.
 - multiSelect : true
 - Options :
   1. "Tous les plugins modifiés ({N} plugins)" (Recommended) - Description : "Bumper automatiquement tous les plugins avec des modifications"
-  2. Pour chaque plugin : "{plugin} ({N} fichiers modifiés) {⚠️ Déjà bumpé aujourd'hui si applicable}" - Description : "Version actuelle : {version}"
+  2. Pour chaque plugin : "{plugin} ({N} fichiers modifiés)" - Description : "Version actuelle : {version}"
 
 **Si l'utilisateur sélectionne "Tous"**, utilise tous les plugins détectés.
 **Sinon**, utilise uniquement les plugins sélectionnés individuellement.
