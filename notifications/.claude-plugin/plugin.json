@@ -1,6 +1,6 @@
 {
   "name": "notifications",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète",
   "author": "Aurélien Tournayre <aurelien.tournayre@gmail.com>",
   "license": "MIT",

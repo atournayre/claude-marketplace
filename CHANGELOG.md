@@ -23,6 +23,15 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.25-2] - 2026-01-25
+
+### Plugins Updated
+- **notifications v1.0.1** - Amélioration notifications desktop
+  - Nouvelle fonction `play_beep()` pour audio feedback PulseAudio/terminal
+  - Support `get_friendly_title()` pour titres plus lisibles
+  - Cleanups whitespace et suppression imports inutilisés
+  - Dépôt : [notifications/CHANGELOG.md](notifications/CHANGELOG.md)
+
 ## [2026.01.25] - 2026-01-25
 
 ### Plugins Updated
