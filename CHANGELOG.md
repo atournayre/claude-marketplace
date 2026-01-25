@@ -7,6 +7,19 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+### Plugins Added
+- **notifications v1.0.0** - Système de notifications avancé
+  - Queue persistante `queue.jsonl` pour historique complet
+  - Auto-détection multi-projet (4 niveaux de fallback)
+  - Dispatchers configurables : `notify-send`, `phpstorm` (futur), `custom`
+  - Gestion statuts `unread`/`read` avec marquage manuel
+  - Scripts CLI : `dispatch-notifications.py`, `view-notifications.sh`, `mark-notification-read.py`
+  - Hook `notification.py` + API `write_notification.py`
+  - Support priorités (`low`, `normal`, `high`, `critical`) et types
+  - Backend `FileQueueBackend` avec utils complets
+  - Documentation complète + guide migration
+  - Dépôt : [notifications/CHANGELOG.md](notifications/CHANGELOG.md)
+
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 

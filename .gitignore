@@ -4,6 +4,7 @@
 .claude/sessions/
 .claude/cache/
 logs/
+.claude/notifications/queue.jsonl
 
 # Python cache (hooks)
 __pycache__/

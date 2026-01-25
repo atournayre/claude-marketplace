@@ -1,0 +1,42 @@
+{
+  "name": "notifications",
+  "version": "1.0.0",
+  "description": "Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète",
+  "author": "Aurélien Tournayre <aurelien.tournayre@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/atournayre/claude-plugin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atournayre/claude-plugin.git"
+  },
+  "keywords": [
+    "notifications",
+    "hooks",
+    "queue",
+    "dispatcher",
+    "desktop",
+    "notify-send",
+    "phpstorm"
+  ],
+  "hooks": {
+    "notification": "hooks/notification.py"
+  },
+  "scripts": {
+    "dispatch": "scripts/dispatch-notifications.py",
+    "view": "scripts/view-notifications.sh",
+    "mark-read": "scripts/mark-notification-read.py"
+  },
+  "requirements": [
+    "python3"
+  ],
+  "features": [
+    "Système de queue persistante (queue.jsonl)",
+    "Auto-détection multi-projet",
+    "Dispatchers configurables (notify-send, phpstorm, custom)",
+    "Marquage read/unread",
+    "Historique complet",
+    "Scripts CLI pour gestion",
+    "Support priorités et types",
+    "Métadonnées extensibles"
+  ]
+}
