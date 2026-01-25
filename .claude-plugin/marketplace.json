@@ -66,6 +66,11 @@
       "description": "Génération de contenu marketing : posts LinkedIn, annonces, communications"
     },
     {
+      "name": "notifications",
+      "source": "./notifications",
+      "description": "Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète"
+    },
+    {
       "name": "prompt",
       "source": "./prompt",
       "description": "Générateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture"
