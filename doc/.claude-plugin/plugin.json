@@ -1,6 +1,6 @@
 {
   "name": "doc",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Documentation : ADR, RTFM, génération docs, framework docs avec skills spécialisés",
   "author": {
     "name": "Aurélien Tournayre",

@@ -6,9 +6,14 @@
   },
   "plugins": [
     {
+      "name": "command",
+      "source": "./command",
+      "description": "Plugin centralisé de commandes - Workaround pour Claude Code issue #15178"
+    },
+    {
       "name": "claude",
       "source": "./claude",
-      "description": "Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation"
+      "description": "Plugin de base pour Claude Code avec skills essentiels pour l'amélioration et la documentation"
     },
     {
       "name": "customize",
@@ -43,12 +48,12 @@
     {
       "name": "symfony",
       "source": "./symfony",
-      "description": "Plugin Symfony avec commandes make, documentation et intégrations framework"
+      "description": "Plugin Symfony avec skills make, documentation et intégrations framework"
     },
     {
       "name": "framework",
       "source": "./framework",
-      "description": "Plugin pour atournayre/framework avec commandes et intégrations"
+      "description": "Plugin pour atournayre/framework avec skills et intégrations"
     },
     {
       "name": "gemini",

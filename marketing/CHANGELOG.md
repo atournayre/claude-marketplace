@@ -2,6 +2,13 @@
 
 Tous les changements notables de ce projet sont documentés dans ce fichier.
 
+## [1.2.1] - 2026-01-26
+
+### Removed
+- Commandes legacy : 1 commande migrée vers plugin centralisé `command`
+  - Déplacement vers plugin `command` (workaround issue #15178)
+  - Skills restent fonctionnels via le plugin `command`
+
 ## [1.2.0] - 2026-01-25
 
 ### Added

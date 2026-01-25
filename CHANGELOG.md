@@ -7,6 +7,50 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.01.26] - 2026-01-26
+
+### Plugins Added
+- **command v1.0.0** - Plugin centralisé de commandes
+  - Workaround temporaire pour Claude Code issue #15178
+  - 63 commandes centralisées depuis 11 plugins
+  - Permet d'utiliser les skills via des slash commands
+  - Dépôt : [command/CHANGELOG.md](command/CHANGELOG.md)
+
+### Plugins Updated
+- **claude v1.2.1** - Migration commandes vers plugin centralisé
+  - Suppression de 5 commandes legacy
+  - Dépôt : [claude/CHANGELOG.md](claude/CHANGELOG.md)
+- **dev v2.4.1** - Migration commandes vers plugin centralisé
+  - Suppression de 23 commandes legacy
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+- **doc v1.6.1** - Migration commandes vers plugin centralisé
+  - Suppression de 4 commandes legacy
+  - Dépôt : [doc/CHANGELOG.md](doc/CHANGELOG.md)
+- **framework v1.1.1** - Migration commandes vers plugin centralisé
+  - Suppression de 9 commandes legacy
+  - Dépôt : [framework/CHANGELOG.md](framework/CHANGELOG.md)
+- **gemini v1.4.1** - Migration commandes vers plugin centralisé
+  - Suppression de 3 commandes legacy
+  - Dépôt : [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
+- **git v1.10.2** - Migration commandes vers plugin centralisé
+  - Suppression de 8 commandes legacy
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+- **github v1.3.1** - Migration commandes vers plugin centralisé
+  - Suppression de 2 commandes legacy
+  - Dépôt : [github/CHANGELOG.md](github/CHANGELOG.md)
+- **marketing v1.2.1** - Migration commandes vers plugin centralisé
+  - Suppression de 1 commande legacy
+  - Dépôt : [marketing/CHANGELOG.md](marketing/CHANGELOG.md)
+- **prompt v1.1.1** - Migration commandes vers plugin centralisé
+  - Suppression de 7 commandes legacy
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+- **qa v1.3.1** - Migration commandes vers plugin centralisé
+  - Suppression de 2 commandes legacy
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+- **symfony v1.3.1** - Migration commandes vers plugin centralisé
+  - Suppression de 4 commandes legacy
+  - Dépôt : [symfony/CHANGELOG.md](symfony/CHANGELOG.md)
+
 ## [2026.01.25-3] - 2026-01-25
 
 ### Plugins Updated

@@ -1,7 +1,7 @@
 {
   "name": "prompt",
   "description": "Générateur de prompts structurés pour développement - Templates DDD/CQRS, refactoring, webhooks, architecture",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"

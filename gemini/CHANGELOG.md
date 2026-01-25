@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1] - 2026-01-26
+
+### Removed
+- Commandes legacy : 3 commandes migrées vers plugin centralisé `command`
+  - Déplacement vers plugin `command` (workaround issue #15178)
+  - Skills restent fonctionnels via le plugin `command`
+
 ## [1.4.0] - 2026-01-25
 
 ### Added

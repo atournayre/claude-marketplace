@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.10.2] - 2026-01-26
+
+### Removed
+- Commandes legacy : `git:branch`, `git:commit`, `git:conflit`, `git:git-cd-pr`, `git:git-pr-core`, `git:git-pr`, `git:release-notes`, `git:release-report`
+  - Migrées vers plugin centralisé `command` (workaround issue #15178)
+  - Skills restent fonctionnels via le plugin `command`
+
 ## [1.10.1] - 2026-01-25
 
 ### Changed

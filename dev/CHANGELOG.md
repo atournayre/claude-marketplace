@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.4.1] - 2026-01-26
+
+### Removed
+- Commandes legacy : 23 commandes migrées vers plugin centralisé `command`
+  - Déplacement vers plugin `command` (workaround issue #15178)
+  - Skills restent fonctionnels via le plugin `command`
+
 ## [2.4.0] - 2026-01-25
 
 ### Added
