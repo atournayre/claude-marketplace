@@ -40,3 +40,27 @@ def get_emoji_for_notification_type(notification_type: str) -> str:
         'elicitation_dialog': '❓',
     }
     return emojis.get(notification_type, 'ℹ️')
+
+
+def get_friendly_title(notification_type: str) -> str:
+    """
+    Get user-friendly title for Claude Code notification type.
+
+    Args:
+        notification_type: Type of notification from Claude Code
+
+    Returns:
+        User-friendly title in French
+    """
+    titles = {
+        'permission_prompt': 'Autorisation requise',
+        'idle_prompt': 'Claude attend',
+        'auth_success': 'Authentification réussie',
+        'elicitation_dialog': 'Question',
+        'error': 'Erreur',
+        'warning': 'Attention',
+        'info': 'Information',
+        'success': 'Succès',
+        'test': 'Test',
+    }
+    return titles.get(notification_type, notification_type.replace('_', ' ').title())

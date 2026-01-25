@@ -59,14 +59,8 @@ def dispatch_notify_send(notification: Dict[str, Any]) -> bool:
         }
         urgency = priority_map.get(notification.get('priority', 'normal'), 'normal')
 
-        # Map priority to timeout
-        timeout_map = {
-            'critical': '-1',  # Permanent
-            'high': '10000',   # 10 seconds
-            'normal': '5000',  # 5 seconds
-            'low': '3000'      # 3 seconds
-        }
-        timeout = timeout_map.get(notification.get('priority', 'normal'), '5000')
+        # Use timeout from environment variable (default: 0 = permanent)
+        timeout = os.getenv('CLAUDE_DESKTOP_NOTIFY_TIMEOUT', '0')
 
         title = notification.get('title', 'Claude Code')
         message = notification.get('message', '')

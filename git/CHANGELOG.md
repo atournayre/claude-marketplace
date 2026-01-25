@@ -5,6 +5,11 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.10.1] - 2026-01-25
+
+### Changed
+- Commande `/git:commit` - Mise à jour légacy command reference vers skill
+
 ## [1.10.0] - 2026-01-25
 
 ### Added

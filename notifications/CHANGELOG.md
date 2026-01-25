@@ -5,6 +5,21 @@ Toutes les modifications notables du plugin notifications seront documentées ic
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
+## [1.0.1] - 2026-01-25
+
+### Fixed
+- Suppression import inutilisé `format_notification_message`
+- Cleanups whitespace dans `notification.py`
+- Mise à jour imports utilitaires desktop notification
+
+### Added
+- Nouvelle fonction `play_beep()` pour notifications desktop avec support :
+  - PulseAudio via `paplay` (préféré)
+  - Fallback sur terminal beep (BEL)
+  - Gestion timeouts et fallbacks gracieux
+- Support `get_friendly_title()` pour titres notifications plus lisibles
+- Play beep lors des notifications desktop
+
 ## [1.0.0] - 2026-01-25
 
 ### 🔧 Corrigé

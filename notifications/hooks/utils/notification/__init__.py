@@ -14,7 +14,7 @@ from .backends import (
 
 # Desktop notifications
 from .desktop import DesktopNotification
-from .icons import get_emoji_for_notification_type, get_icon_path
+from .icons import get_emoji_for_notification_type, get_friendly_title, get_icon_path
 from .formatters import (
     format_completion_message,
     get_session_title,
@@ -30,6 +30,7 @@ __all__ = [
     # Desktop
     'DesktopNotification',
     'get_emoji_for_notification_type',
+    'get_friendly_title',
     'get_icon_path',
     'format_completion_message',
     'get_session_title',

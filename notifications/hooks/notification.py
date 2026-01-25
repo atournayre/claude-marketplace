@@ -20,10 +20,9 @@ sys.path.insert(0, script_dir)
 
 # Desktop notification support
 try:
-    from utils.notification import DesktopNotification, format_notification_message
+    from utils.notification import DesktopNotification
 except ImportError:
     DesktopNotification = None
-    format_notification_message = None
 
 
 def get_tts_script_path():
@@ -48,30 +47,47 @@ def announce_notification():
         tts_script = get_tts_script_path()
         if not tts_script:
             return  # No TTS scripts available
-        
+
         # Get engineer name if available
         engineer_name = os.getenv('ENGINEER_NAME', '').strip()
-        
+
         # Create notification message with 30% chance to include name
         if engineer_name and random.random() < 0.3:
             notification_message = f"{engineer_name}, your agent needs your input"
         else:
             notification_message = "Your agent needs your input"
-        
+
         # Call the TTS script with the notification message
         subprocess.run([
             "python3", tts_script, notification_message
-        ], 
+        ],
         capture_output=True,  # Suppress output
         timeout=10  # 10-second timeout
         )
-        
+
     except (subprocess.TimeoutExpired, subprocess.SubprocessError, FileNotFoundError):
         # Fail silently if TTS encounters issues
         pass
     except Exception:
         # Fail silently for any other errors
         pass
+
+
+def play_beep():
+    """Play a simple beep sound for desktop notifications."""
+    try:
+        # Try paplay first (PulseAudio - most common)
+        subprocess.run(
+            ["paplay", "/usr/share/sounds/freedesktop/stereo/message.oga"],
+            capture_output=True,
+            timeout=2
+        )
+    except (subprocess.TimeoutExpired, subprocess.SubprocessError, FileNotFoundError):
+        try:
+            # Fallback to terminal beep
+            print('\a', end='', flush=True)
+        except Exception:
+            pass  # Fail silently
 
 
 def main():
@@ -114,11 +130,14 @@ def main():
             announce_notification()
 
         # Desktop notification (if --desktop flag is set and module available)
-        if args.desktop and DesktopNotification and format_notification_message:
+        if args.desktop and DesktopNotification:
             try:
                 # Check if desktop notifications are enabled
                 if os.getenv('CLAUDE_DESKTOP_NOTIFY', 'true').lower() != 'true':
                     return
+
+                # Play beep sound
+                play_beep()
 
                 notification_type = input_data.get('notification_type', 'unknown')
                 message = input_data.get('message', 'Claude Code notification')
@@ -128,6 +147,7 @@ def main():
                 # Import notification utils
                 from utils.notification import (
                     get_emoji_for_notification_type,
+                    get_friendly_title,
                     get_project_name,
                     get_session_title
                 )
@@ -141,8 +161,12 @@ def main():
 
                 # Get notification components
                 emoji = get_emoji_for_notification_type(notification_type)
+                friendly_title = get_friendly_title(notification_type)
                 project_name = get_project_name(project_path) if project_path else 'Claude'
                 session_title = get_session_title(session_id, project_path) if session_id and project_path else None
+
+                # Set CLAUDE_PROJECT_PATH for write_notification
+                os.environ['CLAUDE_PROJECT_PATH'] = project_path
 
                 # Write notification to queue
                 write_notification(
@@ -150,7 +174,7 @@ def main():
                     type=notification_type,
                     emoji=emoji,
                     priority='normal',
-                    title=f"{emoji} {notification_type}",
+                    title=f"{emoji} {friendly_title}",
                     session_title=session_title,
                     project_name=project_name,
                     metadata={
