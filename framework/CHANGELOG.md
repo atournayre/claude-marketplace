@@ -5,6 +5,19 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.1.0] - 2026-01-25
+
+### Added
+- Commande `/framework:make:all` - Génère tous les fichiers pour une entité complète (orchestrateur)
+- Commande `/framework:make:collection` - Génère classe Collection typée avec traits Atournayre
+- Commande `/framework:make:contracts` - Génère les interfaces de contrats pour une architecture Elegant Objects
+- Commande `/framework:make:entity` - Génère une entité Doctrine avec repository selon principes Elegant Objects
+- Commande `/framework:make:factory` - Génère Factory Foundry pour tests
+- Commande `/framework:make:invalide` - Génère classe Invalide (exceptions métier)
+- Commande `/framework:make:out` - Génère classe Out (DTO immuable pour output)
+- Commande `/framework:make:story` - Génère Story Foundry pour fixtures de tests
+- Commande `/framework:make:urls` - Génère classe Urls + Message CQRS + Handler
+
 ## [1.0.3] - 2026-01-24
 
 ### Changed

@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.3.0] - 2026-01-25
+
+### Added
+- Commande `/symfony:doc:load` - Charge la documentation Symfony depuis son site web dans des fichiers markdown locaux
+- Commande `/symfony:doc:question` - Interroger la documentation Symfony locale pour répondre à une question
+- Commande `/symfony:make` - Cherche si il existe un maker Symfony pour faire la tache demandée et l'utilise si il existe. Si aucun maker n'existe alors utilise la slash command /prepare
+- Commande `/symfony:symfony-framework` - Comprehensive Symfony 6.4 development skill for web applications, APIs, and microservices.
+
 ## [1.2.1] - 2026-01-24
 
 ### Changed

@@ -2,9 +2,8 @@
 name: bump
 description: Automatise les mises à jour de version des plugins avec détection automatique du type de version
 model: claude-haiku-4-5-20251001
-argument-hint: [plugin-name]
-allowed-tools: [Read, Edit, Bash, Glob, Grep, TaskCreate, TaskUpdate, TaskList]
-version: 1.0.0
+allowed-tools: [Read, Edit, Bash, Glob, Grep, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
+version: 1.0.2
 license: MIT
 hooks:
   PreToolUse:
@@ -66,25 +65,75 @@ hooks:
 
 # Bump Version Plugin
 
-Mettre à jour automatiquement la version d'un ou plusieurs plugins avec détection du type de version.
-
-## Arguments
-- `plugin-name` : Nom du plugin (optionnel, détection automatique depuis git)
-- `--major` : Forcer une version MAJOR (rare)
+Mettre à jour automatiquement la version d'un ou plusieurs plugins avec détection automatique du type de version.
 
 ## Instructions à Exécuter
 
-**IMPORTANT : Exécute ce workflow étape par étape :**
+### 0. Créer les tâches de workflow
+
+Utilise TaskCreate pour créer les tâches suivantes :
+
+1. **Détecter plugins modifiés**
+   - subject: `Détecter les plugins modifiés via git diff`
+   - activeForm: `Detecting modified plugins`
+   - description: Exécuter git diff pour identifier les plugins avec modifications
+
+2. **Sélectionner plugins à bumper**
+   - subject: `Sélectionner les plugins à bumper (vérification bumps + AskUserQuestion)`
+   - activeForm: `Selecting plugins to bump`
+   - description: Vérifier bumps du jour + demander sélection utilisateur
+
+3. **Bumper les plugins sélectionnés**
+   - subject: `Exécuter bump pour chaque plugin sélectionné`
+   - activeForm: `Bumping selected plugins`
+   - description: Détecter type version + analyser changements + mettre à jour fichiers
+
+4. **Vérifier résultat final**
+   - subject: `Vérifier que tous les fichiers sont à jour`
+   - activeForm: `Verifying final result`
+   - description: Afficher résumé avec fichiers modifiés
 
 ### 1. Identifier les plugins modifiés
 
-- Exécute `git diff --name-only HEAD` pour obtenir les fichiers modifiés (non stagés)
-- Exécute `git diff --staged --name-only` pour obtenir les fichiers stagés
-- Combine les deux listes et filtre pour extraire les noms de plugins uniques (premier répertoire du chemin)
-- **Ignore** : fichiers dans `.claude/` et fichiers à la racine (`README.md`, `CHANGELOG.md`)
-- Si un plugin-name est fourni en argument, utilise uniquement celui-ci
+Exécute les commandes suivantes en parallèle :
+- `git diff --name-only HEAD` pour les fichiers modifiés (non stagés)
+- `git diff --staged --name-only` pour les fichiers stagés
 
-### 2. Pour chaque plugin détecté, détecter le type de version
+Combine les deux listes et filtre pour extraire les noms de plugins uniques (premier répertoire du chemin).
+
+**Ignore** :
+- Fichiers dans `.claude/`
+- Fichiers à la racine (`README.md`, `CHANGELOG.md`)
+
+Pour chaque plugin, compte le nombre de fichiers modifiés.
+
+**Marque ensuite la tâche "Détecter plugins modifiés" comme `completed` avec TaskUpdate.**
+
+### 2. Vérifier les bumps existants et sélection interactive
+
+**Pour chaque plugin détecté :**
+- Lis `{plugin}/CHANGELOG.md` (premières 20 lignes)
+- Vérifie si la première version est datée d'aujourd'hui (format `## [X.Y.Z] - YYYY-MM-DD`)
+- Si oui, marque le plugin comme "⚠️ Déjà bumpé aujourd'hui"
+
+**Utilise AskUserQuestion pour demander la sélection :**
+- Question : "Quels plugins veux-tu bumper ?"
+- header : "Plugins"
+- multiSelect : true
+- Options :
+  1. "Tous les plugins modifiés ({N} plugins)" (Recommended) - Description : "Bumper automatiquement tous les plugins avec des modifications"
+  2. Pour chaque plugin : "{plugin} ({N} fichiers modifiés) {⚠️ Déjà bumpé aujourd'hui si applicable}" - Description : "Version actuelle : {version}"
+
+**Si l'utilisateur sélectionne "Tous"**, utilise tous les plugins détectés.
+**Sinon**, utilise uniquement les plugins sélectionnés individuellement.
+
+**Marque ensuite la tâche "Sélectionner plugins à bumper" comme `completed` avec TaskUpdate.**
+
+### 3. Pour chaque plugin sélectionné : bump complet
+
+**Pour chaque plugin sélectionné, exécute les sous-étapes suivantes :**
+
+#### 3.1. Détecter le type de version
 
 **Exécute :**
 - `git diff --staged --name-only --diff-filter=A` pour lister les nouveaux fichiers stagés du plugin
@@ -97,49 +146,17 @@ Mettre à jour automatiquement la version d'un ou plusieurs plugins avec détect
 
 **Détermine le type de version :**
 - Si nouveaux agents OU nouvelles commandes OU nouveaux skills OU nouveau plugin → **MINOR** (X.Y.0 → X.Y+1.0)
-- Si `--major` passé en argument → **MAJOR** (X.0.0 → X+1.0.0)
 - Sinon → **PATCH** (X.Y.Z → X.Y.Z+1)
 
-### 3. Lire la version actuelle et calculer la nouvelle version
+#### 3.2. Lire la version actuelle et calculer la nouvelle version
 
 - Lis le fichier `{plugin}/.claude-plugin/plugin.json`
 - Extrais la version actuelle (champ `version`)
 - Calcule la nouvelle version selon le type détecté :
   - PATCH : `1.2.3` → `1.2.4`
   - MINOR : `1.2.3` → `1.3.0`
-  - MAJOR : `1.2.3` → `2.0.0`
 
-### 4. Créer les tâches avec TaskCreate
-
-Utilise TaskCreate pour créer les tâches suivantes pour chaque plugin :
-
-1. **Bump version du plugin**
-   - subject: `Bump version {plugin}/.claude-plugin/plugin.json ({OLD} → {NEW})`
-   - activeForm: `Bumping version {plugin}`
-
-2. **Mettre à jour CHANGELOG du plugin**
-   - subject: `Mettre à jour {plugin}/CHANGELOG.md`
-   - activeForm: `Updating {plugin} changelog`
-
-3. **Mettre à jour README du plugin** (si nouvelles fonctionnalités)
-   - subject: `Mettre à jour {plugin}/README.md`
-   - activeForm: `Updating {plugin} readme`
-
-4. **Mettre à jour README global**
-   - subject: `Mettre à jour README.md global (tableau versions)`
-   - activeForm: `Updating global README`
-
-5. **Mettre à jour CHANGELOG global**
-   - subject: `Mettre à jour CHANGELOG.md global`
-   - activeForm: `Updating global changelog`
-
-6. **Mettre à jour marketplace.json** (si nouveau plugin)
-   - subject: `Mettre à jour .claude-plugin/marketplace.json`
-   - activeForm: `Updating marketplace.json`
-
-**Au fur et à mesure que tu complètes chaque tâche, utilise TaskUpdate pour marquer la tâche comme `completed`.**
-
-### 5. Analyser les changements pour le CHANGELOG
+#### 3.3. Analyser les changements pour le CHANGELOG
 
 **Exécute :**
 - `git diff {plugin}/` pour voir tous les changements du plugin
@@ -153,16 +170,14 @@ Utilise TaskCreate pour créer les tâches suivantes pour chaque plugin :
 
 **Lis les nouveaux fichiers** pour extraire leurs descriptions (titre, description) depuis le frontmatter YAML.
 
-### 6. Mettre à jour plugin.json
+#### 3.4. Mettre à jour plugin.json
 
 Édite `{plugin}/.claude-plugin/plugin.json` et remplace la version :
 ```json
 "version": "NOUVELLE_VERSION"
 ```
 
-**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
-
-### 7. Mettre à jour CHANGELOG du plugin
+#### 3.5. Mettre à jour CHANGELOG du plugin
 
 Lis `{plugin}/CHANGELOG.md` et ajoute **en haut** (après le titre) une nouvelle section :
 
@@ -187,27 +202,21 @@ Lis `{plugin}/CHANGELOG.md` et ajoute **en haut** (après le titre) une nouvelle
 - Supprime les sections vides (sans contenu)
 - Garde les sections dans l'ordre : Added, Changed, Fixed, Removed
 
-**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
-
-### 8. Mettre à jour README du plugin (si applicable)
+#### 3.6. Mettre à jour README du plugin (si applicable)
 
 **Si** nouveaux agents, skills ou commandes ont été ajoutés :
 - Lis `{plugin}/README.md`
 - Ajoute la documentation pour les nouvelles fonctionnalités dans la section appropriée
 - Mets à jour la section structure si nécessaire
 
-**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
-
-### 9. Mettre à jour README global
+#### 3.7. Mettre à jour README global
 
 Lis `README.md` à la racine et mets à jour la ligne du plugin dans le tableau des versions :
 ```markdown
 | ... | **{Plugin}** | NOUVELLE_VERSION |
 ```
 
-**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
-
-### 10. Mettre à jour CHANGELOG global
+#### 3.8. Mettre à jour CHANGELOG global
 
 Lis `CHANGELOG.md` à la racine.
 
@@ -235,9 +244,7 @@ Lis `CHANGELOG.md` à la racine.
     - Détails des modifications
   ```
 
-**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
-
-### 11. Mettre à jour marketplace.json (si nouveau plugin)
+#### 3.9. Mettre à jour marketplace.json (si nouveau plugin)
 
 **Si** le plugin est nouveau (n'existe pas dans `.claude-plugin/marketplace.json`) :
 - Lis `.claude-plugin/marketplace.json`
@@ -251,17 +258,15 @@ Lis `CHANGELOG.md` à la racine.
   ```
 - Ajoute aussi un lien vers le CHANGELOG dans la section "Notes de version" du `CHANGELOG.md` global
 
-**Marque ensuite la tâche correspondante comme `completed` avec TaskUpdate.**
+**Marque ensuite la tâche "Bumper les plugins sélectionnés" comme `completed` avec TaskUpdate.**
 
-### 12. Vérification et résumé final
+### 4. Vérification et résumé final
 
-**Vérifie avec TaskList que toutes les tâches sont marquées comme `completed`.**
-
-Affiche un résumé avec :
+Affiche un résumé pour chaque plugin bumpé :
 ```
 ✅ Plugin {plugin} : v{OLD} → v{NEW} ({TYPE})
 
-Type détecté : {PATCH|MINOR|MAJOR}
+Type détecté : {PATCH|MINOR}
 Raison : {nouveaux agents|nouvelles commandes|modifications|...}
 
 Fichiers modifiés :
@@ -272,16 +277,15 @@ Fichiers modifiés :
 - CHANGELOG.md
 - .claude-plugin/marketplace.json (si nouveau)
 
-✅ Toutes les tâches complétées
-
 Prochaine étape : /git:commit
 ```
+
+**Marque ensuite la tâche "Vérifier résultat final" comme `completed` avec TaskUpdate.**
 
 ## Règles de versioning
 
 - **MINOR** (X.Y.0 → X.Y+1.0) : Nouveaux agents, skills, commandes, ou nouveau plugin
 - **PATCH** (X.Y.Z → X.Y.Z+1) : Modifications, corrections, refactoring, documentation
-- **MAJOR** (X.0.0 → X+1.0.0) : Uniquement si `--major` passé en argument (breaking changes)
 
 ## Relevant Files
 - @.claude-plugin/marketplace.json

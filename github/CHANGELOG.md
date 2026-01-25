@@ -5,6 +5,12 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.3.0] - 2026-01-25
+
+### Added
+- Commande `/github:fix` - Corriger une issue GitHub avec workflow simplifié et efficace
+- Commande `/github:github-impact` - Génère automatiquement deux rapports d'impact (métier et technique) pour une PR GitHub et les intègre dans la description.
+
 ## [1.2.2] - 2026-01-24
 
 ### Changed

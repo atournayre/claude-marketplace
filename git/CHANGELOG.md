@@ -5,6 +5,18 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.10.0] - 2026-01-25
+
+### Added
+- Commande `/git:branch` - Création de branche Git avec workflow structuré
+- Commande `/git:commit` - Créer des commits bien formatés avec format conventional et emoji
+- Commande `/git:conflit` - Analyse les conflits git et propose à l'utilisateur une résolution pas à pas avec validation de chaque étape.
+- Commande `/git:git-cd-pr` - Crée une Pull Request en mode Continuous Delivery avec workflow complet : QA, labels version (major/minor/patch), feature flags, code review automatique.
+- Commande `/git:git-pr-core` - Skill interne fournissant les scripts communs pour la création de Pull Requests. Ne pas appeler directement - utilisé par git-pr et git-cd-pr.
+- Commande `/git:git-pr` - Crée une Pull Request GitHub standard avec workflow complet : QA, commits, assignation milestone/projet, code review automatique.
+- Commande `/git:release-notes` - Génère des notes de release HTML orientées utilisateurs finaux. Transforme les commits techniques en descriptions accessibles sans jargon.
+- Commande `/git:release-report` - Génère un rapport HTML d'analyse d'impact entre deux branches
+
 ## [1.9.2] - 2026-01-24
 
 ### Changed

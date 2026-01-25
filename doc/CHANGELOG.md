@@ -5,6 +5,14 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.6.0] - 2026-01-25
+
+### Added
+- Commande `/doc:adr` - Génère un Architecture Decision Record (ADR) formaté et structuré
+- Commande `/doc:doc-loader` - Charge la documentation d'un framework depuis son site web dans des fichiers markdown locaux. Supporte Symfony, API Platform, Meilisearch, atournayre-framework et Claude Code.
+- Commande `/doc:rtfm` - Lit la documentation technique - RTFM (Read The Fucking Manual)
+- Commande `/doc:update` - Crées la documentation pour la fonctionnalité en cours. Mets à jour le readme global du projet si nécessaire. Lie les documents entre eux pour ne pas avoir de documentation orpheline. La documentation est générée dans les répertoire de documentation du projet.
+
 ## [1.5.1] - 2026-01-24
 
 ### Changed

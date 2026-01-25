@@ -2,6 +2,11 @@
 
 Tous les changements notables de ce projet sont documentés dans ce fichier.
 
+## [1.2.0] - 2026-01-25
+
+### Added
+- Commande `/marketing:linkedin` - Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace
+
 ## [1.1.1] - 2026-01-24
 
 ### Changed

@@ -5,6 +5,33 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.4.0] - 2026-01-25
+
+### Added
+- Commande `/dev:auto:check-prerequisites` - Vérifier tous les prérequis - Mode AUTO (Phase -1)
+- Commande `/dev:auto:clarify` - Lever ambiguités avec heuristiques automatiques (Phase 3)
+- Commande `/dev:auto:code` - Implémenter selon le plan - Mode AUTO (Phase 6)
+- Commande `/dev:auto:design` - Choisir architecture automatiquement (Phase 4)
+- Commande `/dev:auto:discover` - Comprendre le besoin avant développement - Mode AUTO (Phase 0)
+- Commande `/dev:auto:explore` - Explorer le codebase automatiquement - Mode AUTO (Phase 2)
+- Commande `/dev:auto:feature` - Workflow complet de développement automatisé (mode non-interactif)
+- Commande `/dev:auto:fetch-issue` - Récupérer le contenu d'une issue GitHub - Mode AUTO (Phase 0)
+- Commande `/dev:auto:plan` - Générer plan d'implémentation automatiquement - Mode AUTO (Phase 5)
+- Commande `/dev:auto:review` - Review avec auto-fix automatique - Mode AUTO (Phase 7)
+- Commande `/dev:clarify` - Poser questions pour lever ambiguités (Phase 2)
+- Commande `/dev:code` - Implémenter selon le plan (Phase 5)
+- Commande `/dev:debug` - Analyser et résoudre une erreur (message simple ou stack trace)
+- Commande `/dev:design` - Designer 2-3 approches architecturales (Phase 3)
+- Commande `/dev:discover` - Comprendre le besoin avant développement (Phase 0)
+- Commande `/dev:explore` - Explorer le codebase avec agents parallèles (Phase 1)
+- Commande `/dev:feature` - Workflow complet de développement de feature
+- Commande `/dev:log` - Ajoute des fonctionnalités de log au fichier en cours
+- Commande `/dev:plan` - Générer plan d'implémentation dans docs/specs/ (Phase 4)
+- Commande `/dev:review` - Review qualité complète - PHPStan + Elegant Objects + code review (Phase 6)
+- Commande `/dev:status` - Affiche le workflow et l'étape courante
+- Commande `/dev:summary` - Résumé de ce qui a été construit (Phase 7)
+- Commande `/dev:worktree` - Gestion des git worktrees pour développement parallèle
+
 ## [2.3.3] - 2026-01-24
 
 ### Changed

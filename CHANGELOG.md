@@ -23,6 +23,43 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ### Plugins Removed
 - **output-styles v1.0.0** - Supprimé (migration vers mécanisme natif `~/.claude/output-styles/`)
 
+## [2026.01.25] - 2026-01-25
+
+### Plugins Updated
+- **claude v1.2.0** - Migration commands → skills complète
+  - 5 nouveaux skills : `alias:add`, `challenge`, `doc:load`, `doc:question`, `make:command`
+  - Dépôt : [claude/CHANGELOG.md](claude/CHANGELOG.md)
+- **dev v2.4.0** - Migration commands → skills complète
+  - 23 nouveaux skills (incluant 10 auto:*)
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+- **doc v1.6.0** - Migration commands → skills complète
+  - 4 nouveaux skills : `adr`, `doc-loader`, `rtfm`, `update`
+  - Dépôt : [doc/CHANGELOG.md](doc/CHANGELOG.md)
+- **framework v1.1.0** - Migration commands → skills complète
+  - 9 nouveaux skills : `make:all`, `make:collection`, `make:contracts`, `make:entity`, `make:factory`, `make:invalide`, `make:out`, `make:story`, `make:urls`
+  - Dépôt : [framework/CHANGELOG.md](framework/CHANGELOG.md)
+- **gemini v1.4.0** - Migration commands → skills complète
+  - 3 nouveaux skills : `analyze`, `search`, `think`
+  - Dépôt : [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
+- **git v1.10.0** - Migration commands → skills complète
+  - 8 nouveaux skills : `branch`, `commit`, `conflit`, `git-cd-pr`, `git-pr-core`, `git-pr`, `release-notes`, `release-report`
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+- **github v1.3.0** - Migration commands → skills complète
+  - 2 nouveaux skills : `fix`, `github-impact`
+  - Dépôt : [github/CHANGELOG.md](github/CHANGELOG.md)
+- **marketing v1.2.0** - Migration commands → skills complète
+  - 1 nouveau skill : `linkedin`
+  - Dépôt : [marketing/CHANGELOG.md](marketing/CHANGELOG.md)
+- **prompt v1.1.0** - Nouveau plugin générateur de prompts
+  - 7 nouveaux skills : `architecture`, `configuration`, `feature`, `generic`, `refactoring`, `webhook`, `workflow`
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+- **qa v1.3.0** - Migration commands → skills complète
+  - 2 nouveaux skills : `elegant-objects`, `phpstan-resolver`
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+- **symfony v1.3.0** - Migration commands → skills complète
+  - 4 nouveaux skills : `doc:load`, `doc:question`, `make`, `symfony-framework`
+  - Dépôt : [symfony/CHANGELOG.md](symfony/CHANGELOG.md)
+
 ## [2026.01.24.2] - 2026-01-24
 
 ### Plugins Updated

@@ -5,6 +5,12 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.3.0] - 2026-01-25
+
+### Added
+- Commande `/qa:elegant-objects` - Vérifie la conformité du code PHP aux principes Elegant Objects de Yegor Bugayenko. Analyse un fichier spécifique ou tous les fichiers modifiés dans la branche.
+- Commande `/qa:phpstan-resolver` - Résout automatiquement les erreurs PHPStan en analysant et corrigeant les problèmes de types. Boucle jusqu'à zéro erreur ou stagnation.
+
 ## [1.2.5] - 2026-01-24
 
 ### Changed

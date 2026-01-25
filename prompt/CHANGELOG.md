@@ -5,6 +5,17 @@ Toutes les modifications notables de ce plugin seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
+## [1.1.0] - 2026-01-25
+
+### Added
+- Commande `/prompt:architecture` - Génère un prompt pour architecture et infrastructure (decorators, cache, patterns)
+- Commande `/prompt:configuration` - Génère un prompt pour configuration et feature flags
+- Commande `/prompt:feature` - Génère un prompt pour une nouvelle feature métier basé sur les patterns DDD/CQRS
+- Commande `/prompt:generic` - Génère un prompt générique personnalisable pour toute tâche
+- Commande `/prompt:refactoring` - Génère un prompt pour refactoring et optimisation de code existant
+- Commande `/prompt:webhook` - Génère un prompt pour intégration webhook avec services tiers
+- Commande `/prompt:workflow` - Génère un prompt pour workflow GitHub Actions et CI/CD
+
 ## [1.0.0] - 2026-01-21
 
 ### Added

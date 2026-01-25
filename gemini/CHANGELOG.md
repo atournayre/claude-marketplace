@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0] - 2026-01-25
+
+### Added
+- Commande `/gemini:analyze` - Analyse une codebase ou documentation avec Gemini (1M tokens)
+- Commande `/gemini:search` - Recherche temps réel via Google Search intégré à Gemini
+- Commande `/gemini:think` - Délègue un problème complexe à Gemini Deep Think
+
 ## [1.3.0] - 2026-01-22
 
 ### Changed
