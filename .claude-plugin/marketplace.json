@@ -64,6 +64,11 @@
       "name": "marketing",
       "source": "./marketing",
       "description": "Génération de contenu marketing : posts LinkedIn, annonces, communications"
+    },
+    {
+      "name": "prompt",
+      "source": "./prompt",
+      "description": "Générateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture"
     }
   ]
 }
