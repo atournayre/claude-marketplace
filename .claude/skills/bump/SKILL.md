@@ -258,6 +258,24 @@ Lis `CHANGELOG.md` à la racine.
   ```
 - Ajoute aussi un lien vers le CHANGELOG dans la section "Notes de version" du `CHANGELOG.md` global
 
+#### 3.10. Synchroniser README.md et marketplace.json
+
+Après avoir traité tous les plugins, vérifie la cohérence entre `README.md` et `.claude-plugin/marketplace.json` :
+
+**Étapes :**
+1. Extrais la liste des plugins depuis `README.md` (tableau "Plugins Disponibles")
+2. Extrais la liste des plugins depuis `.claude-plugin/marketplace.json`
+3. Identifie les différences :
+   - Plugins dans README mais pas dans marketplace.json → ajouter au marketplace.json
+   - Plugins dans marketplace.json mais pas dans README → ajouter au README
+4. Pour chaque plugin manquant :
+   - Dans marketplace.json : ajoute une entrée avec name, source, description (extraite du README)
+   - Dans README : ajoute une ligne dans le tableau (extraire version depuis `{plugin}/.claude-plugin/plugin.json`)
+
+**Règles d'ordre :**
+- marketplace.json : ordre alphabétique par `name`
+- README.md : ordre alphabétique par nom de plugin
+
 **Marque ensuite la tâche "Bumper les plugins sélectionnés" comme `completed` avec TaskUpdate.**
 
 ### 4. Vérification et résumé final
