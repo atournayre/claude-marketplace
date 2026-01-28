@@ -7,6 +7,17 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.01.28] - 2026-01-28
+
+### Plugins Updated
+- **prompt v1.3.0** - Nouvelle skill de transformation de prompts en prompts exécutables
+  - Nouvelle skill `prompt:transform` pour transformer un prompt quelconque en prompt exécutable
+  - Compatible avec le Task Management System (TaskCreate/TaskUpdate/TaskList)
+  - Support de fichiers et texte en entrée
+  - Génération de fichiers dans `.claude/prompts/` du projet utilisateur
+  - Bump MINOR : nouvelle fonctionnalité (skill)
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+
 ## [2026.01.26.1] - 2026-01-26
 
 ### Plugins Updated

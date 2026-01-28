@@ -5,6 +5,24 @@ Toutes les modifications notables de ce plugin seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
+## [1.3.0] - 2026-01-28
+
+### Added
+- Nouvelle skill `prompt:transform` - Transforme un prompt quelconque en prompt exécutable
+  - Compatible avec le Task Management System (TaskCreate/TaskUpdate/TaskList)
+  - Analyse et structure les tâches avec content et activeForm
+  - Génère des prompts avec phases d'exécution numérotées
+  - Écrit les fichiers dans `.claude/prompts/` du projet utilisateur
+
+### Changed
+- Plugin description mise à jour pour inclure les capacités de transformation de prompts
+- Keywords étendus avec : `transform`, `executable`, `todowrite`
+
+## [1.2.0] - 2026-01-26
+
+### Changed
+- Intégration du plugin prompt dans le plugin centralisé `command` (workaround issue #15178)
+
 ## [1.1.1] - 2026-01-26
 
 ### Removed
