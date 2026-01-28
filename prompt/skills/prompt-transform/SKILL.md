@@ -1,6 +1,6 @@
 ---
 name: prompt:transform
-description: Transforme un prompt en prompt exécutable compatible avec le Task Management System (TodoWrite)
+description: Transforme un prompt en prompt exécutable compatible avec le Task Management System (TaskCreate/TaskUpdate/TaskList)
 license: MIT
 version: 1.0.0
 allowed-tools: [Read, Write, Bash, AskUserQuestion, Glob]
@@ -12,33 +12,39 @@ Tu es un spécialiste de la transformation de prompts en prompts exécutables co
 
 ## Objectif
 
-Transformer un prompt quelconque (texte libre ou fichier) en un prompt structuré et exécutable, avec des tâches clairement définies pour le système TodoWrite.
+Transformer un prompt quelconque (texte libre ou fichier) en un prompt structuré et exécutable, avec des tâches clairement définies pour le Task Management System (`TaskCreate`, `TaskUpdate`, `TaskList`).
 
 ## Concepts Clés
 
 ### Prompt Exécutable
 
 Un prompt exécutable est un prompt qui :
-- Contient une liste de tâches numérotées et claires
-- Définit chaque tâche avec un statut (pending, in_progress, completed)
-- Fournit pour chaque tâche un `content` (impératif) et un `activeForm` (participe présent)
+- Contient une liste de tâches numérotées (#0, #1, #2, ...)
+- Définit chaque tâche avec un `content` (description) et un `activeForm` (forme continue)
 - Structure le travail en phases progressives
+- Utilise `TaskUpdate` pour suivre la progression (pending → in_progress → completed)
 - Inclut des critères de validation pour chaque tâche
 
 ### Task Management System
 
-Le système utilise l'outil `TodoWrite` avec ce format :
+Le système utilise trois outils :
 
-```json
-{
-  "todos": [
-    {
-      "content": "Créer le fichier de configuration",
-      "status": "pending",
-      "activeForm": "Création du fichier de configuration"
-    }
-  ]
-}
+**1. TaskCreate** - Créer une tâche :
+```
+TaskCreate #0: Vérifier les prérequis
+  content: "Vérifier les prérequis"
+  activeForm: "Vérification des prérequis"
+```
+
+**2. TaskUpdate** - Mettre à jour le statut :
+```
+TaskUpdate #0 → in_progress
+TaskUpdate #0 → completed
+```
+
+**3. TaskList** - Afficher la progression :
+```
+TaskList
 ```
 
 ## Workflow
@@ -70,12 +76,12 @@ Analyser le contenu pour identifier :
 
 ### 3. Structurer en Tâches Exécutables
 
-Transformer le prompt en liste de tâches avec :
+Transformer le prompt en liste de tâches numérotées :
 
 **Pour chaque tâche** :
-- `content` : Description impérative de la tâche (ex: "Créer le fichier X")
+- `#N` : Numéro de la tâche (commence à 0)
+- `content` : Description de la tâche (ex: "Créer le fichier X")
 - `activeForm` : Forme continue pour affichage (ex: "Création du fichier X")
-- `status` : Toujours "pending" initialement
 - Critères de validation
 - Dépendances (si applicable)
 
@@ -84,19 +90,20 @@ Transformer le prompt en liste de tâches avec :
 ```markdown
 ## Tâches
 
-### Initialisation
-| # | Tâche | activeForm | Validation |
-|---|-------|------------|------------|
-| 1 | Vérifier les prérequis | Vérification des prérequis | Tous les outils disponibles |
+### Phase 1 : Initialisation
+| # | content | activeForm | Validation |
+|---|---------|------------|------------|
+| 0 | Vérifier les prérequis | Vérification des prérequis | Tous les outils disponibles |
 
-### Implémentation
-| # | Tâche | activeForm | Validation |
-|---|-------|------------|------------|
-| 2 | Créer le composant X | Création du composant X | Fichier existe + tests passent |
+### Phase 2 : Implémentation
+| # | content | activeForm | Validation |
+|---|---------|------------|------------|
+| 1 | Créer le composant X | Création du composant X | Fichier existe |
+| 2 | Implémenter la logique | Implémentation de la logique | Tests passent |
 
-### Finalisation
-| # | Tâche | activeForm | Validation |
-|---|-------|------------|------------|
+### Phase 3 : Finalisation
+| # | content | activeForm | Validation |
+|---|---------|------------|------------|
 | 3 | Valider l'implémentation | Validation de l'implémentation | Tous les tests passent |
 ```
 
@@ -110,35 +117,57 @@ Le prompt transformé doit inclure :
 ## Objectif
 [Description claire de l'objectif]
 
-## TodoWrite - Tâches Initiales
+## Initialisation des Tâches
 
-Utiliser l'outil `TodoWrite` avec les tâches suivantes :
+Créer toutes les tâches avec `TaskCreate` :
 
-\`\`\`json
-{
-  "todos": [
-    {"content": "Tâche 1", "status": "pending", "activeForm": "Réalisation tâche 1"},
-    {"content": "Tâche 2", "status": "pending", "activeForm": "Réalisation tâche 2"},
-    ...
-  ]
-}
+\`\`\`
+TaskCreate #0: [Nom tâche 0]
+  content: "[Description impérative]"
+  activeForm: "[Forme continue]"
+
+TaskCreate #1: [Nom tâche 1]
+  content: "[Description impérative]"
+  activeForm: "[Forme continue]"
+
+TaskCreate #2: [Nom tâche 2]
+  content: "[Description impérative]"
+  activeForm: "[Forme continue]"
 \`\`\`
 
 ## Instructions d'Exécution
 
-### Phase 1 : [Nom]
-1. Marquer la tâche 1 comme `in_progress`
+### Phase 1 : [Nom de la phase]
+
+**Tâche #0 : [Nom]**
+1. `TaskUpdate #0 → in_progress`
 2. [Instructions détaillées]
-3. Marquer la tâche 1 comme `completed`
+3. [Critères de validation]
+4. `TaskUpdate #0 → completed`
 
-### Phase 2 : [Nom]
-...
+### Phase 2 : [Nom de la phase]
 
-## Critères de Validation
+**Tâche #1 : [Nom]**
+1. `TaskUpdate #1 → in_progress`
+2. [Instructions détaillées]
+3. [Critères de validation]
+4. `TaskUpdate #1 → completed`
+
+**Tâche #2 : [Nom]**
+1. `TaskUpdate #2 → in_progress`
+2. [Instructions détaillées]
+3. [Critères de validation]
+4. `TaskUpdate #2 → completed`
+
+## Affichage de la Progression
+
+Utiliser `TaskList` pour afficher l'état des tâches à tout moment.
+
+## Critères de Validation Globaux
 
 - [ ] Critère 1
 - [ ] Critère 2
-- [ ] Tous les todos marqués completed
+- [ ] Toutes les tâches marquées completed (vérifier avec TaskList)
 ```
 
 ### 5. Créer le Répertoire de Sortie
@@ -154,7 +183,7 @@ mkdir -p .claude/prompts
 
 Le `{name}` provient de :
 1. L'argument `--name=XXX` si fourni
-2. Sinon, extrait du titre/objectif du prompt source
+2. Sinon, extrait du titre/objectif du prompt source (en kebab-case)
 3. Sinon, utiliser "prompt"
 
 Le `{timestamp}` est au format `YYYYMMDD-HHMMSS`.
@@ -192,12 +221,107 @@ Créer un système d'authentification avec login, logout et gestion de session.
 Utiliser JWT pour les tokens. Ajouter des tests.
 ```
 
-**Sortie** :
+**Sortie générée** (.claude/prompts/executable-user-auth-20260128-143022.md) :
+
+```markdown
+# Système d'authentification JWT
+
+## Objectif
+Implémenter un système d'authentification complet avec login, logout, gestion de session et tokens JWT.
+
+## Initialisation des Tâches
+
+Créer toutes les tâches avec `TaskCreate` :
+
+TaskCreate #0: Prérequis - Installer dépendances JWT
+  content: "Installer les dépendances JWT"
+  activeForm: "Installation des dépendances JWT"
+
+TaskCreate #1: Auth - Implémenter le login
+  content: "Implémenter le endpoint login"
+  activeForm: "Implémentation du endpoint login"
+
+TaskCreate #2: Auth - Implémenter le logout
+  content: "Implémenter le endpoint logout"
+  activeForm: "Implémentation du endpoint logout"
+
+TaskCreate #3: Session - Gérer les sessions
+  content: "Implémenter la gestion de session"
+  activeForm: "Implémentation de la gestion de session"
+
+TaskCreate #4: Tests - Écrire les tests
+  content: "Écrire les tests unitaires et d'intégration"
+  activeForm: "Écriture des tests"
+
+TaskCreate #5: Validation - Valider l'implémentation
+  content: "Valider l'implémentation complète"
+  activeForm: "Validation de l'implémentation"
+
+## Instructions d'Exécution
+
+### Phase 1 : Prérequis
+
+**Tâche #0 : Installer dépendances JWT**
+1. TaskUpdate #0 → in_progress
+2. Installer le package JWT (ex: composer require firebase/php-jwt)
+3. Vérifier l'installation
+4. TaskUpdate #0 → completed
+
+### Phase 2 : Implémentation
+
+**Tâche #1 : Implémenter le login**
+1. TaskUpdate #1 → in_progress
+2. Créer le controller/service de login
+3. Valider les credentials et générer le JWT
+4. TaskUpdate #1 → completed
+
+**Tâche #2 : Implémenter le logout**
+1. TaskUpdate #2 → in_progress
+2. Créer le endpoint de logout
+3. Invalider le token/session
+4. TaskUpdate #2 → completed
+
+**Tâche #3 : Gérer les sessions**
+1. TaskUpdate #3 → in_progress
+2. Implémenter le stockage de session
+3. Gérer l'expiration des tokens
+4. TaskUpdate #3 → completed
+
+### Phase 3 : Tests
+
+**Tâche #4 : Écrire les tests**
+1. TaskUpdate #4 → in_progress
+2. Tests unitaires pour chaque composant
+3. Tests d'intégration du flux complet
+4. TaskUpdate #4 → completed
+
+### Phase 4 : Validation
+
+**Tâche #5 : Valider l'implémentation**
+1. TaskUpdate #5 → in_progress
+2. Exécuter tous les tests
+3. Vérifier le coverage
+4. TaskUpdate #5 → completed
+
+## Affichage de la Progression
+
+Utiliser `TaskList` pour afficher l'état des tâches à tout moment.
+
+## Critères de Validation Globaux
+
+- [ ] Login fonctionnel avec génération JWT
+- [ ] Logout avec invalidation token
+- [ ] Sessions gérées correctement
+- [ ] Tests passent à 100%
+- [ ] Toutes les tâches completed (TaskList)
+```
+
+**Affichage console** :
 ```
 .claude/prompts/executable-user-auth-20260128-143022.md
 
 Tâches extraites : 6
-Phases : 3
+Phases : 4
 ```
 
 ### Exemple 2 : Depuis du texte
@@ -210,8 +334,8 @@ Phases : 3
 ```
 .claude/prompts/executable-payment-gateway-20260128-143522.md
 
-Tâches extraites : 4
-Phases : 2
+Tâches extraites : 5
+Phases : 3
 ```
 
 ### Exemple 3 : Mode interactif
@@ -230,6 +354,7 @@ Demande le prompt via `AskUserQuestion`, puis génère le fichier.
 2. **Atomicité** : Une tâche = une action claire
 3. **Vérifiabilité** : Chaque tâche a un critère de validation
 4. **Ordonnancement** : Les tâches respectent les dépendances
+5. **Numérotation** : Toujours commencer à #0
 
 ### Formulation
 
@@ -240,6 +365,7 @@ Demande le prompt via `AskUserQuestion`, puis génère le fichier.
 | Test | Écrire les tests pour Z | Écriture des tests pour Z |
 | Validation | Valider le comportement | Validation du comportement |
 | Documentation | Documenter l'API | Documentation de l'API |
+| Installation | Installer les dépendances | Installation des dépendances |
 
 ### Phases Standard
 
@@ -259,8 +385,10 @@ Demande le prompt via `AskUserQuestion`, puis génère le fichier.
 ## Standards Qualité
 
 Le prompt transformé DOIT :
-- Contenir minimum 3 tâches
+- Contenir minimum 3 tâches (numérotées #0, #1, #2, ...)
 - Avoir au moins 2 phases
-- Inclure le JSON TodoWrite complet
+- Inclure tous les TaskCreate avec content et activeForm
+- Inclure les TaskUpdate pour chaque tâche (in_progress puis completed)
+- Mentionner TaskList pour le suivi
 - Fournir des critères de validation
 - Ne contenir aucune variable `{...}` non substituée
