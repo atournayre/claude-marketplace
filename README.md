@@ -15,7 +15,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📚 **Doc** | 1.6.1 | Documentation : ADR, RTFM, génération docs, framework docs + 3 skills | [README](doc/README.md) |
 | 🏗️ **Framework** | 1.1.1 | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
 | 🔮 **Gemini** | 1.4.1 | Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search + 3 skills | [README](gemini/README.md) |
-| 🔧 **Git** | 1.10.2 | Workflow Git complet : branches, commits, conflits, PR avec automation + 4 skills | [README](git/README.md) |
+| 🔧 **Git** | 1.11.0 | Workflow Git complet : branches, commits, conflits, PR, fix-pr-comments + auto-push | [README](git/README.md) |
 | 🐙 **GitHub** | 1.3.1 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
 | 📱 **Marketing** | 1.2.1 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
 | 🎭 **MLVN** | 1.0.0 | AIBlueprint by Melvynx : agents spécialisés, workflows autonomes (Ralph Loop), hooks sécurité, skills Git/Meta/Utils | [README](mlvn/README.md) |

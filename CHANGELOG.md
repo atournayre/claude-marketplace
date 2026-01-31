@@ -10,6 +10,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [2026.01.31] - 2026-01-31
 
 ### Plugins Updated
+- **git v1.11.0** - Nouveau skill fix-pr-comments + clarification auto-push
+  - Nouveau skill `/fix-pr-comments` : implémente systématiquement TOUS les commentaires de review PR
+  - Batched MultiEdit pour efficacité (same-file modifications)
+  - Auto-commit + auto-push avec checklist progression
+  - Clarification documentation `/git:commit` : auto-push déjà activé par défaut (flag `--no-push` pour désactiver)
+  - Migration depuis mlvn plugin (AIBlueprint v1.0.0)
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 - **claude v1.3.0** - Intégration skills mlvn (skill-creator, memory, make-subagent)
   - Nouveau skill `/skill-creator` : créateur complet avec progressive disclosure, bundled resources, scripts TypeScript
   - Nouveau skill `/memory` : gestion CLAUDE.md 4-level hierarchy (global, workspace, package, directory)
