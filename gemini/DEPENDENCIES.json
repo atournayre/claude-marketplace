@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "critical": {
+    "gcloud": {
+      "version": "*",
+      "description": "Google Cloud CLI pour authentification Gemini API"
+    }
+  },
+  "optional": {},
+  "packages": {}
+}

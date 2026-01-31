@@ -1,0 +1,18 @@
+{
+  "name": "@marketplace/plugin-name",
+  "version": "1.0.0",
+  "description": "Description du plugin",
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "lint": "biome check --write .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.2",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

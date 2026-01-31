@@ -5,6 +5,34 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [2.5.0] - 2026-01-31
+
+### Added
+- **Skill `/oneshot`** - Implémentation ultra-rapide (speed > completeness)
+  - Workflow minimal : Explore (minimal) → Code (main) → Test (validate)
+  - Philosophy : Ship fast, iterate later
+  - Contraintes strictes : ONE task, NO refactoring, NO tangents
+  - Validation simple : lint + typecheck uniquement
+  - Idéal pour : petits fixes, single tasks, prototypes rapides
+  - Migré depuis mlvn plugin (AIBlueprint v1.0.0)
+
+- **Skill `/ralph`** (setup-ralph) - Setup Ralph autonomous coding loop
+  - Alternative à `/dev:auto:feature` pour workflows autonomes
+  - Workflow : PRD interactif → user stories → ralph.sh loop
+  - Setup ONLY : ne lance jamais le loop automatiquement
+  - Structure complète : scripts/setup.sh + steps/ (4 étapes)
+  - Accumulation learnings entre iterations
+  - Migré depuis mlvn plugin (AIBlueprint v1.0.0)
+
+### Changed
+- **Skill `/dev:review`** - Ajout Examine step (adversarial review) ⭐
+  - Nouvelle tâche #5 : Examine (challenge decisions, edge cases)
+  - Questions adversariales : edge cases, limites, sécurité, performance, concurrence
+  - Focus : chercher ce qui **pourrait casser** en production
+  - Identifier hypothèses non validées
+  - Challenger décisions d'architecture
+  - TaskManagement : 5 tâches au lieu de 4 (examine bloquée par consolidation)
+
 ## [2.4.1] - 2026-01-26
 
 ### Removed

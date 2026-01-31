@@ -271,6 +271,316 @@ Après avoir traité tous les plugins, vérifie la cohérence entre `README.md` 
 - marketplace.json : ordre alphabétique par `name`
 - README.md : ordre alphabétique par nom de plugin
 
+#### 3.11. Mettre à jour DEPENDENCIES.json et init-marketplace.md
+
+Pour chaque plugin bumpé, utilise ou crée `DEPENDENCIES.json` puis mets à jour la section AUTO-GENERATED dans `.claude/commands/init-marketplace.md` :
+
+**Étapes :**
+
+1. **Vérifier si DEPENDENCIES.json existe**
+
+   ```bash
+   # Vérifier l'existence du fichier
+   if [ -f {plugin}/DEPENDENCIES.json ]; then
+     # Fichier existe → passer à l'étape 2
+   else
+     # Fichier n'existe pas → scanner le plugin (étape 1.1)
+   fi
+   ```
+
+1.1. **Scanner le plugin pour détecter les dépendances** (si DEPENDENCIES.json n'existe pas)
+
+   Utilise Grep et Read pour analyser tous les fichiers du plugin :
+
+   **a) Détecter les commandes système dans les skills/agents**
+   ```bash
+   # Scanner tous les fichiers SKILL.md et agents/*.md
+   grep -rh "allowed-tools:" {plugin}/skills/*/SKILL.md {plugin}/agents/*.md 2>/dev/null
+
+   # Exemples de patterns à chercher :
+   # - Bash(git :*) → dépendance `git`
+   # - Bash(gh :*) → dépendance `gh`
+   # - Bash(npm :*) → dépendance `npm`
+   # - Bash(pnpm :*) → dépendance `pnpm`
+   # - Bash(bun :*) → dépendance `bun`
+   # - Bash(php :*) → dépendance `php`
+   # - Bash(composer :*) → dépendance `composer`
+   ```
+
+   **b) Détecter les commandes dans les scripts**
+   ```bash
+   # Scanner tous les types de scripts courants
+   find {plugin}/scripts -type f \( \
+     -name "*.ts" -o -name "*.js" -o -name "*.sh" -o \
+     -name "*.py" -o -name "*.rb" -o -name "*.pl" -o \
+     -name "*.php" \
+   \) 2>/dev/null | head -20
+
+   # Vérifier les shebangs pour détecter le runtime/interpréteur
+   find {plugin}/scripts -type f -exec head -1 {} \; 2>/dev/null | grep "^#!"
+
+   # Mapping shebang → dépendance :
+   # #!/usr/bin/env bun → dépendance `bun`
+   # #!/usr/bin/env node → dépendance `node`
+   # #!/usr/bin/env python3 → dépendance `python3`
+   # #!/usr/bin/env python → dépendance `python`
+   # #!/usr/bin/env ruby → dépendance `ruby`
+   # #!/usr/bin/env perl → dépendance `perl`
+   # #!/usr/bin/env php → dépendance `php`
+   # #!/bin/bash → dépendance `bash`
+   # #!/bin/sh → dépendance `sh`
+   ```
+
+   **c) Détecter les packages NPM**
+   ```bash
+   # Chercher tous les package.json dans le plugin
+   find {plugin} -name "package.json" -type f
+
+   # Pour chaque package.json trouvé, extraire :
+   # - dependencies
+   # - devDependencies
+   # - peerDependencies
+   ```
+
+   **d) Détecter les dépendances dans les hooks**
+   ```bash
+   # Scanner hooks.json s'il existe
+   grep -h "command.*bun\|command.*node\|command.*npm" {plugin}/hooks/hooks.json 2>/dev/null
+   ```
+
+   **e) Scanner le contenu des fichiers pour mentions explicites**
+   ```bash
+   # Chercher des patterns dans tous les .md du plugin
+   grep -rh "npm install\|bun install\|composer require\|apt install\|brew install" {plugin}/*.md 2>/dev/null
+   ```
+
+2. **Extraire et classifier les dépendances**
+
+   Pour chaque dépendance détectée :
+
+   **Dépendances critiques** :
+   - Commandes utilisées dans `allowed-tools` de plusieurs skills
+   - Runtime détecté dans les shebangs de scripts
+   - Commandes mentionnées dans hooks
+   - Sans ces dépendances, le plugin est non fonctionnel ou très limité
+
+   **Dépendances optionnelles** :
+   - Commandes utilisées par un seul skill/agent
+   - Commandes marquées comme "optionnel" dans la documentation
+   - Fonctionnalités secondaires
+
+   **Packages NPM** :
+   - Extraire de tous les package.json trouvés
+   - Distinguer dependencies, devDependencies, peerDependencies
+   - Garder les versions spécifiées (^, ~, >=, etc.)
+
+   **Versions minimales** :
+   - Chercher des patterns comme `>= X.Y.Z` dans les commentaires
+   - Chercher dans plugin.json s'il y a un champ `engines` ou `requirements`
+
+3. **Déduire les informations contextuelles**
+
+   Pour améliorer la documentation, ajouter automatiquement les dépendances implicites :
+
+   **Dépendances implicites système** :
+   - Si `bun` détecté → ajouter `node` >= 16.0.0 (prérequis de Bun)
+   - Si `composer` détecté → ajouter `php` si pas déjà listé
+   - Si `npm` ou `pnpm` détecté → ajouter `node` si pas déjà listé
+   - Si `pip` détecté → ajouter `python` si pas déjà listé
+   - Si `gem` détecté → ajouter `ruby` si pas déjà listé
+
+   **Dépendances implicites packages** :
+   - Si scripts TypeScript (*.ts) → ajouter `typescript` dans packages NPM si absent
+   - Si scripts Python avec imports → extraire via `grep "^import\|^from"` pour détecter modules
+   - Si Makefile détecté → ajouter `make` dans dépendances
+   - Si Dockerfile détecté → ajouter `docker` dans dépendances optionnelles
+
+1.2. **Créer ou mettre à jour DEPENDENCIES.json**
+
+   **Si le fichier n'existe pas** (résultat du scan en 1.1) :
+
+   Créer `{plugin}/DEPENDENCIES.json` avec le format suivant :
+
+   ```json
+   {
+     "version": "1.0",
+     "critical": {
+       "commande": {
+         "version": ">=X.Y.Z",
+         "description": "Description de l'utilisation",
+         "detected_in": ["fichier1.ts", "fichier2.md"],
+         "impact": "Fonctionnalités bloquées sans cette dépendance"
+       }
+     },
+     "optional": {
+       "commande": {
+         "description": "Description"
+       }
+     },
+     "packages": {
+       "npm": {
+         "dependencies": {},
+         "devDependencies": {},
+         "peerDependencies": {}
+       },
+       "python": {
+         "dependencies": []
+       }
+     }
+   }
+   ```
+
+   **Règles de génération** :
+   - Classifier automatiquement en critical/optional selon fréquence d'utilisation
+   - Inclure `detected_in` pour traçabilité
+   - Inclure `impact` pour les dépendances critiques
+   - Pour plugins sans dépendances : créer avec `{}`  vides
+
+   **Si le fichier existe déjà** :
+   - Lire le contenu actuel
+   - Comparer avec ce qui a été détecté par le scan
+   - Si nouvelles dépendances détectées → les ajouter
+   - Si dépendances supprimées → les retirer
+   - Conserver les descriptions/commentaires manuels existants
+
+2. **Lire DEPENDENCIES.json du plugin**
+
+   ```bash
+   # Lire le fichier JSON
+   cat {plugin}/DEPENDENCIES.json
+   ```
+
+   Extraire :
+   - `critical` : dépendances obligatoires
+   - `optional` : dépendances facultatives
+   - `packages.npm` : packages NPM (dependencies, devDependencies, peerDependencies)
+   - `packages.python` : packages Python le cas échéant
+   - `packages.composer` : packages PHP le cas échéant
+
+3. **Mettre à jour init-marketplace.md**
+
+   ```bash
+   # 1. Lire le fichier actuel
+   Read .claude/commands/init-marketplace.md
+
+   # 2. Localiser la section AUTO-GENERATED
+   # Chercher entre "<!-- AUTO-GENERATED" et "<!-- END AUTO-GENERATED -->"
+
+   # 3. Construire la nouvelle entrée du plugin
+   ```
+
+   **Format de sortie** :
+   ```markdown
+   #### Plugin: {plugin} (v{VERSION})
+   **Dépendances critiques:**
+   - `commande` >= version - Description de l'utilisation
+
+   **Dépendances optionnelles:**  (si applicable)
+   - `commande` - Description
+
+   **Packages NPM requis:**  (si applicable)
+   - package@^version
+   - package@^version (dev)
+   - package@^version (peer)
+
+   **Fonctionnalités bloquées sans dépendances:**  (si pertinent)
+   - Sans X : Liste des fonctionnalités impactées
+   ```
+
+   **Règles d'édition** :
+   - Si le plugin existe déjà dans AUTO-GENERATED → remplacer sa section complètement
+   - Si le plugin est nouveau → insérer à la position alphabétique
+   - Maintenir l'ordre alphabétique par nom de plugin
+   - Ne jamais toucher aux autres plugins
+
+4. **Exemple concret : workflow DEPENDENCIES.json → init-marketplace.md**
+
+   **Plugin analysé** : `mlvn` (v1.0.0)
+
+   **Étape 1 : Lire DEPENDENCIES.json**
+   ```bash
+   cat mlvn/DEPENDENCIES.json
+   ```
+
+   **Contenu extrait** :
+   ```json
+   {
+     "version": "1.0",
+     "critical": {
+       "bun": {
+         "version": ">=1.0.0",
+         "description": "Runtime pour scripts TypeScript et hooks de sécurité",
+         "impact": "Hook PreToolUse (sécurité), statusline, Ralph Loop, scripts"
+       },
+       "node": {
+         "version": ">=16.0.0",
+         "description": "Prérequis pour Bun et packages NPM"
+       }
+     },
+     "optional": {
+       "gh": {"description": "Pour skills git-create-pr, git-fix-pr-comments, git-merge"},
+       "ccusage": {"description": "Pour statusline tracking des coûts"},
+       "biome": {"description": "Pour lint/format des scripts"}
+     },
+     "packages": {
+       "npm": {
+         "dependencies": {
+           "@ai-sdk/anthropic": "^3.0.6",
+           "ai": "^6.0.11",
+           "picocolors": "^1.1.1",
+           "table": "^6.9.0",
+           "zod": "^4.3.5"
+         },
+         "devDependencies": {
+           "@biomejs/biome": "^2.3.2"
+         },
+         "peerDependencies": {
+           "typescript": "^5.0.0"
+         }
+       }
+     }
+   }
+   ```
+
+   **Étape 2 : Générer la section pour init-marketplace.md**
+   ```markdown
+   #### Plugin: mlvn (v1.0.0)
+   **Dépendances critiques:**
+   - `bun` >= 1.0.0 - Runtime pour scripts TypeScript et hooks de sécurité
+   - `node` >= 16.0.0 - Prérequis pour Bun et packages NPM
+
+   **Dépendances optionnelles:**
+   - `gh` - Pour skills git-create-pr, git-fix-pr-comments, git-merge
+   - `ccusage` - Pour statusline tracking des coûts
+   - `biome` - Pour lint/format des scripts
+
+   **Packages NPM requis:**
+   - @ai-sdk/anthropic@^3.0.6
+   - ai@^6.0.11
+   - picocolors@^1.1.1
+   - table@^6.9.0
+   - zod@^4.3.5
+   - @biomejs/biome@^2.3.2 (dev)
+   - typescript@^5.0.0 (peer)
+
+   **Fonctionnalités bloquées sans dépendances:**
+   - Sans Bun : Hook PreToolUse (sécurité), statusline, Ralph Loop, scripts
+   ```
+
+   **Étape 3 : Insérer/Remplacer dans init-marketplace.md**
+   - Lire `.claude/commands/init-marketplace.md`
+   - Localiser la section AUTO-GENERATED (entre `<!-- AUTO-GENERATED` et `<!-- END AUTO-GENERATED -->`)
+   - Si le plugin existe déjà : remplacer complètement sa section
+   - Si le plugin est nouveau : insérer à la position alphabétique
+   - Conserver l'ordre alphabétique par nom de plugin
+
+5. **Gestion des cas particuliers**
+
+   - **Plugin sans dépendances** : écrire `**Dépendances critiques:** Aucune`
+   - **Plugin supprimé** : retirer complètement sa section de AUTO-GENERATED
+   - **Dépendances inchangées** : conserver la section existante telle quelle
+   - **Nouvelle dépendance** : ajouter dans la section appropriée
+
 **Marque ensuite la tâche "Bumper les plugins sélectionnés" comme `completed` avec TaskUpdate.**
 
 ### 4. Vérification et résumé final

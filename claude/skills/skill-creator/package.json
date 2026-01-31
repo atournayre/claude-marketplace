@@ -1,0 +1,19 @@
+{
+	"name": "@claude/skill-creator",
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"lint": "biome check --write .",
+		"format": "biome format --write ."
+	},
+	"dependencies": {
+		"yaml": "^2.8.2"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.2",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	}
+}

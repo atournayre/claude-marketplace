@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "critical": {
+    "php": {
+      "version": ">=8.1",
+      "description": "Runtime PHP"
+    },
+    "composer": {
+      "version": ">=2.0",
+      "description": "Gestionnaire de dépendances PHP"
+    }
+  },
+  "optional": {
+    "symfony": {
+      "description": "Console Symfony officielle"
+    }
+  },
+  "packages": {}
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@customize/bash-validator",
+  "version": "1.0.0",
+  "description": "Secure command validation for Claude Code's PreToolUse hook",
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "test:ui": "bun test --ui",
+    "lint": "biome check --write .",
+    "format": "biome format --write .",
+    "typecheck": "bunx tsc --noEmit",
+    "cli": "bun src/cli.ts"
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.2",
+    "@types/bun": "latest",
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

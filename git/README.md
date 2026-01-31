@@ -10,7 +10,7 @@ Workflow Git complet : branches, commits, conflits, PR.
 
 ## Skills Disponibles
 
-Le plugin git fournit 8 skills (format natif Claude Code) :
+Le plugin git fournit 9 skills (format natif Claude Code) :
 
 ## Task Management System
 
@@ -113,7 +113,51 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - Génération message selon conventions
 - Commit avec emoji approprié
 - Gestion des pre-commit hooks
-- Push optionnel
+- Push automatique par défaut (flag `--no-push` pour désactiver)
+
+---
+
+### `/fix-pr-comments` ⭐ NOUVEAU
+
+Récupère et implémente systématiquement TOUS les commentaires de review PR.
+
+**Usage :**
+```bash
+# Auto-détecte la PR de la branche courante
+/fix-pr-comments
+
+# PR spécifique
+/fix-pr-comments 123
+```
+
+**Workflow automatisé :**
+1. **Fetch comments** : Récupère via `gh pr review list` + `gh api`
+   - Review comments (CHANGES_REQUESTED)
+   - Inline code comments
+2. **Analyze & plan** : Extrait file:line, groupe par fichier
+3. **Implement fixes** : Batch avec MultiEdit pour efficacité
+4. **Commit & push** : `fix: address PR review comments`
+
+**Features :**
+- ✅ Batched MultiEdit pour same-file modifications (efficacité)
+- ✅ ALWAYS Read files BEFORE editing (sécurité)
+- ✅ Checklist avec progression visible
+- ✅ STAY IN SCOPE : never fix unrelated issues
+- ✅ Auto-commit + auto-push
+
+**Exemple output :**
+```
+✅ Fetched 5 review comments
+📋 Plan:
+  - src/User.php (3 comments)
+  - tests/UserTest.php (2 comments)
+
+🔧 Implementing fixes...
+  ✅ src/User.php: Addressed 3 comments
+  ✅ tests/UserTest.php: Addressed 2 comments
+
+✅ Committed and pushed: fix: address PR review comments
+```
 
 ---
 

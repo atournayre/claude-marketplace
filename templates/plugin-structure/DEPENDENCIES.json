@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "critical": {
+    "example-command": {
+      "version": ">=1.0.0",
+      "description": "Description de l'utilisation",
+      "installUrl": "https://example.com/install"
+    }
+  },
+  "optional": {
+    "example-optional": {
+      "description": "Description fonctionnalité optionnelle"
+    }
+  },
+  "packages": {
+    "npm": {
+      "dependencies": {},
+      "devDependencies": {},
+      "peerDependencies": {}
+    }
+  }
+}

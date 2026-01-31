@@ -1,0 +1,19 @@
+{
+  "name": "utils",
+  "description": "Skills et agents utilitaires génériques : fix-grammar, action, explore-codebase",
+  "version": "1.0.0",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "utilities",
+    "fix-grammar",
+    "action-agent",
+    "explore-codebase",
+    "generic-skills"
+  ]
+}

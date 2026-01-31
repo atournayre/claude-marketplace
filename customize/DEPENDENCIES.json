@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "critical": {
+    "python3": {
+      "command": "python3 --version",
+      "description": "Python 3.x requis pour les hooks",
+      "installUrl": "https://www.python.org/downloads/"
+    }
+  },
+  "optional": {
+    "bun": {
+      "command": "bun --version",
+      "description": "Bun runtime pour Bash Security Validator (validators/bash)",
+      "installUrl": "https://bun.sh/docs/installation",
+      "note": "Optionnel : requis uniquement si vous utilisez le Bash Security Validator"
+    }
+  },
+  "packages": {}
+}

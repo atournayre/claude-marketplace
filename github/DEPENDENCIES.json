@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "critical": {
+    "gh": {
+      "version": "*",
+      "description": "GitHub CLI"
+    }
+  },
+  "optional": {},
+  "packages": {}
+}
