@@ -10,6 +10,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [2026.01.31] - 2026-01-31
 
 ### Plugins Updated
+- **claude v1.3.0** - Intégration skills mlvn (skill-creator, memory, make-subagent)
+  - Nouveau skill `/skill-creator` : créateur complet avec progressive disclosure, bundled resources, scripts TypeScript
+  - Nouveau skill `/memory` : gestion CLAUDE.md 4-level hierarchy (global, workspace, package, directory)
+  - Nouveau skill `/make-subagent` : créateur subagents YAML avec orchestration patterns
+  - Suppression `/claude:make:command` (remplacé par skill-creator, supérieur 100%)
+  - Migration depuis mlvn plugin (AIBlueprint v1.0.0)
+  - Dépôt : [claude/CHANGELOG.md](claude/CHANGELOG.md)
+
 - **customize v1.1.0** - Intégration Bash Security Validator (100+ patterns, 82+ tests)
   - Validateur de sécurité pour commandes Bash via hook PreToolUse
   - Architecture hybride Python (hooks) + TypeScript/Bun (validators)
