@@ -79,6 +79,11 @@
       "name": "prompt",
       "source": "./prompt",
       "description": "Générateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture"
+    },
+    {
+      "name": "mlvn",
+      "source": "./mlvn",
+      "description": "AIBlueprint by Melvynx : agents spécialisés, workflows autonomes (Ralph Loop), hooks sécurité, skills Git/Meta/Utils"
     }
   ]
 }

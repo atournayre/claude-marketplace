@@ -7,6 +7,20 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.01.31] - 2026-01-31
+
+### Plugins Added
+- **mlvn v1.0.0** - Intégration AIBlueprint by Melvynx
+  - 4 agents spécialisés (action, explore-codebase, explore-docs, websearch)
+  - 4 skills Git (commit, create-pr, fix-pr-comments, merge)
+  - 4 skills Meta (claude-memory, prompt-creator, skill-creator, subagent-creator)
+  - 3 skills Workflow (ralph-loop, apex, apex-free)
+  - 3 skills Utilities (fix-errors, fix-grammar, oneshot)
+  - Hook de sécurité PreToolUse pour validation de commandes Bash
+  - Scripts utilitaires (command-validator, statusline)
+  - Documentation complète en français
+  - Dépôt : [mlvn/CHANGELOG.md](mlvn/CHANGELOG.md)
+
 ## [2026.01.28] - 2026-01-28
 
 ### Plugins Updated
@@ -575,14 +589,19 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## Notes de version
 
 Pour les détails complets de chaque plugin, voir les CHANGELOGs individuels:
+- [claude/CHANGELOG.md](claude/CHANGELOG.md)
+- [command/CHANGELOG.md](command/CHANGELOG.md)
+- [customize/CHANGELOG.md](customize/CHANGELOG.md)
+- [dev/CHANGELOG.md](dev/CHANGELOG.md)
+- [doc/CHANGELOG.md](doc/CHANGELOG.md)
 - [framework/CHANGELOG.md](framework/CHANGELOG.md)
 - [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
 - [git/CHANGELOG.md](git/CHANGELOG.md)
+- [github/CHANGELOG.md](github/CHANGELOG.md)
+- [marketing/CHANGELOG.md](marketing/CHANGELOG.md)
+- [mlvn/CHANGELOG.md](mlvn/CHANGELOG.md)
+- [notifications/CHANGELOG.md](notifications/CHANGELOG.md)
+- [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+- [qa/CHANGELOG.md](qa/CHANGELOG.md)
 - [review/CHANGELOG.md](review/CHANGELOG.md)
 - [symfony/CHANGELOG.md](symfony/CHANGELOG.md)
-- [dev/CHANGELOG.md](dev/CHANGELOG.md)
-- [qa/CHANGELOG.md](qa/CHANGELOG.md)
-- [doc/CHANGELOG.md](doc/CHANGELOG.md)
-- [github/CHANGELOG.md](github/CHANGELOG.md)
-- [claude/CHANGELOG.md](claude/CHANGELOG.md)
-- [customize/CHANGELOG.md](customize/CHANGELOG.md)
