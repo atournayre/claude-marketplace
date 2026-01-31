@@ -24,6 +24,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📋 **QA** | 1.3.1 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
 | 🔍 **Review** | 1.0.0 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
 | 🎯 **Symfony** | 1.3.1 | Plugin Symfony avec skills make, documentation et intégrations | [README](symfony/README.md) |
+| 🛠️ **Utils** | 1.0.0 | Skills et agents utilitaires : fix-grammar, action, explore-codebase | [README](utils/README.md) |
 
 ## 🎨 Convention Output Styles
 

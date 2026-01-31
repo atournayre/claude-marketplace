@@ -9,6 +9,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [2026.01.31] - 2026-01-31
 
+### Plugins Added
+- **utils v1.0.0** - Nouveau plugin skills/agents utilitaires génériques
+  - Skill `/fix-grammar` : correction grammaire/orthographe (single/multi mode, auto-detect langue)
+  - Agent `action` : validation conditionnelle avant exécution
+  - Agent `explore-codebase` : exploration avec imports chains
+  - Migration depuis mlvn plugin (AIBlueprint v1.0.0)
+  - Dépôt : [utils/CHANGELOG.md](utils/CHANGELOG.md)
+
 ### Plugins Updated
 - **dev v2.5.0** - Nouveaux skills oneshot, ralph + examine step
   - Nouveau skill `/oneshot` : implémentation ultra-rapide (speed > completeness)

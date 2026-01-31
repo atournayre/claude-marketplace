@@ -51,6 +51,11 @@
       "description": "Plugin Symfony avec skills make, documentation et intégrations framework"
     },
     {
+      "name": "utils",
+      "source": "./utils",
+      "description": "Skills et agents utilitaires génériques : fix-grammar, action, explore-codebase"
+    },
+    {
       "name": "framework",
       "source": "./framework",
       "description": "Plugin pour atournayre/framework avec skills et intégrations"
