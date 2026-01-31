@@ -10,6 +10,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [2026.01.31] - 2026-01-31
 
 ### Plugins Updated
+- **dev v2.5.0** - Nouveaux skills oneshot, ralph + examine step
+  - Nouveau skill `/oneshot` : implémentation ultra-rapide (speed > completeness)
+  - Nouveau skill `/ralph` (setup-ralph) : autonomous coding loop (PRD → stories → loop)
+  - Examine step ajouté dans `/dev:review` : adversarial review (challenge decisions, edge cases)
+  - TaskManagement : 5 tâches dans review (examine bloquée par consolidation)
+  - Migration depuis mlvn plugin (AIBlueprint v1.0.0)
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+
 - **git v1.11.0** - Nouveau skill fix-pr-comments + clarification auto-push
   - Nouveau skill `/fix-pr-comments` : implémente systématiquement TOUS les commentaires de review PR
   - Batched MultiEdit pour efficacité (same-file modifications)
