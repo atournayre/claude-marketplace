@@ -18,7 +18,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 🔧 **Git** | 1.11.0 | Workflow Git complet : branches, commits, conflits, PR, fix-pr-comments + auto-push | [README](git/README.md) |
 | 🐙 **GitHub** | 1.3.1 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
 | 📱 **Marketing** | 1.2.1 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
-| 🎭 **MLVN** | 1.0.0 | AIBlueprint by Melvynx : agents spécialisés, workflows autonomes (Ralph Loop), hooks sécurité, skills Git/Meta/Utils | [README](mlvn/README.md) |
+| 🎭 **MLVN** | 1.1.0 | AIBlueprint by Melvynx : agents spécialisés, workflows, skills Git/Meta/Utils (version épurée après migration) | [README](mlvn/README.md) |
 | 🔔 **Notifications** | 1.0.2 | Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète | [README](notifications/README.md) |
 | 📝 **Prompt** | 1.3.0 | Générateur et transformateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture, prompts exécutables | [README](prompt/README.md) |
 | 📋 **QA** | 1.3.1 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |

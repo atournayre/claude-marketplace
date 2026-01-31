@@ -13,76 +13,65 @@ Plugin Claude Code intégrant les fonctionnalités d'AIBlueprint : agents spéci
 /plugin install mlvn@atournayre
 ```
 
-## ✨ Fonctionnalités
+## ℹ️ Note de Migration
 
-### 🤖 Agents (4)
+**⚠️ Attention** : Ce plugin a été partiellement **démantelé** et ses composants migrés vers des plugins spécialisés dans le marketplace pour éviter les doublons et améliorer la maintenabilité.
+
+**Éléments migrés** :
+- ✅ **Bash Security Validator** → `customize` v1.1.0 (hook PreToolUse, 82+ tests)
+- ✅ **skill-creator** → `claude` v1.3.0 (progressive disclosure)
+- ✅ **memory** → `claude` v1.3.0 (4-level hierarchy)
+- ✅ **make-subagent** → `claude` v1.3.0
+- ✅ **fix-pr-comments** → `git` v1.11.0 (batched MultiEdit)
+- ✅ **oneshot** → `dev` v2.5.0
+- ✅ **ralph-loop** → `dev` v2.5.0 (setup-ralph)
+- ✅ **fix-grammar** → `utils` v1.0.0
+- ✅ **action agent** → `utils` v1.0.0
+- ✅ **explore-codebase agent** → `utils` v1.0.0
+
+**Éléments conservés dans mlvn** :
+- Skills Git : `git-commit`, `git-create-pr`, `git-merge`
+- Skills Meta : `meta-prompt-creator`
+- Skills Workflow : `workflow-apex`, `workflow-apex-free`
+- Skills Utils : `utils-fix-errors`
+- Agents : `explore-docs`, `websearch`
+- Scripts : `statusline` (pour tracking coûts)
+
+## ✨ Fonctionnalités (Restantes)
+
+### 🤖 Agents (2)
 
 | Agent | Description | Modèle |
 |-------|-------------|--------|
-| `action` | Actions génériques | Default |
-| `explore-codebase` | Exploration de codebase pour réaliser une feature | Haiku |
 | `explore-docs` | Exploration de documentation | Default |
 | `websearch` | Recherche web rapide | Default |
 
-### 🔧 Skills Git (4)
+### 🔧 Skills Git (3)
 
 | Skill | Description | Commande |
 |-------|-------------|----------|
 | `git-commit` | Commits rapides avec format conventionnel + auto-push | `/commit` |
 | `git-create-pr` | Création automatique de Pull Request | `/create-pull-request` |
-| `git-fix-pr-comments` | Résolution de commentaires PR | `/fix-pr-comments` |
 | `git-merge` | Gestion des merges | `/git-merge` |
 
-**Particularités git-commit** :
-- Auto-stage si rien en staged
-- Auto-push après commit
-- Format conventionnel strict
-- Pas d'interaction (speed over perfection)
-
-### 🧠 Skills Meta (4)
+### 🧠 Skills Meta (1)
 
 | Skill | Description | Commande |
 |-------|-------------|----------|
-| `meta-claude-memory` | Gestion de CLAUDE.md | `/claude-memory` |
 | `meta-prompt-creator` | Création de prompts | `/prompt-creator` |
-| `meta-skill-creator` | Générateur de skills complet | `/skill-creator` |
-| `meta-subagent-creator` | Générateur de subagents | `/subagent-creator` |
 
-**meta-skill-creator** inclut :
-- Processus de création en 6 étapes
-- Scripts `init-skill.ts` et `package-skill.ts`
-- Guides de référence : XML tags, progressive disclosure, workflows, output patterns
-- Documentation officielle : https://code.claude.com/docs/llms.txt
-
-### 🔁 Skills Workflow (3)
+### 🔁 Skills Workflow (2)
 
 | Skill | Description | Commande |
 |-------|-------------|----------|
-| `ralph-loop` | Boucle autonome AI pour développement | `/setup-ralph` |
 | `workflow-apex` | Workflow avancé (premium) | `/apex` |
 | `workflow-apex-free` | Workflow avancé (version free) | `/apex-free` |
 
-**Ralph Loop** :
-- Boucle autonome de développement
-- Transforme PRD en user stories
-- Implémente une tâche à la fois
-- Commits automatiques avec apprentissage
-- Setup interactif avec `-i` flag
-
-### 🛠️ Skills Utilities (3)
+### 🛠️ Skills Utilities (1)
 
 | Skill | Description | Commande |
 |-------|-------------|----------|
 | `utils-fix-errors` | Correction d'erreurs | `/fix-errors` |
-| `utils-fix-grammar` | Correction grammaticale | `/fix-grammar` |
-| `utils-oneshot` | Actions rapides | `/oneshot` |
-
-### 🛡️ Hooks de Sécurité
-
-**PreToolUse - Validation de commandes Bash** :
-- Bloque les commandes dangereuses (`rm -rf`, etc.)
-- Validation via `validate-command.js`
-- Logs de sécurité dans `~/.claude/security.log`
 
 ### 📊 Scripts Utilitaires
 
@@ -92,11 +81,6 @@ Plugin Claude Code intégrant les fonctionnalités d'AIBlueprint : agents spéci
 - `weekly` - Analyse hebdomadaire
 - `config` - Configuration interactive
 - `migrate` - Migration vers SQLite
-
-**Command Validator** :
-- Validation de sécurité des commandes Bash
-- Règles de sécurité configurables
-- Tests unitaires inclus
 
 ## 🚀 Exemples d'Utilisation
 
@@ -150,30 +134,54 @@ mlvn/
 ├── .claude-plugin/
 │   └── plugin.json
 ├── agents/
-│   ├── action.md
-│   ├── explore-codebase.md
-│   ├── explore-docs.md
-│   └── websearch.md
+│   ├── explore-docs.md      (CONSERVÉ)
+│   └── websearch.md         (CONSERVÉ)
 ├── skills/
-│   ├── git-commit/
-│   ├── git-create-pr/
-│   ├── git-fix-pr-comments/
-│   ├── git-merge/
-│   ├── meta-claude-memory/
-│   ├── meta-prompt-creator/
-│   ├── meta-skill-creator/
-│   ├── meta-subagent-creator/
-│   ├── ralph-loop/
-│   ├── utils-fix-errors/
-│   ├── utils-fix-grammar/
-│   ├── utils-oneshot/
-│   ├── workflow-apex/
-│   └── workflow-apex-free/
-├── hooks/
-│   └── hooks.json
+│   ├── git-commit/          (CONSERVÉ)
+│   ├── git-create-pr/       (CONSERVÉ)
+│   ├── git-merge/           (CONSERVÉ)
+│   ├── meta-prompt-creator/ (CONSERVÉ)
+│   ├── utils-fix-errors/    (CONSERVÉ)
+│   ├── workflow-apex/       (CONSERVÉ)
+│   └── workflow-apex-free/  (CONSERVÉ)
 └── scripts/
-    ├── command-validator/
-    └── statusline/
+    └── statusline/          (CONSERVÉ)
+
+## Éléments Migrés
+
+Les éléments suivants ont été nettoyés de ce plugin et intégrés dans d'autres :
+
+**Sécurité Bash** :
+```
+mlvn/hooks/hooks.json              → customize
+mlvn/scripts/command-validator/    → customize/validators/bash/
+```
+
+**Claude Skills** :
+```
+mlvn/skills/meta-skill-creator/    → claude/skills/skill-creator/
+mlvn/skills/meta-claude-memory/    → claude/skills/memory/
+mlvn/skills/meta-subagent-creator/ → claude/skills/make-subagent/
+```
+
+**Git Skills** :
+```
+mlvn/skills/git-fix-pr-comments/   → git/skills/fix-pr-comments/
+```
+
+**Dev Skills** :
+```
+mlvn/skills/ralph-loop/            → dev/skills/ralph/
+mlvn/skills/utils-oneshot/         → dev/skills/oneshot/
++ examine step ajouté dans dev/skills/review/
+```
+
+**Utils Agents & Skills** :
+```
+mlvn/agents/action.md              → utils/agents/action.md
+mlvn/agents/explore-codebase.md    → utils/agents/explore-codebase.md
+mlvn/skills/utils-fix-grammar/     → utils/skills/fix-grammar/
+```
 ```
 
 ## 🤝 Contribution

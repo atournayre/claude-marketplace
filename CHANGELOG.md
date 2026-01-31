@@ -18,6 +18,12 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - Dépôt : [utils/CHANGELOG.md](utils/CHANGELOG.md)
 
 ### Plugins Updated
+- **mlvn v1.1.0** - Nettoyage après migration vers écosystème
+  - Suppression éléments migrés (security validator, skill-creator, memory, subagent, ralph, fix-grammar, agents, etc.)
+  - Conservé : skills Git, meta-prompt-creator, workflow-apex, utils-fix-errors, agents explore-docs/websearch
+  - Documentation mise à jour pour refléter la structure réduite
+  - Dépôt : [mlvn/CHANGELOG.md](mlvn/CHANGELOG.md)
+
 - **dev v2.5.0** - Nouveaux skills oneshot, ralph + examine step
   - Nouveau skill `/oneshot` : implémentation ultra-rapide (speed > completeness)
   - Nouveau skill `/ralph` (setup-ralph) : autonomous coding loop (PRD → stories → loop)
