@@ -1,0 +1,23 @@
+{
+  "name": "mlvn",
+  "version": "1.0.0",
+  "description": "AIBlueprint by Melvynx - Custom agents, slash commands, hooks, and productivity workflows for Claude Code",
+  "author": {
+    "name": "Melvyn (Melvynx)",
+    "url": "https://github.com/melvynx"
+  },
+  "homepage": "https://github.com/melvynx/aiblueprint",
+  "repository": "https://github.com/melvynx/aiblueprint",
+  "license": "MIT",
+  "keywords": [
+    "aiblueprint",
+    "melvynx",
+    "productivity",
+    "agents",
+    "commands",
+    "hooks",
+    "workflows",
+    "statusline"
+  ],
+  "category": "essentials"
+}
