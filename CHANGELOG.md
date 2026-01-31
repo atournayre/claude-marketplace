@@ -9,6 +9,15 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [2026.01.31] - 2026-01-31
 
+### Plugins Updated
+- **customize v1.1.0** - Intégration Bash Security Validator (100+ patterns, 82+ tests)
+  - Validateur de sécurité pour commandes Bash via hook PreToolUse
+  - Architecture hybride Python (hooks) + TypeScript/Bun (validators)
+  - Détection patterns malveillants : fork bombs, backdoors, exfiltration données
+  - Protection chemins système : /etc, /usr, /bin, /sys, /proc, /dev, /root
+  - Logs sécurité avec traçabilité complète
+  - Dépôt : [customize/CHANGELOG.md](customize/CHANGELOG.md)
+
 ### Plugins Added
 - **mlvn v1.0.0** - Intégration AIBlueprint by Melvynx
   - 4 agents spécialisés (action, explore-codebase, explore-docs, websearch)

@@ -18,7 +18,7 @@
     {
       "name": "customize",
       "source": "./customize",
-      "description": "Personnalise ton expérience Claude Code avec hooks, output styles et status lines sur mesure"
+      "description": "Personnalise ton expérience Claude Code avec hooks, output styles, status lines sur mesure + Bash Security Validator"
     },
     {
       "name": "dev",

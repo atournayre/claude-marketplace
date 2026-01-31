@@ -10,7 +10,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 |--------|---------|-------------|---------------|
 | 📦 **Command** | 1.0.0 | Plugin centralisé de commandes - Workaround issue #15178 | [README](command/README.md) |
 | 🤖 **Claude** | 1.2.1 | Plugin de base pour Claude Code avec skills essentiels | [README](claude/README.md) |
-| 🎨 **Customize** | 1.0.0 | Personnalise ton expérience avec hooks, output styles et status lines | [README](customize/README.md) |
+| 🎨 **Customize** | 1.1.0 | Personnalise ton expérience avec hooks, output styles, status lines + Bash Security Validator | [README](customize/README.md) |
 | ⚙️ **Dev** | 2.4.1 | Workflow structuré 8 phases + mode automation non-interactif + 23 skills | [README](dev/README.md) |
 | 📚 **Doc** | 1.6.1 | Documentation : ADR, RTFM, génération docs, framework docs + 3 skills | [README](doc/README.md) |
 | 🏗️ **Framework** | 1.1.1 | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
