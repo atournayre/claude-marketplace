@@ -1,0 +1,17 @@
+{
+  "name": "plugin-name",
+  "description": "Description courte et claire du plugin",
+  "version": "1.0.0",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "keyword1",
+    "keyword2",
+    "keyword3"
+  ]
+}
