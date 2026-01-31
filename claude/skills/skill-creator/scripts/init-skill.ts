@@ -10,8 +10,8 @@
  *   bun scripts/init-skill.ts my-api-helper --path .claude/skills
  */
 
-import { existsSync, mkdirSync, writeFileSync, chmodSync } from "fs";
-import { join, resolve } from "path";
+import { chmodSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 const SKILL_TEMPLATE = `---
 name: {skill_name}
@@ -110,105 +110,107 @@ Asset files are NOT loaded into context - they're used in Claude's output.
 `;
 
 function titleCase(skillName: string): string {
-  return skillName
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+	return skillName
+		.split("-")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
 }
 
 function initSkill(skillName: string, basePath: string): string | null {
-  const skillDir = resolve(basePath, skillName);
+	const skillDir = resolve(basePath, skillName);
 
-  if (existsSync(skillDir)) {
-    console.log(`❌ Error: Skill directory already exists: ${skillDir}`);
-    return null;
-  }
+	if (existsSync(skillDir)) {
+		console.log(`❌ Error: Skill directory already exists: ${skillDir}`);
+		return null;
+	}
 
-  try {
-    mkdirSync(skillDir, { recursive: true });
-    console.log(`✅ Created skill directory: ${skillDir}`);
-  } catch (e) {
-    console.log(`❌ Error creating directory: ${e}`);
-    return null;
-  }
+	try {
+		mkdirSync(skillDir, { recursive: true });
+		console.log(`✅ Created skill directory: ${skillDir}`);
+	} catch (e) {
+		console.log(`❌ Error creating directory: ${e}`);
+		return null;
+	}
 
-  const skillTitle = titleCase(skillName);
+	const skillTitle = titleCase(skillName);
 
-  // Create SKILL.md
-  const skillContent = SKILL_TEMPLATE.replace(/{skill_name}/g, skillName).replace(
-    /{skill_title}/g,
-    skillTitle
-  );
-  const skillMdPath = join(skillDir, "SKILL.md");
-  try {
-    writeFileSync(skillMdPath, skillContent);
-    console.log("✅ Created SKILL.md");
-  } catch (e) {
-    console.log(`❌ Error creating SKILL.md: ${e}`);
-    return null;
-  }
+	// Create SKILL.md
+	const skillContent = SKILL_TEMPLATE.replace(
+		/{skill_name}/g,
+		skillName,
+	).replace(/{skill_title}/g, skillTitle);
+	const skillMdPath = join(skillDir, "SKILL.md");
+	try {
+		writeFileSync(skillMdPath, skillContent);
+		console.log("✅ Created SKILL.md");
+	} catch (e) {
+		console.log(`❌ Error creating SKILL.md: ${e}`);
+		return null;
+	}
 
-  try {
-    // Create scripts/
-    const scriptsDir = join(skillDir, "scripts");
-    mkdirSync(scriptsDir);
-    const exampleScript = join(scriptsDir, "example.ts");
-    writeFileSync(
-      exampleScript,
-      EXAMPLE_SCRIPT.replace(/{skill_name}/g, skillName)
-    );
-    chmodSync(exampleScript, 0o755);
-    console.log("✅ Created scripts/example.ts");
+	try {
+		// Create scripts/
+		const scriptsDir = join(skillDir, "scripts");
+		mkdirSync(scriptsDir);
+		const exampleScript = join(scriptsDir, "example.ts");
+		writeFileSync(
+			exampleScript,
+			EXAMPLE_SCRIPT.replace(/{skill_name}/g, skillName),
+		);
+		chmodSync(exampleScript, 0o755);
+		console.log("✅ Created scripts/example.ts");
 
-    // Create references/
-    const referencesDir = join(skillDir, "references");
-    mkdirSync(referencesDir);
-    writeFileSync(
-      join(referencesDir, "api-reference.md"),
-      EXAMPLE_REFERENCE.replace(/{skill_title}/g, skillTitle)
-    );
-    console.log("✅ Created references/api-reference.md");
+		// Create references/
+		const referencesDir = join(skillDir, "references");
+		mkdirSync(referencesDir);
+		writeFileSync(
+			join(referencesDir, "api-reference.md"),
+			EXAMPLE_REFERENCE.replace(/{skill_title}/g, skillTitle),
+		);
+		console.log("✅ Created references/api-reference.md");
 
-    // Create assets/
-    const assetsDir = join(skillDir, "assets");
-    mkdirSync(assetsDir);
-    writeFileSync(join(assetsDir, "example-asset.txt"), EXAMPLE_ASSET);
-    console.log("✅ Created assets/example-asset.txt");
-  } catch (e) {
-    console.log(`❌ Error creating resource directories: ${e}`);
-    return null;
-  }
+		// Create assets/
+		const assetsDir = join(skillDir, "assets");
+		mkdirSync(assetsDir);
+		writeFileSync(join(assetsDir, "example-asset.txt"), EXAMPLE_ASSET);
+		console.log("✅ Created assets/example-asset.txt");
+	} catch (e) {
+		console.log(`❌ Error creating resource directories: ${e}`);
+		return null;
+	}
 
-  console.log(`\n✅ Skill '${skillName}' initialized at ${skillDir}`);
-  console.log("\nNext steps:");
-  console.log("1. Edit SKILL.md to complete the TODO items");
-  console.log("2. Customize or delete example files in scripts/, references/, assets/");
-  console.log("3. Run validator: bun scripts/validate.ts " + skillDir);
+	console.log(`\n✅ Skill '${skillName}' initialized at ${skillDir}`);
+	console.log("\nNext steps:");
+	console.log("1. Edit SKILL.md to complete the TODO items");
+	console.log(
+		"2. Customize or delete example files in scripts/, references/, assets/",
+	);
+	console.log(`3. Run validator: bun scripts/validate.ts ${skillDir}`);
 
-  return skillDir;
+	return skillDir;
 }
 
 if (import.meta.main) {
-  const args = process.argv.slice(2);
+	const args = process.argv.slice(2);
 
-  if (args.length < 3 || args[1] !== "--path") {
-    console.log("Usage: bun scripts/init-skill.ts <skill-name> --path <path>");
-    console.log("\nSkill name requirements:");
-    console.log("  - Hyphen-case (e.g., 'data-analyzer')");
-    console.log("  - Lowercase letters, digits, and hyphens only");
-    console.log("  - Max 64 characters");
-    console.log("\nExamples:");
-    console.log("  bun scripts/init-skill.ts my-skill --path ~/.claude/skills");
-    console.log("  bun scripts/init-skill.ts api-helper --path .claude/skills");
-    process.exit(1);
-  }
+	if (args.length < 3 || args[1] !== "--path") {
+		console.log("Usage: bun scripts/init-skill.ts <skill-name> --path <path>");
+		console.log("\nSkill name requirements:");
+		console.log("  - Hyphen-case (e.g., 'data-analyzer')");
+		console.log("  - Lowercase letters, digits, and hyphens only");
+		console.log("  - Max 64 characters");
+		console.log("\nExamples:");
+		console.log("  bun scripts/init-skill.ts my-skill --path ~/.claude/skills");
+		console.log("  bun scripts/init-skill.ts api-helper --path .claude/skills");
+		process.exit(1);
+	}
 
-  const skillName = args[0];
-  const basePath = args[2];
+	const skillName = args[0];
+	const basePath = args[2];
 
-  console.log(`🚀 Initializing skill: ${skillName}`);
-  console.log(`   Location: ${basePath}\n`);
+	console.log(`🚀 Initializing skill: ${skillName}`);
+	console.log(`   Location: ${basePath}\n`);
 
-  const result = initSkill(skillName, basePath);
-  process.exit(result ? 0 : 1);
+	const result = initSkill(skillName, basePath);
+	process.exit(result ? 0 : 1);
 }
