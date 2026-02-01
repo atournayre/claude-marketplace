@@ -1,0 +1,92 @@
+# Claude Plugin Marketplace - Documentation
+
+Site de documentation VitePress pour les plugins Claude Code.
+
+## 🚀 Développement Local
+
+```bash
+# Installer les dépendances
+npm install
+
+# Démarrer le serveur de développement
+npm run dev
+# Ouvre http://localhost:5173
+```
+
+## 📦 Build Production
+
+```bash
+# Générer les docs depuis les plugins + build VitePress
+npm run build
+
+# Preview du build
+npm run preview
+```
+
+## 🔄 Génération des Docs
+
+Les fichiers de documentation sont générés automatiquement depuis :
+- `*/README.md` → `docs/plugins/*.md`
+- `*/skills/*/SKILL.md` → `docs/commands/index.md`
+- `*/.claude-plugin/plugin.json` → métadonnées
+
+```bash
+# Régénérer uniquement les docs (sans build)
+npm run generate
+```
+
+## 📁 Structure
+
+```
+docs/
+├── .vitepress/
+│   ├── config.ts              # Config VitePress
+│   ├── theme/                 # Custom theme (dark mode)
+│   └── data/
+│       └── plugins.data.ts    # Data loader pour métadonnées
+├── public/                    # Assets statiques
+├── index.md                   # Homepage
+├── guide/                     # Guides d'installation
+├── plugins/                   # Pages générées par plugin
+└── commands/                  # Index des commandes
+```
+
+## 🔧 Scripts
+
+- `npm run dev` - Serveur de développement
+- `npm run build` - Build production (génère docs + VitePress)
+- `npm run preview` - Preview du build
+- `npm run generate` - Génère docs depuis plugins
+
+## 🌐 Déploiement
+
+Le site est déployé automatiquement sur GitHub Pages via GitHub Actions lors d'un push sur `main`.
+
+URL : `https://atournayre.github.io/claude-marketplace`
+
+## 📝 Maintenance
+
+### Ajouter un nouveau plugin
+
+1. Créer le plugin dans la racine du repo
+2. Lancer `npm run generate`
+3. Vérifier `docs/plugins/<plugin-name>.md`
+
+### Mettre à jour un README
+
+1. Modifier le README dans le plugin
+2. Lancer `npm run generate`
+3. Vérifier le build : `npm run build`
+
+## ⚠️ Notes Importantes
+
+- Les liens internes vers `MODELS.md`, `CHANGELOG.md` sont automatiquement supprimés
+- Les badges GitHub Actions sont retirés lors de la génération
+- Les liens relatifs entre plugins sont transformés en liens absolus VitePress
+- Le frontmatter YAML est généré automatiquement depuis `plugin.json`
+
+## 📚 Documentation VitePress
+
+- [VitePress Docs](https://vitepress.dev/)
+- [Config Reference](https://vitepress.dev/reference/site-config)
+- [Theme Config](https://vitepress.dev/reference/default-theme-config)

@@ -1,0 +1,33 @@
+:root {
+  /* Light mode colors */
+  --vp-c-brand-1: #5b21b6;
+  --vp-c-brand-2: #7c3aed;
+  --vp-c-brand-3: #8b5cf6;
+}
+
+.dark {
+  /* Dark mode colors */
+  --vp-c-brand-1: #a78bfa;
+  --vp-c-brand-2: #8b5cf6;
+  --vp-c-brand-3: #7c3aed;
+}
+
+.plugin-card {
+  padding: 1rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.plugin-card h2 {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+}
+
+.plugin-card .meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
