@@ -23,17 +23,39 @@ npm run build
 npm run preview
 ```
 
-## 🔄 Génération des Docs
+## 🔄 Génération Automatique des Docs
 
-Les fichiers de documentation sont générés automatiquement depuis :
-- `*/README.md` → `docs/plugins/*.md`
-- `*/skills/*/SKILL.md` → `docs/commands/index.md`
-- `*/.claude-plugin/plugin.json` → métadonnées
+**IMPORTANT** : Les fichiers de documentation sont **générés automatiquement** depuis les plugins sources. Ne modifie jamais directement les fichiers dans `docs/plugins/` (sauf `index.md` et `by-category.md`) !
+
+### Sources → Destination
+
+| Source | Destination | Description |
+|--------|-------------|-------------|
+| `*/README.md` | `docs/plugins/*.md` | Page complète du plugin |
+| `*/.claude-plugin/plugin.json` | Frontmatter YAML | Métadonnées (titre, version) |
+| `*/skills/*/SKILL.md` | `docs/commands/index.md` | Index des 70 commandes |
+
+### Workflow de modification
+
+1. **Modifier le source** (ex: `git/README.md`)
+2. **Régénérer** : `npm run generate`
+3. **Vérifier** : `npm run dev`
+4. **Commiter** les sources ET les fichiers générés
 
 ```bash
-# Régénérer uniquement les docs (sans build)
-npm run generate
+# Exemple complet
+cd docs
+npm run generate  # Régénère tous les fichiers
+npm run dev       # Vérifie en local
 ```
+
+### Guide complet
+
+Consulte [docs/guide/contributing.md](guide/contributing.md) pour :
+- Ajouter un nouveau plugin
+- Modifier un plugin existant
+- Comprendre les transformations automatiques
+- Dépanner les problèmes courants
 
 ## 📁 Structure
 

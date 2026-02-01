@@ -57,11 +57,17 @@ export default defineConfig({
     sidebar: {
       '/guide/': [
         {
-          text: 'Guide',
+          text: 'Guide utilisateur',
           items: [
             { text: 'Démarrage rapide', link: '/guide/getting-started' },
             { text: 'Installation', link: '/guide/installation' },
             { text: 'Architecture slash commands', link: '/guide/workaround-slash-commands' }
+          ]
+        },
+        {
+          text: 'Contribution',
+          items: [
+            { text: 'Guide de contribution', link: '/guide/contributing' }
           ]
         }
       ],
