@@ -14,7 +14,7 @@ export default defineConfig({
     ['meta', { property: 'og:title', content: 'Claude Plugin Marketplace' }],
     ['meta', { property: 'og:description', content: '16 plugins, 69 commandes pour booster ton workflow Claude Code' }],
     ['meta', { property: 'og:url', content: 'https://atournayre.github.io/claude-marketplace/' }],
-    ['meta', { property: 'og:image', content: 'https://atournayre.github.io/claude-marketplace/og-image.svg' }],
+    ['meta', { property: 'og:image', content: 'https://atournayre.github.io/claude-marketplace/og-image.png' }],
     ['meta', { property: 'og:image:width', content: '1200' }],
     ['meta', { property: 'og:image:height', content: '630' }],
     ['meta', { property: 'og:image:alt', content: 'Claude Plugin Marketplace - 16 plugins, 69 commandes' }],
