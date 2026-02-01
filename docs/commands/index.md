@@ -4,17 +4,21 @@ title: Index des Skills
 
 # Index des Skills
 
-70 skills disponibles dans le marketplace.
+83 skills disponibles dans le marketplace.
 
 **Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
 
 | Skill | Plugin | Description |
 |-------|--------|-------------|
+| `/apex` | [mlvn](/plugins/mlvn) | Systematic implementation using APEX methodology (Analyze-Plan-Execute-eXamine) with parallel agents, self-validation, and optional adversarial review. Use when implementing features, fixing bugs, or making code changes that benefit from structured workflow. |
+| `/apex` | [mlvn](/plugins/mlvn) | Systematic implementation using APEX methodology (Analyze-Plan-Execute-Validate) with parallel agents and self-validation. Use when implementing features, fixing bugs, or making code changes that benefit from structured workflow. |
+| `/claude-memory` | [claude](/plugins/claude) | Create and optimize CLAUDE.md memory files or .claude/rules/ modular rules for Claude Code projects. Comprehensive guidance on file hierarchy, content structure, path-scoped rules, best practices, and anti-patterns. Use when working with CLAUDE.md files, .claude/rules directories, setting up new projects, or improving Claude Code's context awareness. |
 | `/claude:alias:add` | [claude](/plugins/claude) | Crée un alias de commande qui délègue à une autre slash command |
 | `/claude:challenge` | [claude](/plugins/claude) | Évalue ma dernière réponse, donne une note sur 10 et propose des améliorations |
 | `/claude:doc:load` | [claude](/plugins/claude) | Charge la documentation Claude Code depuis docs.claude.com dans des fichiers markdown locaux |
 | `/claude:doc:question` | [claude](/plugins/claude) | Interroger la documentation Claude Code locale pour répondre à une question |
-| `/claude:make:command` | [claude](/plugins/claude) | Générateur de slash commands pour Claude Code avec workflow structuré et bonnes pratiques |
+| `/commit` | [mlvn](/plugins/mlvn) | Quick commit and push with minimal, clean messages |
+| `/create-pr` | [mlvn](/plugins/mlvn) | Create and push PR with auto-generated title and description |
 | `/dev:auto:check-prerequisites` | [dev](/plugins/dev) | Vérifier tous les prérequis - Mode AUTO (Phase -1) |
 | `/dev:auto:clarify` | [dev](/plugins/dev) | Lever ambiguités avec heuristiques automatiques (Phase 3) |
 | `/dev:auto:code` | [dev](/plugins/dev) | Implémenter selon le plan - Mode AUTO (Phase 6) |
@@ -43,6 +47,9 @@ title: Index des Skills
 | `/doc:rtfm` | [doc](/plugins/doc) | Lit la documentation technique - RTFM (Read The Fucking Manual) |
 | `/doc:update` | [doc](/plugins/doc) | Crées la documentation pour la fonctionnalité en cours. Mets à jour le readme global du projet si nécessaire. Lie les documents entre eux pour ne pas avoir de documentation orpheline. La documentation est générée dans les répertoire de documentation du projet. |
 | `/elegant-objects` | [qa](/plugins/qa) | > |
+| `/fix-errors` | [mlvn](/plugins/mlvn) | Fix all ESLint and TypeScript errors with parallel processing using snipper agents |
+| `/fix-grammar` | [utils](/plugins/utils) | Fix grammar and spelling errors in one or multiple files while preserving formatting |
+| `/fix-pr-comments` | [git](/plugins/git) | Fetch PR review comments and implement all requested changes |
 | `/framework:make:all` | [framework](/plugins/framework) | Génère tous les fichiers pour une entité complète (orchestrateur) |
 | `/framework:make:collection` | [framework](/plugins/framework) | Génère classe Collection typée avec traits Atournayre |
 | `/framework:make:contracts` | [framework](/plugins/framework) | Génère les interfaces de contrats pour une architecture Elegant Objects |
@@ -65,7 +72,10 @@ title: Index des Skills
 | `/github-impact` | [github](/plugins/github) | > |
 | `/github:fix` | [github](/plugins/github) | Corriger une issue GitHub avec workflow simplifié et efficace |
 | `/marketing:linkedin` | [marketing](/plugins/marketing) | Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace |
+| `/merge` | [mlvn](/plugins/mlvn) | Intelligently merge branches with context-aware conflict resolution |
+| `/oneshot` | [dev](/plugins/dev) | Ultra-fast feature implementation using Explore → Code → Test workflow. Use when implementing focused features, single tasks, or when speed over completeness is priority. |
 | `/phpstan-resolver` | [qa](/plugins/qa) | > |
+| `/prompt-creator` | [mlvn](/plugins/mlvn) | Expert prompt engineering for creating effective prompts for Claude, GPT, and other LLMs. Use when writing system prompts, user prompts, few-shot examples, or optimizing existing prompts for better performance. |
 | `/prompt:architecture` | [prompt](/plugins/prompt) | Génère un prompt pour architecture et infrastructure (decorators, cache, patterns) |
 | `/prompt:configuration` | [prompt](/plugins/prompt) | Génère un prompt pour configuration et feature flags |
 | `/prompt:feature` | [prompt](/plugins/prompt) | Génère un prompt pour une nouvelle feature métier basé sur les patterns DDD/CQRS |
@@ -75,6 +85,9 @@ title: Index des Skills
 | `/prompt:webhook` | [prompt](/plugins/prompt) | Génère un prompt pour intégration webhook avec services tiers |
 | `/prompt:workflow` | [prompt](/plugins/prompt) | Génère un prompt pour workflow GitHub Actions et CI/CD |
 | `/release-notes` | [git](/plugins/git) | > |
+| `/setup-ralph` | [dev](/plugins/dev) | Setup the Ralph autonomous AI coding loop - ships features while you sleep |
+| `/skill-creator` | [claude](/plugins/claude) | This skill should be used when the user asks to "create a skill", "build a skill", "write a skill", "improve skill structure", "understand skill creation", or mentions SKILL.md files, skill development, progressive disclosure, XML structure, or bundled resources (scripts, references, assets). Comprehensive guide for creating effective Claude Code skills. |
+| `/skill-workflow-creator` | [claude](/plugins/claude) | Expert guidance for creating, building, and using Claude Code subagents and the Task tool. Use when working with subagents, setting up agent configurations, understanding how agents work, or using the Task tool to launch specialized agents. |
 | `/symfony-framework` | [symfony](/plugins/symfony) | Comprehensive Symfony 6.4 development skill for web applications, APIs, and microservices. |
 | `/symfony:doc:load` | [symfony](/plugins/symfony) | Charge la documentation Symfony depuis son site web dans des fichiers markdown locaux |
 | `/symfony:doc:question` | [symfony](/plugins/symfony) | Interroger la documentation Symfony locale pour répondre à une question |

@@ -1,10 +1,10 @@
 ---
 title: "claude"
 description: "Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation"
-version: "1.2.1"
+version: "1.3.0"
 ---
 
-# claude <Badge type="info" text="v1.2.1" />
+# claude <Badge type="info" text="v1.3.0" />
 
 
 Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation.
@@ -17,7 +17,7 @@ Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration
 
 ## Skills Disponibles
 
-Le plugin claude fournit 5 skills (format natif Claude Code) :
+Le plugin claude fournit 7 skills (format natif Claude Code) :
 
 ### `/claude:challenge`
 
@@ -52,35 +52,95 @@ Axes d'amélioration :
 
 ---
 
-### `/claude:make:command`
+### `/skill-creator` ⭐ NOUVEAU
 
-Générateur de slash commands pour Claude Code avec workflow structuré et bonnes pratiques.
+Créateur de skills Claude Code complet avec progressive disclosure, bundled resources et scripts d'automatisation.
 
-**Arguments :**
+**Supérieur à make-command :**
+- ✅ 6 fichiers références (progressive disclosure, workflows, examples, patterns, XML guide, output patterns)
+- ✅ 3 scripts TypeScript (init-skill.ts, package-skill.ts, validate.ts)
+- ✅ Bundled resources (scripts/, references/, assets/)
+- ✅ Progressive disclosure pattern (docs chargées à la demande)
+- ✅ Basé sur doc officielle https://code.claude.com/docs/llms.txt
+
+**Usage :**
 ```bash
-/claude:make:command [nom-commande] [description] [--tools=outil1,outil2] [--category=categorie]
-```
+# Créer un nouveau skill
+/skill-creator
 
-**Options :**
-- `nom-commande` : Format kebab-case
-- `description` : Description courte
-- `--tools` : Outils autorisés (défaut: Bash,Read,Write,Edit)
-- `--category` : Catégorie (git, doc, build, etc.)
+# Comprendre la structure d'un skill
+/skill-creator "explain skill anatomy"
 
-**Exemples :**
-```bash
-# Commande Git
-/claude:make:command git-hotfix "Création de hotfix avec workflow Git" --tools=Bash,Edit --category=git
-
-# Commande Build
-/claude:make:command deploy-staging "Déploiement en staging" --tools=Bash,Read --category=build
+# Améliorer un skill existant
+/skill-creator "improve my-skill progressive disclosure"
 ```
 
 **Génère automatiquement :**
-- Frontmatter YAML avec métadonnées
-- Structure de workflow
-- Section timing
-- Documentation
+- SKILL.md avec frontmatter YAML complet
+- Structure références/ pour progressive disclosure
+- Scripts d'automatisation si nécessaires
+- Documentation complète avec exemples
+
+---
+
+### `/memory`
+
+Gestion intelligente de CLAUDE.md avec 4-level hierarchy et path-scoped memory.
+
+**Hiérarchie 4 niveaux :**
+1. **Global** : `~/.claude/CLAUDE.md` (tous les projets)
+2. **Workspace** : `.claude/CLAUDE.md` (projet courant)
+3. **Package** : `package/.claude/CLAUDE.md` (package spécifique)
+4. **Directory** : `.claude/CLAUDE.md` dans sous-dossiers (contexte local)
+
+**Usage :**
+```bash
+# Créer/mettre à jour memory
+/memory "remember: use PSR-12 for PHP formatting"
+
+# Memory scopée au package
+/memory "for package auth: use JWT tokens" --scope=package
+
+# Memory directory-specific
+/memory "for this component: always validate input" --scope=directory
+```
+
+**Features :**
+- Path-scoped memory (workspace, package, directory)
+- Fusion automatique des niveaux (global → workspace → package → directory)
+- Patterns de projet (monorepo, microservices, etc.)
+- Techniques de prompting intégrées
+
+---
+
+### `/make-subagent`
+
+Créateur de subagents Claude Code avec configuration YAML, tool restrictions et orchestration patterns.
+
+**Usage :**
+```bash
+# Créer un subagent
+/make-subagent "security-reviewer" "Review code for security issues"
+
+# Subagent avec tools restreints
+/make-subagent "file-explorer" "Explore codebase" --tools=Read,Glob,Grep
+
+# Subagent avec contexte spécifique
+/make-subagent "test-runner" "Run and analyze tests" --context=testing
+```
+
+**Génère automatiquement :**
+- Fichier YAML de configuration (.claude/agents/)
+- Tool restrictions appropriées
+- Context management patterns
+- Error handling et recovery
+- Orchestration patterns (pipeline, parallel, conditional)
+
+**Features :**
+- 7 fichiers références (orchestration, debugging, error handling, etc.)
+- Patterns d'orchestration (sequential, parallel, conditional, retry)
+- Gestion du contexte et de l'état
+- Evaluation et testing des agents
 
 ---
 

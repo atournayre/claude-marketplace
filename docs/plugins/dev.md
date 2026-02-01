@@ -1,10 +1,10 @@
 ---
 title: "dev"
 description: "Workflow structuré de développement de features en 8 phases avec agents spécialisés et support git worktrees"
-version: "2.4.1"
+version: "2.5.0"
 ---
 
-# dev <Badge type="info" text="v2.4.1" />
+# dev <Badge type="info" text="v2.5.0" />
 
 
 Workflow structuré de développement de features avec **deux modes** :
