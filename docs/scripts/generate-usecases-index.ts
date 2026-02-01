@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 import matter from 'gray-matter'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const docsDir = path.resolve(__dirname, '../docs')
+const docsDir = path.resolve(__dirname, '..')
 const usecasesDir = path.join(docsDir, 'usecases')
 
 interface UseCase {

@@ -8,7 +8,7 @@
     "preview": "vitepress preview",
     "generate": "npm run generate:docs && npm run generate:usecases",
     "generate:docs": "tsx ../scripts/generate-docs.ts",
-    "generate:usecases": "tsx ../scripts/generate-usecases-index.ts"
+    "generate:usecases": "tsx scripts/generate-usecases-index.ts"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",
