@@ -23,7 +23,7 @@
     {
       "name": "customize",
       "source": "./customize",
-      "description": "Personnalise ton expérience Claude Code avec hooks, output styles et status lines sur mesure"
+      "description": "Personnalise ton expérience Claude Code avec hooks, output styles, status lines sur mesure + Bash Security Validator"
     },
     {
       "name": "dev",
@@ -56,6 +56,11 @@
       "description": "Plugin Symfony avec skills make, documentation et intégrations framework"
     },
     {
+      "name": "utils",
+      "source": "./utils",
+      "description": "Skills et agents utilitaires génériques : fix-grammar, action, explore-codebase"
+    },
+    {
       "name": "framework",
       "source": "./framework",
       "description": "Plugin pour atournayre/framework avec skills et intégrations"
@@ -84,6 +89,11 @@
       "name": "prompt",
       "source": "./prompt",
       "description": "Générateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture"
+    },
+    {
+      "name": "mlvn",
+      "source": "./mlvn",
+      "description": "AIBlueprint by Melvynx : agents spécialisés, workflows autonomes (Ralph Loop), hooks sécurité, skills Git/Meta/Utils"
     }
   ]
 }

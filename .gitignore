@@ -19,3 +19,10 @@ credentials.json
 
 # Auto Claude data directory
 .auto-claude/
+
+# Plugins - dossiers .claude dans sous-dossiers (données locales, pas configuration)
+# Note: garde le .claude/ racine qui contient les commandes/skills du projet
+*/**/.claude/
+
+# Plugins - node_modules
+/mlvn/scripts/node_modules/

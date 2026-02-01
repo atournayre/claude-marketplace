@@ -22,6 +22,67 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - Documentation complète avec patterns courants et guide quick start
   - Dépôt : [chrome-ui-test/CHANGELOG.md](chrome-ui-test/CHANGELOG.md)
 
+## [2026.01.31] - 2026-01-31
+
+### Plugins Added
+- **utils v1.0.0** - Nouveau plugin skills/agents utilitaires génériques
+  - Skill `/fix-grammar` : correction grammaire/orthographe (single/multi mode, auto-detect langue)
+  - Agent `action` : validation conditionnelle avant exécution
+  - Agent `explore-codebase` : exploration avec imports chains
+  - Migration depuis mlvn plugin (AIBlueprint v1.0.0)
+  - Dépôt : [utils/CHANGELOG.md](utils/CHANGELOG.md)
+
+### Plugins Updated
+- **mlvn v1.1.0** - Nettoyage après migration vers écosystème
+  - Suppression éléments migrés (security validator, skill-creator, memory, subagent, ralph, fix-grammar, agents, etc.)
+  - Conservé : skills Git, meta-prompt-creator, workflow-apex, utils-fix-errors, agents explore-docs/websearch
+  - Documentation mise à jour pour refléter la structure réduite
+  - Dépôt : [mlvn/CHANGELOG.md](mlvn/CHANGELOG.md)
+
+- **dev v2.5.0** - Nouveaux skills oneshot, ralph + examine step
+  - Nouveau skill `/oneshot` : implémentation ultra-rapide (speed > completeness)
+  - Nouveau skill `/ralph` (setup-ralph) : autonomous coding loop (PRD → stories → loop)
+  - Examine step ajouté dans `/dev:review` : adversarial review (challenge decisions, edge cases)
+  - TaskManagement : 5 tâches dans review (examine bloquée par consolidation)
+  - Migration depuis mlvn plugin (AIBlueprint v1.0.0)
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+
+- **git v1.11.0** - Nouveau skill fix-pr-comments + clarification auto-push
+  - Nouveau skill `/fix-pr-comments` : implémente systématiquement TOUS les commentaires de review PR
+  - Batched MultiEdit pour efficacité (same-file modifications)
+  - Auto-commit + auto-push avec checklist progression
+  - Clarification documentation `/git:commit` : auto-push déjà activé par défaut (flag `--no-push` pour désactiver)
+  - Migration depuis mlvn plugin (AIBlueprint v1.0.0)
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
+- **claude v1.3.0** - Intégration skills mlvn (skill-creator, memory, make-subagent)
+  - Nouveau skill `/skill-creator` : créateur complet avec progressive disclosure, bundled resources, scripts TypeScript
+  - Nouveau skill `/memory` : gestion CLAUDE.md 4-level hierarchy (global, workspace, package, directory)
+  - Nouveau skill `/make-subagent` : créateur subagents YAML avec orchestration patterns
+  - Suppression `/claude:make:command` (remplacé par skill-creator, supérieur 100%)
+  - Migration depuis mlvn plugin (AIBlueprint v1.0.0)
+  - Dépôt : [claude/CHANGELOG.md](claude/CHANGELOG.md)
+
+- **customize v1.1.0** - Intégration Bash Security Validator (100+ patterns, 82+ tests)
+  - Validateur de sécurité pour commandes Bash via hook PreToolUse
+  - Architecture hybride Python (hooks) + TypeScript/Bun (validators)
+  - Détection patterns malveillants : fork bombs, backdoors, exfiltration données
+  - Protection chemins système : /etc, /usr, /bin, /sys, /proc, /dev, /root
+  - Logs sécurité avec traçabilité complète
+  - Dépôt : [customize/CHANGELOG.md](customize/CHANGELOG.md)
+
+### Plugins Added
+- **mlvn v1.0.0** - Intégration AIBlueprint by Melvynx
+  - 4 agents spécialisés (action, explore-codebase, explore-docs, websearch)
+  - 4 skills Git (commit, create-pr, fix-pr-comments, merge)
+  - 4 skills Meta (claude-memory, prompt-creator, skill-creator, subagent-creator)
+  - 3 skills Workflow (ralph-loop, apex, apex-free)
+  - 3 skills Utilities (fix-errors, fix-grammar, oneshot)
+  - Hook de sécurité PreToolUse pour validation de commandes Bash
+  - Scripts utilitaires (command-validator, statusline)
+  - Documentation complète en français
+  - Dépôt : [mlvn/CHANGELOG.md](mlvn/CHANGELOG.md)
+
 ## [2026.01.28] - 2026-01-28
 
 ### Plugins Updated
@@ -590,14 +651,19 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## Notes de version
 
 Pour les détails complets de chaque plugin, voir les CHANGELOGs individuels:
+- [claude/CHANGELOG.md](claude/CHANGELOG.md)
+- [command/CHANGELOG.md](command/CHANGELOG.md)
+- [customize/CHANGELOG.md](customize/CHANGELOG.md)
+- [dev/CHANGELOG.md](dev/CHANGELOG.md)
+- [doc/CHANGELOG.md](doc/CHANGELOG.md)
 - [framework/CHANGELOG.md](framework/CHANGELOG.md)
 - [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
 - [git/CHANGELOG.md](git/CHANGELOG.md)
+- [github/CHANGELOG.md](github/CHANGELOG.md)
+- [marketing/CHANGELOG.md](marketing/CHANGELOG.md)
+- [mlvn/CHANGELOG.md](mlvn/CHANGELOG.md)
+- [notifications/CHANGELOG.md](notifications/CHANGELOG.md)
+- [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+- [qa/CHANGELOG.md](qa/CHANGELOG.md)
 - [review/CHANGELOG.md](review/CHANGELOG.md)
 - [symfony/CHANGELOG.md](symfony/CHANGELOG.md)
-- [dev/CHANGELOG.md](dev/CHANGELOG.md)
-- [qa/CHANGELOG.md](qa/CHANGELOG.md)
-- [doc/CHANGELOG.md](doc/CHANGELOG.md)
-- [github/CHANGELOG.md](github/CHANGELOG.md)
-- [claude/CHANGELOG.md](claude/CHANGELOG.md)
-- [customize/CHANGELOG.md](customize/CHANGELOG.md)

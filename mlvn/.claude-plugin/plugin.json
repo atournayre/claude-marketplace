@@ -1,0 +1,22 @@
+{
+  "name": "mlvn",
+  "version": "1.1.0",
+  "description": "Adaptation du repo AIBlueprint de Melvynx (https://github.com/Melvynx/aiblueprint) - Agents spécialisés, workflows autonomes, skills Git/Meta/Utils (version épurée - composants migrés vers autres plugins)",
+  "author": {
+    "name": "Melvyn (Melvynx)",
+    "url": "https://github.com/melvynx"
+  },
+  "homepage": "https://github.com/melvynx/aiblueprint",
+  "repository": "https://github.com/melvynx/aiblueprint",
+  "license": "MIT",
+  "keywords": [
+    "aiblueprint",
+    "melvynx",
+    "productivity",
+    "agents",
+    "workflows",
+    "statusline",
+    "git"
+  ],
+  "category": "productivity"
+}

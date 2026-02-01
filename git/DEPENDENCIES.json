@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "critical": {
+    "git": {
+      "version": "*",
+      "description": "Commandes git"
+    },
+    "gh": {
+      "version": "*",
+      "description": "GitHub CLI pour PR"
+    }
+  },
+  "optional": {},
+  "packages": {}
+}

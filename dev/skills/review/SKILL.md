@@ -84,6 +84,7 @@ TaskCreate #1: Code Review - Simplicité/bugs/conventions (feature-dev)
 TaskCreate #2: PHPStan - Résoudre erreurs niveau 9
 TaskCreate #3: Elegant Objects - Conformité principes
 TaskCreate #4: Consolider - Agréger résultats et décider
+TaskCreate #5: Examine - Adversarial review (challenge decisions, edge cases)
 ```
 
 **Important :**
@@ -125,6 +126,45 @@ Lancer l'agent `elegant-objects-reviewer` (local)
 
 Agréger les résultats des 3 reviews.
 
+**Quand terminé :** `TaskUpdate` → tâche #4 en `completed`
+
+## 4.5. Examine (Adversarial Review) ⭐ NOUVEAU
+
+**🔄 Progression :** `TaskUpdate` → tâche #5 en `in_progress`
+
+Challenge l'implémentation avec perspective adversariale :
+
+**Questions à poser :**
+- **Edge cases** : Qu'arrive-t-il si input null/vide/invalide ?
+- **Limites** : Quelle est la taille maximale acceptable ? Le timeout ?
+- **Sécurité** : Injection possible ? Exposition de données sensibles ?
+- **Performance** : N+1 queries ? Boucles infinies possibles ?
+- **Concurrence** : Race conditions ? Deadlocks ?
+- **Rollback** : Comment annuler si ça échoue en prod ?
+- **Décisions d'architecture** : Pourquoi ce pattern ? Alternative meilleure ?
+
+**Focus prioritaire :**
+1. Chercher ce qui **pourrait casser** en production
+2. Identifier **hypothèses non validées** dans le code
+3. Tester mentalement **scénarios extrêmes**
+4. Challenger **décisions d'implémentation** (pourquoi X au lieu de Y ?)
+
+**Output :**
+```
+🔍 Examine Results:
+
+Edge cases trouvés:
+- [cas] : [risque] → [suggestion]
+
+Limites détectées:
+- [limite] : [impact] → [mitigation]
+
+Décisions challengées:
+- [décision] : [alternative] → [trade-off]
+```
+
+**Quand terminé :** `TaskUpdate` → tâche #5 en `completed`
+
 ## 5. Demander l'action utilisateur
 
 ```
@@ -145,8 +185,6 @@ Que souhaites-tu faire ?
 
 ## 7. Finaliser
 
-**🔄 Progression :** `TaskUpdate` → tâche #4 en `completed`
-
 Mettre à jour le workflow state
 
 # Prochaine étape
@@ -160,9 +198,10 @@ Prochaine étape : /dev:summary pour le résumé final
 # Règles
 
 - **Task Management** :
-  - Créer 4 tâches au démarrage (3 reviews + 1 consolidation)
+  - Créer 5 tâches au démarrage (3 reviews + 1 consolidation + 1 examine)
   - Marquer les 3 reviews en `in_progress` avant lancement parallèle
   - La tâche de consolidation est bloquée par les 3 reviews (`addBlockedBy`)
+  - La tâche examine est bloquée par la consolidation (`addBlockedBy`)
   - Utiliser `TaskList` pour afficher la progression
 - **PHPStan erreurs = BLOQUANT** (font échouer la CI)
 - Confiance minimum 80% pour les issues code review

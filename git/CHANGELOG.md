@@ -5,6 +5,25 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
+## [1.11.0] - 2026-01-31
+
+### Added
+- **Skill `/fix-pr-comments`** - Implémente systématiquement TOUS les commentaires de review PR
+  - Fetch automatique via `gh pr review list` + `gh api`
+  - Batched MultiEdit pour same-file modifications (efficacité)
+  - ALWAYS Read files BEFORE editing (sécurité)
+  - Checklist avec progression visible
+  - STAY IN SCOPE : never fix unrelated issues
+  - Auto-commit + auto-push
+  - Migré depuis mlvn plugin (AIBlueprint v1.0.0)
+
+### Changed
+- **Skill `/git:commit`** - Documentation clarifiée sur auto-push
+  - Auto-push activé PAR DÉFAUT (déjà existant)
+  - Flag `--no-push` pour désactiver
+  - Tracking intelligent avec `git push -u` si premier commit
+  - Cette fonctionnalité existait déjà, documentation mise à jour pour clarté
+
 ## [1.10.2] - 2026-01-26
 
 ### Removed
