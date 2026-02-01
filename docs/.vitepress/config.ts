@@ -24,7 +24,7 @@ export default defineConfig({
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:title', content: 'Claude Plugin Marketplace' }],
     ['meta', { name: 'twitter:description', content: '16 plugins, 69 commandes pour booster ton workflow Claude Code' }],
-    ['meta', { name: 'twitter:image', content: 'https://atournayre.github.io/claude-marketplace/og-image.svg' }]
+    ['meta', { name: 'twitter:image', content: 'https://atournayre.github.io/claude-marketplace/og-image.png' }]
   ],
 
   themeConfig: {
