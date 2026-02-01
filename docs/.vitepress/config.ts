@@ -8,8 +8,23 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', href: '/claude-marketplace/favicon.ico' }],
+
+    // Open Graph
+    ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'Claude Plugin Marketplace' }],
-    ['meta', { property: 'og:description', content: '16 plugins pour Claude Code' }]
+    ['meta', { property: 'og:description', content: '16 plugins, 69 commandes pour booster ton workflow Claude Code' }],
+    ['meta', { property: 'og:url', content: 'https://atournayre.github.io/claude-marketplace/' }],
+    ['meta', { property: 'og:image', content: 'https://atournayre.github.io/claude-marketplace/og-image.svg' }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { property: 'og:image:alt', content: 'Claude Plugin Marketplace - 16 plugins, 69 commandes' }],
+    ['meta', { property: 'og:locale', content: 'fr_FR' }],
+
+    // Twitter Card
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: 'Claude Plugin Marketplace' }],
+    ['meta', { name: 'twitter:description', content: '16 plugins, 69 commandes pour booster ton workflow Claude Code' }],
+    ['meta', { name: 'twitter:image', content: 'https://atournayre.github.io/claude-marketplace/og-image.svg' }]
   ],
 
   themeConfig: {
