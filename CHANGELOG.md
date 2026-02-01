@@ -7,6 +7,21 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.01] - 2026-02-01
+
+### Plugins Added
+- **chrome-ui-test v1.0.0** - Tests automatisés d'interface utilisateur dans Chrome
+  - Skill `/chrome-ui-test:ui-test` pour tests UI complets
+  - Support navigation, clics, validation visuelle, tests fonctionnels
+  - Tests responsive avec raccourcis viewport (`--responsive`, `--mobile`, `--tablet`, `--desktop`)
+  - Mode aide `--help` pour résumé des actions avant exécution
+  - Mode debug (console logs, network requests)
+  - Enregistrement GIF des parcours utilisateur
+  - Génération de rapports détaillés en Markdown
+  - 12+ exemples détaillés (login, e-commerce, formulaires, debug)
+  - Documentation complète avec patterns courants et guide quick start
+  - Dépôt : [chrome-ui-test/CHANGELOG.md](chrome-ui-test/CHANGELOG.md)
+
 ## [2026.01.28] - 2026-01-28
 
 ### Plugins Updated
