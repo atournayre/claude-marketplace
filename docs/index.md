@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Claude Plugin Marketplace
   text: Plugins pour Claude Code
-  tagline: 16 plugins, 69 commandes pour booster ton workflow
+  tagline: Écosystème complet pour booster ton workflow
   image:
     src: /og-image.png
     alt: Claude Plugin Marketplace illustration
@@ -50,6 +50,19 @@ features:
 
 <script setup>
 import { data as plugins } from './.vitepress/data/plugins.data'
+import { computed } from 'vue'
+
+const totalSkills = computed(() =>
+  plugins.reduce((sum, p) => sum + p.skillCount, 0)
+)
+
+const totalAgents = computed(() =>
+  plugins.reduce((sum, p) => sum + p.agentCount, 0)
+)
+
+const totalHooks = computed(() =>
+  plugins.reduce((sum, p) => sum + p.hookCount, 0)
+)
 </script>
 
 ## Installation rapide
@@ -65,7 +78,9 @@ import { data as plugins } from './.vitepress/data/plugins.data'
 ## Statistiques
 
 - **{{ plugins.length }} plugins** disponibles
-- **69 commandes** slash
+- **{{ totalSkills }} skills** pour automatiser ton workflow
+- **{{ totalAgents }} agents** spécialisés
+- **{{ totalHooks }} hooks** pour événements
 - **Open Source** (MIT)
 
 ## Pourquoi ce marketplace ?
@@ -76,7 +91,18 @@ Ce marketplace centralise tous mes plugins Claude Code pour faciliter leur déco
 
 - [Tous les plugins](/plugins/) - Liste complète avec métadonnées
 - [Par catégorie](/plugins/by-category) - Plugins organisés par domaine
-- [Index des commandes](/commands/) - Les 69 slash commands disponibles
+- [Index des skills](/commands/) - Toutes les skills disponibles
+
+## Composants du Marketplace
+
+### 🎯 Skills
+Les **skills** sont des prompts réutilisables invoqués via slash commands (`/git:commit`, `/dev:feature`, etc.). Elles automatisent des tâches spécifiques du workflow de développement.
+
+### 🤖 Agents
+Les **agents** sont des sous-processus spécialisés qui exécutent des tâches complexes de manière autonome (exploration de codebase, review de code, résolution d'erreurs, etc.).
+
+### 🪝 Hooks
+Les **hooks** sont des scripts déclenchés automatiquement lors d'événements (pre-commit, post-merge, file-save, etc.) pour automatiser ton workflow.
 
 ## Contribuer
 

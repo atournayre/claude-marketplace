@@ -164,15 +164,17 @@ function generateCommandsIndex() {
   ).join('\n')
 
   const content = `---
-title: Index des Commandes
+title: Index des Skills
 ---
 
-# Index des Commandes
+# Index des Skills
 
-${allCommands.length} commandes disponibles dans le marketplace.
+${allCommands.length} skills disponibles dans le marketplace.
 
-| Commande | Plugin | Description |
-|----------|--------|-------------|
+**Note** : Les skills sont invoquées via slash commands (ex: \`/git:commit\`, \`/dev:feature\`).
+
+| Skill | Plugin | Description |
+|-------|--------|-------------|
 ${tableRows}
 `
 

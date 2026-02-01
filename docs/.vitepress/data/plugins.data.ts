@@ -11,6 +11,8 @@ export interface PluginMetadata {
   author: { name: string; email: string }
   keywords: string[]
   skillCount: number
+  agentCount: number
+  hookCount: number
   readmeLines: number
   slug: string
 }
@@ -50,6 +52,24 @@ export default {
         })
       }
 
+      // Compter agents
+      const agentsDir = path.join(rootDir, dir, 'agents')
+      let agentCount = 0
+      if (fs.existsSync(agentsDir)) {
+        const agentFiles = fs.readdirSync(agentsDir, { withFileTypes: true })
+          .filter(e => e.isFile() && e.name.endsWith('.yaml'))
+        agentCount = agentFiles.length
+      }
+
+      // Compter hooks
+      const hooksDir = path.join(rootDir, dir, 'hooks')
+      let hookCount = 0
+      if (fs.existsSync(hooksDir)) {
+        const hookFiles = fs.readdirSync(hooksDir, { withFileTypes: true })
+          .filter(e => e.isFile() && (e.name.endsWith('.sh') || e.name.endsWith('.js')))
+        hookCount = hookFiles.length
+      }
+
       // Compter lignes README
       const readmePath = path.join(rootDir, dir, 'README.md')
       const readmeLines = fs.existsSync(readmePath)
@@ -59,6 +79,8 @@ export default {
       return {
         ...pluginJson,
         skillCount,
+        agentCount,
+        hookCount,
         readmeLines,
         slug: dir
       }

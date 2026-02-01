@@ -1,13 +1,15 @@
 ---
-title: Index des Commandes
+title: Index des Skills
 ---
 
-# Index des Commandes
+# Index des Skills
 
-70 commandes disponibles dans le marketplace.
+70 skills disponibles dans le marketplace.
 
-| Commande | Plugin | Description |
-|----------|--------|-------------|
+**Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
+
+| Skill | Plugin | Description |
+|-------|--------|-------------|
 | `/claude:alias:add` | [claude](/plugins/claude) | Crée un alias de commande qui délègue à une autre slash command |
 | `/claude:challenge` | [claude](/plugins/claude) | Évalue ma dernière réponse, donne une note sur 10 et propose des améliorations |
 | `/claude:doc:load` | [claude](/plugins/claude) | Charge la documentation Claude Code depuis docs.claude.com dans des fichiers markdown locaux |
