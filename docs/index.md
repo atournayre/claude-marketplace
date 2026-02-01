@@ -6,7 +6,7 @@ hero:
   text: Plugins pour Claude Code
   tagline: 16 plugins, 69 commandes pour booster ton workflow
   image:
-    src: /claude-marketplace/og-image.png
+    src: /og-image.png
     alt: Claude Plugin Marketplace illustration
   actions:
     - theme: brand
