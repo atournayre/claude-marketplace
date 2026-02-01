@@ -37,6 +37,8 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Plugins', link: '/plugins/' },
       { text: 'Skills', link: '/commands/' },
+      { text: 'Agents', link: '/agents/' },
+      { text: 'Hooks', link: '/hooks/' },
       { text: 'Use Cases', link: '/usecases/' },
       { text: 'GitHub', link: 'https://github.com/atournayre/claude-marketplace' }
     ],

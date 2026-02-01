@@ -16,6 +16,8 @@ import { data as plugins } from '../.vitepress/data/plugins.data'
   <p>{{ plugin.description }}</p>
   <div class="meta">
     <Badge type="tip" :text="plugin.skillCount + ' skills'" />
+    <Badge v-if="plugin.agentCount > 0" type="tip" :text="plugin.agentCount + ' agents'" />
+    <Badge v-if="plugin.hookCount > 0" type="tip" :text="plugin.hookCount + ' hooks'" />
     <span v-for="keyword in plugin.keywords.slice(0, 3)" :key="keyword">
       <Badge type="warning" :text="keyword" />
     </span>
