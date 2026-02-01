@@ -52,21 +52,26 @@ export default {
         })
       }
 
-      // Compter agents
+      // Compter agents (fichiers .md dans agents/)
       const agentsDir = path.join(rootDir, dir, 'agents')
       let agentCount = 0
       if (fs.existsSync(agentsDir)) {
         const agentFiles = fs.readdirSync(agentsDir, { withFileTypes: true })
-          .filter(e => e.isFile() && e.name.endsWith('.yaml'))
+          .filter(e => e.isFile() && e.name.endsWith('.md'))
         agentCount = agentFiles.length
       }
 
-      // Compter hooks
+      // Compter hooks (fichiers .py dans hooks/, hors utils/ et __pycache__)
       const hooksDir = path.join(rootDir, dir, 'hooks')
       let hookCount = 0
       if (fs.existsSync(hooksDir)) {
         const hookFiles = fs.readdirSync(hooksDir, { withFileTypes: true })
-          .filter(e => e.isFile() && (e.name.endsWith('.sh') || e.name.endsWith('.js')))
+          .filter(e =>
+            e.isFile() &&
+            e.name.endsWith('.py') &&
+            !e.name.startsWith('_') && // Exclure __init__.py, __pycache__
+            e.name !== 'utils.py'
+          )
         hookCount = hookFiles.length
       }
 
