@@ -11,6 +11,11 @@
       "description": "Plugin centralisé de commandes - Workaround pour Claude Code issue #15178"
     },
     {
+      "name": "chrome-ui-test",
+      "source": "./chrome-ui-test",
+      "description": "Tests automatisés d'interface utilisateur dans Chrome : navigation, screenshots, responsive, debug, GIF"
+    },
+    {
       "name": "claude",
       "source": "./claude",
       "description": "Plugin de base pour Claude Code avec skills essentiels pour l'amélioration et la documentation"

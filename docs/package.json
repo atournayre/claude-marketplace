@@ -1,0 +1,17 @@
+{
+  "name": "claude-marketplace-docs",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run generate && vitepress dev",
+    "build": "npm run generate && vitepress build",
+    "preview": "vitepress preview",
+    "generate": "tsx ../scripts/generate-docs.ts"
+  },
+  "devDependencies": {
+    "vitepress": "^1.5.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.2",
+    "vue": "^3.5.13"
+  }
+}

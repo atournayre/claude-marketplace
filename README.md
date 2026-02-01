@@ -8,6 +8,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 
 | Plugin | Version | Description | Documentation |
 |--------|---------|-------------|---------------|
+| 🌐 **Chrome UI Test** | 1.0.0 | Tests automatisés d'interface utilisateur dans Chrome (navigation, screenshots, responsive, GIF) | [README](chrome-ui-test/README.md) |
 | 📦 **Command** | 1.0.0 | Plugin centralisé de commandes - Workaround issue #15178 | [README](command/README.md) |
 | 🤖 **Claude** | 1.3.0 | Plugin de base : skill-creator, memory, make-subagent, challenge, doc-loader | [README](claude/README.md) |
 | 🎨 **Customize** | 1.1.0 | Personnalise ton expérience avec hooks, output styles, status lines + Bash Security Validator | [README](customize/README.md) |

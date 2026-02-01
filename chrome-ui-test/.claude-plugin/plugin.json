@@ -1,0 +1,10 @@
+{
+  "name": "chrome-ui-test",
+  "version": "1.0.0",
+  "description": "Tests automatisés d'interface utilisateur dans Chrome : navigation, validation visuelle, tests fonctionnels et responsive",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "keywords": ["chrome", "ui", "test", "automation", "browser", "e2e", "skills"]
+}
