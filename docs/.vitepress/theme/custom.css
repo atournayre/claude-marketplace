@@ -31,3 +31,22 @@
   flex-wrap: wrap;
   margin-top: 0.5rem;
 }
+
+/* Hero image styling */
+.VPHero .image-src {
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.VPHero .image-src:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive hero image */
+@media (max-width: 768px) {
+  .VPHero .image-container {
+    margin-top: 2rem;
+  }
+}
