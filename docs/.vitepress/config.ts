@@ -36,8 +36,23 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Plugins', link: '/plugins/' },
-      { text: 'Commandes', link: '/commands/' }
+      { text: 'Commandes', link: '/commands/' },
+      { text: 'GitHub', link: 'https://github.com/atournayre/claude-marketplace' }
     ],
+
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/atournayre/claude-marketplace' }
+    ],
+
+    footer: {
+      message: 'Publié sous licence MIT',
+      copyright: 'Copyright © 2026 Aurélien Tournayre'
+    },
+
+    editLink: {
+      pattern: 'https://github.com/atournayre/claude-marketplace/edit/main/docs/:path',
+      text: 'Modifier cette page sur GitHub'
+    },
 
     sidebar: {
       '/guide/': [

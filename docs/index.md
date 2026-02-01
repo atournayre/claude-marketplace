@@ -74,3 +74,23 @@ Ce marketplace centralise tous mes plugins Claude Code pour faciliter leur déco
 - [Tous les plugins](/plugins/) - Liste complète avec métadonnées
 - [Par catégorie](/plugins/by-category) - Plugins organisés par domaine
 - [Index des commandes](/commands/) - Les 69 slash commands disponibles
+
+## Contribuer
+
+Le marketplace est open source et les contributions sont les bienvenues !
+
+- **Repository GitHub** : [atournayre/claude-marketplace](https://github.com/atournayre/claude-marketplace)
+- **Issues** : Signaler un bug ou proposer une fonctionnalité
+- **Pull Requests** : Contribuer du code ou de la documentation
+
+### Développement local
+
+```bash
+git clone https://github.com/atournayre/claude-marketplace.git
+cd claude-marketplace
+
+# Installer et lancer la doc
+cd docs
+npm install
+npm run dev
+```
