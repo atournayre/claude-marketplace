@@ -129,7 +129,8 @@ export default defineConfig({
             { text: 'Notifications', link: '/plugins/notifications' },
             { text: 'Chrome UI Test', link: '/plugins/chrome-ui-test' },
             { text: 'Marketing', link: '/plugins/marketing' },
-            { text: 'Command', link: '/plugins/command' }
+            { text: 'Command', link: '/plugins/command' },
+            { text: 'MLVN (AIBlueprint)', link: '/plugins/mlvn' }
           ]
         }
       ]

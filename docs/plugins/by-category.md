@@ -13,7 +13,7 @@ const categories = {
   'Framework': ['symfony'],
   'Documentation': ['doc', 'prompt', 'claude'],
   'IA': ['gemini'],
-  'Outils': ['customize', 'notifications', 'chrome-ui-test', 'marketing', 'command']
+  'Outils': ['customize', 'notifications', 'chrome-ui-test', 'marketing', 'command', 'mlvn']
 }
 
 function getPluginsByCategory(category) {
