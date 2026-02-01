@@ -1,10 +1,10 @@
 ---
 title: "customize"
 description: "Personnalise ton expérience Claude Code avec hooks, output styles et status lines sur mesure"
-version: "1.0.0"
+version: "1.1.0"
 ---
 
-# customize <Badge type="info" text="v1.0.0" />
+# customize <Badge type="info" text="v1.1.0" />
 
 
 Personnalise ton expérience Claude Code avec hooks, output styles et status lines sur mesure.
@@ -64,6 +64,26 @@ Scripts Python pour automatiser et personnaliser le comportement de Claude Code 
 - Récupération de résultats
 - Cleanup spécifique
 
+### Bash Security Validator ⚡
+
+**Validateur de sécurité pour commandes bash** (TypeScript/Bun)
+
+Protection automatique contre commandes dangereuses via hook PreToolUse :
+
+- ✅ **100+ patterns de sécurité** : Bloque rm -rf /, dd, mkfs, etc.
+- ✅ **82+ tests automatisés** : Suite complète de validation
+- ✅ **Détection patterns malveillants** : Fork bombs, backdoors, exfiltration
+- ✅ **Protection chemins système** : Empêche écritures dans /etc, /usr, /bin
+- ✅ **Logs sécurité** : Traçabilité complète des blocages
+
+**Commandes bloquées :**
+- Destruction système : `rm -rf /`, `dd if=/dev/zero`, `mkfs`
+- Escalade privilèges : `sudo`, `chmod 777`, `passwd`
+- Attaques réseau : `nc -l`, `nmap`, `telnet`
+- Patterns malveillants : Fork bombs, backdoors, manipulation logs
+
+**Documentation complète** : `validators/bash/README.md`
+
 ### Configuration
 
 Les hooks sont automatiquement détectés et chargés depuis `customize/hooks/`.
@@ -113,18 +133,45 @@ Pour activer un hook dans ton projet :
 ```
 customize/
 ├── .claude-plugin/
-│   └── plugin.json
-└── hooks/
-    ├── notification.py
-    ├── session_start.py
-    ├── user_prompt_submit.py
-    ├── pre_tool_use.py
-    ├── post_tool_use.py
-    ├── pre_compact.py
-    ├── stop.py
-    ├── subagent_stop.py
-    └── utils/
+│   ├── plugin.json
+│   └── hooks.json           # Configuration hook PreToolUse (Bash Validator)
+├── hooks/                   # Hooks Python
+│   ├── notification.py
+│   ├── session_start.py
+│   ├── user_prompt_submit.py
+│   ├── pre_tool_use.py
+│   ├── post_tool_use.py
+│   ├── pre_compact.py
+│   ├── stop.py
+│   ├── subagent_stop.py
+│   └── utils/
+└── validators/              # Validators TypeScript/Bun
+    └── bash/                # Bash Security Validator
+        ├── src/
+        │   ├── cli.ts       # Entry point hook PreToolUse
+        │   └── lib/
+        │       ├── security-rules.ts  # 100+ patterns sécurité
+        │       ├── validator.ts
+        │       └── types.ts
+        ├── __tests__/       # 82+ tests
+        ├── package.json
+        └── README.md
 ```
+
+## Architecture Hybride
+
+Ce plugin utilise une **architecture hybride Python + TypeScript** :
+
+- **Hooks Python** (`hooks/`) : Gestion événements Claude Code (session, prompts, notifications)
+- **Validators TypeScript** (`validators/`) : Validation sécurité haute performance avec Bun
+
+**Pourquoi hybride ?**
+- Python : Excellent pour scripts hooks, intégration système, flexibilité
+- TypeScript/Bun : Performance critique pour validation temps réel, tests robustes (82+)
+
+**Dépendances :**
+- Python 3.x (hooks)
+- Bun runtime (validators, optionnel si validators non utilisés)
 
 ## Développement de Hooks
 

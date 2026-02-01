@@ -37,6 +37,7 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Plugins', link: '/plugins/' },
       { text: 'Skills', link: '/commands/' },
+      { text: 'Use Cases', link: '/usecases/' },
       { text: 'GitHub', link: 'https://github.com/atournayre/claude-marketplace' }
     ],
 
@@ -55,6 +56,61 @@ export default defineConfig({
     },
 
     sidebar: {
+      '/usecases/': [
+        {
+          text: 'Vue d\'ensemble',
+          items: [
+            { text: 'Tous les use cases', link: '/usecases/' },
+            { text: 'Par catégorie', link: '/usecases/by-category' },
+            { text: 'Par plugin', link: '/usecases/by-plugin' }
+          ]
+        },
+        {
+          text: 'Git & Workflow',
+          collapsed: false,
+          items: [
+            { text: 'Créer PR avec QA', link: '/usecases/git-workflow/create-pr-with-qa' },
+            { text: 'Corriger review PR', link: '/usecases/git-workflow/fix-pr-comments' },
+            { text: 'Résoudre conflits', link: '/usecases/git-workflow/resolve-merge-conflicts' },
+            { text: 'Release automation', link: '/usecases/git-workflow/release-automation' }
+          ]
+        },
+        {
+          text: 'Development',
+          collapsed: false,
+          items: [
+            { text: 'Workflow complet', link: '/usecases/development/full-feature-workflow' },
+            { text: 'Auto depuis issue', link: '/usecases/development/auto-feature-from-issue' },
+            { text: 'Code review auto', link: '/usecases/development/code-review-automation' },
+            { text: 'PHPStan level 9', link: '/usecases/development/phpstan-error-resolution' }
+          ]
+        },
+        {
+          text: 'Framework',
+          collapsed: true,
+          items: [
+            { text: 'Stack entité', link: '/usecases/framework/generate-entity-stack' },
+            { text: 'Workflow CQRS', link: '/usecases/framework/create-cqrs-workflow' },
+            { text: 'Module DDD', link: '/usecases/framework/setup-ddd-module' }
+          ]
+        },
+        {
+          text: 'Testing',
+          collapsed: true,
+          items: [
+            { text: 'Test UI E2E', link: '/usecases/testing/e2e-ui-testing' },
+            { text: 'Test responsive', link: '/usecases/testing/responsive-testing' }
+          ]
+        },
+        {
+          text: 'Advanced',
+          collapsed: true,
+          items: [
+            { text: 'Multi-plugin', link: '/usecases/advanced/multi-plugin-orchestration' },
+            { text: 'Worktrees', link: '/usecases/advanced/worktree-parallel-features' }
+          ]
+        }
+      ],
       '/guide/': [
         {
           text: 'Guide utilisateur',
