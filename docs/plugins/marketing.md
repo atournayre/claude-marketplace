@@ -1,10 +1,10 @@
 ---
 title: "marketing"
 description: "Génération de contenu marketing  - posts LinkedIn, annonces, communications"
-version: "1.2.1"
+version: "1.2.2"
 ---
 
-# marketing <Badge type="info" text="v1.2.1" />
+# marketing <Badge type="info" text="v1.2.2" />
 
 
 Génération de contenu marketing pour réseaux sociaux et communications.

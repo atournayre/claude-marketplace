@@ -1,10 +1,10 @@
 ---
 title: "claude"
 description: "Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation"
-version: "1.3.0"
+version: "1.3.1"
 ---
 
-# claude <Badge type="info" text="v1.3.0" />
+# claude <Badge type="info" text="v1.3.1" />
 
 
 Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation.

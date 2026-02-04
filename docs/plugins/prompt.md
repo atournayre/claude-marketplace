@@ -1,10 +1,10 @@
 ---
 title: "prompt"
 description: "Générateur et transformateur de prompts structurés pour développement - Templates DDD/CQRS, refactoring, webhooks, architecture, transformation en prompts exécutables"
-version: "1.3.0"
+version: "1.3.1"
 ---
 
-# prompt <Badge type="info" text="v1.3.0" />
+# prompt <Badge type="info" text="v1.3.1" />
 
 
 Générateur de prompts structurés pour accélérer le développement de projets PHP/Symfony.

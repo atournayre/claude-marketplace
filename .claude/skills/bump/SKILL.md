@@ -3,7 +3,7 @@ name: bump
 description: Automatise les mises à jour de version des plugins avec détection automatique du type de version
 model: haiku
 allowed-tools: [Read, Edit, Bash, Glob, Grep, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
-version: 1.0.2
+version: 1.0.3
 license: MIT
 hooks:
   PreToolUse:
@@ -581,6 +581,21 @@ Pour chaque plugin bumpé, utilise ou crée `DEPENDENCIES.json` puis mets à jou
    - **Dépendances inchangées** : conserver la section existante telle quelle
    - **Nouvelle dépendance** : ajouter dans la section appropriée
 
+#### 3.12. Reconstruire la documentation VitePress
+
+Après avoir mis à jour tous les fichiers, reconstruire la documentation :
+
+```bash
+cd docs && npm run build
+```
+
+Cette étape :
+- Régénère les fichiers compilés dans `docs/.vitepress/dist/`
+- Met à jour les index de plugins et use cases
+- S'assure que la doc reflète les nouvelles versions
+
+**Note** : Les fichiers `dist/` sont dans `.gitignore`, ils ne seront pas committés mais seront disponibles pour le déploiement.
+
 **Marque ensuite la tâche "Bumper les plugins sélectionnés" comme `completed` avec TaskUpdate.**
 
 ### 4. Vérification et résumé final
@@ -599,6 +614,7 @@ Fichiers modifiés :
 - README.md
 - CHANGELOG.md
 - .claude-plugin/marketplace.json (si nouveau)
+- docs/.vitepress/dist/ (rebuild)
 
 Prochaine étape : /git:commit
 ```

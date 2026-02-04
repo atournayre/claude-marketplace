@@ -1,10 +1,10 @@
 ---
 title: "symfony"
 description: "Plugin Symfony avec commandes make, documentation et intégrations framework"
-version: "1.3.1"
+version: "1.3.2"
 ---
 
-# symfony <Badge type="info" text="v1.3.1" />
+# symfony <Badge type="info" text="v1.3.2" />
 
 
 Plugin Symfony avec commandes make, documentation et intégrations framework.

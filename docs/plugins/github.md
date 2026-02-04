@@ -1,10 +1,10 @@
 ---
 title: "github"
 description: "Gestion GitHub  - issues, PR, analyse d'impact avec skills spécialisés"
-version: "1.3.1"
+version: "1.3.2"
 ---
 
-# github <Badge type="info" text="v1.3.1" />
+# github <Badge type="info" text="v1.3.2" />
 
 
 Gestion GitHub : issues, PR, analyse d'impact.

@@ -1,10 +1,10 @@
 ---
 title: "doc"
 description: "Documentation  - ADR, RTFM, génération docs, framework docs avec skills spécialisés"
-version: "1.6.1"
+version: "1.6.2"
 ---
 
-# doc <Badge type="info" text="v1.6.1" />
+# doc <Badge type="info" text="v1.6.2" />
 
 
 Documentation : ADR, RTFM, génération docs, framework docs.
