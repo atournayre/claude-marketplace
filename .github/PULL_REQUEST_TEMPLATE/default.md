@@ -1,34 +1,46 @@
 ## Description
 
-<!-- Décrivez les changements apportés par cette PR -->
+<!-- Décris brièvement les changements apportés -->
 
 ## Type de changement
 
-- [ ] 🐛 Bug fix (correction non-breaking)
-- [ ] ✨ Nouvelle fonctionnalité (changement non-breaking)
-- [ ] 💥 Breaking change (correction ou fonctionnalité qui casserait la compatibilité)
-- [ ] 📝 Documentation uniquement
-- [ ] 🔧 Configuration / Maintenance
+- [ ] Nouveau plugin
+- [ ] Nouvelle commande/skill
+- [ ] Nouvel agent
+- [ ] Amélioration/refactoring
+- [ ] Correction de bug
+- [ ] Documentation
+- [ ] Autre : _________
 
-## Plugins affectés
+## Plugin(s) concerné(s)
 
-<!-- Listez les plugins modifiés -->
-- [ ] Plugin : `xxx` - Version : `x.x.x`
+<!-- Coche les plugins impactés -->
+
+- [ ] claude
+- [ ] customize
+- [ ] dev
+- [ ] doc
+- [ ] framework
+- [ ] gemini
+- [ ] git
+- [ ] github
+- [ ] marketing
+- [ ] qa
+- [ ] review
+- [ ] symfony
 
 ## Checklist
 
-- [ ] Mon code suit les conventions du projet
-- [ ] J'ai effectué une auto-review de mon code
-- [ ] J'ai commenté les parties complexes si nécessaire
-- [ ] J'ai mis à jour la documentation (README, CHANGELOG)
-- [ ] Mes changements ne génèrent pas de nouveaux warnings
-- [ ] J'ai ajouté des tests si nécessaire
-- [ ] Tous les tests passent localement
+- [ ] Le `plugin.json` est valide et la version est incrémentée
+- [ ] Le `README.md` du plugin est à jour
+- [ ] Le `CHANGELOG.md` est mis à jour
+- [ ] Les commandes/skills ont un `argument-hint` et `description` clairs
+- [ ] Les agents ont un `when_to_use` bien défini
 
 ## Tests effectués
 
-<!-- Décrivez comment vous avez testé vos changements -->
+<!-- Décris comment tu as testé ces changements -->
 
-## Contexte additionnel
+## Notes additionnelles
 
-<!-- Ajoutez tout contexte utile (issues liées, screenshots, etc.) -->
+<!-- Contexte supplémentaire, captures d'écran, etc. -->
