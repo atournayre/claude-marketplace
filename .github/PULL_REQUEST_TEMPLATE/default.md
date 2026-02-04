@@ -16,6 +16,7 @@
 
 <!-- Coche les plugins impactés -->
 
+- [ ] chrome-ui-test
 - [ ] claude
 - [ ] customize
 - [ ] dev
@@ -25,9 +26,13 @@
 - [ ] git
 - [ ] github
 - [ ] marketing
+- [ ] mlvn
+- [ ] notifications
+- [ ] prompt
 - [ ] qa
 - [ ] review
 - [ ] symfony
+- [ ] utils
 
 ## Checklist
 

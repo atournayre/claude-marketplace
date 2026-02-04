@@ -40,7 +40,7 @@ TaskCreate #3: "Mettre à jour fichiers du plugin"
 
 TaskCreate #4: "Mettre à jour fichiers du marketplace"
   - activeForm: "Updating marketplace files"
-  - description: "README.md global + CHANGELOG.md global + marketplace.json"
+  - description: "README.md global + CHANGELOG.md global + marketplace.json + PR template"
 
 TaskCreate #5: "Mettre à jour dépendances et documentation"
   - activeForm: "Updating dependencies and docs"
@@ -200,6 +200,28 @@ Vérifie la cohérence :
 - Plugins dans marketplace mais pas README → ajouter
 - Ordre alphabétique dans les deux fichiers
 
+#### 5.5 Mettre à jour le template PR
+
+Met à jour `.github/PULL_REQUEST_TEMPLATE/default.md` avec la liste des plugins :
+
+1. Liste tous les dossiers contenant un `plugin.json` :
+```bash
+find . -name "plugin.json" -path "*/.claude-plugin/*" | sed 's|^\./||' | sed 's|/.claude-plugin/plugin.json||' | grep -v "^templates/" | sort
+```
+
+2. Génère la section "Plugin(s) concerné(s)" avec checkboxes :
+```markdown
+## Plugin(s) concerné(s)
+
+<!-- Coche les plugins impactés -->
+
+- [ ] {plugin1}
+- [ ] {plugin2}
+...
+```
+
+3. Remplace la section existante dans le template (entre `## Plugin(s) concerné(s)` et `## Checklist`)
+
 **TaskUpdate : Tâche #4 → `completed`**
 
 ---
@@ -260,6 +282,7 @@ Fichiers modifiés :
 ✓ README.md
 ✓ CHANGELOG.md
 ✓ .claude-plugin/marketplace.json (si nouveau)
+✓ .github/PULL_REQUEST_TEMPLATE/default.md
 ✓ docs/plugins/{plugin}.md
 ✓ docs/commands/index.md
 
@@ -277,7 +300,7 @@ Avant de terminer, vérifie que TOUTES ces conditions sont remplies :
 - [ ] Tâche #1 completed : Plugins détectés
 - [ ] Tâche #2 completed : Sélection faite
 - [ ] Tâche #3 completed : plugin.json + CHANGELOG plugin + README plugin mis à jour
-- [ ] Tâche #4 completed : README global + CHANGELOG global + marketplace.json mis à jour
+- [ ] Tâche #4 completed : README global + CHANGELOG global + marketplace.json + PR template mis à jour
 - [ ] Tâche #5 completed : DEPENDENCIES.json + VitePress rebuild
 - [ ] Tâche #6 completed : Résumé affiché
 
@@ -301,3 +324,4 @@ Avant de terminer, vérifie que TOUTES ces conditions sont remplies :
 - `{plugin}/DEPENDENCIES.json`
 - `docs/plugins/{plugin}.md`
 - `docs/commands/index.md`
+- `.github/PULL_REQUEST_TEMPLATE/default.md`
