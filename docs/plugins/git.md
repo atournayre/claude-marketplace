@@ -1,10 +1,10 @@
 ---
 title: "git"
 description: "Workflow Git complet  - branches, commits, conflits, PR avec automation QA"
-version: "1.11.1"
+version: "1.12.0"
 ---
 
-# git <Badge type="info" text="v1.11.1" />
+# git <Badge type="info" text="v1.12.0" />
 
 
 Workflow Git complet : branches, commits, conflits, PR.
@@ -70,27 +70,33 @@ Création de branche Git avec workflow structuré.
 
 ---
 
-### `/git:commit`
+### `/git:commit` ⭐ v1.12.0 - REFONTE
 
-Créer des commits bien formatés avec format conventional et emoji.
+Créer des commits bien formatés avec format conventional et emoji, avec **Task Management System intégré**.
 
 **Arguments :**
 ```bash
-/git:commit [message]
-/git:commit --no-verify
-/git:commit --push
+/git:commit [--verify] [--no-push]
 ```
+
+**Nouveautés v1.12.0 :**
+- ✅ **Task Management System** : Chaque étape trackée via TaskCreate/TaskUpdate
+- ✅ **5 tâches** : Vérification → Analyse → Stratégie → Création → Push
+- ✅ **Détection automatique** de division des commits (feat + docs, fix + refactor, etc.)
+- ✅ **20+ emojis spécialisés** : Table complète avec contextes (breaking, security, hotfix, etc.)
+- ✅ **Mode HEREDOC obligatoire** : Format sécurisé pour messages commits
+- ✅ **Directives de division** : Quand créer plusieurs commits
 
 **Format Conventional Commits :**
 ```
-<emoji> <type>: <description>
+<emoji> <type>(<scope>): <description impérative courte>
 
-[body optionnel]
+[body optionnel - explique le "pourquoi"]
 
-Co-Authored-By: Claude <noreply@anthropic.com>
+[footer optionnel - références issues]
 ```
 
-**Types disponibles :**
+**Types disponibles (10) :**
 - `feat` ✨ - Nouvelle fonctionnalité
 - `fix` 🐛 - Correction de bug
 - `docs` 📝 - Documentation
@@ -99,28 +105,45 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - `chore` 🔧 - Maintenance
 - `perf` ⚡ - Performance
 - `style` 💄 - Formatage
-- `ci` 👷 - CI/CD
-- `build` 📦 - Build
-- `revert` ⏪ - Revert
+- `ci` 🚀 - CI/CD
+- `revert` ⏪ - Annulation
+
+**Emojis spécialisés (10+) :**
+- `💥` Breaking change
+- `🔒️` Sécurité
+- `🚑️` Hotfix critique
+- `✏️` Faute de frappe
+- `🚧` WIP
+- `🚨` Lint warnings
+- Et bien d'autres...
 
 **Exemples :**
 ```bash
-# Commit simple
-/git:commit "feat: add user login"
+# Commit simple (Task Management automatique)
+/git:commit
 
-# Sans hooks
-/git:commit "fix: correct validation" --no-verify
+# Avec vérification QA avant commit
+/git:commit --verify
 
-# Commit et push
-/git:commit "docs: update README" --push
+# Sans push automatique
+/git:commit --no-push
+
+# Combinaison
+/git:commit --verify --no-push
 ```
 
-**Workflow :**
-- Analyse des changements staged/unstaged
-- Génération message selon conventions
-- Commit avec emoji approprié
-- Gestion des pre-commit hooks
-- Push automatique par défaut (flag `--no-push` pour désactiver)
+**Workflow (5 étapes) :**
+1. **Vérifier les changements** - git status, staging automatique si nécessaire
+2. **Analyser le diff** - Détection des types de changements
+3. **Déterminer la stratégie** - Décision : 1 ou plusieurs commits
+4. **Créer le(s) commit(s)** - Messages formatés avec HEREDOC
+5. **Push vers remote** - Automatique (sauf `--no-push`)
+
+**Task Management (nouveau v1.12.0) :**
+- ✅ Progression visible via 5 tâches
+- ✅ Validation avant chaque étape
+- ✅ Checklist complète de validation finale
+- ✅ Impossibilité de skip une étape
 
 ---
 

@@ -7,6 +7,19 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.04c] - 2026-02-04
+
+### Plugins Updated
+- **git v1.12.0** - Task Management System obligatoire + Refonte complète de git:commit
+  - Skill `git:commit` : 5 tâches pour suivi complet (Vérif → Analyse → Stratégie → Commit → Push)
+  - Task Management : TaskCreate/TaskUpdate automatiques, validation de progression
+  - Détection automatique division commits (feat + docs → 2 commits)
+  - 20+ emojis spécialisés (breaking change, security, hotfix, etc.)
+  - Pattern HEREDOC obligatoire pour sécurité des messages commits
+  - Directives de division commits : quand créer plusieurs commits
+  - Hooks améliorés pour validation git status avant commit
+  - Upgrade MINOR (v1.11.1 → v1.12.0)
+
 ## [2026.02.04b] - 2026-02-04
 
 ### Plugins Updated
