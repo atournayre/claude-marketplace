@@ -7,6 +7,22 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.04] - 2026-02-04
+
+### Plugins Updated
+- **claude v1.3.1** - Migrer noms de modèles vers format court
+- **customize v1.1.1** - Migrer noms de modèles vers format court
+- **dev v2.5.1** - Migrer noms de modèles vers format court
+- **doc v1.6.2** - Migrer noms de modèles vers format court
+- **gemini v1.4.2** - Migrer noms de modèles vers format court
+- **git v1.11.1** - Migrer noms de modèles vers format court
+- **github v1.3.2** - Migrer noms de modèles vers format court
+- **marketing v1.2.2** - Migrer noms de modèles vers format court
+- **prompt v1.3.1** - Migrer noms de modèles vers format court
+- **qa v1.3.2** - Migrer noms de modèles vers format court
+- **review v1.0.1** - Migrer noms de modèles vers format court
+- **symfony v1.3.2** - Migrer noms de modèles vers format court
+
 ## [2026.02.01] - 2026-02-01
 
 ### Plugins Added

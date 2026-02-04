@@ -10,21 +10,21 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 |--------|---------|-------------|---------------|
 | 🌐 **Chrome UI Test** | 1.0.0 | Tests automatisés d'interface utilisateur dans Chrome (navigation, screenshots, responsive, GIF) | [README](chrome-ui-test/README.md) |
 | 📦 **Command** | 1.0.0 | Plugin centralisé de commandes - Workaround issue #15178 | [README](command/README.md) |
-| 🤖 **Claude** | 1.3.0 | Plugin de base : skill-creator, memory, make-subagent, challenge, doc-loader | [README](claude/README.md) |
-| 🎨 **Customize** | 1.1.0 | Personnalise ton expérience avec hooks, output styles, status lines + Bash Security Validator | [README](customize/README.md) |
-| ⚙️ **Dev** | 2.5.0 | Workflow 8 phases + oneshot, ralph-loop, examine step + 25 skills | [README](dev/README.md) |
-| 📚 **Doc** | 1.6.1 | Documentation : ADR, RTFM, génération docs, framework docs + 3 skills | [README](doc/README.md) |
+| 🤖 **Claude** | 1.3.1 | Plugin de base : skill-creator, memory, make-subagent, challenge, doc-loader | [README](claude/README.md) |
+| 🎨 **Customize** | 1.1.1 | Personnalise ton expérience avec hooks, output styles, status lines + Bash Security Validator | [README](customize/README.md) |
+| ⚙️ **Dev** | 2.5.1 | Workflow 8 phases + oneshot, ralph-loop, examine step + 25 skills | [README](dev/README.md) |
+| 📚 **Doc** | 1.6.2 | Documentation : ADR, RTFM, génération docs, framework docs + 3 skills | [README](doc/README.md) |
 | 🏗️ **Framework** | 1.1.1 | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
-| 🔮 **Gemini** | 1.4.1 | Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search + 3 skills | [README](gemini/README.md) |
-| 🔧 **Git** | 1.11.0 | Workflow Git complet : branches, commits, conflits, PR, fix-pr-comments + auto-push | [README](git/README.md) |
-| 🐙 **GitHub** | 1.3.1 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
-| 📱 **Marketing** | 1.2.1 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
+| 🔮 **Gemini** | 1.4.2 | Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search + 3 skills | [README](gemini/README.md) |
+| 🔧 **Git** | 1.11.1 | Workflow Git complet : branches, commits, conflits, PR, fix-pr-comments + auto-push | [README](git/README.md) |
+| 🐙 **GitHub** | 1.3.2 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
+| 📱 **Marketing** | 1.2.2 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
 | 🎭 **MLVN** | 1.1.0 | Adaptation du repo AIBlueprint de Melvynx : agents spécialisés, workflows, skills Git/Meta/Utils (version épurée après migration) | [README](mlvn/README.md) |
 | 🔔 **Notifications** | 1.0.2 | Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète | [README](notifications/README.md) |
-| 📝 **Prompt** | 1.3.0 | Générateur et transformateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture, prompts exécutables | [README](prompt/README.md) |
-| 📋 **QA** | 1.3.1 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
-| 🔍 **Review** | 1.0.0 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
-| 🎯 **Symfony** | 1.3.1 | Plugin Symfony avec skills make, documentation et intégrations | [README](symfony/README.md) |
+| 📝 **Prompt** | 1.3.1 | Générateur et transformateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture, prompts exécutables | [README](prompt/README.md) |
+| 📋 **QA** | 1.3.2 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
+| 🔍 **Review** | 1.0.1 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
+| 🎯 **Symfony** | 1.3.2 | Plugin Symfony avec skills make, documentation et intégrations | [README](symfony/README.md) |
 | 🛠️ **Utils** | 1.0.0 | Skills et agents utilitaires : fix-grammar, action, explore-codebase | [README](utils/README.md) |
 
 ## 🎨 Convention Output Styles

@@ -1,3 +1,8 @@
+## [1.1.1] - 2026-02-04
+
+### Changed
+- Migrer noms de modèles Claude vers format court (sonnet, haiku, opus)
+
 # Changelog
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
