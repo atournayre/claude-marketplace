@@ -15,12 +15,12 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📚 **Doc** | 1.6.2 | Documentation : ADR, RTFM, génération docs, framework docs + 3 skills | [README](doc/README.md) |
 | 🏗️ **Framework** | 1.1.1 | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
 | 🔮 **Gemini** | 1.4.2 | Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search + 3 skills | [README](gemini/README.md) |
-| 🔧 **Git** | 1.11.1 | Workflow Git complet : branches, commits, conflits, PR, fix-pr-comments + auto-push | [README](git/README.md) |
+| 🔧 **Git** | 1.12.0 | Workflow Git complet : branches, commits, conflits, PR, fix-pr-comments + Task Management System | [README](git/README.md) |
 | 🐙 **GitHub** | 1.3.2 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
 | 📱 **Marketing** | 1.2.2 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
 | 🎭 **MLVN** | 1.1.0 | Adaptation du repo AIBlueprint de Melvynx : agents spécialisés, workflows, skills Git/Meta/Utils (version épurée après migration) | [README](mlvn/README.md) |
 | 🔔 **Notifications** | 1.0.2 | Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète | [README](notifications/README.md) |
-| 📝 **Prompt** | 1.3.1 | Générateur et transformateur de prompts structurés : features DDD/CQRS, refactoring, webhooks, architecture, prompts exécutables | [README](prompt/README.md) |
+| 📝 **Prompt** | 2.0.0 | Système hybride Starters + Mode Plan + Checklists - Templates légers, exploration contextuelle, validation automatisée | [README](prompt/README.md) |
 | 📋 **QA** | 1.3.2 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
 | 🔍 **Review** | 1.0.1 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
 | 🎯 **Symfony** | 1.3.2 | Plugin Symfony avec skills make, documentation et intégrations | [README](symfony/README.md) |

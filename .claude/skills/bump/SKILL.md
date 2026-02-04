@@ -3,633 +3,301 @@ name: bump
 description: Automatise les mises à jour de version des plugins avec détection automatique du type de version
 model: haiku
 allowed-tools: [Read, Edit, Bash, Glob, Grep, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
-version: 1.0.3
+version: 2.0.0
 license: MIT
-hooks:
-  PreToolUse:
-    - matcher: "Bash(git diff:*)"
-      hooks:
-        - type: command
-          command: |
-            # Hook 1: Validation workspace clean
-            if ! git diff --quiet; then
-              echo "⚠️  Attention : modifications non stagées détectées"
-              echo "Les fichiers suivants seront inclus dans le bump :"
-              git diff --name-only
-            fi
-          once: true
-    - matcher: "Read"
-      hooks:
-        - type: command
-          command: |
-            # Hook 3: Validation fichiers requis
-            PLUGIN_FILE=$(echo "$CLAUDE_TOOL_ARGS" | grep -oP '(?<=file_path: ).*?plugin\.json' || echo "")
-            if [ -n "$PLUGIN_FILE" ]; then
-              PLUGIN_DIR=$(dirname $(dirname "$PLUGIN_FILE"))
-              for file in "$PLUGIN_DIR/.claude-plugin/plugin.json" "$PLUGIN_DIR/CHANGELOG.md" "$PLUGIN_DIR/README.md"; do
-                if [ ! -f "$file" ]; then
-                  echo "❌ Fichier manquant : $file"
-                  exit 1
-                fi
-              done
-            fi
-          once: true
-  PostToolUse:
-    - matcher: "Edit"
-      hooks:
-        - type: command
-          command: |
-            # Hook 2: Auto-commit après bump (suggéré)
-            if ! git diff --quiet; then
-              # Détecter le plugin et la version depuis le dernier fichier édité
-              if echo "$CLAUDE_TOOL_ARGS" | grep -q "plugin.json"; then
-                PLUGIN_JSON=$(echo "$CLAUDE_TOOL_ARGS" | grep -oP '(?<=file_path: ).*?plugin\.json' || echo "")
-                if [ -n "$PLUGIN_JSON" ] && [ -f "$PLUGIN_JSON" ]; then
-                  PLUGIN=$(basename $(dirname $(dirname "$PLUGIN_JSON")))
-                  NEW_VERSION=$(grep '"version"' "$PLUGIN_JSON" | sed 's/.*"\([0-9.]*\)".*/\1/')
-                  OLD_VERSION=$(git show HEAD:"$PLUGIN_JSON" 2>/dev/null | grep '"version"' | sed 's/.*"\([0-9.]*\)".*/\1/' || echo "unknown")
-
-                  echo ""
-                  echo "📝 Bump détecté : $PLUGIN $OLD_VERSION → $NEW_VERSION"
-                  echo ""
-                  echo "Prêt pour commit. Tu peux lancer :"
-                  echo "   /git:commit"
-                  echo ""
-                  echo "Message suggéré :"
-                  echo "   🔖 chore(git): bump version $OLD_VERSION → $NEW_VERSION (PATCH)"
-                fi
-              fi
-            fi
-          once: false
 ---
 
 # Bump Version Plugin
 
 Mettre à jour automatiquement la version d'un ou plusieurs plugins avec détection automatique du type de version.
 
+## IMPORTANT : Task Management System obligatoire
+
+**RÈGLE CRITIQUE** : Chaque étape DOIT être trackée via TaskCreate/TaskUpdate.
+- Créer la tâche AVANT de commencer l'étape
+- Marquer `in_progress` au début
+- Marquer `completed` UNIQUEMENT quand l'étape est 100% terminée
+- NE JAMAIS sauter une étape
+
 ## Instructions à Exécuter
 
-### 0. Créer les tâches de workflow
+### Étape 1 : Créer TOUTES les tâches du workflow
 
-Utilise TaskCreate pour créer les tâches suivantes :
+**OBLIGATOIRE** : Utilise TaskCreate pour créer ces 6 tâches dans cet ordre exact :
 
-1. **Détecter plugins modifiés**
-   - subject: `Détecter les plugins modifiés via git diff`
-   - activeForm: `Detecting modified plugins`
-   - description: Exécuter git diff pour identifier les plugins avec modifications
+```
+TaskCreate #1: "Détecter les plugins modifiés"
+  - activeForm: "Detecting modified plugins"
+  - description: "git diff pour identifier plugins avec modifications"
 
-2. **Sélectionner plugins à bumper**
-   - subject: `Sélectionner les plugins à bumper (AskUserQuestion)`
-   - activeForm: `Selecting plugins to bump`
-   - description: Demander sélection utilisateur des plugins à bumper
+TaskCreate #2: "Sélectionner les plugins à bumper"
+  - activeForm: "Selecting plugins to bump"
+  - description: "AskUserQuestion pour sélection utilisateur"
 
-3. **Bumper les plugins sélectionnés**
-   - subject: `Exécuter bump pour chaque plugin sélectionné`
-   - activeForm: `Bumping selected plugins`
-   - description: Détecter type version + analyser changements + mettre à jour fichiers
+TaskCreate #3: "Mettre à jour fichiers du plugin"
+  - activeForm: "Updating plugin files"
+  - description: "plugin.json + CHANGELOG.md + README.md du plugin"
 
-4. **Vérifier résultat final**
-   - subject: `Vérifier que tous les fichiers sont à jour`
-   - activeForm: `Verifying final result`
-   - description: Afficher résumé avec fichiers modifiés
+TaskCreate #4: "Mettre à jour fichiers du marketplace"
+  - activeForm: "Updating marketplace files"
+  - description: "README.md global + CHANGELOG.md global + marketplace.json"
 
-### 1. Identifier les plugins modifiés
+TaskCreate #5: "Mettre à jour dépendances et documentation"
+  - activeForm: "Updating dependencies and docs"
+  - description: "DEPENDENCIES.json + rebuild VitePress (npm run build)"
 
-Exécute les commandes suivantes en parallèle :
-- `git diff --name-only HEAD` pour les fichiers modifiés (non stagés)
-- `git diff --staged --name-only` pour les fichiers stagés
+TaskCreate #6: "Vérifier et afficher résumé"
+  - activeForm: "Verifying final result"
+  - description: "Lister tous les fichiers modifiés + prochaine étape"
+```
 
-Combine les deux listes et filtre pour extraire les noms de plugins uniques (premier répertoire du chemin).
+**Après création** : Affiche `TaskList` pour confirmer que les 6 tâches existent.
 
-**Ignore** :
-- Fichiers dans `.claude/`
-- Fichiers à la racine (`README.md`, `CHANGELOG.md`)
+---
 
-Pour chaque plugin, compte le nombre de fichiers modifiés.
+### Étape 2 : Détecter les plugins modifiés
 
-**Marque ensuite la tâche "Détecter plugins modifiés" comme `completed` avec TaskUpdate.**
+**TaskUpdate : Tâche #1 → `in_progress`**
 
-### 2. Sélection interactive des plugins
+Exécute en parallèle :
+```bash
+git diff --name-only HEAD
+git diff --staged --name-only
+```
 
-**Utilise AskUserQuestion pour demander la sélection :**
-- Question : "Quels plugins veux-tu bumper ?"
-- header : "Plugins"
-- multiSelect : true
-- Options :
-  1. "Tous les plugins modifiés ({N} plugins)" (Recommended) - Description : "Bumper automatiquement tous les plugins avec des modifications"
-  2. Pour chaque plugin : "{plugin} ({N} fichiers modifiés)" - Description : "Version actuelle : {version}"
+**Traitement** :
+1. Combine les deux listes
+2. Filtre pour extraire les noms de plugins (premier répertoire)
+3. Ignore : `.claude/`, fichiers à la racine
+4. Compte les fichiers par plugin
 
-**Si l'utilisateur sélectionne "Tous"**, utilise tous les plugins détectés.
-**Sinon**, utilise uniquement les plugins sélectionnés individuellement.
+**TaskUpdate : Tâche #1 → `completed`**
 
-**Marque ensuite la tâche "Sélectionner plugins à bumper" comme `completed` avec TaskUpdate.**
+---
 
-### 3. Pour chaque plugin sélectionné : bump complet
+### Étape 3 : Sélection interactive
 
-**Pour chaque plugin sélectionné, exécute les sous-étapes suivantes :**
+**TaskUpdate : Tâche #2 → `in_progress`**
 
-#### 3.1. Détecter le type de version
+Utilise `AskUserQuestion` :
+```json
+{
+  "questions": [{
+    "question": "Quels plugins veux-tu bumper ?",
+    "header": "Plugins",
+    "multiSelect": true,
+    "options": [
+      {"label": "Tous les plugins modifiés (N plugins) (Recommended)", "description": "Bumper automatiquement tous"},
+      {"label": "{plugin} (N fichiers)", "description": "Version actuelle : X.Y.Z"}
+    ]
+  }]
+}
+```
 
-**Exécute :**
-- `git diff --staged --name-only --diff-filter=A` pour lister les nouveaux fichiers stagés du plugin
+**TaskUpdate : Tâche #2 → `completed`**
 
-**Analyse les patterns suivants :**
-- Nouveaux agents : fichiers `{plugin}/agents/*.md`
-- Nouvelles commandes : fichiers `{plugin}/commands/*.md` (legacy)
-- Nouveaux skills : répertoires `{plugin}/skills/*/`
-- Nouveau plugin : le plugin n'existe pas dans `.claude-plugin/marketplace.json`
+---
 
-**Détermine le type de version :**
-- Si nouveaux agents OU nouvelles commandes OU nouveaux skills OU nouveau plugin → **MINOR** (X.Y.0 → X.Y+1.0)
-- Sinon → **PATCH** (X.Y.Z → X.Y.Z+1)
+### Étape 4 : Mettre à jour fichiers du plugin
 
-#### 3.2. Lire la version actuelle et calculer la nouvelle version
+**TaskUpdate : Tâche #3 → `in_progress`**
 
-- Lis le fichier `{plugin}/.claude-plugin/plugin.json`
-- Extrais la version actuelle (champ `version`)
-- Calcule la nouvelle version selon le type détecté :
-  - PATCH : `1.2.3` → `1.2.4`
-  - MINOR : `1.2.3` → `1.3.0`
+**Pour CHAQUE plugin sélectionné, dans cet ordre :**
 
-#### 3.3. Analyser les changements pour le CHANGELOG
+#### 4.1 Détecter le type de version
 
-**Exécute :**
-- `git diff {plugin}/` pour voir tous les changements du plugin
-- `git diff --staged {plugin}/` pour voir les changements stagés
+```bash
+git diff --staged --name-only --diff-filter=A | grep "^{plugin}/"
+```
 
-**Analyse les changements et catégorise-les :**
-- Nouveaux agents/skills/commandes → `### Added`
-- Modifications de code/logique → `### Changed`
-- Corrections de bugs → `### Fixed`
-- Suppressions → `### Removed`
+**Règles** :
+- Nouveaux agents (`agents/*.md`) → MINOR
+- Nouveaux skills (`skills/*/`) → MINOR
+- Nouveau plugin (pas dans marketplace.json) → MINOR
+- Sinon → PATCH
 
-**Lis les nouveaux fichiers** pour extraire leurs descriptions (titre, description) depuis le frontmatter YAML.
+#### 4.2 Calculer la nouvelle version
 
-#### 3.4. Mettre à jour plugin.json
+Lis `{plugin}/.claude-plugin/plugin.json` et calcule :
+- PATCH : `1.2.3` → `1.2.4`
+- MINOR : `1.2.3` → `1.3.0`
 
-Édite `{plugin}/.claude-plugin/plugin.json` et remplace la version :
+#### 4.3 Analyser les changements
+
+```bash
+git diff {plugin}/
+git diff --staged {plugin}/
+```
+
+Catégorise en : Added, Changed, Fixed, Removed
+
+#### 4.4 Mettre à jour plugin.json
+
 ```json
 "version": "NOUVELLE_VERSION"
 ```
 
-#### 3.5. Mettre à jour CHANGELOG du plugin
+#### 4.5 Mettre à jour CHANGELOG du plugin
 
-Lis `{plugin}/CHANGELOG.md` et ajoute **en haut** (après le titre) une nouvelle section :
-
+Ajoute en haut (après le titre) :
 ```markdown
 ## [NOUVELLE_VERSION] - YYYY-MM-DD
 
 ### Added
-- Description des nouvelles fonctionnalités
+- ...
 
 ### Changed
-- Description des modifications
-
-### Fixed
-- Description des corrections
-
-### Removed
-- Description des suppressions
+- ...
 ```
 
-**Règles :**
-- Utilise la date du jour (format YYYY-MM-DD)
-- Supprime les sections vides (sans contenu)
-- Garde les sections dans l'ordre : Added, Changed, Fixed, Removed
+#### 4.6 Mettre à jour README du plugin (si nouveaux agents/skills)
 
-#### 3.6. Mettre à jour README du plugin (si applicable)
+**TaskUpdate : Tâche #3 → `completed`**
 
-**Si** nouveaux agents, skills ou commandes ont été ajoutés :
-- Lis `{plugin}/README.md`
-- Ajoute la documentation pour les nouvelles fonctionnalités dans la section appropriée
-- Mets à jour la section structure si nécessaire
+---
 
-#### 3.7. Mettre à jour README global
+### Étape 5 : Mettre à jour fichiers du marketplace
 
-Lis `README.md` à la racine et mets à jour la ligne du plugin dans le tableau des versions :
+**TaskUpdate : Tâche #4 → `in_progress`**
+
+#### 5.1 Mettre à jour README.md global
+
+Dans le tableau des plugins :
 ```markdown
-| ... | **{Plugin}** | NOUVELLE_VERSION |
+| 📝 **{Plugin}** | NOUVELLE_VERSION | Description | [README](...) |
 ```
 
-#### 3.8. Mettre à jour CHANGELOG global
+#### 5.2 Mettre à jour CHANGELOG.md global
 
-Lis `CHANGELOG.md` à la racine.
-
-**Vérifie si une section avec la date du jour existe :**
+Vérifie si section du jour existe :
 ```markdown
 ## [YYYY.MM.DD] - YYYY-MM-DD
 ```
 
-**Si elle n'existe pas**, crée-la juste après `## [Unreleased]` :
+Si non, crée-la après `## [Unreleased]`.
+
+Ajoute :
 ```markdown
-## [YYYY.MM.DD] - YYYY-MM-DD
+### Plugins Updated
+- **{plugin} vNOUVELLE_VERSION** - Résumé des changements
 ```
 
-**Ajoute l'entrée du plugin :**
-- Si **nouveau plugin** :
-  ```markdown
-  ### Plugins Added
-  - **{plugin} vNOUVELLE_VERSION** - Description courte
-    - Liste des fonctionnalités
-  ```
-- Si **plugin existant** :
-  ```markdown
-  ### Plugins Updated
-  - **{plugin} vNOUVELLE_VERSION** - Résumé des changements
-    - Détails des modifications
-  ```
+#### 5.3 Mettre à jour marketplace.json (si nouveau plugin)
 
-#### 3.9. Mettre à jour marketplace.json (si nouveau plugin)
+Si le plugin n'existe pas dans `.claude-plugin/marketplace.json` :
+```json
+{
+  "name": "{plugin}",
+  "source": "./{plugin}",
+  "description": "..."
+}
+```
 
-**Si** le plugin est nouveau (n'existe pas dans `.claude-plugin/marketplace.json`) :
-- Lis `.claude-plugin/marketplace.json`
-- Ajoute une entrée pour le nouveau plugin :
-  ```json
-  {
-    "name": "{plugin}",
-    "source": "./{plugin}",
-    "description": "Description du plugin"
-  }
-  ```
-- Ajoute aussi un lien vers le CHANGELOG dans la section "Notes de version" du `CHANGELOG.md` global
+#### 5.4 Synchroniser README.md et marketplace.json
 
-#### 3.10. Synchroniser README.md et marketplace.json
+Vérifie la cohérence :
+- Plugins dans README mais pas marketplace → ajouter
+- Plugins dans marketplace mais pas README → ajouter
+- Ordre alphabétique dans les deux fichiers
 
-Après avoir traité tous les plugins, vérifie la cohérence entre `README.md` et `.claude-plugin/marketplace.json` :
+**TaskUpdate : Tâche #4 → `completed`**
 
-**Étapes :**
-1. Extrais la liste des plugins depuis `README.md` (tableau "Plugins Disponibles")
-2. Extrais la liste des plugins depuis `.claude-plugin/marketplace.json`
-3. Identifie les différences :
-   - Plugins dans README mais pas dans marketplace.json → ajouter au marketplace.json
-   - Plugins dans marketplace.json mais pas dans README → ajouter au README
-4. Pour chaque plugin manquant :
-   - Dans marketplace.json : ajoute une entrée avec name, source, description (extraite du README)
-   - Dans README : ajoute une ligne dans le tableau (extraire version depuis `{plugin}/.claude-plugin/plugin.json`)
+---
 
-**Règles d'ordre :**
-- marketplace.json : ordre alphabétique par `name`
-- README.md : ordre alphabétique par nom de plugin
+### Étape 6 : Mettre à jour dépendances et documentation
 
-#### 3.11. Mettre à jour DEPENDENCIES.json et init-marketplace.md
+**TaskUpdate : Tâche #5 → `in_progress`**
 
-Pour chaque plugin bumpé, utilise ou crée `DEPENDENCIES.json` puis mets à jour la section AUTO-GENERATED dans `.claude/commands/init-marketplace.md` :
+#### 6.1 DEPENDENCIES.json
 
-**Étapes :**
+Si `{plugin}/DEPENDENCIES.json` n'existe pas, scanner et créer :
+```json
+{
+  "version": "1.0",
+  "critical": {},
+  "optional": {},
+  "packages": {"npm": {}}
+}
+```
 
-1. **Vérifier si DEPENDENCIES.json existe**
+#### 6.2 Rebuild VitePress
 
-   ```bash
-   # Vérifier l'existence du fichier
-   if [ -f {plugin}/DEPENDENCIES.json ]; then
-     # Fichier existe → passer à l'étape 2
-   else
-     # Fichier n'existe pas → scanner le plugin (étape 1.1)
-   fi
-   ```
-
-1.1. **Scanner le plugin pour détecter les dépendances** (si DEPENDENCIES.json n'existe pas)
-
-   Utilise Grep et Read pour analyser tous les fichiers du plugin :
-
-   **a) Détecter les commandes système dans les skills/agents**
-   ```bash
-   # Scanner tous les fichiers SKILL.md et agents/*.md
-   grep -rh "allowed-tools:" {plugin}/skills/*/SKILL.md {plugin}/agents/*.md 2>/dev/null
-
-   # Exemples de patterns à chercher :
-   # - Bash(git :*) → dépendance `git`
-   # - Bash(gh :*) → dépendance `gh`
-   # - Bash(npm :*) → dépendance `npm`
-   # - Bash(pnpm :*) → dépendance `pnpm`
-   # - Bash(bun :*) → dépendance `bun`
-   # - Bash(php :*) → dépendance `php`
-   # - Bash(composer :*) → dépendance `composer`
-   ```
-
-   **b) Détecter les commandes dans les scripts**
-   ```bash
-   # Scanner tous les types de scripts courants
-   find {plugin}/scripts -type f \( \
-     -name "*.ts" -o -name "*.js" -o -name "*.sh" -o \
-     -name "*.py" -o -name "*.rb" -o -name "*.pl" -o \
-     -name "*.php" \
-   \) 2>/dev/null | head -20
-
-   # Vérifier les shebangs pour détecter le runtime/interpréteur
-   find {plugin}/scripts -type f -exec head -1 {} \; 2>/dev/null | grep "^#!"
-
-   # Mapping shebang → dépendance :
-   # #!/usr/bin/env bun → dépendance `bun`
-   # #!/usr/bin/env node → dépendance `node`
-   # #!/usr/bin/env python3 → dépendance `python3`
-   # #!/usr/bin/env python → dépendance `python`
-   # #!/usr/bin/env ruby → dépendance `ruby`
-   # #!/usr/bin/env perl → dépendance `perl`
-   # #!/usr/bin/env php → dépendance `php`
-   # #!/bin/bash → dépendance `bash`
-   # #!/bin/sh → dépendance `sh`
-   ```
-
-   **c) Détecter les packages NPM**
-   ```bash
-   # Chercher tous les package.json dans le plugin
-   find {plugin} -name "package.json" -type f
-
-   # Pour chaque package.json trouvé, extraire :
-   # - dependencies
-   # - devDependencies
-   # - peerDependencies
-   ```
-
-   **d) Détecter les dépendances dans les hooks**
-   ```bash
-   # Scanner hooks.json s'il existe
-   grep -h "command.*bun\|command.*node\|command.*npm" {plugin}/hooks/hooks.json 2>/dev/null
-   ```
-
-   **e) Scanner le contenu des fichiers pour mentions explicites**
-   ```bash
-   # Chercher des patterns dans tous les .md du plugin
-   grep -rh "npm install\|bun install\|composer require\|apt install\|brew install" {plugin}/*.md 2>/dev/null
-   ```
-
-2. **Extraire et classifier les dépendances**
-
-   Pour chaque dépendance détectée :
-
-   **Dépendances critiques** :
-   - Commandes utilisées dans `allowed-tools` de plusieurs skills
-   - Runtime détecté dans les shebangs de scripts
-   - Commandes mentionnées dans hooks
-   - Sans ces dépendances, le plugin est non fonctionnel ou très limité
-
-   **Dépendances optionnelles** :
-   - Commandes utilisées par un seul skill/agent
-   - Commandes marquées comme "optionnel" dans la documentation
-   - Fonctionnalités secondaires
-
-   **Packages NPM** :
-   - Extraire de tous les package.json trouvés
-   - Distinguer dependencies, devDependencies, peerDependencies
-   - Garder les versions spécifiées (^, ~, >=, etc.)
-
-   **Versions minimales** :
-   - Chercher des patterns comme `>= X.Y.Z` dans les commentaires
-   - Chercher dans plugin.json s'il y a un champ `engines` ou `requirements`
-
-3. **Déduire les informations contextuelles**
-
-   Pour améliorer la documentation, ajouter automatiquement les dépendances implicites :
-
-   **Dépendances implicites système** :
-   - Si `bun` détecté → ajouter `node` >= 16.0.0 (prérequis de Bun)
-   - Si `composer` détecté → ajouter `php` si pas déjà listé
-   - Si `npm` ou `pnpm` détecté → ajouter `node` si pas déjà listé
-   - Si `pip` détecté → ajouter `python` si pas déjà listé
-   - Si `gem` détecté → ajouter `ruby` si pas déjà listé
-
-   **Dépendances implicites packages** :
-   - Si scripts TypeScript (*.ts) → ajouter `typescript` dans packages NPM si absent
-   - Si scripts Python avec imports → extraire via `grep "^import\|^from"` pour détecter modules
-   - Si Makefile détecté → ajouter `make` dans dépendances
-   - Si Dockerfile détecté → ajouter `docker` dans dépendances optionnelles
-
-1.2. **Créer ou mettre à jour DEPENDENCIES.json**
-
-   **Si le fichier n'existe pas** (résultat du scan en 1.1) :
-
-   Créer `{plugin}/DEPENDENCIES.json` avec le format suivant :
-
-   ```json
-   {
-     "version": "1.0",
-     "critical": {
-       "commande": {
-         "version": ">=X.Y.Z",
-         "description": "Description de l'utilisation",
-         "detected_in": ["fichier1.ts", "fichier2.md"],
-         "impact": "Fonctionnalités bloquées sans cette dépendance"
-       }
-     },
-     "optional": {
-       "commande": {
-         "description": "Description"
-       }
-     },
-     "packages": {
-       "npm": {
-         "dependencies": {},
-         "devDependencies": {},
-         "peerDependencies": {}
-       },
-       "python": {
-         "dependencies": []
-       }
-     }
-   }
-   ```
-
-   **Règles de génération** :
-   - Classifier automatiquement en critical/optional selon fréquence d'utilisation
-   - Inclure `detected_in` pour traçabilité
-   - Inclure `impact` pour les dépendances critiques
-   - Pour plugins sans dépendances : créer avec `{}`  vides
-
-   **Si le fichier existe déjà** :
-   - Lire le contenu actuel
-   - Comparer avec ce qui a été détecté par le scan
-   - Si nouvelles dépendances détectées → les ajouter
-   - Si dépendances supprimées → les retirer
-   - Conserver les descriptions/commentaires manuels existants
-
-2. **Lire DEPENDENCIES.json du plugin**
-
-   ```bash
-   # Lire le fichier JSON
-   cat {plugin}/DEPENDENCIES.json
-   ```
-
-   Extraire :
-   - `critical` : dépendances obligatoires
-   - `optional` : dépendances facultatives
-   - `packages.npm` : packages NPM (dependencies, devDependencies, peerDependencies)
-   - `packages.python` : packages Python le cas échéant
-   - `packages.composer` : packages PHP le cas échéant
-
-3. **Mettre à jour init-marketplace.md**
-
-   ```bash
-   # 1. Lire le fichier actuel
-   Read .claude/commands/init-marketplace.md
-
-   # 2. Localiser la section AUTO-GENERATED
-   # Chercher entre "<!-- AUTO-GENERATED" et "<!-- END AUTO-GENERATED -->"
-
-   # 3. Construire la nouvelle entrée du plugin
-   ```
-
-   **Format de sortie** :
-   ```markdown
-   #### Plugin: {plugin} (v{VERSION})
-   **Dépendances critiques:**
-   - `commande` >= version - Description de l'utilisation
-
-   **Dépendances optionnelles:**  (si applicable)
-   - `commande` - Description
-
-   **Packages NPM requis:**  (si applicable)
-   - package@^version
-   - package@^version (dev)
-   - package@^version (peer)
-
-   **Fonctionnalités bloquées sans dépendances:**  (si pertinent)
-   - Sans X : Liste des fonctionnalités impactées
-   ```
-
-   **Règles d'édition** :
-   - Si le plugin existe déjà dans AUTO-GENERATED → remplacer sa section complètement
-   - Si le plugin est nouveau → insérer à la position alphabétique
-   - Maintenir l'ordre alphabétique par nom de plugin
-   - Ne jamais toucher aux autres plugins
-
-4. **Exemple concret : workflow DEPENDENCIES.json → init-marketplace.md**
-
-   **Plugin analysé** : `mlvn` (v1.0.0)
-
-   **Étape 1 : Lire DEPENDENCIES.json**
-   ```bash
-   cat mlvn/DEPENDENCIES.json
-   ```
-
-   **Contenu extrait** :
-   ```json
-   {
-     "version": "1.0",
-     "critical": {
-       "bun": {
-         "version": ">=1.0.0",
-         "description": "Runtime pour scripts TypeScript et hooks de sécurité",
-         "impact": "Hook PreToolUse (sécurité), statusline, Ralph Loop, scripts"
-       },
-       "node": {
-         "version": ">=16.0.0",
-         "description": "Prérequis pour Bun et packages NPM"
-       }
-     },
-     "optional": {
-       "gh": {"description": "Pour skills git-create-pr, git-fix-pr-comments, git-merge"},
-       "ccusage": {"description": "Pour statusline tracking des coûts"},
-       "biome": {"description": "Pour lint/format des scripts"}
-     },
-     "packages": {
-       "npm": {
-         "dependencies": {
-           "@ai-sdk/anthropic": "^3.0.6",
-           "ai": "^6.0.11",
-           "picocolors": "^1.1.1",
-           "table": "^6.9.0",
-           "zod": "^4.3.5"
-         },
-         "devDependencies": {
-           "@biomejs/biome": "^2.3.2"
-         },
-         "peerDependencies": {
-           "typescript": "^5.0.0"
-         }
-       }
-     }
-   }
-   ```
-
-   **Étape 2 : Générer la section pour init-marketplace.md**
-   ```markdown
-   #### Plugin: mlvn (v1.0.0)
-   **Dépendances critiques:**
-   - `bun` >= 1.0.0 - Runtime pour scripts TypeScript et hooks de sécurité
-   - `node` >= 16.0.0 - Prérequis pour Bun et packages NPM
-
-   **Dépendances optionnelles:**
-   - `gh` - Pour skills git-create-pr, git-fix-pr-comments, git-merge
-   - `ccusage` - Pour statusline tracking des coûts
-   - `biome` - Pour lint/format des scripts
-
-   **Packages NPM requis:**
-   - @ai-sdk/anthropic@^3.0.6
-   - ai@^6.0.11
-   - picocolors@^1.1.1
-   - table@^6.9.0
-   - zod@^4.3.5
-   - @biomejs/biome@^2.3.2 (dev)
-   - typescript@^5.0.0 (peer)
-
-   **Fonctionnalités bloquées sans dépendances:**
-   - Sans Bun : Hook PreToolUse (sécurité), statusline, Ralph Loop, scripts
-   ```
-
-   **Étape 3 : Insérer/Remplacer dans init-marketplace.md**
-   - Lire `.claude/commands/init-marketplace.md`
-   - Localiser la section AUTO-GENERATED (entre `<!-- AUTO-GENERATED` et `<!-- END AUTO-GENERATED -->`)
-   - Si le plugin existe déjà : remplacer complètement sa section
-   - Si le plugin est nouveau : insérer à la position alphabétique
-   - Conserver l'ordre alphabétique par nom de plugin
-
-5. **Gestion des cas particuliers**
-
-   - **Plugin sans dépendances** : écrire `**Dépendances critiques:** Aucune`
-   - **Plugin supprimé** : retirer complètement sa section de AUTO-GENERATED
-   - **Dépendances inchangées** : conserver la section existante telle quelle
-   - **Nouvelle dépendance** : ajouter dans la section appropriée
-
-#### 3.12. Reconstruire la documentation VitePress
-
-Après avoir mis à jour tous les fichiers, reconstruire la documentation :
-
+**OBLIGATOIRE - NE PAS OUBLIER** :
 ```bash
 cd docs && npm run build
 ```
 
-Cette étape :
-- Régénère les fichiers compilés dans `docs/.vitepress/dist/`
-- Met à jour les index de plugins et use cases
-- S'assure que la doc reflète les nouvelles versions
+Vérifie que la commande s'exécute sans erreur.
 
-**Note** : Les fichiers `dist/` sont dans `.gitignore`, ils ne seront pas committés mais seront disponibles pour le déploiement.
+#### 6.3 Vérifier les fichiers générés
 
-**Marque ensuite la tâche "Bumper les plugins sélectionnés" comme `completed` avec TaskUpdate.**
+```bash
+git status --short docs/
+```
 
-### 4. Vérification et résumé final
+Les fichiers `docs/plugins/{plugin}.md` et `docs/commands/index.md` doivent être modifiés.
 
-Affiche un résumé pour chaque plugin bumpé :
+**TaskUpdate : Tâche #5 → `completed`**
+
+---
+
+### Étape 7 : Vérification et résumé final
+
+**TaskUpdate : Tâche #6 → `in_progress`**
+
+Affiche le résumé complet :
+
 ```
 ✅ Plugin {plugin} : v{OLD} → v{NEW} ({TYPE})
 
-Type détecté : {PATCH|MINOR}
-Raison : {nouveaux agents|nouvelles commandes|modifications|...}
+Type : {PATCH|MINOR}
+Raison : {description}
 
 Fichiers modifiés :
-- {plugin}/.claude-plugin/plugin.json
-- {plugin}/CHANGELOG.md
-- {plugin}/README.md (si applicable)
-- README.md
-- CHANGELOG.md
-- .claude-plugin/marketplace.json (si nouveau)
-- docs/.vitepress/dist/ (rebuild)
+✓ {plugin}/.claude-plugin/plugin.json
+✓ {plugin}/CHANGELOG.md
+✓ {plugin}/README.md (si applicable)
+✓ README.md
+✓ CHANGELOG.md
+✓ .claude-plugin/marketplace.json (si nouveau)
+✓ docs/plugins/{plugin}.md
+✓ docs/commands/index.md
 
 Prochaine étape : /git:commit
 ```
 
-**Marque ensuite la tâche "Vérifier résultat final" comme `completed` avec TaskUpdate.**
+**TaskUpdate : Tâche #6 → `completed`**
+
+---
+
+## Checklist de validation finale
+
+Avant de terminer, vérifie que TOUTES ces conditions sont remplies :
+
+- [ ] Tâche #1 completed : Plugins détectés
+- [ ] Tâche #2 completed : Sélection faite
+- [ ] Tâche #3 completed : plugin.json + CHANGELOG plugin + README plugin mis à jour
+- [ ] Tâche #4 completed : README global + CHANGELOG global + marketplace.json mis à jour
+- [ ] Tâche #5 completed : DEPENDENCIES.json + VitePress rebuild
+- [ ] Tâche #6 completed : Résumé affiché
+
+**Si une tâche n'est pas completed, NE PAS continuer.**
+
+---
 
 ## Règles de versioning
 
-- **MINOR** (X.Y.0 → X.Y+1.0) : Nouveaux agents, skills, commandes, ou nouveau plugin
+- **MINOR** (X.Y.0 → X.Y+1.0) : Nouveaux agents, skills, ou nouveau plugin
 - **PATCH** (X.Y.Z → X.Y.Z+1) : Modifications, corrections, refactoring, documentation
 
 ## Relevant Files
-- @.claude-plugin/marketplace.json
-- @README.md
-- @CHANGELOG.md
-- @{plugin}/.claude-plugin/plugin.json
-- @{plugin}/CHANGELOG.md
-- @{plugin}/README.md
+
+- `{plugin}/.claude-plugin/plugin.json`
+- `{plugin}/CHANGELOG.md`
+- `{plugin}/README.md`
+- `README.md`
+- `CHANGELOG.md`
+- `.claude-plugin/marketplace.json`
+- `{plugin}/DEPENDENCIES.json`
+- `docs/plugins/{plugin}.md`
+- `docs/commands/index.md`

@@ -1,7 +1,7 @@
 {
   "name": "prompt",
-  "description": "Générateur et transformateur de prompts structurés pour développement - Templates DDD/CQRS, refactoring, webhooks, architecture, transformation en prompts exécutables",
-  "version": "1.3.1",
+  "description": "Système hybride Starters + Mode Plan + Checklists pour développement efficace - Templates légers, exploration contextuelle, validation automatisée",
+  "version": "2.0.0",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
@@ -11,13 +11,12 @@
   "license": "MIT",
   "keywords": [
     "prompt",
-    "templates",
-    "ddd",
-    "cqrs",
-    "planning",
-    "architecture",
-    "transform",
-    "executable",
-    "task-management"
+    "starter",
+    "checklist",
+    "plan-mode",
+    "validation",
+    "php",
+    "symfony",
+    "elegant-objects"
   ]
 }

@@ -1,3 +1,23 @@
+## [1.12.0] - 2026-02-04
+
+### Added
+- **Task Management System obligatoire** dans `git:commit` skill
+  - Chaque étape du workflow trackée via TaskCreate/TaskUpdate
+  - Création de 5 tâches (workflow complet)
+  - Validation de progression avant continuation
+  - Checklists pour validation finale
+
+### Changed
+- **Refonte complète de la documentation `git:commit`** (version 2.0.0 du SKILL.md)
+  - Instructions réorganisées avec Task Management System
+  - Ajout des permissions manquantes : TaskCreate, TaskUpdate, TaskList
+  - Nouvelle stratégie de commit avec détection de division automatique
+  - Table consolidée des emojis par type de commit (20+ catégories)
+  - Clarification du workflow en 6 étapes majeures
+  - Exemples HEREDOC pour création commits atomiques
+  - Directives de division des commits (feat + docs, fix + refactor, etc.)
+  - Pattern obligatoire : Documentation → Implémentation → Test
+
 ## [1.11.1] - 2026-02-04
 
 ### Changed

@@ -2,17 +2,27 @@
 name: git:commit
 description: Créer des commits bien formatés avec format conventional et emoji
 model: haiku
-allowed-tools: [Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git push:*)]
+allowed-tools: [Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git push:*), TaskCreate, TaskUpdate, TaskList]
 argument-hint: [message] [--verify] [--no-push]
-version: 1.0.0
+version: 2.0.0
 license: MIT
 hooks:
   PreToolUse:
+    - matcher: "Bash(git status:*)"
+      hooks:
+        - type: command
+          command: |
+            # Hook: Vérifier qu'il y a des changements à committer
+            if git diff --cached --quiet && git diff --quiet; then
+              echo "❌ Aucun changement détecté (stagé ou non stagé)"
+              exit 1
+            fi
+          once: true
     - matcher: "Bash(git commit:*)"
       hooks:
         - type: command
           command: |
-            # Hook 1: Vérifier si --verify est passé en argument
+            # Hook: Vérifier si --verify est passé en argument
             if echo "$ARGUMENTS" | grep -q -- "--verify"; then
               echo "🔍 Exécution de make qa..."
               make qa || {
@@ -21,22 +31,12 @@ hooks:
               }
             fi
           once: false
-    - matcher: "Bash(git status:*)"
-      hooks:
-        - type: command
-          command: |
-            # Hook 2: Vérifier qu'il y a des changements à committer
-            if git diff --cached --quiet && git diff --quiet; then
-              echo "❌ Aucun changement détecté (stagé ou non stagé)"
-              exit 1
-            fi
-          once: true
   PostToolUse:
     - matcher: "Bash(git commit:*)"
       hooks:
         - type: command
           command: |
-            # Hook 3: Push automatique avec tracking intelligent
+            # Hook: Push automatique avec tracking intelligent
             BRANCH=$(git branch --show-current)
             echo "✅ Commit créé : $(git log -1 --oneline)"
 
@@ -61,187 +61,323 @@ hooks:
 
 # Workflow Git Commit
 
-Tu dois créer un commit bien formaté avec les arguments : $ARGUMENTS
+Créer un commit bien formaté avec les arguments : $ARGUMENTS
+
+## IMPORTANT : Task Management System obligatoire
+
+**RÈGLE CRITIQUE** : Chaque étape DOIT être trackée via TaskCreate/TaskUpdate.
+- Créer TOUTES les tâches AVANT de commencer
+- Marquer `in_progress` au début de chaque étape
+- Marquer `completed` UNIQUEMENT quand l'étape est 100% terminée
+- NE JAMAIS sauter une étape
 
 ## Instructions à Exécuter
 
-**IMPORTANT : Exécute ce workflow étape par étape :**
+### Étape 1 : Créer TOUTES les tâches du workflow
 
-1. **Vérifications pre-commit (optionnel)**
-   - Si l'utilisateur a passé `--verify`, exécute `make qa` d'abord
-   - Si ça échoue, demande confirmation avant de continuer
+**OBLIGATOIRE** : Utilise TaskCreate pour créer ces 5 tâches dans cet ordre exact :
 
-2. **Vérifier les fichiers stagés**
-   - Exécute `git status` pour voir ce qui est stagé
-   - Exécute `git diff --cached` pour voir les changements stagés
+```
+TaskCreate #1: "Vérifier les changements disponibles"
+  - activeForm: "Checking available changes"
+  - description: "git status + git diff pour voir les fichiers modifiés"
 
-3. **Stager automatiquement si nécessaire**
-   - Si 0 fichiers stagés : exécute `git add .` pour tout ajouter
-   - Puis re-vérifie avec `git status`
+TaskCreate #2: "Analyser le diff des changements"
+  - activeForm: "Analyzing diff content"
+  - description: "git diff --cached pour comprendre les changements"
 
-4. **Analyser les changements**
-   - Exécute `git diff --cached` pour voir TOUS les changements
-   - Analyse le diff pour détecter si plusieurs préoccupations distinctes sont mélangées
+TaskCreate #3: "Déterminer la stratégie de commit"
+  - activeForm: "Determining commit strategy"
+  - description: "Décider si un ou plusieurs commits sont nécessaires"
 
-5. **Diviser si nécessaire**
-   - Si plusieurs types de changements détectés (feat + docs + fix...), propose de diviser
-   - Utilise `git add -p` ou `git reset` pour séparer les commits
-   - Crée plusieurs commits atomiques successifs
+TaskCreate #4: "Créer le(s) commit(s)"
+  - activeForm: "Creating commit(s)"
+  - description: "git commit avec message formaté emoji + conventional"
 
-6. **Créer le(s) commit(s)**
-   - Analyse les changements pour déterminer le type (feat, fix, docs, etc.)
-   - Choisis l'emoji approprié selon la table de référence ci-dessous
-   - Construis un message format : `<emoji> <type>(<scope>): <description>`
-   - **IMPORTANT : Utilise TOUJOURS un HEREDOC pour le message :**
-   ```bash
-   git commit -m "$(cat <<'EOF'
-   <emoji> <type>: <description courte>
+TaskCreate #5: "Push vers remote"
+  - activeForm: "Pushing to remote"
+  - description: "git push (sauf si --no-push)"
+```
 
-   <détails optionnels>
-   EOF
-   )"
-   ```
+**Après création** : Affiche `TaskList` pour confirmer que les 5 tâches existent.
 
-7. **Push automatique**
-   - Si l'utilisateur n'a PAS passé `--no-push`, exécute `git push`
-   - Sinon, informe que le commit est local uniquement
+---
 
-## Bonnes Pratiques pour les Commits
+### Étape 2 : Vérifier les changements disponibles
 
-- **Vérifier avant de commiter** : S'assurer que le code est linté, se build correctement, et que la documentation est à jour
-- **Commits atomiques** : Chaque commit doit contenir des changements liés qui servent un seul objectif
-- **Diviser les gros changements** : Si les changements touchent plusieurs préoccupations, les diviser en commits séparés
-- **Format conventional commit** : Utiliser le format <type>: <description> où type est un de :
-    - feat: Une nouvelle fonctionnalité
-    - fix: Une correction de bug
-    - docs: Changements de documentation
-    - style: Changements de style de code (formatage, etc)
-    - refactor: Changements de code qui ne corrigent pas de bugs ni n'ajoutent de fonctionnalités
-    - perf: Améliorations de performance
-    - test: Ajout ou correction de tests
-    - chore: Changements du processus de build, outils, etc.
-- **Présent, mode impératif** : Écrire les messages de commit comme des commandes (ex. "ajouter fonctionnalité" pas "ajouté fonctionnalité")
-- **Première ligne concise** : Garder la première ligne sous 72 caractères
-- **Emoji** : Chaque type de commit est associé à un emoji approprié :
-    - ✨ feat: Nouvelle fonctionnalité
-    - 🐛 fix: Correction de bug
-    - 📝 docs: Documentation
-    - 💄 style: Formatage/style
-    - ♻️ refactor: Refactorisation de code
-    - ⚡️ perf: Améliorations de performance
-    - ✅ test: Tests
-    - 🔧 chore: Outils, configuration
-    - 🚀 ci: Améliorations CI/CD
-    - 🗑️ revert: Annulation de changements
-    - 🧪 test: Ajouter un test qui échoue
-    - 🚨 fix: Corriger les warnings compilateur/linter
-    - 🔒️ fix: Corriger les problèmes de sécurité
-    - 👥 chore: Ajouter ou mettre à jour les contributeurs
-    - 🚚 refactor: Déplacer ou renommer des ressources
-    - 🏗️ refactor: Faire des changements architecturaux
-    - 🔀 chore: Fusionner des branches
-    - 📦️ chore: Ajouter ou mettre à jour les fichiers compilés ou packages
-    - ➕ chore: Ajouter une dépendance
-    - ➖ chore: Supprimer une dépendance
-    - 🌱 chore: Ajouter ou mettre à jour les fichiers de seed
-    - 🧑‍💻 chore: Améliorer l'expérience développeur
-    - 🧵 feat: Ajouter ou mettre à jour le code lié au multithreading ou à la concurrence
-    - 🔍️ feat: Améliorer le SEO
-    - 🏷️ feat: Ajouter ou mettre à jour les types
-    - 💬 feat: Ajouter ou mettre à jour le texte et les littéraux
-    - 🌐 feat: Internationalisation et localisation
-    - 👔 feat: Ajouter ou mettre à jour la logique métier
-    - 📱 feat: Travailler sur le design responsive
-    - 🚸 feat: Améliorer l'expérience utilisateur / utilisabilité
-    - 🩹 fix: Correction simple pour un problème non-critique
-    - 🥅 fix: Intercepter les erreurs
-    - 👽️ fix: Mettre à jour le code suite aux changements d'API externe
-    - 🔥 fix: Supprimer du code ou des fichiers
-    - 🎨 style: Améliorer la structure/format du code
-    - 🚑️ fix: Hotfix critique
-    - 🎉 chore: Commencer un projet
-    - 🔖 chore: Tags de release/version
-    - 🚧 wip: Travail en cours
-    - 💚 fix: Corriger le build CI
-    - 📌 chore: Épingler les dépendances à des versions spécifiques
-    - 👷 ci: Ajouter ou mettre à jour le système de build CI
-    - 📈 feat: Ajouter ou mettre à jour le code d'analytics ou de tracking
-    - ✏️ fix: Corriger les fautes de frappe
-    - ⏪️ revert: Annuler les changements
-    - 📄 chore: Ajouter ou mettre à jour la licence
-    - 💥 feat: Introduire des changements cassants
-    - 🍱 assets: Ajouter ou mettre à jour les assets
-    - ♿️ feat: Améliorer l'accessibilité
-    - 💡 docs: Ajouter ou mettre à jour les commentaires dans le code source
-    - 🗃️ db: Effectuer des changements liés à la base de données
-    - 🔊 feat: Ajouter ou mettre à jour les logs
-    - 🔇 fix: Supprimer les logs
-    - 🤡 test: Mocker des choses
-    - 🥚 feat: Ajouter ou mettre à jour un easter egg
-    - 🙈 chore: Ajouter ou mettre à jour le fichier .gitignore
-    - 📸 test: Ajouter ou mettre à jour les snapshots
-    - ⚗️ experiment: Effectuer des expériences
-    - 🚩 feat: Ajouter, mettre à jour, ou supprimer les feature flags
-    - 💫 ui: Ajouter ou mettre à jour les animations et transitions
-    - ⚰️ refactor: Supprimer le code mort
-    - 🦺 feat: Ajouter ou mettre à jour le code lié à la validation
-    - ✈️ feat: Améliorer le support hors ligne
+**TaskUpdate : Tâche #1 → `in_progress`**
 
-## Directives pour Diviser les Commits
+Exécute en parallèle :
+```bash
+git status
+git diff --cached --stat
+```
 
-Lors de l'analyse du diff, considérer diviser les commits selon ces critères :
+**Traitement** :
 
-1. **Préoccupations différentes** : Changements dans des parties non-liées du codebase
-2. **Types de changements différents** : Mélange de fonctionnalités, corrections, refactorisation, etc.
-3. **Patterns de fichiers** : Changements dans différents types de fichiers (ex. code source vs documentation)
-4. **Groupement logique** : Changements qui seraient plus faciles à comprendre ou réviser séparément
-5. **Taille** : Changements très larges qui seraient plus clairs s'ils étaient décomposés
+1. **SI** aucun changement (ni stagé, ni non-stagé) :
+   - Affiche "❌ Aucun changement à committer"
+   - **TaskUpdate : Tâche #1 → `completed`**
+   - **STOP** - Ne pas continuer
 
-## Exemples
+2. **SI** des fichiers modifiés mais rien de stagé :
+   - Exécute `git add .` pour tout stager
+   - Exécute `git status` pour confirmer
 
-Bons messages de commit :
-- ✨ feat: ajouter système d'authentification utilisateur
-- 🐛 fix: résoudre fuite mémoire dans le processus de rendu
-- 📝 docs: mettre à jour documentation API avec nouveaux endpoints
-- ♻️ refactor: simplifier la logique de gestion d'erreurs dans le parser
-- 🚨 fix: résoudre warnings linter dans les fichiers de composants
-- 🧑‍💻 chore: améliorer processus de setup des outils développeur
-- 👔 feat: implémenter logique métier pour validation de transaction
-- 🩹 fix: corriger incohérence de style mineure dans le header
-- 🚑️ fix: patcher vulnérabilité de sécurité critique dans le flux d'auth
-- 🎨 style: réorganiser structure des composants pour meilleure lisibilité
-- 🔥 fix: supprimer code legacy déprécié
-- 🦺 feat: ajouter validation d'entrée pour formulaire d'inscription utilisateur
-- 💚 fix: résoudre tests CI pipeline qui échouent
-- 📈 feat: implémenter tracking analytics pour engagement utilisateur
-- 🔒️ fix: renforcer exigences de mot de passe d'authentification
-- ♿️ feat: améliorer accessibilité des formulaires pour lecteurs d'écran
+3. **SI** des fichiers déjà stagés :
+   - Continue avec ces fichiers uniquement
 
-Exemple de division de commits :
-- Premier commit : ✨ feat: ajouter définitions de types pour nouvelle version solc
-- Deuxième commit : 📝 docs: mettre à jour documentation pour nouvelles versions solc
-- Troisième commit : 🔧 chore: mettre à jour dépendances package.json
-- Quatrième commit : 🏷️ feat: ajouter définitions de types pour nouveaux endpoints API
-- Cinquième commit : 🧵 feat: améliorer gestion de concurrence dans worker threads
-- Sixième commit : 🚨 fix: résoudre problèmes de linting dans nouveau code
-- Septième commit : ✅ test: ajouter tests unitaires pour fonctionnalités nouvelle version solc
-- Huitième commit : 🔒️ fix: mettre à jour dépendances avec vulnérabilités de sécurité
+**TaskUpdate : Tâche #1 → `completed`**
+
+---
+
+### Étape 3 : Analyser le diff des changements
+
+**TaskUpdate : Tâche #2 → `in_progress`**
+
+Exécute en parallèle :
+```bash
+git diff --cached
+git log -5 --oneline
+```
+
+**Traitement** :
+1. Lis TOUT le diff des changements stagés
+2. Note le style des commits récents du repo
+3. Identifie les types de changements présents :
+   - feat (nouvelles fonctionnalités)
+   - fix (corrections de bugs)
+   - docs (documentation)
+   - refactor (refactorisation)
+   - test (tests)
+   - chore (configuration, maintenance)
+   - style (formatage)
+   - perf (performance)
+
+**TaskUpdate : Tâche #2 → `completed`**
+
+---
+
+### Étape 4 : Déterminer la stratégie de commit
+
+**TaskUpdate : Tâche #3 → `in_progress`**
+
+**Critères pour DIVISER en plusieurs commits :**
+1. Préoccupations distinctes (feat + docs + tests mélangés)
+2. Types de changements différents (fix + refactor)
+3. Fichiers non-liés modifiés ensemble
+4. Diff > 200 lignes sur sujets différents
+
+**SI plusieurs types détectés :**
+- Liste les commits à créer
+- Pour chaque commit, utilise :
+  ```bash
+  git reset HEAD <fichiers-à-exclure>
+  git commit -m "..."
+  git add <fichiers-suivants>
+  ```
+
+**SINON :**
+- Continue avec un seul commit
+
+**TaskUpdate : Tâche #3 → `completed`**
+
+---
+
+### Étape 5 : Créer le(s) commit(s)
+
+**TaskUpdate : Tâche #4 → `in_progress`**
+
+**Pour CHAQUE commit à créer :**
+
+#### 5.1 Déterminer le message
+
+1. **Type** : feat, fix, docs, refactor, test, chore, style, perf, ci, revert
+2. **Emoji** : Voir table ci-dessous
+3. **Scope** : Optionnel, entre parenthèses (auth, api, ui...)
+4. **Description** : < 72 caractères, mode impératif, présent
+
+#### 5.2 Exécuter le commit
+
+**OBLIGATOIRE : Utilise TOUJOURS un HEREDOC pour le message :**
+
+```bash
+git commit -m "$(cat <<'EOF'
+<emoji> <type>(<scope>): <description courte>
+
+<détails optionnels - explique le "pourquoi">
+EOF
+)"
+```
+
+**Exemple simple :**
+```bash
+git commit -m "$(cat <<'EOF'
+✨ feat(auth): ajouter connexion OAuth Google
+EOF
+)"
+```
+
+**Exemple avec corps :**
+```bash
+git commit -m "$(cat <<'EOF'
+🐛 fix(api): corriger fuite mémoire dans le cache
+
+Le cache ne libérait pas les entrées expirées, causant une
+augmentation progressive de la mémoire utilisée.
+
+Fixes #123
+EOF
+)"
+```
+
+**TaskUpdate : Tâche #4 → `completed`**
+
+---
+
+### Étape 6 : Push vers remote
+
+**TaskUpdate : Tâche #5 → `in_progress`**
+
+#### 6.1 Vérifier l'option --no-push
+
+**SI** `--no-push` présent dans $ARGUMENTS :
+- Affiche "📝 Commit local uniquement (--no-push)"
+- **TaskUpdate : Tâche #5 → `completed`**
+- **STOP** - Workflow terminé
+
+#### 6.2 Push automatique
+
+Le hook PostToolUse gère automatiquement :
+- Premier push : `git push -u origin <branch>`
+- Push suivants : `git push`
+
+**TaskUpdate : Tâche #5 → `completed`**
+
+---
+
+## Checklist de validation finale
+
+Avant de terminer, vérifie que TOUTES ces conditions sont remplies :
+
+- [ ] Tâche #1 completed : Changements vérifiés et stagés
+- [ ] Tâche #2 completed : Diff analysé
+- [ ] Tâche #3 completed : Stratégie déterminée
+- [ ] Tâche #4 completed : Commit(s) créé(s) avec HEREDOC
+- [ ] Tâche #5 completed : Push effectué (ou skip si --no-push)
+
+**Si une tâche n'est pas completed, NE PAS terminer.**
+
+---
+
+## Table des Emojis par Type
+
+| Type | Emoji | Usage |
+|------|-------|-------|
+| feat | ✨ | Nouvelle fonctionnalité |
+| fix | 🐛 | Correction de bug |
+| docs | 📝 | Documentation |
+| style | 💄 | Formatage/style (pas de changement de logique) |
+| refactor | ♻️ | Refactorisation de code |
+| perf | ⚡️ | Amélioration de performance |
+| test | ✅ | Ajout/modification de tests |
+| chore | 🔧 | Outils, configuration, maintenance |
+| ci | 🚀 | CI/CD |
+| revert | ⏪️ | Annulation de changements |
+
+### Emojis Spécialisés
+
+| Contexte | Emoji | Description |
+|----------|-------|-------------|
+| Breaking change | 💥 | Changement cassant |
+| Security | 🔒️ | Sécurité |
+| Hotfix | 🚑️ | Correction critique urgente |
+| Typo | ✏️ | Faute de frappe |
+| WIP | 🚧 | Travail en cours |
+| Lint/warnings | 🚨 | Correction warnings linter |
+| Dependencies + | ➕ | Ajout dépendance |
+| Dependencies - | ➖ | Suppression dépendance |
+| Database | 🗃️ | Changements BDD |
+| Logs + | 🔊 | Ajout de logs |
+| Logs - | 🔇 | Suppression de logs |
+| Types | 🏷️ | Définitions de types |
+| UX | 🚸 | Amélioration UX |
+| Accessibility | ♿️ | Accessibilité |
+| i18n | 🌐 | Internationalisation |
+| Business logic | 👔 | Logique métier |
+| Architecture | 🏗️ | Changements architecturaux |
+| Dead code | ⚰️ | Suppression code mort |
+| Remove files | 🔥 | Suppression fichiers |
+| Move/rename | 🚚 | Déplacement/renommage |
+| Assets | 🍱 | Assets (images, etc.) |
+| UI animations | 💫 | Animations UI |
+| Validation | 🦺 | Code de validation |
+| Feature flags | 🚩 | Feature flags |
+| Analytics | 📈 | Tracking/analytics |
+| CI fix | 💚 | Correction CI |
+| Snapshot tests | 📸 | Tests snapshot |
+| Mock | 🤡 | Mocking |
+| Experiment | ⚗️ | Expérimentations |
+| Seed data | 🌱 | Données de seed |
+| .gitignore | 🙈 | Fichier .gitignore |
+| License | 📄 | Licence |
+| Contributors | 👥 | Contributeurs |
+| DX | 🧑‍💻 | Developer Experience |
+| Responsive | 📱 | Design responsive |
+| SEO | 🔍️ | SEO |
+| Offline | ✈️ | Support offline |
+| Concurrency | 🧵 | Multithreading |
+| Easter egg | 🥚 | Easter egg |
+| Comments | 💡 | Commentaires dans le code |
+| Text/literals | 💬 | Textes et littéraux |
+| External API | 👽️ | Changements API externe |
+| Error handling | 🥅 | Gestion d'erreurs |
+| Simple fix | 🩹 | Fix non-critique simple |
+| Package build | 📦️ | Fichiers compilés/packages |
+| Pin deps | 📌 | Épingler versions |
+| Release tag | 🔖 | Tags de release |
+| Init project | 🎉 | Début de projet |
+| Merge | 🔀 | Fusion de branches |
+
+---
+
+## Format du Message de Commit
+
+```
+<emoji> <type>(<scope>): <description impérative courte>
+
+[corps optionnel - explique le "pourquoi" pas le "quoi"]
+
+[footer optionnel - références issues, breaking changes]
+```
+
+### Règles du Message
+
+1. **Première ligne** : < 72 caractères
+2. **Mode impératif** : "ajouter" pas "ajouté"
+3. **Présent** : "corrige" pas "a corrigé"
+4. **Pas de point final** sur la première ligne
+5. **Ligne vide** entre titre et corps
+6. **Corps** : explique le contexte et la raison
+
+---
 
 ## Options de Commande
 
-- --verify: Exécuter les vérifications pre-commit (qa) avant de commiter
-- --no-push: Ne pas pousser automatiquement le(s) commit(s) vers le remote après création
+| Option | Description |
+|--------|-------------|
+| `--verify` | Exécute `make qa` avant le commit |
+| `--no-push` | Ne push pas automatiquement après le commit |
 
-## Notes Importantes
+**Combinaison possible :** `/git:commit --verify --no-push`
 
-- Par défaut, les vérifications pre-commit (qa) ne s'exécutent PAS pour permettre un workflow rapide
-- Si vous utilisez --verify et que les vérifications échouent, il vous sera demandé si vous voulez procéder au commit quand même ou corriger les problèmes d'abord
-- Si des fichiers spécifiques sont déjà stagés, la commande ne commitera que ces fichiers
-- Si aucun fichier n'est stagé, elle stagera automatiquement tous les fichiers modifiés et nouveaux
-- Le message de commit sera construit basé sur les changements détectés
-- Avant de commiter, la commande révisera le diff pour identifier si plusieurs commits seraient plus appropriés
-- Si elle suggère plusieurs commits, elle vous aidera à stager et commiter les changements séparément
-- Révise toujours le diff du commit pour s'assurer que le message correspond aux changements
-- Par défaut, le(s) commit(s) seront automatiquement poussés vers le remote après création
-- Avec --no-push, le commit ne sera pas poussé et restera local
-- Les options peuvent être combinées : /git:commit --verify --no-push
+---
+
+## Directives de Division
+
+Divise les commits si tu détectes :
+1. **feat + docs** → 2 commits séparés
+2. **fix + refactor** → 2 commits séparés
+3. **test + implementation** → peut être ensemble si cohérent
+4. **chore (deps) + feat** → toujours séparés
+5. **Plusieurs features distinctes** → 1 commit par feature

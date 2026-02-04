@@ -4,7 +4,7 @@ title: Index des Skills
 
 # Index des Skills
 
-83 skills disponibles dans le marketplace.
+78 skills disponibles dans le marketplace.
 
 **Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
 
@@ -76,14 +76,9 @@ title: Index des Skills
 | `/oneshot` | [dev](/plugins/dev) | Ultra-fast feature implementation using Explore → Code → Test workflow. Use when implementing focused features, single tasks, or when speed over completeness is priority. |
 | `/phpstan-resolver` | [qa](/plugins/qa) | > |
 | `/prompt-creator` | [mlvn](/plugins/mlvn) | Expert prompt engineering for creating effective prompts for Claude, GPT, and other LLMs. Use when writing system prompts, user prompts, few-shot examples, or optimizing existing prompts for better performance. |
-| `/prompt:architecture` | [prompt](/plugins/prompt) | Génère un prompt pour architecture et infrastructure (decorators, cache, patterns) |
-| `/prompt:configuration` | [prompt](/plugins/prompt) | Génère un prompt pour configuration et feature flags |
-| `/prompt:feature` | [prompt](/plugins/prompt) | Génère un prompt pour une nouvelle feature métier basé sur les patterns DDD/CQRS |
-| `/prompt:generic` | [prompt](/plugins/prompt) | Génère un prompt générique personnalisable pour toute tâche |
-| `/prompt:refactoring` | [prompt](/plugins/prompt) | Génère un prompt pour refactoring et optimisation de code existant |
+| `/prompt:start` | [prompt](/plugins/prompt) | Démarre un développement avec un starter léger puis active le mode plan |
 | `/prompt:transform` | [prompt](/plugins/prompt) | Transforme un prompt en prompt exécutable compatible avec le Task Management System (TaskCreate/TaskUpdate/TaskList) |
-| `/prompt:webhook` | [prompt](/plugins/prompt) | Génère un prompt pour intégration webhook avec services tiers |
-| `/prompt:workflow` | [prompt](/plugins/prompt) | Génère un prompt pour workflow GitHub Actions et CI/CD |
+| `/prompt:validate` | [prompt](/plugins/prompt) | Vérifie la checklist avant exécution et liste les oublis |
 | `/release-notes` | [git](/plugins/git) | > |
 | `/setup-ralph` | [dev](/plugins/dev) | Setup the Ralph autonomous AI coding loop - ships features while you sleep |
 | `/skill-creator` | [claude](/plugins/claude) | This skill should be used when the user asks to "create a skill", "build a skill", "write a skill", "improve skill structure", "understand skill creation", or mentions SKILL.md files, skill development, progressive disclosure, XML structure, or bundled resources (scripts, references, assets). Comprehensive guide for creating effective Claude Code skills. |
