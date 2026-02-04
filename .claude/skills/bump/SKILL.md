@@ -1,7 +1,7 @@
 ---
 name: bump
 description: Automatise les mises à jour de version des plugins avec détection automatique du type de version
-model: claude-haiku-4-5-20251001
+model: haiku
 allowed-tools: [Read, Edit, Bash, Glob, Grep, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
 version: 1.0.2
 license: MIT

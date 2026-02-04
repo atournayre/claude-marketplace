@@ -2,7 +2,7 @@
 name: dev:feature
 description: Workflow complet de développement de feature
 argument-hint: <description-feature>
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Read, Write, Edit, Grep, Glob, Task, TaskCreate, TaskUpdate, TaskList, AskUserQuestion, Bash, Skill]
 version: 1.0.0
 license: MIT

@@ -1,7 +1,7 @@
 ---
 name: dev:auto:clarify
 description: Lever ambiguités avec heuristiques automatiques (Phase 3)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools:
   - Read
   - Grep

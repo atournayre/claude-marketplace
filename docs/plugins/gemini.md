@@ -28,9 +28,9 @@ Le plugin gemini fournit 3 skills (format natif Claude Code) :
 
 | Agent | Modèle Claude | Modèle Gemini | Cas d'usage |
 |-------|---------------|---------------|-------------|
-| `gemini-analyzer` | `claude-haiku-4-5-20251001` | `gemini-3-pro-preview` | Analyse codebase/docs (1M tokens) |
-| `gemini-thinker` | `claude-haiku-4-5-20251001` | `gemini-3-pro-preview` | Deep Think (math, logique, architecture) |
-| `gemini-researcher` | `claude-haiku-4-5-20251001` | `gemini-2.5-flash` | Recherche web temps réel |
+| `gemini-analyzer` | `haiku` | `gemini-3-pro-preview` | Analyse codebase/docs (1M tokens) |
+| `gemini-thinker` | `haiku` | `gemini-3-pro-preview` | Deep Think (math, logique, architecture) |
+| `gemini-researcher` | `haiku` | `gemini-2.5-flash` | Recherche web temps réel |
 
 ## Utilisation
 

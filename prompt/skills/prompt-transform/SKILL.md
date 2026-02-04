@@ -4,7 +4,7 @@ description: Transforme un prompt en prompt exécutable compatible avec le Task 
 license: MIT
 version: 1.0.0
 allowed-tools: [Read, Write, Bash, AskUserQuestion, Glob, TaskCreate, TaskUpdate, TaskList]
-model: claude-sonnet-4-5-20250929
+model: sonnet
 argument-hint: <prompt-file-or-text> [--name=<output-name>]
 ---
 

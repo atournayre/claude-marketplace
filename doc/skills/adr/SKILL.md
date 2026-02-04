@@ -1,7 +1,7 @@
 ---
 name: doc:adr
 description: Génère un Architecture Decision Record (ADR) formaté et structuré
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [TaskCreate, TaskUpdate, TaskList, Read, Write, Edit, Bash]
 argument-hint: [titre]
 version: 1.0.0

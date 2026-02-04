@@ -1,7 +1,7 @@
 ---
 name: doc:rtfm
 description: Lit la documentation technique - RTFM (Read The Fucking Manual)
-model: claude-haiku-4-5-20251001
+model: haiku
 allowed-tools: [Bash, WebFetch, WebSearch]
 argument-hint: [url|doc-name]
 version: 1.0.0

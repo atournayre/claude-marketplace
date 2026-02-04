@@ -2,7 +2,7 @@
 name: code-reviewer
 description: "Review de code complète pour conformité CLAUDE.md, détection de bugs, et qualité. À utiliser de manière proactive après l'écriture de code ou avant de créer une PR. Scoring 0-100 avec seuil 80."
 tools: Read, Grep, Glob, Bash
-model: claude-sonnet-4-5-20250929
+model: sonnet
 ---
 
 # Code Reviewer - PHP/Symfony

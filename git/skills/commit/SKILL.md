@@ -1,7 +1,7 @@
 ---
 name: git:commit
 description: Créer des commits bien formatés avec format conventional et emoji
-model: claude-haiku-4-5-20251001
+model: haiku
 allowed-tools: [Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Bash(git push:*)]
 argument-hint: [message] [--verify] [--no-push]
 version: 1.0.0

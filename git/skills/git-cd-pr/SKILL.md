@@ -4,7 +4,7 @@ description: >
   Crée une Pull Request en mode Continuous Delivery avec workflow complet :
   QA, labels version (major/minor/patch), feature flags, code review automatique.
 allowed-tools: [Bash, Read, Write, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
-model: claude-sonnet-4-5-20250929
+model: sonnet
 ---
 
 # Git CD PR Skill (Continuous Delivery)

@@ -1,7 +1,7 @@
 ---
 name: dev:auto:code
 description: Implémenter selon le plan - Mode AUTO (Phase 6)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools:
   - Read
   - Write

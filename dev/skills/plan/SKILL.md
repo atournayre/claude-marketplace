@@ -1,7 +1,7 @@
 ---
 name: dev:plan
 description: Générer plan d'implémentation dans docs/specs/ (Phase 4)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Write, Read, Glob]
 version: 1.0.0
 license: MIT

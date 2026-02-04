@@ -1,7 +1,7 @@
 ---
 name: dev:auto:fetch-issue
 description: Récupérer le contenu d'une issue GitHub - Mode AUTO (Phase 0)
-model: claude-haiku-4-5-20251001
+model: haiku
 allowed-tools:
   - Bash
   - Read

@@ -1,7 +1,7 @@
 ---
 name: dev:clarify
 description: Poser questions pour lever ambiguités (Phase 2)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [AskUserQuestion, Read]
 version: 1.0.0
 license: MIT

@@ -1,7 +1,7 @@
 ---
 name: github:fix
 description: Corriger une issue GitHub avec workflow simplifié et efficace
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Bash, Read, Write, Edit, Grep, Glob, Task]
 argument-hint: [issue-number]
 version: 1.0.0

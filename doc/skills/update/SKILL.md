@@ -1,7 +1,7 @@
 ---
 name: doc:update
 description: Crées la documentation pour la fonctionnalité en cours. Mets à jour le readme global du projet si nécessaire. Lie les documents entre eux pour ne pas avoir de documentation orpheline. La documentation est générée dans les répertoire de documentation du projet.
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Bash, Read, Write, Edit, Glob, Grep]
 version: 1.0.0
 license: MIT

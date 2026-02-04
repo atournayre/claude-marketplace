@@ -1,7 +1,7 @@
 ---
 name: git:conflit
 description: Analyse les conflits git et propose à l'utilisateur une résolution pas à pas avec validation de chaque étape.
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git merge:*), Bash(git rebase:*), Bash(git checkout:*), Bash(git add:*), Read, Edit]
 argument-hint: <branche-destination>
 version: 1.0.0

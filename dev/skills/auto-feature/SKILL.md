@@ -2,7 +2,7 @@
 name: dev:auto:feature
 description: Workflow complet de développement automatisé (mode non-interactif)
 argument-hint: <issue-number>
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools:
   - Read
   - Write

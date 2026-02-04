@@ -1,7 +1,7 @@
 ---
 name: claude:challenge
 description: Évalue ma dernière réponse, donne une note sur 10 et propose des améliorations
-model: claude-haiku-4-5-20251001
+model: haiku
 allowed-tools: [Read]
 argument-hint: ""
 version: 1.0.0

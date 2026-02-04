@@ -1,7 +1,7 @@
 ---
 name: dev:design
 description: Designer 2-3 approches architecturales (Phase 3)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Task, Read, Glob, Grep, AskUserQuestion]
 version: 1.0.0
 license: MIT

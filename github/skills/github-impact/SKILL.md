@@ -4,7 +4,7 @@ description: >
   Génère automatiquement deux rapports d'impact (métier et technique) pour une PR GitHub
   et les intègre dans la description.
 allowed-tools: [Bash, Read, Write, Grep, Glob]
-model: claude-opus-4-1-20250805
+model: opus
 ---
 
 # GitHub PR Impact Analysis Skill

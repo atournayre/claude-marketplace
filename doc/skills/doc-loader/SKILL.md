@@ -4,7 +4,7 @@ description: >
   Charge la documentation d'un framework depuis son site web dans des fichiers markdown locaux.
   Supporte Symfony, API Platform, Meilisearch, atournayre-framework et Claude Code.
 allowed-tools: [Task, WebFetch, Write, Edit, Bash, Read, Glob]
-model: claude-sonnet-4-5-20250929
+model: sonnet
 ---
 
 # Documentation Loader Skill

@@ -2,7 +2,7 @@
 name: silent-failure-hunter
 description: "Détecte les erreurs silencieuses, catch vides, et gestion d'erreurs inadéquate dans le code PHP. À utiliser de manière proactive après l'écriture de code impliquant des try-catch, fallbacks, ou gestion d'erreurs."
 tools: Read, Grep, Glob, Bash
-model: claude-sonnet-4-5-20250929
+model: sonnet
 ---
 
 # Silent Failure Hunter - PHP

@@ -2,7 +2,7 @@
 name: dev:worktree
 description: Gestion des git worktrees pour développement parallèle
 argument-hint: <action> [args]
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Bash, Read, Write, Edit, Grep, AskUserQuestion]
 version: 1.0.0
 license: MIT

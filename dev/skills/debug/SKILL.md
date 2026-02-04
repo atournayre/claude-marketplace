@@ -1,7 +1,7 @@
 ---
 name: dev:debug
 description: Analyser et résoudre une erreur (message simple ou stack trace)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Bash, Read, Write, Edit, Grep, Glob, Task]
 argument-hint: <message-erreur-ou-fichier-log>
 version: 1.0.0

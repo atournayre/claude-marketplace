@@ -1,7 +1,7 @@
 ---
 name: dev:auto:design
 description: Choisir architecture automatiquement (Phase 4)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools:
   - Task
   - Read

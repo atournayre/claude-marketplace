@@ -1,7 +1,7 @@
 ---
 name: dev:status
 description: Affiche le workflow et l'étape courante
-model: claude-haiku-4-5-20251001
+model: haiku
 allowed-tools: [Read, Glob]
 version: 1.0.0
 license: MIT

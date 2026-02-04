@@ -3,7 +3,7 @@ name: claude:alias:add
 description: Crée un alias de commande qui délègue à une autre slash command
 allowed-tools: [Skill, Write, Read, Glob]
 argument-hint: <alias> <commande>
-model: claude-sonnet-4-5-20250929
+model: sonnet
 version: 1.0.0
 license: MIT
 ---
@@ -46,7 +46,7 @@ Permettre de créer des raccourcis (alias) vers des commandes existantes pour si
     - Skill
   description: Alias vers [TARGET_COMMAND]
   argument-hint: [arguments de la commande cible]
-  model: claude-haiku-4-5-20251001
+  model: haiku
   ---
 
   # [ALIAS]

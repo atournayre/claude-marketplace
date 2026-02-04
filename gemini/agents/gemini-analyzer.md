@@ -2,7 +2,7 @@
 name: gemini-analyzer
 description: Délègue l'analyse de contextes ultra-longs (codebases, docs) à Gemini 3 Pro (1M tokens). À utiliser quand le contexte dépasse les capacités de Claude ou pour analyser une codebase entière.
 tools: Bash, Read, Glob, Grep
-model: claude-haiku-4-5-20251001
+model: haiku
 ---
 
 # Objectif

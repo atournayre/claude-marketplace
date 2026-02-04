@@ -2,7 +2,7 @@
 name: dev:discover
 description: Comprendre le besoin avant développement (Phase 0)
 argument-hint: <description-feature>
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [TaskCreate, TaskUpdate, TaskList, Read, AskUserQuestion, Glob, Grep]
 version: 1.0.0
 license: MIT

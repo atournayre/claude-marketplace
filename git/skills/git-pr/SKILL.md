@@ -4,7 +4,7 @@ description: >
   Crée une Pull Request GitHub standard avec workflow complet :
   QA, commits, assignation milestone/projet, code review automatique.
 allowed-tools: [Bash, Read, Write, TaskCreate, TaskUpdate, TaskList, AskUserQuestion]
-model: claude-sonnet-4-5-20250929
+model: sonnet
 ---
 
 # Git PR Skill (Standard)

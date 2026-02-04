@@ -1,7 +1,7 @@
 ---
 name: dev:summary
 description: Résumé de ce qui a été construit (Phase 7)
-model: claude-haiku-4-5-20251001
+model: haiku
 allowed-tools: [Read, Glob]
 version: 1.0.0
 license: MIT

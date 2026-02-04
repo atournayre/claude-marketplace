@@ -3,7 +3,7 @@ name: claude:doc:question
 description: Interroger la documentation Claude Code locale pour répondre à une question
 allowed-tools: [Read, Grep, Glob, Bash]
 argument-hint: <question>
-model: claude-sonnet-4-5-20250929
+model: sonnet
 version: 1.0.0
 license: MIT
 ---

@@ -1,7 +1,7 @@
 ---
 name: git:branch
 description: Création de branche Git avec workflow structuré
-model: claude-haiku-4-5-20251001
+model: haiku
 allowed-tools: [Bash, AskUserQuestion]
 argument-hint: <source-branch> [issue-number-or-text]
 version: 1.0.0

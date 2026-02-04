@@ -1,7 +1,7 @@
 ---
 name: dev:auto:explore
 description: Explorer le codebase automatiquement - Mode AUTO (Phase 2)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools:
   - Task
   - Read

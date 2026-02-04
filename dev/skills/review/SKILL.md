@@ -1,7 +1,7 @@
 ---
 name: dev:review
 description: Review qualité complète - PHPStan + Elegant Objects + code review (Phase 6)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Task, TaskCreate, TaskUpdate, TaskList, Bash, Read, Grep, Glob, Edit]
 version: 1.0.0
 license: MIT

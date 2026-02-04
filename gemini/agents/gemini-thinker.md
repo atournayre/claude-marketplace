@@ -2,7 +2,7 @@
 name: gemini-thinker
 description: Délègue les problèmes complexes (math, logique, architecture) à Gemini 3 Deep Think. À utiliser pour réflexion approfondie nécessitant exploration multi-hypothèses.
 tools: Bash
-model: claude-haiku-4-5-20251001
+model: haiku
 ---
 
 # Objectif

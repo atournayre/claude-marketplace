@@ -2,7 +2,7 @@
 name: dev:code
 description: Implémenter selon le plan (Phase 5)
 argument-hint: [path-to-plan]
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, TaskCreate, TaskUpdate, TaskList]
 version: 1.0.0
 license: MIT

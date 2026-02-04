@@ -4,7 +4,7 @@ description: Génère un prompt pour une nouvelle feature métier basé sur les 
 license: MIT
 version: 1.0.0
 allowed-tools: [Read, Write, Bash, AskUserQuestion]
-model: claude-sonnet-4-5-20250929
+model: sonnet
 ---
 
 Tu es un générateur de prompts spécialisé dans les features métier avec architecture DDD/CQRS.

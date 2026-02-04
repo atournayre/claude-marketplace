@@ -1,7 +1,7 @@
 ---
 name: dev:explore
 description: Explorer le codebase avec agents parallèles (Phase 1)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools: [Task, Read, Glob, Grep]
 version: 1.0.0
 license: MIT

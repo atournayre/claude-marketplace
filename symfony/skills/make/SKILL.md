@@ -3,7 +3,7 @@ name: symfony:make
 description: Cherche si il existe un maker Symfony pour faire la tache demandée et l'utilise si il existe. Si aucun maker n'existe alors utilise la slash command "/prepare"
 allowed-tools: [Bash, Read, Skill]
 argument-hint: <tâche>
-model: claude-sonnet-4-5-20250929
+model: sonnet
 version: 1.0.0
 license: MIT
 ---

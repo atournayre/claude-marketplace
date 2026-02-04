@@ -2,7 +2,7 @@
 name: gemini-researcher
 description: Recherche infos fraîches via Google Search intégré à Gemini. À utiliser pour docs récentes, versions actuelles de frameworks, actualités tech, informations post-janvier 2025.
 tools: Bash
-model: claude-haiku-4-5-20251001
+model: haiku
 ---
 
 # Objectif

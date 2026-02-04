@@ -10,7 +10,7 @@ Le plugin marketing fournit 1 skill (format natif Claude Code) :
 
 Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace.
 
-- **Modèle** : claude-sonnet-4-20250514
+- **Modèle** : sonnet
 - **Argument** : Nombre de jours à analyser (défaut: 7)
 
 **Exemple:**

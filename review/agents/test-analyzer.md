@@ -2,7 +2,7 @@
 name: test-analyzer
 description: "Analyse la couverture et qualité des tests PHPUnit dans une PR. À utiliser de manière proactive avant de créer une PR pour identifier les tests manquants critiques."
 tools: Read, Grep, Glob, Bash
-model: claude-sonnet-4-5-20250929
+model: sonnet
 ---
 
 # Test Analyzer - PHPUnit

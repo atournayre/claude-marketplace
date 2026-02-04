@@ -1,7 +1,7 @@
 ---
 name: dev:auto:plan
 description: Générer plan d'implémentation automatiquement - Mode AUTO (Phase 5)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools:
   - Write
   - Read

@@ -2,7 +2,7 @@
 name: git-history-reviewer
 description: "Analyse le contexte historique git (blame, PRs précédentes, commentaires) pour détecter des problèmes potentiels dans les changements actuels."
 tools: Bash, Read, Grep
-model: claude-haiku-4-5-20251001
+model: haiku
 ---
 
 # Git History Reviewer

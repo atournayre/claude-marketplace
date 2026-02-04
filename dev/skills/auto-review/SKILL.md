@@ -1,7 +1,7 @@
 ---
 name: dev:auto:review
 description: Review avec auto-fix automatique - Mode AUTO (Phase 7)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools:
   - Task
   - Bash

@@ -2,7 +2,7 @@
 name: dev:auto:discover
 description: Comprendre le besoin avant développement - Mode AUTO (Phase 0)
 argument-hint: <description-feature>
-model: claude-sonnet-4-5-20250929
+model: sonnet
 allowed-tools:
   - Read
   - Glob
