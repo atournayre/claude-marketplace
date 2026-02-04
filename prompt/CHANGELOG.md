@@ -1,3 +1,43 @@
+## [2.0.0] - 2026-02-04
+
+### Changed
+- **BREAKING** : Refonte complète du système de prompts
+- Remplacement des templates longs (300+ lignes) par des starters légers (10-15 lignes)
+- Nouvelle approche hybride : Starter + Mode Plan + Checklist
+
+### Added
+- Nouveau skill `/prompt:start` - Démarre avec un starter et active le mode plan
+- Nouveau skill `/prompt:validate` - Vérifie la checklist avant exécution
+- 4 starters légers :
+  - `starters/feature.md` - Feature métier
+  - `starters/refactor.md` - Refactoring
+  - `starters/api.md` - API/Intégration
+  - `starters/fix.md` - Bug fix
+- 3 checklists de validation :
+  - `checklists/php.md` - PHPStan, PSR-12, Elegant Objects, tests
+  - `checklists/api.md` - Validation, auth, robustesse, logging
+  - `checklists/security.md` - OWASP, injections, données sensibles
+
+### Removed
+- Template `feature.md` (340 lignes) → remplacé par `starters/feature.md` (20 lignes)
+- Template `architecture.md` → supprimé (le mode plan suffit)
+- Template `webhook.md` → remplacé par `starters/api.md`
+- Template `workflow.md` → supprimé (domaine GitHub Actions séparé)
+- Template `configuration.md` → supprimé (cas trop rare)
+- Template `generic.md` → supprimé (inutile avec starters ciblés)
+- Skills associés aux anciens templates (6 skills supprimés)
+
+### Why this change?
+Les anciens templates n'étaient jamais utilisés car :
+- Trop longs et intimidants
+- Code boilerplate fixe pas adapté au contexte
+- Le mode plan faisait déjà le même travail avec plus de flexibilité
+
+La nouvelle approche combine :
+- La légèreté des starters (contexte + contraintes)
+- La puissance du mode plan (exploration + adaptation)
+- La complétude des checklists (validation finale)
+
 ## [1.3.1] - 2026-02-04
 
 ### Changed

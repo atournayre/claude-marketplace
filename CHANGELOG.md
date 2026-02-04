@@ -7,6 +7,17 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.04b] - 2026-02-04
+
+### Plugins Updated
+- **prompt v2.0.0** - Refonte système Starters + Mode Plan + Checklists (BREAKING)
+  - Remplacement templates longs (300+ lignes) par starters légers (10-15 lignes)
+  - Nouveaux skills `/prompt:start` (hybrid) et `/prompt:validate` (checklist)
+  - 4 starters : feature, refactor, api, fix
+  - 3 checklists : php, api, security
+  - Suppression 6 anciens templates et skills associés
+  - Upgrade MINOR → MAJOR (v1.3.1 → v2.0.0)
+
 ## [2026.02.04] - 2026-02-04
 
 ### Plugins Updated

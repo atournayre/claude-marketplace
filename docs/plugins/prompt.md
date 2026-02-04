@@ -1,106 +1,140 @@
 ---
 title: "prompt"
-description: "Générateur et transformateur de prompts structurés pour développement - Templates DDD/CQRS, refactoring, webhooks, architecture, transformation en prompts exécutables"
-version: "1.3.1"
+description: "Système hybride Starters + Mode Plan + Checklists pour développement efficace - Templates légers, exploration contextuelle, validation automatisée"
+version: "2.0.0"
 ---
 
-# prompt <Badge type="info" text="v1.3.1" />
+# prompt <Badge type="info" text="v2.0.0" />
 
 
-Générateur de prompts structurés pour accélérer le développement de projets PHP/Symfony.
+Système hybride combinant prompts structurés et mode plan pour un développement efficace.
 
-## Description
+## Philosophie
 
-Ce plugin génère des templates de prompts détaillés pour différents types de tâches de développement :
-- Nouvelles features (DDD/CQRS)
-- Refactoring et optimisation
-- Webhooks et intégrations
-- Architecture et infrastructure
-- Workflows et automation
-- Configuration et feature flags
+**Avant (v1.x)** : Templates longs (300+ lignes) avec tout le code boilerplate.
+
+**Maintenant (v2.x)** : Starters légers (15 lignes) + Mode Plan + Checklists de validation.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. STARTER (10-15 lignes)                                  │
+│     → Contexte minimal + contraintes + livrable attendu     │
+├─────────────────────────────────────────────────────────────┤
+│  2. MODE PLAN (exploration + adaptation)                    │
+│     → Claude explore le codebase                            │
+│     → Propose un plan adapté au contexte                    │
+├─────────────────────────────────────────────────────────────┤
+│  3. VALIDATION (checklist automatique)                      │
+│     → Vérification avant exécution                          │
+│     → Liste les oublis potentiels                           │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ## Installation
 
 Le plugin est automatiquement disponible via le marketplace.
 
-## Slash Commands Disponibles
+## Slash Commands
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `/prompt:feature` | Génère un prompt pour une feature métier DDD/CQRS | `/prompt:feature [EntityName] [FeatureName]` |
-| `/prompt:architecture` | Génère un prompt pour architecture/infrastructure | `/prompt:architecture [ComponentName]` |
-| `/prompt:refactoring` | Génère un prompt pour refactoring/optimisation | `/prompt:refactoring [TargetFile]` |
-| `/prompt:webhook` | Génère un prompt pour intégration webhook | `/prompt:webhook [ServiceName] [EventType]` |
-| `/prompt:workflow` | Génère un prompt pour workflow automation | `/prompt:workflow [WorkflowName]` |
-| `/prompt:configuration` | Génère un prompt pour configuration/feature flags | `/prompt:configuration [ConfigName]` |
-| `/prompt:generic` | Génère un prompt générique personnalisable | `/prompt:generic [TaskName]` |
+| Command | Description |
+|---------|-------------|
+| `/prompt:start` | Démarre avec un starter + active le mode plan |
+| `/prompt:validate` | Vérifie la checklist et liste les oublis |
+| `/prompt:transform` | Transforme un prompt en tâches exécutables |
 
-## Exemples d'Utilisation
+## Usage
 
-### Feature Métier
+### Démarrage rapide
+
 ```bash
-/prompt:feature DeclarationDeBug declaration-bug --bounded-context=Support --duration=8
+# Feature métier
+/prompt:start feature "Gestion des factures" --entity=Invoice --context=Billing
+
+# Refactoring
+/prompt:start refactor "Simplifier la validation" --target=src/Validator/
+
+# API/Intégration
+/prompt:start api "Intégration Stripe" --service=Stripe
+
+# Bug fix
+/prompt:start fix "Erreur 500 sur login" --target=src/Security/
 ```
 
-### Refactoring
+### Validation avant exécution
+
 ```bash
-/prompt:refactoring MenuBuilder --optimization-type=cache-decorator
+# Validation PHP standard
+/prompt:validate
+
+# Validation API
+/prompt:validate --checklist=api
+
+# Validation sécurité
+/prompt:validate --checklist=security
 ```
 
-### Webhook
+## Starters disponibles
+
+| Starter | Fichier | Usage |
+|---------|---------|-------|
+| `feature` | starters/feature.md | Nouvelle fonctionnalité métier |
+| `refactor` | starters/refactor.md | Refactoring de code existant |
+| `api` | starters/api.md | API ou intégration externe |
+| `fix` | starters/fix.md | Correction de bug |
+
+## Checklists disponibles
+
+| Checklist | Fichier | Points vérifiés |
+|-----------|---------|-----------------|
+| `php` | checklists/php.md | PHPStan, PSR-12, Elegant Objects, tests |
+| `api` | checklists/api.md | Validation, auth, rate-limit, logging |
+| `security` | checklists/security.md | OWASP, injection, auth, données sensibles |
+
+## Workflow complet
+
 ```bash
-/prompt:webhook GitHub issue.created --webhook-url-var=GITHUB_WEBHOOK_SECRET
+# 1. Démarrer avec un starter (active automatiquement le mode plan)
+/prompt:start feature "Gestion des factures" --entity=Invoice
+
+# 2. Claude explore le codebase et propose un plan
+# 3. Tu valides/ajustes le plan
+
+# 4. Avant d'exécuter, valider la checklist
+/prompt:validate
+
+# 5. Si tout est OK, exécuter le plan
 ```
 
-### Mode Interactif
-```bash
-/prompt:feature --interactive
+## Avantages vs anciens templates
+
+| Aspect | Avant (v1.x) | Maintenant (v2.x) |
+|--------|--------------|-------------------|
+| Taille template | 300-400 lignes | 10-15 lignes |
+| Flexibilité | Code boilerplate fixe | Adapté au contexte |
+| Exploration | Manuelle | Mode plan automatique |
+| Validation | Manuelle | Checklist automatisée |
+| Temps de setup | Remplir variables | Description simple |
+
+## Structure du plugin
+
 ```
-
-## Variables de Substitution
-
-### Automatiques (détectées depuis le projet)
-- `{PROJECT_NAME}` - Nom du projet (depuis composer.json)
-- `{NAMESPACE}` - Namespace racine (depuis composer.json)
-- `{AUTHOR}` - Nom de l'auteur (depuis git config)
-- `{DATE}` - Date actuelle
-
-### Interactives (demandées si absentes)
-- `{ENTITY_NAME}` - Nom de l'entité (PascalCase)
-- `{FEATURE_NAME}` - Nom de la feature (kebab-case)
-- `{BOUNDED_CONTEXT}` - Bounded context DDD
-- `{DURATION}` - Estimation en heures
-- `{TARGET_FILE}` - Fichier à refactorer
-- `{OPTIMIZATION_TYPE}` - Type d'optimisation
-- `{SERVICE_NAME}` - Nom du service tiers
-- `{EVENT_TYPE}` - Type d'événement
-
-## Structure des Prompts Générés
-
-Les prompts générés suivent une structure standardisée :
-
-1. **Objectif** - Description claire du besoin
-2. **Architecture** - Patterns et composants (DDD, CQRS, Decorators, etc.)
-3. **Plan d'Implémentation** - Phases détaillées avec fichiers à créer/modifier
-4. **Vérification** - Commands make et tests manuels
-5. **Points d'Attention** - Standards qualité, risques, patterns
-
-## Patterns Inclus
-
-Les templates intègrent automatiquement :
-- **DDD** : Entity, Repository, Collection, Value Objects
-- **CQRS** : Messages + Handlers asynchrones
-- **Elegant Objects** : Constructeur privé, factory statique, final readonly
-- **Testing** : TDD, Factories Foundry, Pattern AAA
-- **Qualité** : PHPStan niveau 9, PSR-12, Conditions Yoda
-- **Infrastructure** : Decorators, Traits, Feature Flags
-
-## Emplacement des Prompts
-
-Les prompts générés sont écrits dans `.claude/prompts/` du projet courant :
-- `.claude/prompts/feature-{name}-{timestamp}.md`
-- `.claude/prompts/refactoring-{name}-{timestamp}.md`
-- etc.
+prompt/
+├── templates/
+│   ├── starters/          # Starters légers (4 fichiers)
+│   │   ├── feature.md
+│   │   ├── refactor.md
+│   │   ├── api.md
+│   │   └── fix.md
+│   └── checklists/        # Checklists de validation (3 fichiers)
+│       ├── php.md
+│       ├── api.md
+│       └── security.md
+├── skills/
+│   ├── prompt-start/      # Skill hybride starter + plan
+│   ├── prompt-validate/   # Skill de validation
+│   └── prompt-transform/  # Conversion en tâches
+└── scripts/               # Scripts utilitaires
+```
 
 ## Licence
 
