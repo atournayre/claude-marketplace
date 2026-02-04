@@ -122,13 +122,6 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [2026.01.26] - 2026-01-26
 
-### Plugins Added
-- **command v1.0.0** - Plugin centralisé de commandes
-  - Workaround temporaire pour Claude Code issue #15178
-  - 63 commandes centralisées depuis 11 plugins
-  - Permet d'utiliser les skills via des slash commands
-  - Dépôt : [command/CHANGELOG.md](command/CHANGELOG.md)
-
 ### Plugins Updated
 - **claude v1.2.1** - Migration commandes vers plugin centralisé
   - Suppression de 5 commandes legacy
@@ -668,7 +661,6 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 Pour les détails complets de chaque plugin, voir les CHANGELOGs individuels:
 - [claude/CHANGELOG.md](claude/CHANGELOG.md)
-- [command/CHANGELOG.md](command/CHANGELOG.md)
 - [customize/CHANGELOG.md](customize/CHANGELOG.md)
 - [dev/CHANGELOG.md](dev/CHANGELOG.md)
 - [doc/CHANGELOG.md](doc/CHANGELOG.md)
