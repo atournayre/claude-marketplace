@@ -1,10 +1,10 @@
 ---
 title: "git"
 description: "Workflow Git complet  - branches, commits, conflits, PR avec automation QA"
-version: "1.12.0"
+version: "1.12.1"
 ---
 
-# git <Badge type="info" text="v1.12.0" />
+# git <Badge type="info" text="v1.12.1" />
 
 
 Workflow Git complet : branches, commits, conflits, PR.
@@ -29,7 +29,7 @@ Le plugin git fournit 9 skills (format natif Claude Code) :
 |-------|------------------|------------------|
 | `git-pr` | 13 tâches | Workflow création PR standard |
 | `git-cd-pr` | 15 tâches | Workflow CD avec labels version |
-| `git:release-notes` | 5 tâches | Génération notes de release |
+| `git:gen-release-notes` | 5 tâches | Génération notes de release |
 
 ### Fonctionnalités
 
@@ -297,15 +297,15 @@ Crée une Pull Request optimisée avec workflow structuré.
 
 ---
 
-### `/git:release-notes`
+### `/git:gen-release-notes`
 
-**🔹 Skill disponible : `release-notes`**
+**🔹 Skill disponible : `gen-release-notes`**
 
 Génère des notes de release HTML orientées **utilisateurs finaux** (sans jargon technique).
 
 **Arguments :**
 ```bash
-/git:release-notes <branche-source> <branche-cible> [nom-release]
+/git:gen-release-notes <branche-source> <branche-cible> [nom-release]
 ```
 
 > **Note :** Si les arguments obligatoires ne sont pas fournis, la commande les demandera interactivement.
@@ -313,15 +313,15 @@ Génère des notes de release HTML orientées **utilisateurs finaux** (sans jarg
 **Exemples :**
 ```bash
 # Notes de release
-/git:release-notes release/v27.0.0 main
+/git:gen-release-notes release/v27.0.0 main
 
 # Avec nom personnalisé
-/git:release-notes release/v27.0.0 develop "Version 27"
+/git:gen-release-notes release/v27.0.0 develop "Version 27"
 ```
 
 **Différence avec `/git:release-report` :**
 
-| Aspect | release-report | release-notes |
+| Aspect | release-report | gen-release-notes |
 |--------|----------------|---------------|
 | Public cible | Équipe technique / PO | Utilisateurs finaux |
 | Langage | Technique (KPI, stats) | Simple, accessible |
@@ -492,9 +492,9 @@ emoji=$(get_commit_emoji "feat")  # ✨
 
 ## Skills Disponibles
 
-### `release-notes`
+### `gen-release-notes`
 
-**Localisation :** `skills/release-notes/`
+**Localisation :** `skills/gen-release-notes/`
 
 Skill spécialisé pour générer des notes de release orientées utilisateurs finaux.
 

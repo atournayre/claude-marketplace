@@ -62,6 +62,7 @@ title: Index des Skills
 | `/gemini:analyze` | [gemini](/plugins/gemini) | Analyse une codebase ou documentation avec Gemini (1M tokens) |
 | `/gemini:search` | [gemini](/plugins/gemini) | Recherche temps réel via Google Search intégré à Gemini |
 | `/gemini:think` | [gemini](/plugins/gemini) | Délègue un problème complexe à Gemini Deep Think |
+| `/gen-release-notes` | [git](/plugins/git) | > |
 | `/git-cd-pr` | [git](/plugins/git) | > |
 | `/git-pr` | [git](/plugins/git) | > |
 | `/git-pr-core` | [git](/plugins/git) | > |
@@ -80,7 +81,6 @@ title: Index des Skills
 | `/prompt:team` | [prompt](/plugins/prompt) | Orchestre une équipe d'agents spécialisés pour les tâches complexes. Auto-détecte le type, compose l'équipe, coordonne les phases analyse → challenge → implémentation → QA. |
 | `/prompt:transform` | [prompt](/plugins/prompt) | Transforme un prompt en prompt exécutable compatible avec le Task Management System (TaskCreate/TaskUpdate/TaskList) |
 | `/prompt:validate` | [prompt](/plugins/prompt) | Vérifie la checklist avant exécution et liste les oublis |
-| `/release-notes` | [git](/plugins/git) | > |
 | `/setup-ralph` | [dev](/plugins/dev) | Setup the Ralph autonomous AI coding loop - ships features while you sleep |
 | `/skill-creator` | [claude](/plugins/claude) | This skill should be used when the user asks to "create a skill", "build a skill", "write a skill", "improve skill structure", "understand skill creation", or mentions SKILL.md files, skill development, progressive disclosure, XML structure, or bundled resources (scripts, references, assets). Comprehensive guide for creating effective Claude Code skills. |
 | `/skill-workflow-creator` | [claude](/plugins/claude) | Expert guidance for creating, building, and using Claude Code subagents and the Task tool. Use when working with subagents, setting up agent configurations, understanding how agents work, or using the Task tool to launch specialized agents. |

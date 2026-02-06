@@ -1,3 +1,11 @@
+## [1.12.1] - 2026-02-06
+
+### Changed
+- **Skill rename** : `release-notes` → `gen-release-notes`
+  - Renamed skill to avoid conflicts with native command
+  - Updated all documentation references
+  - Usage: `/git:gen-release-notes` (instead of `/git:release-notes`)
+
 ## [1.12.0] - 2026-02-04
 
 ### Added
@@ -52,7 +60,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [1.10.2] - 2026-01-26
 
 ### Removed
-- Commandes legacy : `git:branch`, `git:commit`, `git:conflit`, `git:git-cd-pr`, `git:git-pr-core`, `git:git-pr`, `git:release-notes`, `git:release-report`
+- Commandes legacy : `git:branch`, `git:commit`, `git:conflit`, `git:git-cd-pr`, `git:git-pr-core`, `git:git-pr`, `git:gen-release-notes`, `git:release-report`
   - Migrées vers plugin centralisé `command` (workaround issue #15178)
   - Skills restent fonctionnels via le plugin `command`
 
@@ -70,7 +78,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 - Commande `/git:git-cd-pr` - Crée une Pull Request en mode Continuous Delivery avec workflow complet : QA, labels version (major/minor/patch), feature flags, code review automatique.
 - Commande `/git:git-pr-core` - Skill interne fournissant les scripts communs pour la création de Pull Requests. Ne pas appeler directement - utilisé par git-pr et git-cd-pr.
 - Commande `/git:git-pr` - Crée une Pull Request GitHub standard avec workflow complet : QA, commits, assignation milestone/projet, code review automatique.
-- Commande `/git:release-notes` - Génère des notes de release HTML orientées utilisateurs finaux. Transforme les commits techniques en descriptions accessibles sans jargon.
+- Commande `/git:gen-release-notes` - Génère des notes de release HTML orientées utilisateurs finaux. Transforme les commits techniques en descriptions accessibles sans jargon.
 - Commande `/git:release-report` - Génère un rapport HTML d'analyse d'impact entre deux branches
 
 ## [1.9.2] - 2026-01-24
@@ -84,7 +92,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 - Intégration du task management system dans 3 skills git/ :
   - `git-pr` - 13 tâches (workflow création PR standard)
   - `git-cd-pr` - 15 tâches (workflow CD avec labels version)
-  - `git:release-notes` - 5 tâches (génération notes de release)
+  - `git:gen-release-notes` - 5 tâches (génération notes de release)
 - Ajout de TaskCreate/TaskUpdate pour suivi progression
 - Documentation patterns task management et dépendances
 
@@ -128,7 +136,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - `/git:branch` : Blocage si modifications non commitées, validation branche source, feedback création
   - `/git:pr` : Vérification branche à jour, QA complète avant création PR
 - **Corrections** : `argument-hint` au format correct pour toutes les commandes (`argument-hint: <requis> [optionnel]`)
-  - `/git:pr`, `/git:commit`, `/git:release-notes`, `/git:release-report` normalisés
+  - `/git:pr`, `/git:commit`, `/git:gen-release-notes`, `/git:release-report` normalisés
 
 ## [1.7.7] - 2026-01-08
 
@@ -268,10 +276,10 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [1.4.17] - 2025-12-20
 
 ### Changed
-- Skills `git-pr`, `release-notes` : réduction tokens SKILL.md
+- Skills `git-pr`, `gen-release-notes` : réduction tokens SKILL.md
   - Externalisation templates et workflows vers `references/`
   - `git-pr` : review template + todos template (lignes: 374→64)
-  - `release-notes` : HTML template + writing rules (lignes: 302→62)
+  - `gen-release-notes` : HTML template + writing rules (lignes: 302→62)
 
 ## [1.4.16] - 2025-12-17
 
@@ -337,12 +345,12 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [1.4.9] - 2025-11-26
 
 ### Added
-- Skill `release-notes` - Génère des notes de release HTML orientées utilisateurs finaux
+- Skill `gen-release-notes` - Génère des notes de release HTML orientées utilisateurs finaux
   - Transformation commits techniques → descriptions accessibles
   - Catégorisation automatique (Nouveautés, Améliorations, Corrections, Sécurité)
   - Filtrage des commits internes (tests, CI, refactoring)
   - Modèle sonnet pour qualité rédactionnelle
-- Commande `/git:release-notes` - Délègue au skill `release-notes`
+- Commande `/git:gen-release-notes` - Délègue au skill `gen-release-notes`
 
 ## [1.4.8] - 2025-11-26
 
