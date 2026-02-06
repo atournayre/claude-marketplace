@@ -34,6 +34,7 @@
 ## Commandes de vérification
 ```bash
 ./vendor/bin/phpstan analyse
+./vendor/bin/rector --dry-run
 ./vendor/bin/php-cs-fixer fix --dry-run
 ./vendor/bin/phpunit
 ```

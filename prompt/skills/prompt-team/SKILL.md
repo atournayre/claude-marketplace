@@ -247,7 +247,7 @@ Task(subagent_type="general-purpose", team_name="prompt-{slug}", name="prompt-ch
 
 **Prompt QA :**
 - Instruction de lire `prompt/agents/prompt-qa.md`
-- Lancer PHPStan, CS-Fixer, PHPUnit
+- Découvrir et exécuter tous les outils QA du projet (Phase 0 : scanner Makefile, composer.json, package.json, vendor/bin/, fichiers de config)
 - Si URL disponible : tester l'UI via Chrome
 
 **Prompt challenger (review finale) :**

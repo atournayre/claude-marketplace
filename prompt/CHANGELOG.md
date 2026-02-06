@@ -1,3 +1,15 @@
+## [2.1.1] - 2026-02-06
+
+### Changed
+- **prompt-qa** : Découverte dynamique des outils QA (Makefile, composer.json, package.json, vendor/bin/)
+  - Scanner automatique des sources : Makefile, composer scripts, npm scripts, binaires, fichiers de config
+  - Support multi-outil : PHPStan, Rector, PHP CS Fixer, PHPUnit, Biome, ESLint, Stylelint
+  - Exécution en mode check/dry-run (jamais de modification)
+  - Rapport dynamique basé sur les outils découverts (pas juste 4 outils hardcodés)
+  - Notion de criticité : BLOQUANT (erreur = fail) vs INFORMATIF (warnings)
+- **prompt-team** : Mise à jour Phase 5 - QA découvre et exécute tous les outils du projet
+- **php.md checklist** : Ajout de `rector --dry-run` dans les commandes de vérification
+
 ## [2.1.0] - 2026-02-06
 
 ### Added

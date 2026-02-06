@@ -7,6 +7,17 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.06c] - 2026-02-06
+
+### Plugins Updated
+- **prompt v2.1.1** - Découverte dynamique des outils QA
+  - Phase 0 : scanner automatique des outils QA (Makefile, composer.json, package.json, vendor/bin/, fichiers de config)
+  - Support multi-outil : PHPStan, Rector, PHP CS Fixer, PHPUnit, Biome, ESLint, Stylelint
+  - Exécution en mode check/dry-run (jamais de modification)
+  - Rapport dynamique basé sur les outils découverts
+  - Notion de criticité : BLOQUANT (erreur = fail) vs INFORMATIF (warnings)
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+
 ## [2026.02.06b] - 2026-02-06
 
 ### Plugins Updated
