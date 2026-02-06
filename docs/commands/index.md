@@ -4,7 +4,7 @@ title: Index des Skills
 
 # Index des Skills
 
-79 skills disponibles dans le marketplace.
+81 skills disponibles dans le marketplace.
 
 **Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
 
@@ -12,6 +12,7 @@ title: Index des Skills
 |-------|--------|-------------|
 | `/apex` | [mlvn](/plugins/mlvn) | Systematic implementation using APEX methodology (Analyze-Plan-Execute-eXamine) with parallel agents, self-validation, and optional adversarial review. Use when implementing features, fixing bugs, or making code changes that benefit from structured workflow. |
 | `/apex` | [mlvn](/plugins/mlvn) | Systematic implementation using APEX methodology (Analyze-Plan-Execute-Validate) with parallel agents and self-validation. Use when implementing features, fixing bugs, or making code changes that benefit from structured workflow. |
+| `/bump` | marketplace | Automatise les mises à jour de version des plugins avec détection automatique du type de version |
 | `/claude-memory` | [claude](/plugins/claude) | Create and optimize CLAUDE.md memory files or .claude/rules/ modular rules for Claude Code projects. Comprehensive guidance on file hierarchy, content structure, path-scoped rules, best practices, and anti-patterns. Use when working with CLAUDE.md files, .claude/rules directories, setting up new projects, or improving Claude Code's context awareness. |
 | `/claude:alias:add` | [claude](/plugins/claude) | Crée un alias de commande qui délègue à une autre slash command |
 | `/claude:challenge` | [claude](/plugins/claude) | Évalue ma dernière réponse, donne une note sur 10 et propose des améliorations |
@@ -72,6 +73,7 @@ title: Index des Skills
 | `/git:release-report` | [git](/plugins/git) | Génère un rapport HTML d'analyse d'impact entre deux branches |
 | `/github-impact` | [github](/plugins/github) | > |
 | `/github:fix` | [github](/plugins/github) | Corriger une issue GitHub avec workflow simplifié et efficace |
+| `/init-marketplace` | marketplace | Initialise le marketplace et vérifie toutes les dépendances nécessaires aux plugins |
 | `/marketing:linkedin` | [marketing](/plugins/marketing) | Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace |
 | `/merge` | [mlvn](/plugins/mlvn) | Intelligently merge branches with context-aware conflict resolution |
 | `/oneshot` | [dev](/plugins/dev) | Ultra-fast feature implementation using Explore → Code → Test workflow. Use when implementing focused features, single tasks, or when speed over completeness is priority. |
