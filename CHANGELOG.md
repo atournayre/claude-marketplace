@@ -7,6 +7,15 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.06a] - 2026-02-06
+
+### Plugins Updated
+- **git v1.12.1** - Skill rename to avoid command conflicts
+  - Renamed skill `release-notes` → `gen-release-notes`
+  - Updated command from `/git:release-notes` → `/git:gen-release-notes`
+  - Resolves conflict with native command
+  - Upgrade PATCH (v1.12.0 → v1.12.1)
+
 ## [2026.02.04c] - 2026-02-04
 
 ### Plugins Updated

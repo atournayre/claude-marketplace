@@ -1,3 +1,11 @@
+## [1.12.1] - 2026-02-06
+
+### Changed
+- **Skill rename** : `release-notes` → `gen-release-notes`
+  - Renamed skill to avoid conflicts with native command
+  - Updated all documentation references
+  - Usage: `/git:gen-release-notes` (instead of `/git:release-notes`)
+
 ## [1.12.0] - 2026-02-04
 
 ### Added
