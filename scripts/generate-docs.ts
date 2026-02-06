@@ -122,59 +122,70 @@ ${content}`
 }
 
 // Phase 2.2 : Générer l'index des commandes
+// Fonction utilitaire pour scanner un dossier de skills et extraire les commandes
+function scanSkillsDirectory(skillsDir: string, pluginLabel: string, allCommands: Command[]) {
+  if (!fs.existsSync(skillsDir)) {
+    return
+  }
+
+  const skillDirs = fs.readdirSync(skillsDir, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
+
+  skillDirs.forEach(skillEntry => {
+    const skillPath = path.join(skillsDir, skillEntry.name, 'SKILL.md')
+
+    if (!fs.existsSync(skillPath)) {
+      return
+    }
+
+    const skillContent = fs.readFileSync(skillPath, 'utf-8')
+
+    // Parser le frontmatter YAML
+    const frontmatterMatch = skillContent.match(/^---\n([\s\S]+?)\n---/)
+    if (!frontmatterMatch) {
+      return
+    }
+
+    const frontmatter = frontmatterMatch[1]
+    const nameMatch = frontmatter.match(/name:\s*['"]?(.+?)['"]?\s*$/m)
+    const descMatch = frontmatter.match(/description:\s*['"]?(.+?)['"]?\s*$/m)
+
+    if (nameMatch && descMatch) {
+      allCommands.push({
+        command: nameMatch[1],
+        plugin: pluginLabel,
+        description: descMatch[1]
+      })
+    }
+  })
+}
+
 function generateCommandsIndex() {
   console.log('📋 Génération de l\'index des commandes...')
 
   const allCommands: Command[] = []
   const pluginDirs = findPluginDirectories()
 
+  // Scanner les skills de chaque plugin
   pluginDirs.forEach(pluginDir => {
     const skillsDir = path.join(rootDir, pluginDir, 'skills')
-
-    if (!fs.existsSync(skillsDir)) {
-      return
-    }
-
-    // Lire tous les sous-dossiers de skills
-    const skillDirs = fs.readdirSync(skillsDir, { withFileTypes: true })
-      .filter(entry => entry.isDirectory())
-
-    skillDirs.forEach(skillEntry => {
-      const skillPath = path.join(skillsDir, skillEntry.name, 'SKILL.md')
-
-      if (!fs.existsSync(skillPath)) {
-        return
-      }
-
-      const skillContent = fs.readFileSync(skillPath, 'utf-8')
-
-      // Parser le frontmatter YAML
-      const frontmatterMatch = skillContent.match(/^---\n([\s\S]+?)\n---/)
-      if (!frontmatterMatch) {
-        return
-      }
-
-      const frontmatter = frontmatterMatch[1]
-      const nameMatch = frontmatter.match(/name:\s*['"]?(.+?)['"]?\s*$/m)
-      const descMatch = frontmatter.match(/description:\s*['"]?(.+?)['"]?\s*$/m)
-
-      if (nameMatch && descMatch) {
-        allCommands.push({
-          command: nameMatch[1],
-          plugin: pluginDir,
-          description: descMatch[1]
-        })
-      }
-    })
+    scanSkillsDirectory(skillsDir, pluginDir, allCommands)
   })
+
+  // Scanner les skills au niveau marketplace (.claude/skills/)
+  const marketplaceSkillsDir = path.join(rootDir, '.claude', 'skills')
+  scanSkillsDirectory(marketplaceSkillsDir, 'marketplace', allCommands)
 
   // Trier par nom de commande
   allCommands.sort((a, b) => a.command.localeCompare(b.command))
 
   // Générer la table markdown
-  const tableRows = allCommands.map(cmd =>
-    `| \`/${cmd.command}\` | [${cmd.plugin}](/plugins/${cmd.plugin}) | ${cmd.description} |`
-  ).join('\n')
+  const tableRows = allCommands.map(cmd => {
+    const pluginCell = cmd.plugin === 'marketplace'
+      ? 'marketplace'
+      : `[${cmd.plugin}](/plugins/${cmd.plugin})`
+    return `| \`/${cmd.command}\` | ${pluginCell} | ${cmd.description} |`
+  }).join('\n')
 
   const content = `---
 title: Index des Skills
