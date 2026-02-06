@@ -1,5 +1,5 @@
 ---
-name: release-notes
+name: gen-release-notes
 description: >
   Génère des notes de release HTML orientées utilisateurs finaux.
   Transforme les commits techniques en descriptions accessibles sans jargon.
@@ -7,7 +7,7 @@ allowed-tools: [Bash, Read, Write, Grep, Glob, AskUserQuestion]
 model: sonnet
 ---
 
-# Release Notes Skill
+# Gen Release Notes Skill
 
 ## Instructions à Exécuter
 
@@ -16,7 +16,7 @@ model: sonnet
 
 ## Usage
 ```
-/git:release-notes <branche-source> <branche-cible> [nom-release]
+/git:gen-release-notes <branche-source> <branche-cible> [nom-release]
 ```
 Si arguments manquants : `AskUserQuestion` pour demander.
 

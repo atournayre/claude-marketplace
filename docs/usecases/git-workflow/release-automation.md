@@ -4,7 +4,7 @@ description: Génération automatique de notes de release HTML orientées utilis
 category: git-workflow
 plugins:
   - name: git
-    skills: [/git:release-notes, /git:release-report]
+    skills: [/git:gen-release-notes, /git:release-report]
   - name: doc
     skills: []
 complexity: 2
@@ -69,7 +69,7 @@ Commits doivent suivre le format :
 
 **Commande :**
 ```bash
-/git:release-notes v1.2.0..v1.3.0
+/git:gen-release-notes v1.2.0..v1.3.0
 ```
 
 Génère les notes de release entre deux tags.
@@ -347,7 +347,7 @@ Deployment Checklist :
 
 **Commande :**
 ```bash
-/git:release-notes v1.9.0..v2.0.0
+/git:gen-release-notes v1.9.0..v2.0.0
 ```
 
 **Release notes générées :**
@@ -433,7 +433,7 @@ For help, contact support@example.com
 ### Release notes pour GitHub
 
 ```bash
-/git:release-notes v1.2.0..v1.3.0 --format=github
+/git:gen-release-notes v1.2.0..v1.3.0 --format=github
 ```
 
 Génère format optimisé pour GitHub Releases.
@@ -441,7 +441,7 @@ Génère format optimisé pour GitHub Releases.
 ### Changelog pour CHANGELOG.md
 
 ```bash
-/git:release-notes --append-changelog
+/git:gen-release-notes --append-changelog
 ```
 
 Ajoute automatiquement à `CHANGELOG.md` au format Keep a Changelog.
@@ -451,7 +451,7 @@ Ajoute automatiquement à `CHANGELOG.md` au format Keep a Changelog.
 Configurer GitHub Action :
 
 ```yaml
-# .github/workflows/release-notes.yml
+# .github/workflows/gen-release-notes.yml
 name: Auto Release Notes
 on:
   push:
@@ -467,7 +467,7 @@ jobs:
           fetch-depth: 0
 
       - name: Generate release notes
-        run: /git:release-notes ${{ github.ref_name }}
+        run: /git:gen-release-notes ${{ github.ref_name }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

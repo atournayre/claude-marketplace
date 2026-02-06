@@ -231,7 +231,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - 3 nouveaux skills : `analyze`, `search`, `think`
   - Dépôt : [gemini/CHANGELOG.md](gemini/CHANGELOG.md)
 - **git v1.10.0** - Migration commands → skills complète
-  - 8 nouveaux skills : `branch`, `commit`, `conflit`, `git-cd-pr`, `git-pr-core`, `git-pr`, `release-notes`, `release-report`
+  - 8 nouveaux skills : `branch`, `commit`, `conflit`, `git-cd-pr`, `git-pr-core`, `git-pr`, `gen-release-notes`, `release-report`
   - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
 - **github v1.3.0** - Migration commands → skills complète
   - 2 nouveaux skills : `fix`, `github-impact`
@@ -272,7 +272,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
   - Documentation patterns task management et agents parallèles
   - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
 - **git v1.9.1** - Intégration task management system
-  - 3 skills modifiés : `git-pr` (13 tâches), `git-cd-pr` (15 tâches), `git:release-notes` (5 tâches)
+  - 3 skills modifiés : `git-pr` (13 tâches), `git-cd-pr` (15 tâches), `git:gen-release-notes` (5 tâches)
   - Suivi détaillé workflows création PR (QA → création → review)
   - Tâches conditionnelles (review automatique si plugin installé)
   - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
@@ -511,7 +511,7 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 - **git v1.4.18** - Réoptimisation commande git:commit
   - Commande `git:commit` : meilleure organisation des options
 - **git v1.4.17** - Réduction tokens skills
-  - Skills `git-pr`, `release-notes` : optimisées
+  - Skills `git-pr`, `gen-release-notes` : optimisées
   - Externalisation templates vers `references/`
 - **github v1.1.1** - Réduction tokens skills
   - Skill `github-impact` : optimisation SKILL.md

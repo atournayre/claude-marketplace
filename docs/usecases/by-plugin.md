@@ -105,7 +105,7 @@ Workflow standard pour créer une PR avec PHPStan, tests et review automatique
 
 Génération automatique de notes de release HTML orientées utilisateurs finaux
 
-**Skills :** `/git:release-notes`, `/git:release-report`
+**Skills :** `/git:gen-release-notes`, `/git:release-report`
 
 ---
 

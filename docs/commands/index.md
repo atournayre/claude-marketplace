@@ -79,7 +79,7 @@ title: Index des Skills
 | `/prompt:start` | [prompt](/plugins/prompt) | Démarre un développement avec un starter léger puis active le mode plan |
 | `/prompt:transform` | [prompt](/plugins/prompt) | Transforme un prompt en prompt exécutable compatible avec le Task Management System (TaskCreate/TaskUpdate/TaskList) |
 | `/prompt:validate` | [prompt](/plugins/prompt) | Vérifie la checklist avant exécution et liste les oublis |
-| `/release-notes` | [git](/plugins/git) | > |
+| `/gen-release-notes` | [git](/plugins/git) | > |
 | `/setup-ralph` | [dev](/plugins/dev) | Setup the Ralph autonomous AI coding loop - ships features while you sleep |
 | `/skill-creator` | [claude](/plugins/claude) | This skill should be used when the user asks to "create a skill", "build a skill", "write a skill", "improve skill structure", "understand skill creation", or mentions SKILL.md files, skill development, progressive disclosure, XML structure, or bundled resources (scripts, references, assets). Comprehensive guide for creating effective Claude Code skills. |
 | `/skill-workflow-creator` | [claude](/plugins/claude) | Expert guidance for creating, building, and using Claude Code subagents and the Task tool. Use when working with subagents, setting up agent configurations, understanding how agents work, or using the Task tool to launch specialized agents. |
