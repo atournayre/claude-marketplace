@@ -1,16 +1,109 @@
 ---
+name: init-marketplace
 description: Initialise le marketplace et vérifie toutes les dépendances nécessaires aux plugins
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Glob
-  - Grep
+model: haiku
+allowed-tools: [Bash, Read, Write, Glob, Grep]
+version: 1.0.0
+license: MIT
 ---
 
-# init-marketplace
+# Init Marketplace
 
 Initialise le marketplace et vérifie toutes les dépendances système nécessaires aux plugins.
+
+## Instructions à Exécuter
+
+**IMPORTANT : Exécute ce workflow étape par étape :**
+
+### Étape 1 : Vérifier les dépendances système
+
+Exécuter les vérifications suivantes en parallèle avec Bash :
+
+```bash
+# Vérifier chaque dépendance
+which git && echo "✅ git installé" || echo "❌ git manquant"
+which gh && echo "✅ gh installé" || echo "❌ gh manquant"
+which node && echo "✅ node installé" || echo "❌ node manquant"
+which npm && echo "✅ npm installé" || echo "❌ npm manquant"
+which bun && echo "✅ bun installé" || echo "❌ bun manquant"
+which pnpm && echo "✅ pnpm installé" || echo "❌ pnpm manquant (optionnel)"
+which ccusage && echo "✅ ccusage installé" || echo "❌ ccusage manquant (optionnel)"
+which biome && echo "✅ biome installé" || echo "❌ biome manquant (optionnel)"
+```
+
+### Étape 2 : Afficher les versions
+
+Pour chaque dépendance installée, afficher la version :
+
+```bash
+git --version
+gh --version
+node --version
+npm --version
+bun --version
+pnpm --version 2>/dev/null || echo "pnpm non installé"
+```
+
+### Étape 3 : Analyser les plugins installés
+
+Lire `.claude-plugin/marketplace.json` pour obtenir la liste des plugins.
+
+Pour chaque plugin, vérifier si ses dépendances sont satisfaites en se basant sur la section "Dépendances par plugin" ci-dessous.
+
+### Étape 4 : Générer le rapport
+
+Créer un rapport structuré :
+
+```
+📦 Marketplace Claude Plugin - Rapport de dépendances
+
+✅ Dépendances installées (X/Y)
+- git v2.x.x
+- gh v2.x.x
+- node v20.x.x
+- npm v10.x.x
+- bun v1.3.8
+
+❌ Dépendances manquantes (X/Y)
+- biome (optionnel)
+
+⚠️ Plugins affectés par les dépendances manquantes
+- mlvn: Scripts de dev (biome manquant)
+
+📊 Résumé par plugin
+✅ git (1.10.2): Toutes les dépendances satisfaites
+✅ github (1.3.1): Toutes les dépendances satisfaites
+✅ mlvn (1.0.0): 100% fonctionnel (biome optionnel manquant)
+...
+```
+
+### Étape 5 : Proposer l'installation des dépendances manquantes
+
+Si des dépendances critiques manquent, afficher les commandes d'installation :
+
+```bash
+# Installer bun
+curl -fsSL https://bun.sh/install | bash
+
+# Installer gh (GitHub CLI)
+# macOS
+brew install gh
+# Linux
+sudo apt install gh  # ou yum, dnf selon la distro
+
+# Installer biome
+npm install -g @biomejs/biome
+```
+
+### Étape 6 : Installer les packages NPM des plugins
+
+Pour chaque plugin nécessitant des packages NPM (comme mlvn), proposer :
+
+```bash
+# Plugin mlvn
+cd mlvn/scripts
+bun install
+```
 
 ## Dépendances à vérifier
 
@@ -121,98 +214,6 @@ Initialise le marketplace et vérifie toutes les dépendances système nécessai
 
 <!-- END AUTO-GENERATED -->
 
-## Workflow
-
-### 1. Vérifier les dépendances système
-
-Exécuter les vérifications suivantes en parallèle avec Bash :
-
-```bash
-# Vérifier chaque dépendance
-which git && echo "✅ git installé" || echo "❌ git manquant"
-which gh && echo "✅ gh installé" || echo "❌ gh manquant"
-which node && echo "✅ node installé" || echo "❌ node manquant"
-which npm && echo "✅ npm installé" || echo "❌ npm manquant"
-which bun && echo "✅ bun installé" || echo "❌ bun manquant"
-which pnpm && echo "✅ pnpm installé" || echo "❌ pnpm manquant (optionnel)"
-which ccusage && echo "✅ ccusage installé" || echo "❌ ccusage manquant (optionnel)"
-which biome && echo "✅ biome installé" || echo "❌ biome manquant (optionnel)"
-```
-
-### 2. Afficher les versions
-
-Pour chaque dépendance installée, afficher la version :
-
-```bash
-git --version
-gh --version
-node --version
-npm --version
-bun --version
-pnpm --version 2>/dev/null || echo "pnpm non installé"
-```
-
-### 3. Analyser les plugins installés
-
-Lire `.claude-plugin/marketplace.json` pour obtenir la liste des plugins.
-
-Pour chaque plugin, vérifier si ses dépendances sont satisfaites.
-
-### 4. Générer le rapport
-
-Créer un rapport structuré :
-
-```
-📦 Marketplace Claude Plugin - Rapport de dépendances
-
-✅ Dépendances installées (X/Y)
-- git v2.x.x
-- gh v2.x.x
-- node v20.x.x
-- npm v10.x.x
-- bun v1.3.8
-
-❌ Dépendances manquantes (X/Y)
-- biome (optionnel)
-
-⚠️ Plugins affectés par les dépendances manquantes
-- mlvn: Scripts de dev (biome manquant)
-
-📊 Résumé par plugin
-✅ git (1.10.2): Toutes les dépendances satisfaites
-✅ github (1.3.1): Toutes les dépendances satisfaites
-✅ mlvn (1.0.0): 100% fonctionnel (biome optionnel manquant)
-...
-```
-
-### 5. Proposer l'installation des dépendances manquantes
-
-Si des dépendances critiques manquent, afficher les commandes d'installation :
-
-```bash
-# Installer bun
-curl -fsSL https://bun.sh/install | bash
-
-# Installer gh (GitHub CLI)
-# macOS
-brew install gh
-# Linux
-sudo apt install gh  # ou yum, dnf selon la distro
-
-# Installer biome
-npm install -g @biomejs/biome
-```
-
-### 6. Installer les packages NPM des plugins
-
-Pour chaque plugin nécessitant des packages NPM (comme mlvn), proposer :
-
-```bash
-# Plugin mlvn
-cd mlvn/scripts
-bun install
-```
-
 ## Sortie
 
 Le rapport doit être formaté en markdown avec :
@@ -221,19 +222,6 @@ Le rapport doit être formaté en markdown avec :
 - ⚠️ Icônes pour avertissements
 - 📊 Sections claires
 - 🔧 Commandes d'installation prêtes à copier-coller
-
-## Exemple d'exécution
-
-```bash
-/init-marketplace
-```
-
-Affiche :
-1. État des dépendances système
-2. Versions installées
-3. Plugins affectés
-4. Commandes d'installation pour ce qui manque
-5. Résumé global
 
 ## Notes
 
