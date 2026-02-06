@@ -4,7 +4,7 @@ title: Index des Agents
 
 # Index des Agents
 
-19 agents disponibles dans le marketplace.
+25 agents disponibles dans le marketplace.
 
 **Note** : Les agents sont des sous-agents spécialisés qui peuvent être invoqués via le Task tool.
 
@@ -25,6 +25,12 @@ title: Index des Agents
 | `meilisearch-docs-scraper` | [dev](/plugins/dev) | À utiliser de manière proactive pour extraire et sauvegarder spécifiquement la documentation Meilisearch dans docs/meilisearch/. Spécialisé pour créer des fichiers individuels par URL sans écrasement. | WebFetch, Read, Write, MultiEdit, Grep, Glob |
 | `meta-agent` | [dev](/plugins/dev) | Génère un nouveau fichier de configuration d'agent Claude Code complet à partir de la description d'un utilisateur. Utilisez-le pour créer de nouveaux agents. À utiliser de manière proactive lorsque l'utilisateur demande de créer un nouveau sous-agent. | Write, WebFetch, mcp__firecrawl-mcp__firecrawl_scrape, mcp__firecrawl-mcp__firecrawl_search, MultiEdit |
 | `phpstan-error-resolver` | [dev](/plugins/dev) | À utiliser de manière proactive pour analyser et corriger systématiquement les erreurs PHPStan niveau 9 dans les projets PHP/Symfony. Spécialiste pour résoudre les problèmes de types stricts, annotations generics, array shapes et collections Doctrine. | Read, Edit, Grep, Glob, Bash |
+| `prompt-architect` | [prompt](/plugins/prompt) | Analyse l'architecture, les patterns et la structure du codebase pour proposer une conception technique solide. À utiliser dans le cadre d'une équipe d'agents pour la phase d'analyse. | Read, Grep, Glob, Bash |
+| `prompt-challenger` | [prompt](/plugins/prompt) | Avocat du diable : challenge les propositions, identifie les edge cases, failles de sécurité et alternatives. À utiliser dans le cadre d'une équipe d'agents pour la phase de challenge. | Read, Grep, Glob, Bash |
+| `prompt-designer` | [prompt](/plugins/prompt) | Conçoit le design DDD, les contrats, interfaces et flux de données. À utiliser dans le cadre d'une équipe d'agents pour la phase d'analyse. | Read, Grep, Glob, Bash |
+| `prompt-developer` | [prompt](/plugins/prompt) | Implémente le code selon le plan validé par l'équipe. Accès écriture aux fichiers. À utiliser dans le cadre d'une équipe d'agents pour la phase d'implémentation. | Read, Write, Edit, Grep, Glob, Bash |
+| `prompt-qa` | [prompt](/plugins/prompt) | QA : lint (PHPStan, CS-Fixer), run tests, Chrome UI testing. À utiliser dans le cadre d'une équipe d'agents pour la phase de validation finale. | Read, Grep, Glob, Bash |
+| `prompt-tester` | [prompt](/plugins/prompt) | Écrit les tests PHPUnit en approche TDD. Accès écriture aux fichiers de tests. À utiliser dans le cadre d'une équipe d'agents pour la phase d'implémentation. | Read, Write, Edit, Grep, Glob, Bash |
 | `silent-failure-hunter` | [review](/plugins/review) | Détecte les erreurs silencieuses, catch vides, et gestion d'erreurs inadéquate dans le code PHP. À utiliser de manière proactive après l'écriture de code impliquant des try-catch, fallbacks, ou gestion d'erreurs. | Read, Grep, Glob, Bash |
 | `symfony-docs-scraper` | [dev](/plugins/dev) | À utiliser de manière proactive pour extraire et sauvegarder spécifiquement la documentation Symfony dans docs/symfony/. Spécialisé pour créer des fichiers individuels par URL sans écrasement. | WebFetch, Read, Write, MultiEdit, Grep, Glob |
 | `test-analyzer` | [review](/plugins/review) | Analyse la couverture et qualité des tests PHPUnit dans une PR. À utiliser de manière proactive avant de créer une PR pour identifier les tests manquants critiques. | Read, Grep, Glob, Bash |

@@ -7,6 +7,19 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.06b] - 2026-02-06
+
+### Plugins Updated
+- **prompt v2.1.0** - Agent Teams natif pour orchestration multi-agents
+  - Nouveau skill `/prompt:team` : orchestre une équipe d'agents spécialisés
+  - Auto-détection type de tâche (feature/refactor/api/fix)
+  - 6 agents spécialisés : architect, designer, challenger, developer, tester, qa
+  - Workflow 6 phases : Analyse → Challenge → Synthèse → Implémentation → QA → Rapport
+  - Communication inter-agents via SendMessage natif
+  - Validation utilisateur avant implémentation
+  - Gestion d'erreurs avec fallbacks par phase
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+
 ## [2026.02.06a] - 2026-02-06
 
 ### Plugins Updated

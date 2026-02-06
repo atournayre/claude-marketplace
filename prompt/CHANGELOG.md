@@ -1,3 +1,25 @@
+## [2.1.0] - 2026-02-06
+
+### Added
+- Nouveau skill `/prompt:team` - Orchestre une équipe d'agents spécialisés via Agent Teams natif
+  - Auto-détection du type de tâche (feature/refactor/api/fix)
+  - Composition d'équipe automatique selon le type
+  - Override possible avec `--agents=architect,developer,qa`
+  - Workflow 6 phases : Analyse → Challenge → Synthèse → Implémentation → QA → Rapport
+  - Validation utilisateur avant implémentation
+  - Gestion d'erreurs avec fallbacks par phase
+- 6 agents spécialisés :
+  - `prompt-architect` - Architecture, patterns, structure codebase
+  - `prompt-designer` - Design DDD, contrats, interfaces, data flow
+  - `prompt-challenger` - Avocat du diable, edge cases, sécurité, alternatives
+  - `prompt-developer` - Implémentation code selon plan validé
+  - `prompt-tester` - Écriture tests PHPUnit (TDD)
+  - `prompt-qa` - Lint (PHPStan, CS-Fixer), run tests, Chrome UI testing
+
+### Changed
+- Plugin description mise à jour pour inclure Agent Teams
+- Keywords étendus avec : `team`, `agents`, `orchestration`, `multi-agent`
+
 ## [2.0.0] - 2026-02-04
 
 ### Changed
