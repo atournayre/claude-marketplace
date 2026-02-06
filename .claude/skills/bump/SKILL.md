@@ -19,6 +19,15 @@ Mettre à jour automatiquement la version d'un ou plusieurs plugins avec détect
 - Marquer `completed` UNIQUEMENT quand l'étape est 100% terminée
 - NE JAMAIS sauter une étape
 
+## RÈGLE ANTI-OUBLI : Vérification avant completed
+
+**INTERDICTION** de marquer une tâche `completed` sans avoir :
+1. Exécuté CHAQUE sous-étape listée (4.1, 4.2, 4.3... pas juste certaines)
+2. Vérifié la sous-checklist `🔒 AVANT DE MARQUER COMPLETED` de l'étape
+3. Lu les fichiers cibles pour confirmer que la modification est bien faite
+
+**Si une sous-étape semble "non applicable"** : tu DOIS quand même lire le fichier cible pour le vérifier. Ne JAMAIS supposer qu'une étape est inapplicable sans preuve.
+
 ## Instructions à Exécuter
 
 ### Étape 1 : Créer TOUTES les tâches du workflow
@@ -152,6 +161,20 @@ Ajoute en haut (après le titre) :
 
 #### 4.6 Mettre à jour README du plugin (si nouveaux agents/skills)
 
+**OBLIGATOIRE si MINOR** : Lis `{plugin}/README.md` avec Read et mets à jour :
+- Ajouter la nouvelle commande/skill dans le tableau "Slash Commands" ou équivalent
+- Ajouter les nouveaux agents dans la section agents si elle existe
+- Mettre à jour la structure du plugin (arborescence `tree`)
+- Ajouter une section usage/exemples pour les nouvelles fonctionnalités
+
+Si le README ne contient pas de section pertinente, en ajouter une.
+
+**🔒 AVANT DE MARQUER COMPLETED - Vérifie ces points :**
+- [ ] `{plugin}/.claude-plugin/plugin.json` → version mise à jour (Read pour vérifier)
+- [ ] `{plugin}/CHANGELOG.md` → nouvelle entrée en haut du fichier (Read pour vérifier)
+- [ ] `{plugin}/README.md` → nouvelles commandes/agents/structure documentés (Read pour vérifier)
+- [ ] Si MINOR et aucune modif README → ERREUR, tu as oublié quelque chose
+
 **TaskUpdate : Tâche #3 → `completed`**
 
 ---
@@ -162,14 +185,14 @@ Ajoute en haut (après le titre) :
 
 #### 5.1 Mettre à jour README.md global
 
-Dans le tableau des plugins :
+**OBLIGATOIRE** : Lis `README.md` avec Read. Trouve le tableau des plugins et mets à jour la ligne du plugin :
 ```markdown
-| 📝 **{Plugin}** | NOUVELLE_VERSION | Description | [README](...) |
+| 📝 **{Plugin}** | NOUVELLE_VERSION | Description mise à jour | [README](...) |
 ```
 
 #### 5.2 Mettre à jour CHANGELOG.md global
 
-Vérifie si section du jour existe :
+**OBLIGATOIRE** : Lis `CHANGELOG.md` avec Read. Vérifie si section du jour existe :
 ```markdown
 ## [YYYY.MM.DD] - YYYY-MM-DD
 ```
@@ -180,11 +203,14 @@ Ajoute :
 ```markdown
 ### Plugins Updated
 - **{plugin} vNOUVELLE_VERSION** - Résumé des changements
+  - Détail changement 1
+  - Détail changement 2
+  - Dépôt : [{plugin}/CHANGELOG.md]({plugin}/CHANGELOG.md)
 ```
 
 #### 5.3 Mettre à jour marketplace.json (si nouveau plugin)
 
-Si le plugin n'existe pas dans `.claude-plugin/marketplace.json` :
+**OBLIGATOIRE** : Lis `.claude-plugin/marketplace.json` avec Read. Si le plugin n'existe pas :
 ```json
 {
   "name": "{plugin}",
@@ -192,6 +218,8 @@ Si le plugin n'existe pas dans `.claude-plugin/marketplace.json` :
   "description": "..."
 }
 ```
+
+Si le plugin existe déjà, vérifier que sa description est à jour.
 
 #### 5.4 Synchroniser README.md et marketplace.json
 
@@ -222,6 +250,12 @@ find . -name "plugin.json" -path "*/.claude-plugin/*" | sed 's|^\./||' | sed 's|
 
 3. Remplace la section existante dans le template (entre `## Plugin(s) concerné(s)` et `## Checklist`)
 
+**🔒 AVANT DE MARQUER COMPLETED - Vérifie ces points :**
+- [ ] `README.md` global → ligne du plugin mise à jour avec nouvelle version (Read pour vérifier)
+- [ ] `CHANGELOG.md` global → entrée du jour avec résumé du plugin (Read pour vérifier)
+- [ ] `.claude-plugin/marketplace.json` → plugin présent avec description à jour (Read pour vérifier)
+- [ ] `.github/PULL_REQUEST_TEMPLATE/default.md` → liste plugins synchronisée (Read pour vérifier)
+
 **TaskUpdate : Tâche #4 → `completed`**
 
 ---
@@ -244,12 +278,12 @@ Si `{plugin}/DEPENDENCIES.json` n'existe pas, scanner et créer :
 
 #### 6.2 Rebuild VitePress
 
-**OBLIGATOIRE - NE PAS OUBLIER** :
+**OBLIGATOIRE - TOUJOURS EXÉCUTER, SANS EXCEPTION** :
 ```bash
 cd docs && npm run build
 ```
 
-Vérifie que la commande s'exécute sans erreur.
+Vérifie que la commande s'exécute sans erreur. Si erreur, corriger avant de continuer.
 
 #### 6.3 Vérifier les fichiers générés
 
@@ -258,6 +292,13 @@ git status --short docs/
 ```
 
 Les fichiers `docs/plugins/{plugin}.md` et `docs/commands/index.md` doivent être modifiés.
+Si nouveaux agents ajoutés, `docs/agents/index.md` doit aussi être modifié.
+
+**🔒 AVANT DE MARQUER COMPLETED - Vérifie ces points :**
+- [ ] `{plugin}/DEPENDENCIES.json` → existe (Read pour vérifier)
+- [ ] `cd docs && npm run build` → exécuté avec succès (0 erreurs)
+- [ ] `git status --short docs/` → au moins `docs/plugins/{plugin}.md` et `docs/commands/index.md` modifiés
+- [ ] Si nouveaux agents → `docs/agents/index.md` aussi modifié
 
 **TaskUpdate : Tâche #5 → `completed`**
 
@@ -295,16 +336,33 @@ Prochaine étape : /git:commit
 
 ## Checklist de validation finale
 
-Avant de terminer, vérifie que TOUTES ces conditions sont remplies :
+**OBLIGATOIRE** : Avant de terminer, vérifie chaque fichier individuellement avec `git diff --name-only` et confirme que TOUS ces fichiers apparaissent dans la liste des modifiés :
 
+### Fichiers du plugin (par plugin bumpé)
+- [ ] `{plugin}/.claude-plugin/plugin.json` → version incrémentée
+- [ ] `{plugin}/CHANGELOG.md` → nouvelle entrée datée du jour
+- [ ] `{plugin}/README.md` → à jour si MINOR (nouveaux skills/agents documentés)
+
+### Fichiers du marketplace (toujours)
+- [ ] `README.md` → tableau des plugins avec nouvelle version
+- [ ] `CHANGELOG.md` → entrée du jour avec résumé plugin
+- [ ] `.claude-plugin/marketplace.json` → description à jour (si nouveau plugin)
+- [ ] `.github/PULL_REQUEST_TEMPLATE/default.md` → liste plugins synchronisée
+
+### Documentation générée (toujours)
+- [ ] `docs/plugins/{plugin}.md` → régénéré via VitePress
+- [ ] `docs/commands/index.md` → régénéré via VitePress
+- [ ] `docs/agents/index.md` → régénéré si nouveaux agents
+
+### Tâches
 - [ ] Tâche #1 completed : Plugins détectés
 - [ ] Tâche #2 completed : Sélection faite
-- [ ] Tâche #3 completed : plugin.json + CHANGELOG plugin + README plugin mis à jour
-- [ ] Tâche #4 completed : README global + CHANGELOG global + marketplace.json + PR template mis à jour
-- [ ] Tâche #5 completed : DEPENDENCIES.json + VitePress rebuild
+- [ ] Tâche #3 completed : Fichiers plugin mis à jour
+- [ ] Tâche #4 completed : Fichiers marketplace mis à jour
+- [ ] Tâche #5 completed : Dépendances + VitePress rebuild
 - [ ] Tâche #6 completed : Résumé affiché
 
-**Si une tâche n'est pas completed, NE PAS continuer.**
+**Si un fichier manque dans `git diff --name-only`, STOP : tu as oublié une étape.**
 
 ---
 

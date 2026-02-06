@@ -4,7 +4,7 @@ title: Index des Skills
 
 # Index des Skills
 
-78 skills disponibles dans le marketplace.
+79 skills disponibles dans le marketplace.
 
 **Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
 
@@ -77,6 +77,7 @@ title: Index des Skills
 | `/phpstan-resolver` | [qa](/plugins/qa) | > |
 | `/prompt-creator` | [mlvn](/plugins/mlvn) | Expert prompt engineering for creating effective prompts for Claude, GPT, and other LLMs. Use when writing system prompts, user prompts, few-shot examples, or optimizing existing prompts for better performance. |
 | `/prompt:start` | [prompt](/plugins/prompt) | Démarre un développement avec un starter léger puis active le mode plan |
+| `/prompt:team` | [prompt](/plugins/prompt) | Orchestre une équipe d'agents spécialisés pour les tâches complexes. Auto-détecte le type, compose l'équipe, coordonne les phases analyse → challenge → implémentation → QA. |
 | `/prompt:transform` | [prompt](/plugins/prompt) | Transforme un prompt en prompt exécutable compatible avec le Task Management System (TaskCreate/TaskUpdate/TaskList) |
 | `/prompt:validate` | [prompt](/plugins/prompt) | Vérifie la checklist avant exécution et liste les oublis |
 | `/release-notes` | [git](/plugins/git) | > |

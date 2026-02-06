@@ -1,7 +1,7 @@
 {
   "name": "prompt",
-  "description": "Système hybride Starters + Mode Plan + Checklists pour développement efficace - Templates légers, exploration contextuelle, validation automatisée",
-  "version": "2.0.0",
+  "description": "Système hybride Starters + Mode Plan + Checklists + Agent Teams pour développement efficace - Templates légers, exploration contextuelle, validation automatisée, orchestration multi-agents",
+  "version": "2.1.0",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
@@ -17,6 +17,10 @@
     "validation",
     "php",
     "symfony",
-    "elegant-objects"
+    "elegant-objects",
+    "team",
+    "agents",
+    "orchestration",
+    "multi-agent"
   ]
 }
