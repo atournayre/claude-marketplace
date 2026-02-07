@@ -1,3 +1,33 @@
+## [2.3.0] - 2026-02-06
+
+### Added
+- Nouvel agent **prompt-analyst** : fusion architect + designer (architecture technique + design DDD)
+- Nouvel agent **prompt-implementer** : fusion developer + tester (code + tests intégrés)
+
+### Changed
+- **prompt-team** v2.0.0 → v2.1.0 : Refonte complète pour gestion optimisée des ressources
+  - Architecture multi-agent hybride : 3 agents au lieu de 6 (analyst, challenger, implementer)
+  - Fichiers intermédiaires dans le scratchpad pour communication inter-phases (contexte du team lead protégé)
+  - Mode Normal (parallèle intra-phase, max 2 agents) avec basculement automatique vers mode Safe si RAM < 4 GB
+  - Shutdown par phase : agents d'une même phase communiquent en temps réel avant shutdown
+  - Option `--safe` pour forcer le mode séquentiel sur machines contraintes
+
+## [2.2.0] - 2026-02-06
+
+### Changed
+- **prompt-team** v2.0.0 : Refonte architecture multi-agent
+  - Fusion des agents : 3 agents (analyst, challenger, implementer) au lieu de 6
+  - Fichiers intermédiaires dans le scratchpad pour la communication inter-phases (pas dans le contexte du team lead)
+  - Mode Normal (parallèle intra-phase, max 2 agents) et mode Safe (séquentiel strict)
+  - Shutdown par phase : les agents d'une même phase communiquent en temps réel, puis sont tous shutdown avant la phase suivante
+  - Option `--safe` pour forcer le mode séquentiel sur machines contraintes
+  - Health check RAM avec basculement automatique Normal -> Safe si RAM < 4 GB
+  - `max_turns` obligatoire sur chaque agent (15 analyse, 20 QA, 30 implémentation)
+
+### Added
+- Nouvel agent **prompt-analyst** : fusion architect + designer (architecture technique + design DDD)
+- Nouvel agent **prompt-implementer** : fusion developer + tester (code + tests)
+
 ## [2.1.1] - 2026-02-06
 
 ### Changed

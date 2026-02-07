@@ -20,7 +20,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📱 **Marketing** | 1.2.2 | Génération de contenu marketing : posts LinkedIn, annonces, communications | [README](marketing/README.md) |
 | 🎭 **MLVN** | 1.1.0 | Adaptation du repo AIBlueprint de Melvynx : agents spécialisés, workflows, skills Git/Meta/Utils (version épurée après migration) | [README](mlvn/README.md) |
 | 🔔 **Notifications** | 1.0.2 | Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète | [README](notifications/README.md) |
-| 📝 **Prompt** | 2.1.1 | Système hybride Starters + Mode Plan + Checklists + Agent Teams - Templates légers, exploration contextuelle, validation automatisée, orchestration multi-agents | [README](prompt/README.md) |
+| 📝 **Prompt** | 2.3.0 | Système hybride Starters + Mode Plan + Checklists + Agent Teams - Templates légers, exploration contextuelle, validation automatisée, orchestration multi-agents | [README](prompt/README.md) |
 | 📋 **QA** | 1.3.2 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
 | 🔍 **Review** | 1.0.1 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
 | 🎯 **Symfony** | 1.3.2 | Plugin Symfony avec skills make, documentation et intégrations | [README](symfony/README.md) |

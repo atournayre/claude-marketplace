@@ -7,6 +7,28 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.06e] - 2026-02-06
+
+### Plugins Updated
+- **prompt v2.3.0** - Agents fusionnés et optimisation des ressources
+  - Nouveaux agents : prompt-analyst, prompt-implementer
+  - prompt-team v2.0.0 → v2.1.0 : architecture multi-agent hybride (3 agents au lieu de 6)
+  - Fichiers intermédiaires dans le scratchpad pour communication inter-phases
+  - Mode Normal (parallèle intra-phase) + mode Safe (séquentiel, basculement automatique RAM < 4GB)
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+
+## [2026.02.06d] - 2026-02-06
+
+### Plugins Updated
+- **prompt v2.2.0** - Refonte architecture multi-agent pour Agent Teams
+  - Fusion des agents : 3 (analyst, challenger, implementer) au lieu de 6 (architect, designer, challenger, developer, tester, qa)
+  - Fichiers intermédiaires dans le scratchpad pour communication inter-phases (protège le contexte du team lead)
+  - Mode Normal (parallèle intra-phase, max 2 agents) et mode Safe (séquentiel strict, 1 agent)
+  - Shutdown par phase : communication temps réel dans la phase, shutdown avant la suivante
+  - Health check RAM avec basculement automatique Normal -> Safe
+  - Nouveaux agents : prompt-analyst, prompt-implementer
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+
 ## [2026.02.06c] - 2026-02-06
 
 ### Plugins Updated
