@@ -64,25 +64,38 @@ Le plugin est automatiquement disponible via le marketplace.
 /prompt:team "Simplifier PaymentService" --agents=architect,developer,qa
 ```
 
-#### Agents disponibles
+#### Agents disponibles (v2.0.0+)
+
+**Agents fusionnés (optimisé pour ressources) :**
+
+| Agent | Rôle | Accès écriture |
+|-------|------|----------------|
+| `analyst` | Architecture + Design DDD (fusion architect + designer) | Non |
+| `challenger` | Avocat du diable, edge cases, sécurité | Non |
+| `implementer` | Code + Tests intégrés (fusion developer + tester) | Oui |
+
+**Agents historiques (solo, pas dans prompt:team v2.0.0+) :**
 
 | Agent | Rôle | Accès écriture |
 |-------|------|----------------|
 | `architect` | Architecture, patterns, structure codebase | Non |
 | `designer` | Design DDD, contrats, interfaces, data flow | Non |
-| `challenger` | Avocat du diable, edge cases, sécurité | Non |
 | `developer` | Implémentation code selon plan validé | Oui |
 | `tester` | Écriture tests PHPUnit (TDD) | Oui |
 | `qa` | PHPStan, CS-Fixer, tests, Chrome UI | Non |
 
-#### Équipes par défaut
+#### Équipes par défaut (v2.0.0+)
 
-| Type | Agents |
-|------|--------|
-| `feature` | architect, designer, challenger, developer, tester, qa |
-| `refactor` | architect, challenger, developer, qa |
-| `api` | architect, designer, challenger, developer, tester, qa |
-| `fix` | challenger, developer, tester, qa |
+| Type | Agents | Mode |
+|------|--------|------|
+| `feature` | analyst, challenger, implementer | Parallèle intra-phase |
+| `refactor` | analyst, implementer | Séquentiel |
+| `api` | analyst, challenger, implementer | Parallèle intra-phase |
+| `fix` | challenger, implementer | Séquentiel |
+
+**Modes** :
+- **Normal** (RAM >= 4 GB) : parallèle intra-phase (max 2 agents)
+- **Safe** (RAM >= 2 GB, ou `--safe`) : séquentiel strict (1 agent)
 
 ### Mode Solo (démarrage rapide)
 

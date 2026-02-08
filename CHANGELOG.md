@@ -7,6 +7,15 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.08a] - 2026-02-08
+
+### Plugins Updated
+- **git v1.12.2** - PR title suffix avec numéro d'issue
+  - Ajout du suffixe ` / Issue #NUMERO` au titre des PR créées depuis une issue
+  - Modification dans `git-pr-core/scripts/create_pr.sh` et `git-cd-pr/scripts/create_pr.sh`
+  - Le suffixe est détecté automatiquement si un numéro d'issue est présent dans le nom de branche
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 ## [2026.02.06e] - 2026-02-06
 
 ### Plugins Updated

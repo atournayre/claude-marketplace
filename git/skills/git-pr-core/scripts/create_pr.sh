@@ -79,6 +79,11 @@ else
     PR_TITLE="$(get_commit_emoji chore) chore: ${DESCRIPTION}"
 fi
 
+# Suffixer avec le numéro d'issue si détecté
+if [ -n "$ISSUE_NUMBER" ]; then
+    PR_TITLE="${PR_TITLE} / Issue #${ISSUE_NUMBER}"
+fi
+
 # Créer fichier temporaire avec le body
 PR_BODY_FILE="/tmp/pr_body_$(date +%s).md"
 echo "$PR_TEMPLATE" > "$PR_BODY_FILE"

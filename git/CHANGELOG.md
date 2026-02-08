@@ -1,3 +1,11 @@
+## [1.12.2] - 2026-02-08
+
+### Fixed
+- **PR title suffix** : Ajouter ` / Issue #NUMERO` au titre des PR quand créées depuis une issue
+  - Modification dans `git-pr-core/scripts/create_pr.sh`
+  - Modification dans `git-cd-pr/scripts/create_pr.sh`
+  - Le suffixe est ajouté automatiquement si un numéro d'issue est détecté dans le nom de branche
+
 ## [1.12.1] - 2026-02-06
 
 ### Changed
