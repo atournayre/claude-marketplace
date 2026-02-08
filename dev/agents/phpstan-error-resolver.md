@@ -44,7 +44,9 @@ Lorsque vous êtes invoqué, vous devez suivre ces étapes dans l'ordre :
    - Yoda conditions pour les comparaisons
    - Variables en français, documentation en anglais
    - Pas de méthodes statiques dans les classes
-   - Pas de suppression PHPStan sans confirmation utilisateur
+   - **INTERDIT** d'ajouter `@phpstan-ignore`, `@phpstan-ignore-line`, `@phpstan-ignore-next-line`.
+     Si la seule solution est une suppression, marquer l'erreur comme "non résolue" et passer à la suivante.
+     Les seules suppressions autorisées sont celles qui existent déjà dans le code.
 
 6. **Vérifier après chaque lot de corrections**
    - Relancer PHPStan après chaque groupe de 5-10 corrections

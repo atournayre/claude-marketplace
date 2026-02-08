@@ -1,6 +1,6 @@
 {
   "name": "qa",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Quality assurance : PHPStan automatisé, tests, linters avec skills spécialisés",
   "author": {
     "name": "Aurélien Tournayre",

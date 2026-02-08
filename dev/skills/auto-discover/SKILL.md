@@ -81,9 +81,31 @@ workflow_state_file=".claude/data/workflows/issue-${issue_number}-dev-workflow-s
 
 ## 2. Explorer le contexte
 
+Limiter l'exploration à **5 fichiers maximum**. Ne pas explorer le codebase en profondeur — c'est le rôle de la phase Explore.
+
 - Chercher si des fichiers similaires existent déjà dans le projet
 - Lire `CLAUDE.md` et `.ai/` pour comprendre les conventions
 - Identifier les patterns architecturaux utilisés
+
+## 2.5 Identifier les contraintes architecturales
+
+- Lire le `CLAUDE.md` du projet cible (racine du CWD)
+- Lire `.claude/rules/` si le répertoire existe
+- Extraire les sections "Contraintes", "Architecture", "Conventions" ou similaires
+- Stocker dans le workflow state : `phases.1.constraints: [...]`
+
+```json
+{
+  "phases": {
+    "1": {
+      "constraints": [
+        "{contrainte 1 extraite du CLAUDE.md}",
+        "{contrainte 2 extraite de .claude/rules/}"
+      ]
+    }
+  }
+}
+```
 
 ## 3. Résumer la compréhension
 

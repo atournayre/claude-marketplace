@@ -4,7 +4,7 @@ title: Index des Skills
 
 # Index des Skills
 
-83 skills disponibles dans le marketplace.
+87 skills disponibles dans le marketplace.
 
 **Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
 
@@ -37,8 +37,11 @@ title: Index des Skills
 | `/dev:discover` | [dev](/plugins/dev) | Comprendre le besoin avant développement (Phase 0) |
 | `/dev:explore` | [dev](/plugins/dev) | Explorer le codebase avec agents parallèles (Phase 1) |
 | `/dev:feature` | [dev](/plugins/dev) | Workflow complet de développement de feature |
+| `/dev:implement` | [dev](/plugins/dev) | Force l'implémentation complète d'une feature (pas juste planification) |
 | `/dev:log` | [dev](/plugins/dev) | Ajoute des fonctionnalités de log au fichier en cours |
+| `/dev:parallel-implement` | [dev](/plugins/dev) | Implémentation parallèle de N issues via worktrees isolés |
 | `/dev:plan` | [dev](/plugins/dev) | Générer plan d'implémentation dans docs/specs/ (Phase 4) |
+| `/dev:refactor-safe` | [dev](/plugins/dev) | Refactoring autonome piloté par tests — boucle refactor/test/ajust |
 | `/dev:review` | [dev](/plugins/dev) | Review qualité complète - PHPStan + Elegant Objects + code review (Phase 6) |
 | `/dev:status` | [dev](/plugins/dev) | Affiche le workflow et l'étape courante |
 | `/dev:summary` | [dev](/plugins/dev) | Résumé de ce qui a été construit (Phase 7) |
@@ -69,6 +72,7 @@ title: Index des Skills
 | `/git-pr` | [git](/plugins/git) | > |
 | `/git-pr-core` | [git](/plugins/git) | > |
 | `/git:branch` | [git](/plugins/git) | Création de branche Git avec workflow structuré |
+| `/git:ci-autofix` | [git](/plugins/git) | Parse les logs CI et corrige automatiquement les erreurs |
 | `/git:commit` | [git](/plugins/git) | Créer des commits bien formatés avec format conventional et emoji |
 | `/git:conflit` | [git](/plugins/git) | Analyse les conflits git et propose à l'utilisateur une résolution pas à pas avec validation de chaque étape. |
 | `/git:release-report` | [git](/plugins/git) | Génère un rapport HTML d'analyse d'impact entre deux branches |

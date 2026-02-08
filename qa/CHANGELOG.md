@@ -1,3 +1,9 @@
+## [1.3.3] - 2026-02-08
+
+### Changed
+- Skill **phpstan-resolver** : vérification anti-suppression automatique en étape 4.5 de la boucle de résolution
+- Agent **phpstan-error-resolver** : interdiction complète `@phpstan-ignore*`, passage à l'erreur suivante si seulement solution
+
 ## [1.3.2] - 2026-02-04
 
 ### Changed

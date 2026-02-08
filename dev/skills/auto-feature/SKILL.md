@@ -277,6 +277,8 @@ Si `/dev:auto:discover` échoue (ambiguïté critique) :
 
 Exécuter `/dev:auto:explore` (exploration codebase sans interaction)
 
+**Time-box :** si exploration dépasse 5 minutes, passer à la phase suivante avec résultats partiels. Enregistrer `timebox_triggered: true` dans le workflow state.
+
 **⏱️ Arrêter le timer**
 
 ## Phase 4 : Clarify

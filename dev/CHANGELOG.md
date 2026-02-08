@@ -1,3 +1,30 @@
+## [2.6.0] - 2026-02-08
+
+### Added
+- **Skill `/dev:implement`** - Force l'implémentation complète (pas juste planification)
+  - Workflow : inventaire → checklist → implémentation → vérification
+  - Production de CODE, pas de plan
+  - Respecte les contraintes architecturales du projet
+
+- **Skill `/dev:parallel-implement`** - Implémentation parallèle N issues via worktrees isolés
+  - Traitement simultané (max 3 agents) pour plusieurs issues
+  - Chaque issue dans son worktree dédié
+  - PRs créées automatiquement
+
+- **Skill `/dev:refactor-safe`** - Refactoring autonome piloté par les tests
+  - Boucle refactor → test → ajust (max 5 itérations/fichier)
+  - Tests VERTS obligatoires à chaque itération
+  - Revert automatique si tests cassés
+
+### Changed
+- **Time-boxing exploration** : max 10 tours par agent + seuil 10 fichiers
+- **Passage de contraintes aux agents** : lecture dynamique CLAUDE.md + .claude/rules/, injection dans tous les agents en aval
+- **Hook PHPStan** : détection post-édition + vérification annotations suppression
+- **Anti-suppression PHPStan** : agent `phpstan-error-resolver` interdit `@phpstan-ignore*`
+
+### Fixed
+- Scripts Git : `set -euo pipefail`, `eval` supprimé, `mktemp + trap`, guards sur inputs vides
+
 ## [2.5.1] - 2026-02-04
 
 ### Changed

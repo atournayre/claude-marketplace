@@ -210,6 +210,7 @@ Task(subagent_type="general-purpose", team_name="prompt-{slug}", name="prompt-an
 - Description de la tâche
 - Instruction de lire `prompt/agents/prompt-analyst.md`
 - Contexte : description utilisateur
+- **Lire le CLAUDE.md et `.claude/rules/` du projet** pour extraire les contraintes architecturales. Les inclure dans `01-analysis.md` sous une section `## Contraintes`.
 - **Écrire l'output dans `{scratchpad}/prompt-{slug}/01-analysis.md`**
 
 Quand l'analyst termine -> `TaskUpdate` tâche #1 en `completed`.

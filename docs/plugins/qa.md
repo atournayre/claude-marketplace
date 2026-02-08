@@ -1,10 +1,10 @@
 ---
 title: "qa"
 description: "Quality assurance  - PHPStan automatisé, tests, linters avec skills spécialisés"
-version: "1.3.2"
+version: "1.3.3"
 ---
 
-# qa <Badge type="info" text="v1.3.2" />
+# qa <Badge type="info" text="v1.3.3" />
 
 
 Quality assurance : PHPStan, tests, linters.

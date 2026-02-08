@@ -4,7 +4,7 @@ title: Index des Hooks
 
 # Index des Hooks
 
-10 hooks disponibles dans le marketplace.
+11 hooks disponibles dans le marketplace.
 
 **Note** : Les hooks sont des scripts Python qui s'exécutent en réponse à des événements (pre_tool_use, post_tool_use, etc.).
 
@@ -12,6 +12,7 @@ title: Index des Hooks
 |------|--------|-------------|
 | `notification` | [customize](/plugins/customize) | Determine which TTS script to use - only pyttsx3 is available. |
 | `notification` | [notifications](/plugins/notifications) | Determine which TTS script to use - only pyttsx3 is available. |
+| `phpstan_check` | [customize](/plugins/customize) | Hook PostToolUse pour vérifier les erreurs PHPStan et les annotations |
 | `post_tool_use` | [customize](/plugins/customize) | Ajuste les permissions des fichiers et dossiers créés. |
 | `pre_compact` | [customize](/plugins/customize) | Log pre-compact event to logs directory. |
 | `pre_tool_use` | [customize](/plugins/customize) | Comprehensive detection of dangerous rm commands. |

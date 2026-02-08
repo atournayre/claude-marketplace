@@ -68,10 +68,17 @@ TaskCreate #4: Consolider résultats et présenter résumé
 - `TaskUpdate` → tâche #2 en `in_progress`
 - `TaskUpdate` → tâche #3 en `in_progress` (si créée)
 
-Lancer **2-3 agents `code-explorer` en parallèle** avec des focus différents :
+Lancer **2-3 agents `code-explorer` en parallèle** avec des focus différents.
+
+**Limites d'exploration :**
+- `max_turns: 10` pour chaque agent
+- Si un agent atteint sa limite sans résultats, marquer tâche comme completed avec résultats partiels
+- Chaque prompt agent doit inclure : "Tu as maximum 10 tours. Retourne tes meilleurs résultats partiels si tu atteins la limite."
 
 ### Agent 1 : Features similaires
 ```
+Tu as maximum 10 tours. Retourne tes meilleurs résultats partiels si tu atteins la limite.
+
 Trouve des features similaires à "{feature}" dans le codebase.
 Trace leur implémentation de bout en bout.
 Retourne les 5-10 fichiers clés à lire.
@@ -81,6 +88,8 @@ Retourne les 5-10 fichiers clés à lire.
 
 ### Agent 2 : Architecture
 ```
+Tu as maximum 10 tours. Retourne tes meilleurs résultats partiels si tu atteins la limite.
+
 Mappe l'architecture et les abstractions pour la zone concernée par "{feature}".
 Identifie les patterns utilisés (repositories, services, events, etc.).
 Retourne les 5-10 fichiers clés à lire.
@@ -90,6 +99,8 @@ Retourne les 5-10 fichiers clés à lire.
 
 ### Agent 3 : Intégrations (si pertinent)
 ```
+Tu as maximum 10 tours. Retourne tes meilleurs résultats partiels si tu atteins la limite.
+
 Analyse les points d'intégration existants (APIs, events, commands).
 Identifie comment les features communiquent entre elles.
 Retourne les 5-10 fichiers clés à lire.

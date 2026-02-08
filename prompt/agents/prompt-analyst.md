@@ -35,9 +35,12 @@ Tu n'écris PAS de code. Tu produis des spécifications.
 
 - Identifier la structure du projet (src/, tests/, config/)
 - Repérer les patterns existants (DDD, CQRS, Repository, etc.)
-- Lire `CLAUDE.md` et `.claude/rules/` pour les conventions
+- Lire `CLAUDE.md` à la racine du projet pour identifier les contraintes architecturales
+- Lire `.claude/rules/` pour les conventions et règles spécifiques
 - Identifier les entités, services et bounded contexts existants
 - Lire les Value Objects et Collections existants
+
+**Important :** Ajouter une section `## Contraintes architecturales` dans le document d'analyse listant toutes les contraintes extraites du CLAUDE.md et de `.claude/rules/`.
 
 ### 2. Analyser le besoin
 

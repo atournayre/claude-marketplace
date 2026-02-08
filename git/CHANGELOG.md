@@ -1,3 +1,22 @@
+## [1.14.0] - 2026-02-08
+
+### Added
+- **Skill `/git:ci-autofix`** - Parse logs CI et corrige automatiquement les erreurs
+  - Catégorise erreurs : linting, tests, build, types
+  - Boucle auto-correction (max 3 tentatives)
+  - Intégration avec `@phpstan-error-resolver` et scripts de correction
+
+### Changed
+- **Scripts Git durcis** : `set -euo pipefail` partout, `eval` supprimé, `mktemp + trap`, guard inputs vides
+  - `analyze_changes.sh` : factorisation triple appel git diff
+  - `auto_review.sh` : vérification `jq`/`gh`, guard diff vide
+  - `create_pr.sh` : cleanup fichiers temporaires via trap
+  - `gh_auth_setup.sh` : suppression eval, tableau bash
+  - `final_report.sh` : guard PR_INFO vide
+
+### Fixed
+- Scripts shell : gestion d'erreurs robuste, pas de sortie trompeuse sur input vide
+
 ## [1.13.0] - 2026-02-08
 
 ### Added

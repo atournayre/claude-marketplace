@@ -1,3 +1,9 @@
+## [2.3.1] - 2026-02-08
+
+### Changed
+- Agent **prompt-analyst** : extraction obligatoire des contraintes architecturales (CLAUDE.md + .claude/rules/) dans la section `## Contraintes architecturales` du rapport
+- Skill **prompt-team** : passage des contraintes du projet cible aux agents en aval
+
 ## [2.3.0] - 2026-02-06
 
 ### Added

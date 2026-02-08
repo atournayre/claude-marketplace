@@ -86,6 +86,13 @@ while [ $ITERATION -le $MAX_ITERATIONS ] && [ $ERRORS_CURRENT -gt 0 ] && [ $ERRO
             cat /tmp/phpstan_batch.txt
 
             # L'agent lit le fichier, analyse erreurs, applique corrections via Edit
+
+            # Vérification anti-suppression après chaque correction
+            SUPPRESSIONS=$(git diff -- "$file" | grep -cE '^\+.*@phpstan-ignore' || echo 0)
+            if [ "$SUPPRESSIONS" -gt 0 ]; then
+                echo "  REJET : $SUPPRESSIONS suppression(s) dans $file"
+                git checkout -- "$file"
+            fi
         fi
     done
 

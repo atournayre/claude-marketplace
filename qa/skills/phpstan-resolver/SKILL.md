@@ -66,9 +66,13 @@ TaskCreate #5: Générer rapport final
 3. Grouper erreurs par fichier
 4. Boucle de résolution :
    - Déléguer corrections à `@phpstan-error-resolver`
+   - **4.5 Vérification anti-suppression** : après chaque correction par `@phpstan-error-resolver`, vérifier :
+     - `grep -rn '@phpstan-ignore' dans les fichiers modifiés`
+     - Si détectée : revert le fichier (`git checkout -- <fichier>`), logger "Suppression rejetée pour {fichier}"
+     - Passer à l'erreur suivante
    - Re-exécuter PHPStan
    - Répéter jusqu'à 0 erreur ou stagnation
-5. Générer rapport final
+5. Générer rapport final (inclure les suppressions rejetées dans le rapport)
 
 ## Délégation
 

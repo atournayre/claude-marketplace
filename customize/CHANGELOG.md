@@ -1,3 +1,8 @@
+## [1.1.2] - 2026-02-08
+
+### Changed
+- Ajouter hook PHPStan post-édition pour détection automatique erreurs + annotations suppression
+
 ## [1.1.1] - 2026-02-04
 
 ### Changed
