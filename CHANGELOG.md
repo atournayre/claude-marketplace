@@ -7,6 +7,35 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.08c] - 2026-02-08
+
+### Plugins Updated
+- **dev v2.6.0** - Nouvelles skills implementation + refactoring + time-boxing (MINOR bump)
+  - Nouvelles skills : `/dev:implement`, `/dev:parallel-implement`, `/dev:refactor-safe`
+  - Time-boxing exploration : max 10 tours agents + 5min auto-feature
+  - Passage contraintes architecturales aux agents (CLAUDE.md + .claude/rules/)
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+
+- **git v1.14.0** - Skill CI autofix + scripts Git durcis (MINOR bump)
+  - Nouvelle skill : `/git:ci-autofix` pour corrections automatiques CI
+  - Scripts Git : `set -euo pipefail`, `eval` supprimé, `mktemp + trap`, guards inputs vides
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
+- **customize v1.1.2** - Hook PHPStan post-édition (PATCH bump)
+  - Hook PostToolUse : détection PHPStan + annotations suppression après Edit/Write
+  - Script Python `phpstan_check.py` pour analyse post-édition
+  - Dépôt : [customize/CHANGELOG.md](customize/CHANGELOG.md)
+
+- **prompt v2.3.1** - Contraintes architecturales dans analyst (PATCH bump)
+  - Agent `prompt-analyst` : extraction CLAUDE.md + .claude/rules/ dans section dédiée
+  - Passage contraintes à tous les agents en aval
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+
+- **qa v1.3.3** - Anti-suppression PHPStan automatique (PATCH bump)
+  - Vérification automatique étape 4.5 de la boucle de résolution
+  - Agent `phpstan-error-resolver` : interdiction `@phpstan-ignore*`
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+
 ## [2026.02.08b] - 2026-02-08
 
 ### Plugins Updated
