@@ -4,7 +4,7 @@ title: Index des Skills
 
 # Index des Skills
 
-81 skills disponibles dans le marketplace.
+83 skills disponibles dans le marketplace.
 
 **Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
 
@@ -64,6 +64,7 @@ title: Index des Skills
 | `/gemini:search` | [gemini](/plugins/gemini) | Recherche temps réel via Google Search intégré à Gemini |
 | `/gemini:think` | [gemini](/plugins/gemini) | Délègue un problème complexe à Gemini Deep Think |
 | `/gen-release-notes` | [git](/plugins/git) | > |
+| `/git-branch-core` | [git](/plugins/git) | > |
 | `/git-cd-pr` | [git](/plugins/git) | > |
 | `/git-pr` | [git](/plugins/git) | > |
 | `/git-pr-core` | [git](/plugins/git) | > |
@@ -71,6 +72,7 @@ title: Index des Skills
 | `/git:commit` | [git](/plugins/git) | Créer des commits bien formatés avec format conventional et emoji |
 | `/git:conflit` | [git](/plugins/git) | Analyse les conflits git et propose à l'utilisateur une résolution pas à pas avec validation de chaque étape. |
 | `/git:release-report` | [git](/plugins/git) | Génère un rapport HTML d'analyse d'impact entre deux branches |
+| `/git:worktree` | [git](/plugins/git) | Création de worktree Git avec workflow structuré |
 | `/github-impact` | [github](/plugins/github) | > |
 | `/github:fix` | [github](/plugins/github) | Corriger une issue GitHub avec workflow simplifié et efficace |
 | `/init-marketplace` | marketplace | Initialise le marketplace et vérifie toutes les dépendances nécessaires aux plugins |

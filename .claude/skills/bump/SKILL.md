@@ -228,7 +228,24 @@ Vérifie la cohérence :
 - Plugins dans marketplace mais pas README → ajouter
 - Ordre alphabétique dans les deux fichiers
 
-#### 5.5 Mettre à jour le template PR
+#### 5.5 Mettre à jour la documentation `.env.claude` (si applicable)
+
+**Condition** : Vérifie si les fichiers modifiés du plugin contiennent des références à `.env.claude` :
+```bash
+git diff {plugin}/ | grep -i "env\.claude\|MAIN_BRANCH\|WORKTREE_DIR\|REPO\|PROJECT"
+```
+
+**Si des variables `.env.claude` sont ajoutées ou modifiées dans les skills** :
+1. Lis `docs/guide/env-claude.md` avec Read
+2. Vérifie que chaque variable utilisée dans les skills modifiés est documentée dans la page
+3. Pour chaque variable manquante ou obsolète :
+   - Ajouter la variable dans la section "Variables disponibles" avec le même format que les existantes
+   - Ajouter le skill dans le tableau "Skills qui l'utilisent" de la variable
+4. Vérifier que les exemples sont cohérents avec les changements
+
+**Si aucune référence `.env.claude` détectée** : passer cette sous-étape.
+
+#### 5.6 Mettre à jour le template PR
 
 Met à jour `.github/PULL_REQUEST_TEMPLATE/default.md` avec la liste des plugins :
 
@@ -254,6 +271,7 @@ find . -name "plugin.json" -path "*/.claude-plugin/*" | sed 's|^\./||' | sed 's|
 - [ ] `README.md` global → ligne du plugin mise à jour avec nouvelle version (Read pour vérifier)
 - [ ] `CHANGELOG.md` global → entrée du jour avec résumé du plugin (Read pour vérifier)
 - [ ] `.claude-plugin/marketplace.json` → plugin présent avec description à jour (Read pour vérifier)
+- [ ] `docs/guide/env-claude.md` → variables `.env.claude` à jour si applicable (Read pour vérifier)
 - [ ] `.github/PULL_REQUEST_TEMPLATE/default.md` → liste plugins synchronisée (Read pour vérifier)
 
 **TaskUpdate : Tâche #4 → `completed`**
@@ -347,6 +365,7 @@ Prochaine étape : /git:commit
 - [ ] `README.md` → tableau des plugins avec nouvelle version
 - [ ] `CHANGELOG.md` → entrée du jour avec résumé plugin
 - [ ] `.claude-plugin/marketplace.json` → description à jour (si nouveau plugin)
+- [ ] `docs/guide/env-claude.md` → variables `.env.claude` à jour (si nouvelles variables détectées)
 - [ ] `.github/PULL_REQUEST_TEMPLATE/default.md` → liste plugins synchronisée
 
 ### Documentation générée (toujours)
@@ -382,4 +401,5 @@ Prochaine étape : /git:commit
 - `{plugin}/DEPENDENCIES.json`
 - `docs/plugins/{plugin}.md`
 - `docs/commands/index.md`
+- `docs/guide/env-claude.md`
 - `.github/PULL_REQUEST_TEMPLATE/default.md`

@@ -1,10 +1,10 @@
 ---
 title: "git"
 description: "Workflow Git complet  - branches, commits, conflits, PR avec automation QA"
-version: "1.12.2"
+version: "1.13.0"
 ---
 
-# git <Badge type="info" text="v1.12.2" />
+# git <Badge type="info" text="v1.13.0" />
 
 
 Workflow Git complet : branches, commits, conflits, PR.
@@ -17,7 +17,7 @@ Workflow Git complet : branches, commits, conflits, PR.
 
 ## Skills Disponibles
 
-Le plugin git fournit 9 skills (format natif Claude Code) :
+Le plugin git fournit 10 skills (format natif Claude Code) :
 
 ## Task Management System
 
@@ -40,33 +40,94 @@ Le plugin git fournit 9 skills (format natif Claude Code) :
 
 ---
 
-### `/git:branch`
+### `/git:branch` ⭐ v1.13.0 - REFACTORISATION
 
 Création de branche Git avec workflow structuré.
 
 **Arguments :**
 ```bash
-/git:branch <source-branch> [issue-number-or-text]
+/git:branch [source-branch] <issue-number-or-text>
+```
+
+**Nouveautés v1.13.0 :**
+- ✅ SOURCE_BRANCH optionnel (défaut: `MAIN_BRANCH` de `.env.claude`)
+- ✅ Désambiguisation intelligente des arguments
+- ✅ Logique partagée via `branch-core` (utilisée aussi par `git:worktree`)
+
+**Exemples :**
+```bash
+# Avec issue seule (source = MAIN_BRANCH)
+/git:branch 123
+
+# Avec texte seul (source = MAIN_BRANCH)
+/git:branch "add user authentication"
+
+# Avec branche source explicite
+/git:branch develop 456
+
+# Depuis branche existante (demande issue/texte)
+/git:branch feature/api-base
+```
+
+**Workflow :**
+- Lit `MAIN_BRANCH` depuis `.env.claude` (fallback si source non fourni)
+- Détecte automatiquement branche source vs issue vs texte
+- Vérifie branche source existe
+- Crée branche avec nom normalisé (avec détection préfixe automatique)
+- Format : `feature/123-short-description` ou `fix/login-bug`
+- Checkout automatique
+
+---
+
+### `/git:worktree` ⭐ NOUVEAU v1.13.0
+
+Création de worktrees Git pour développement parallèle (plusieurs branches simultanément).
+
+**Arguments :**
+```bash
+/git:worktree [source-branch] <issue-number-or-text>
+```
+
+**Avantages vs branche classique :**
+- ✅ Plusieurs branches en parallèle sans stash/commit
+- ✅ Répertoires séparés (ex: `feature-123-login` / `feature-456-profile`)
+- ✅ Utilisateur reste sur sa branche courante dans le worktree principal
+- ✅ Convention répertoire automatique : `feature/login-bug` → `feature-login-bug`
+
+**Configuration requise dans `.env.claude` du projet :**
+```bash
+WORKTREE_DIR=../worktrees    # ou .worktrees ou path custom
+MAIN_BRANCH=main              # ou master, develop
 ```
 
 **Exemples :**
 ```bash
-# Depuis main avec numéro d'issue
-/git:branch main 123
+# Créer worktree pour issue (source = MAIN_BRANCH)
+/git:worktree 123
 
-# Depuis main avec description
-/git:branch main "add user authentication"
+# Créer worktree depuis develop
+/git:worktree develop 456
 
-# Depuis develop
-/git:branch develop 456
+# Créer worktree avec texte descriptif
+/git:worktree "fix critical bug"
+
+# Sans argument (demande source + issue/texte)
+/git:worktree
 ```
 
 **Workflow :**
-- Vérifie branche source existe
-- Crée branche avec nom normalisé
-- Format : `feature/123-short-description` ou `feature/add-user-authentication`
-- Checkout automatique
-- Push upstream si configuré
+- Lit config `WORKTREE_DIR` et `MAIN_BRANCH` depuis `.env.claude`
+- Désambiguisation identique à `git:branch`
+- Crée branche avec détection préfixe automatique
+- Crée répertoire worktree (`WORKTREE_DIR/feature-123-login/`)
+- Checkout branche dans le worktree
+- Affiche commande `cd` pour accéder
+
+**Pour basculer entre worktrees :**
+```bash
+cd ../worktrees/feature-123-login
+cd ../worktrees/feature-456-profile
+```
 
 ---
 

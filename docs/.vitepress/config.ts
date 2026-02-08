@@ -119,6 +119,7 @@ export default defineConfig({
           items: [
             { text: 'Démarrage rapide', link: '/guide/getting-started' },
             { text: 'Installation', link: '/guide/installation' },
+            { text: 'Configuration .env.claude', link: '/guide/env-claude' },
             { text: 'Architecture slash commands', link: '/guide/workaround-slash-commands' }
           ]
         },

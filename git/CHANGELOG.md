@@ -1,3 +1,33 @@
+## [1.13.0] - 2026-02-08
+
+### Added
+- **New skill `git:worktree`** - Création de worktrees Git parallèles avec nommage automatique
+  - Support issues GitHub et texte descriptif (même logique que `git:branch`)
+  - Configuration `WORKTREE_DIR` via `.env.claude` du projet utilisateur
+  - Convention répertoire : branche `feature/ma-fonctionnalite` → répertoire `feature-ma-fonctionnalite`
+  - Première mise à jour depuis SOURCE_BRANCH avant création (via `fetch`)
+  - Utilisateur reste sur sa branche courante dans le worktree principal
+
+- **Refactorisation `git:branch`** - Mutualis logique de nommage de branches
+  - Extraction de la détection de nom dans `branch-core/scripts/resolve-branch-name.sh`
+  - SOURCE_BRANCH optionnel (défaut: `MAIN_BRANCH` de `.env.claude`)
+  - Désambiguisation intelligente des arguments (issue vs texte vs branche existante)
+  - Nettoyage de code et meilleure maintenabilité
+
+### Changed
+- **Scripts partagés** : nouvelle skill `git-branch-core` (interne)
+  - `resolve-branch-name.sh` - Résolution nom branche depuis issue/texte (utilisé par branch + worktree)
+  - `validate-source-branch.sh` - Validation branche source existe
+  - `check-branch-exists.sh` - Vérification branche pas déjà existante
+  - Version skills `git:branch` et `git:worktree` → `2.0.0`
+
+- **Argument parsing** : nouvelle logique de désambiguisation
+  - 2 arguments : `<source-branch> <issue-or-text>`
+  - 1 argument entier : issue (source = MAIN_BRANCH)
+  - 1 argument branche existante : source (issue demandé)
+  - 1 argument texte : issue-or-text (source = MAIN_BRANCH)
+  - 0 argument : source = MAIN_BRANCH, issue demandé
+
 ## [1.12.2] - 2026-02-08
 
 ### Fixed

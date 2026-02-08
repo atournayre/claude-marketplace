@@ -33,7 +33,7 @@
     {
       "name": "git",
       "source": "./git",
-      "description": "Workflow Git complet : branches, commits, conflits, PR avec Task Management System"
+      "description": "Workflow Git complet : branches, worktrees, commits, conflits, PR avec Task Management System"
     },
     {
       "name": "github",

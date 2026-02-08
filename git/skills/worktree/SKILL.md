@@ -1,6 +1,6 @@
 ---
-name: git:branch
-description: Création de branche Git avec workflow structuré
+name: git:worktree
+description: Création de worktree Git avec workflow structuré
 model: haiku
 allowed-tools: [Bash, Read, AskUserQuestion]
 argument-hint: [source-branch] <issue-number-or-text>
@@ -8,7 +8,7 @@ version: 2.0.0
 license: MIT
 hooks:
   PreToolUse:
-    - matcher: "Bash(git checkout:*)"
+    - matcher: "Bash(git worktree add:*)"
       hooks:
         - type: command
           command: |
@@ -19,19 +19,17 @@ hooks:
               echo "Fichiers modifiés :"
               git status --short
               echo ""
-              echo "Vous devez commit ou stash avant de créer une branche"
+              echo "Vous devez commit ou stash avant de créer un worktree"
               exit 1
             fi
           once: true
   PostToolUse:
-    - matcher: "Bash(git checkout -b:*)"
+    - matcher: "Bash(git worktree add:*)"
       hooks:
         - type: command
           command: |
             # Hook 2: Feedback création
-            BRANCH=$(git branch --show-current)
-            echo "✅ Branche créée : $BRANCH"
-            echo "📝 Le tracking sera configuré automatiquement au premier commit"
+            echo "✅ Worktree créé avec succès"
           once: false
 ---
 
@@ -46,9 +44,18 @@ Lis le frontmatter de cette skill. Si un champ `output-style` est présent, exé
 
 *Note : Une fois que le champ `output-style` sera supporté nativement par Claude Code, cette instruction pourra être supprimée.*
 
-# Création de branche Git
+# Création de worktree Git
 
-Créer une nouvelle branche Git de manière structurée avec support des issues GitHub.
+Créer un nouveau worktree Git de manière structurée avec support des issues GitHub.
+
+## Principe
+
+Un worktree permet de travailler sur plusieurs branches en parallèle sans avoir à stash/commit. Chaque worktree est un répertoire séparé lié au même dépôt Git.
+
+Le répertoire de base des worktrees est défini dans le `.env.claude` du projet utilisateur via la variable `WORKTREE_DIR`.
+
+La convention de nommage du répertoire worktree est de remplacer les `/` du nom de branche par des `-`.
+Exemple : branche `feature/ma-fonctionnalite` → répertoire `feature-ma-fonctionnalite`
 
 ## Configuration
 
@@ -64,18 +71,23 @@ CORE_SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/branch-core/scripts"
 - @.git/config
 - @.gitignore
 - @.env.claude
-- @docs/README.md
 
 ## Instructions à Exécuter
 
 **IMPORTANT : Exécute ce workflow étape par étape :**
 
-**🚨 ÉTAPE CRITIQUE : CHECKOUT VERS SOURCE D'ABORD 🚨**
-
 ### 1. Lire la configuration depuis .env.claude
 
 - Lis le fichier `.env.claude` à la racine du projet courant (pas celui du plugin, celui du projet utilisateur)
-- Extrais la valeur de `MAIN_BRANCH` (fallback pour SOURCE_BRANCH)
+- Extrais les valeurs de :
+  - `WORKTREE_DIR` (répertoire de base des worktrees)
+  - `MAIN_BRANCH` (fallback pour SOURCE_BRANCH)
+- Si `WORKTREE_DIR` n'est pas défini ou est vide, utilise AskUserQuestion pour demander :
+  ```
+  Question: "La variable WORKTREE_DIR n'est pas définie dans .env.claude. Quel répertoire utiliser pour les worktrees ?"
+  Options: ["../worktrees", ".worktrees", "Autre"]
+  ```
+- Vérifie que le répertoire parent de WORKTREE_DIR existe. Si non, affiche une erreur et arrête.
 
 ### 2. Parser les arguments et résoudre SOURCE_BRANCH
 
@@ -97,7 +109,7 @@ CORE_SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/branch-core/scripts"
 **Si SOURCE_BRANCH n'est toujours pas résolu** (MAIN_BRANCH absent de .env.claude et pas fourni en argument) :
 - Utilise AskUserQuestion pour demander :
   ```
-  Question: "Depuis quelle branche veux-tu créer la nouvelle branche ?"
+  Question: "Depuis quelle branche veux-tu créer le nouveau worktree ?"
   Options: ["main", "master", "develop", "Autre"]
   ```
 
@@ -109,21 +121,17 @@ CORE_SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/branch-core/scripts"
   ```
 - Si le script échoue (exit 1), arrête le workflow
 
-### 4. 🔴 CHECKOUT VERS SOURCE_BRANCH AVANT TOUT 🔴
+### 4. 🔴 METTRE À JOUR SOURCE_BRANCH 🔴
 
-- Exécute `git checkout $SOURCE_BRANCH` avec Bash
-- Exécute `git branch --show-current` pour vérifier qu'on est bien dessus
-- **CRITIQUE** : Cette étape garantit qu'on crée depuis un point propre
-
-### 5. 🔴 PULL POUR METTRE À JOUR SOURCE_BRANCH 🔴
-
-- Exécute `git pull origin $SOURCE_BRANCH` avec Bash
+- Exécute `git fetch origin $SOURCE_BRANCH` avec Bash
 - **CRITIQUE** : Garantit qu'on part du dernier commit de origin
-- Évite de créer depuis un point obsolète
+- Note : On utilise `fetch` au lieu de `checkout + pull` car on ne veut pas changer la branche courante du worktree principal
 
-### 6. Résoudre le nom de la nouvelle branche
+### 5. Résoudre le nom de la nouvelle branche
 
-**Si ISSUE_OR_TEXT est fourni (résolu à l'étape 2) :**
+- Extrais ISSUE_OR_TEXT depuis $ARGUMENTS (second argument)
+
+**Si ISSUE_OR_TEXT est fourni :**
 
 - Exécute avec Bash :
   ```bash
@@ -131,14 +139,15 @@ CORE_SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/branch-core/scripts"
   echo "BRANCH_NAME=$BRANCH_NAME"
   echo "PREFIX=$PREFIX"
   echo "PREFIX_SOURCE=$PREFIX_SOURCE"
+  echo "WORKTREE_DIRNAME=$WORKTREE_DIRNAME"
   ```
 - Si le script échoue (exit 1), arrête le workflow
-- Les variables `BRANCH_NAME`, `PREFIX`, `PREFIX_SOURCE`, `ISSUE_NUMBER` sont disponibles
+- Les variables `BRANCH_NAME`, `PREFIX`, `PREFIX_SOURCE`, `ISSUE_NUMBER`, `WORKTREE_DIRNAME` sont disponibles
 
 **Si ISSUE_OR_TEXT n'est pas fourni :**
    - Utilise AskUserQuestion pour demander le nom de branche
 
-### 7. Vérifier que la nouvelle branche n'existe pas
+### 6. Vérifier que la nouvelle branche n'existe pas
 
 - Exécute avec Bash :
   ```bash
@@ -146,21 +155,44 @@ CORE_SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/branch-core/scripts"
   ```
 - Si le script échoue (exit 1), arrête le workflow
 
-### 8. Créer et checkout la nouvelle branche
+### 7. Calculer le chemin du worktree
 
-- Exécute `git checkout -b $BRANCH_NAME` avec Bash
-- La branche est créée depuis SOURCE_BRANCH (car on est dessus)
+- Le chemin complet est : `$WORKTREE_DIR/$WORKTREE_DIRNAME`
+  - Exemple : `/home/user/worktrees/feature-42-login-fix`
 
-### 9. Afficher le résumé
+### 8. Vérifier que le répertoire worktree n'existe pas déjà
+
+- Vérifie avec `test -d "$WORKTREE_PATH"` via Bash
+- Si le répertoire existe, affiche :
+  ```
+  ❌ ERREUR : Le répertoire worktree '$WORKTREE_PATH' existe déjà
+
+  Supprime-le d'abord ou choisis un autre nom
+  ```
+  - Arrête le workflow
+
+### 9. Créer le worktree
+
+- Exécute `git worktree add "$WORKTREE_PATH" -b "$BRANCH_NAME" "origin/$SOURCE_BRANCH"` avec Bash
+- Cette commande :
+  - Crée le répertoire worktree
+  - Crée la branche depuis le dernier état distant de SOURCE_BRANCH
+  - Checkout la branche dans le worktree
+
+### 10. Afficher le résumé
 
 Affiche :
 ```
-✅ Branche créée : $BRANCH_NAME
+✅ Worktree créé : $BRANCH_NAME
+📁 Répertoire : $WORKTREE_PATH
 📝 Préfixe détecté : $PREFIX (source: $PREFIX_SOURCE)
 📍 Depuis : $SOURCE_BRANCH
 {Si issue} 🔗 Issue associée : #$ISSUE_NUMBER
 
-📝 Le tracking sera configuré automatiquement au premier commit avec :
+Pour travailler dans ce worktree :
+   cd $WORKTREE_PATH
+
+📝 Le tracking sera configuré automatiquement au premier push avec :
    git push -u origin $BRANCH_NAME
 ```
 
@@ -185,84 +217,91 @@ Détection automatique du préfixe (par priorité) :
 3. Mots-clés dans le titre de l'issue
 4. Défaut : `feature/` si aucun indicateur trouvé
 
+Convention de nommage du répertoire worktree :
+- Remplacer `/` par `-` dans le nom de branche
+- `feature/ma-fonctionnalite` → `feature-ma-fonctionnalite`
+- `fix/42-login-bug` → `fix-42-login-bug`
+- `hotfix/critical-payment` → `hotfix-critical-payment`
+
 ## Template
 ```bash
 # Exemple 1 : Issue seule (SOURCE_BRANCH = MAIN_BRANCH de .env.claude)
-/git:branch 42
+/git:worktree 42
 # → Résolution via branch-core : fix/42-login-form-crashes-on-submit
+# → Worktree dans: $WORKTREE_DIR/fix-42-login-form-crashes-on-submit
 
 # Exemple 2 : Issue avec branche source explicite
-/git:branch develop 42
+/git:worktree develop 42
 # → Résolution via branch-core : fix/42-login-form-crashes-on-submit (depuis develop)
+# → Worktree dans: $WORKTREE_DIR/fix-42-login-form-crashes-on-submit
 
 # Exemple 3 : Texte descriptif seul (SOURCE_BRANCH = MAIN_BRANCH de .env.claude)
-/git:branch "fix login validation"
+/git:worktree "fix login validation"
 # → Résolution via branch-core : fix/login-validation
+# → Worktree dans: $WORKTREE_DIR/fix-login-validation
 
 # Exemple 4 : Texte descriptif avec branche source
-/git:branch main "Add OAuth support"
+/git:worktree main "Add OAuth support"
 # → Résolution via branch-core : feature/add-oauth-support
+# → Worktree dans: $WORKTREE_DIR/feature-add-oauth-support
 
 # Exemple 5 : Sans argument (SOURCE_BRANCH = MAIN_BRANCH, demande issue/texte)
-/git:branch
+/git:worktree
 ```
 
 ## Examples
 ```bash
-# Créer une branche avec issue (source = MAIN_BRANCH de .env.claude)
-/git:branch 123
+# Créer un worktree avec issue (source = MAIN_BRANCH de .env.claude)
+/git:worktree 123
 
-# Créer une branche avec texte descriptif (source = MAIN_BRANCH)
-/git:branch "user authentication"
+# Créer un worktree avec texte descriptif (source = MAIN_BRANCH)
+/git:worktree "user authentication"
 
-# Créer une branche depuis une branche source explicite avec issue
-/git:branch develop 123
+# Créer un worktree depuis une branche source explicite avec issue
+/git:worktree develop 123
 
-# Créer une branche fix avec texte explicite (source = MAIN_BRANCH)
-/git:branch "fix login bug"
+# Créer un worktree fix avec texte explicite (source = MAIN_BRANCH)
+/git:worktree "fix login bug"
 
-# Créer une branche hotfix (source = MAIN_BRANCH)
-/git:branch "hotfix critical payment issue"
+# Créer un worktree hotfix (source = MAIN_BRANCH)
+/git:worktree "hotfix critical payment issue"
 
-# Créer une branche depuis develop (demande issue/texte)
-/git:branch develop
+# Créer un worktree depuis develop (demande issue/texte)
+/git:worktree develop
 
-# Créer une branche depuis une branche existante avec issue
-/git:branch feature/api-base 456
+# Créer un worktree depuis une branche existante avec issue
+/git:worktree feature/api-base 456
 ```
 
 ## Report
 - Nom de la branche créée
-- Préfixe détecté et sa source (label/description/titre/défaut/texte)
+- Chemin du worktree créé
+- Préfixe détecté et sa source (label/description/titre/défaut)
 - Branche source utilisée
 - Issue associée (si applicable)
-- Statut du checkout
+- Commande `cd` pour accéder au worktree
 - Note : Le tracking remote sera configuré lors du premier push avec `git push -u origin $BRANCH_NAME`
 
 ## Validation
+- ✅ `WORKTREE_DIR` doit être défini dans `.env.claude` (ou demandé à l'utilisateur)
+- ✅ Le répertoire parent de `WORKTREE_DIR` doit exister
 - ✅ `SOURCE_BRANCH` doit exister localement
 - ✅ `SOURCE_BRANCH` optionnel (défaut: MAIN_BRANCH de .env.claude)
-- ✅ **CHECKOUT vers SOURCE_BRANCH AVANT création** (CRITIQUE)
-- ✅ **PULL pour mettre à jour SOURCE_BRANCH** (CRITIQUE)
+- ✅ **FETCH pour mettre à jour SOURCE_BRANCH** (CRITIQUE)
 - ✅ La nouvelle branche ne doit pas déjà exister
+- ✅ Le répertoire worktree ne doit pas déjà exister
 - ✅ Si `ISSUE_OR_TEXT` est un numéro, l'issue doit exister sur GitHub
 - ✅ Le nom généré respecte les conventions de nommage
 - ✅ Détection automatique entre numéro d'issue et texte descriptif
 
-## Pourquoi checkout + pull vers SOURCE_BRANCH d'abord ?
+## Pourquoi fetch au lieu de checkout + pull ?
 
-**Problème 1 évité** :
-- Si on est sur `feature/A` et on crée `feature/B` depuis `main`
-- Sans checkout vers `main` d'abord, la branche est créée depuis `feature/A`
-- Les commits de `feature/A` se retrouvent sur `feature/B`
-- Résultat : impossible de créer une PR propre
+**Différence avec git:branch :**
+- `git:branch` fait `checkout SOURCE_BRANCH` puis `pull` car il crée la branche depuis le HEAD courant
+- `git:worktree` fait `fetch` car `git worktree add -b BRANCH "origin/SOURCE_BRANCH"` crée directement depuis la ref distante
+- On ne veut pas changer la branche courante du worktree principal (l'utilisateur peut y travailler)
 
-**Problème 2 évité** :
-- Si `main` locale est en retard sur `origin/main`
-- Sans pull, on crée depuis un point obsolète
-- Résultat : commits manquants, conflits, PR avec historique incorrect
-
-**Solution** :
-1. TOUJOURS faire `git checkout $SOURCE_BRANCH`
-2. TOUJOURS faire `git pull origin $SOURCE_BRANCH`
-3. PUIS créer avec `git checkout -b $BRANCH_NAME`
+**Avantage :**
+- L'utilisateur reste sur sa branche courante dans le worktree principal
+- Le worktree est créé depuis le dernier état distant de SOURCE_BRANCH
+- Pas de risque de conflits dans le worktree principal

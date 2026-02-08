@@ -7,6 +7,18 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.08b] - 2026-02-08
+
+### Plugins Updated
+- **git v1.13.0** - Nouvelle skill `git:worktree` + refactorisation `git:branch`
+  - Nouvelle skill : `/git:worktree` pour créer des worktrees Git parallèles
+  - Convention répertoire automatique : `feature/ma-fonctionnalite` → `feature-ma-fonctionnalite`
+  - Logique partagée via nouvelle skill interne `git-branch-core` (3 scripts)
+  - SOURCE_BRANCH optionnel (défaut: `MAIN_BRANCH` de `.env.claude`)
+  - Désambiguisation intelligente des arguments (issue vs texte vs branche existante)
+  - Versions mises à jour : `git:branch` v1.0.0 → v2.0.0, `git:worktree` v1.0.0
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 ## [2026.02.08a] - 2026-02-08
 
 ### Plugins Updated
