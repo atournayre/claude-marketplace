@@ -1,4 +1,5 @@
 ---
+description: Conventions de sécurité et robustesse pour les scripts shell du marketplace. Appliqué automatiquement à tous les fichiers .sh dans les répertoires scripts/.
 path: "**/scripts/**/*.sh"
 ---
 
