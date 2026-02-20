@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "critical": {
+    "analyst": {
+      "version": "*",
+      "description": "Phase d'analyse"
+    },
+    "architect": {
+      "version": "*",
+      "description": "Phase de design"
+    },
+    "implementer": {
+      "version": "*",
+      "description": "Phase d'implémentation"
+    },
+    "reviewer": {
+      "version": "*",
+      "description": "Phase de review"
+    }
+  },
+  "optional": {},
+  "packages": {}
+}

@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "critical": {},
+  "optional": {
+    "gemini": {
+      "version": "*",
+      "description": "Pour deep-think (Gemini) agent"
+    }
+  },
+  "packages": {}
+}
