@@ -7,6 +7,8 @@ allowed-tools: [Bash, Read, Write, TaskCreate, TaskUpdate, TaskList, AskUserQues
 model: sonnet
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:cd-pr`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Git CD PR Skill (Continuous Delivery)
 
 ## Instructions à Exécuter

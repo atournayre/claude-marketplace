@@ -1,3 +1,11 @@
+## [2.3.2] - 2026-02-20
+
+### Added
+- Release for marketplace
+
+### Changed
+- Documentation updates
+
 ## [2.3.1] - 2026-02-08
 
 ### Changed

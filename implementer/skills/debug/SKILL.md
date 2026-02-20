@@ -95,6 +95,29 @@ Si l'utilisateur demande la résolution :
 /implementer:debug "npm ERR! missing script: build"
 ```
 
+## Résultat
+
+```markdown
+## Diagnostic : [Type d'erreur]
+
+### Cause racine
+[Description de la cause réelle, pas du symptôme]
+
+### Solutions
+
+#### Quick Fix _(rapide, symptôme)_
+[Solution immédiate]
+
+#### Recommandée _(équilibrée, cause)_
+[Solution traitant la cause racine]
+
+#### Long terme _(robuste, prévention)_
+[Solution pérenne]
+
+### Correction appliquée
+[Si exécution demandée : étapes appliquées + validation]
+```
+
 ## Règles
 
 - Détecter le type avant de traiter

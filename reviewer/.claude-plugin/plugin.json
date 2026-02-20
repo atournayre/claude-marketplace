@@ -1,6 +1,6 @@
 {
   "name": "reviewer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Skills de review de code : qualité, PHPStan, Elegant Objects, challenge adversarial",
   "author": {
     "name": "Aurélien Tournayre",

@@ -16,6 +16,8 @@ arguments:
     required: false
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:release-report`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Configuration de sortie
 
 ## Instructions à Exécuter

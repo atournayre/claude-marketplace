@@ -4,6 +4,8 @@ description: Create and optimize CLAUDE.md memory files or .claude/rules/ modula
 argument-hint: [task description]
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `infra:memory`. Voir le plugin `infra`. Sera supprimée en v3.0.
+
 <objective>
 Master the creation of effective Claude Code memory systems using either CLAUDE.md files or the modular `.claude/rules/` directory. This skill covers file hierarchy, content structure, path-scoped rules, formatting, emphasis techniques, and common anti-patterns to avoid.
 

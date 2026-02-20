@@ -54,31 +54,40 @@ Lorsque invoqué, suivre ces étapes :
 
 ## Rapport / Réponse
 
-```
-## Score de conformité Elegant Objects
-Score global : X/100
-
-## Violations critiques (bloquantes)
-### [Règle violée]
-- Fichier: /chemin/absolu/fichier.php:ligne
-- Problème: Description précise
-- Suggestion: Code corrigé ou approche recommandée
-
-## Violations majeures (à corriger)
-[Même format]
-
-## Recommandations (améliorations)
-[Même format]
-
-## Statistiques
-- Fichiers analysés : X
-- Classes analysées : Y
-- Méthodes analysées : Z
-- Tests analysés : W
-- Total violations : N
-
-## Prochaines étapes
-Liste priorisée des corrections à effectuer
+```xml
+<review>
+  <score>X/100</score>
+  <findings>
+    <finding severity="critical">
+      <location>/chemin/absolu/fichier.php:ligne</location>
+      <rule>Règle violée</rule>
+      <problem>Description précise du problème</problem>
+      <suggestion>Code corrigé ou approche recommandée</suggestion>
+    </finding>
+    <finding severity="major">
+      <location>/chemin/absolu/fichier.php:ligne</location>
+      <rule>Règle violée</rule>
+      <problem>Description précise</problem>
+      <suggestion>Approche recommandée</suggestion>
+    </finding>
+    <finding severity="suggestion">
+      <location>/chemin/absolu/fichier.php:ligne</location>
+      <rule>Règle violée</rule>
+      <problem>Description</problem>
+      <suggestion>Amélioration possible</suggestion>
+    </finding>
+  </findings>
+  <stats>
+    <files-analyzed>X</files-analyzed>
+    <classes-analyzed>Y</classes-analyzed>
+    <methods-analyzed>Z</methods-analyzed>
+    <tests-analyzed>W</tests-analyzed>
+    <total-violations>N</total-violations>
+  </stats>
+  <next-steps>
+    <step>Correction priorisée à effectuer</step>
+  </next-steps>
+</review>
 ```
 
 ## Règles

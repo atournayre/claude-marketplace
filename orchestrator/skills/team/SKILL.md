@@ -114,6 +114,33 @@ Team lead :
 | Max turns implementer | 30 |
 | RAM minimum | 2 GB |
 
+## Résultat
+
+```markdown
+## Rapport final — [Description de la tâche]
+
+### Équipe mobilisée
+- analyst : [durée]
+- challenger : [durée]
+- implementer : [durée]
+
+### Fichiers créés
+- [fichier] : [description]
+
+### Fichiers modifiés
+- [fichier] : [nature de la modification]
+
+### Concerns adressés
+- [concern BLOQUANT] : résolu via [approche]
+
+### QA
+- PHPStan : PASS / FAIL (X erreurs)
+- Tests : PASS / FAIL (X/Y)
+
+### Points d'attention
+- [Élément nécessitant une vérification manuelle]
+```
+
 ## Règles
 
 - Fichiers intermédiaires pour communication inter-agents

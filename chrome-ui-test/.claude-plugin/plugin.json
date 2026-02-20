@@ -1,10 +1,13 @@
 {
   "name": "chrome-ui-test",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tests automatisés d'interface utilisateur dans Chrome : navigation, validation visuelle, tests fonctionnels et responsive",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
   },
-  "keywords": ["chrome", "ui", "test", "automation", "browser", "e2e", "skills"]
+  "keywords": ["chrome", "ui", "test", "automation", "browser", "e2e", "skills"],
+  "deprecated": true,
+  "replaced_by": ["tester"],
+  "deprecation_message": "Ce plugin est déprécié. Utilise le plugin-persona : tester"
 }

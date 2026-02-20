@@ -1,10 +1,10 @@
 ---
 title: "review"
 description: "Agents spécialisés pour la code review automatique des PRs. Inclut 4 agents  - code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer."
-version: "1.0.1"
+version: "1.0.2"
 ---
 
-# review <Badge type="info" text="v1.0.1" />
+# review <Badge type="info" text="v1.0.2" />
 
 
 Agents spécialisés pour la code review automatique des Pull Requests.

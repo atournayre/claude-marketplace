@@ -1,6 +1,6 @@
 {
   "name": "devops",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Opérations DevOps Git : branches, commits, worktrees, PR, CI, releases",
   "author": {
     "name": "Aurélien Tournayre",

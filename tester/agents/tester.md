@@ -55,7 +55,19 @@ Depuis les spécifications :
 
 ## Rapport / Réponse
 
-Lister les fichiers de tests créés ou modifiés avec le nombre de cas de test couverts par fichier.
+```xml
+<done>
+  <files-created>
+    <file path="tests/..." tests="X">Composant testé</file>
+  </files-created>
+  <files-modified>
+    <file path="tests/..." tests="X">Composant testé</file>
+  </files-modified>
+  <bugs-found>
+    <bug file="src/..." description="Bug découvert lors des tests"/>
+  </bugs-found>
+</done>
+```
 
 ## Restrictions
 

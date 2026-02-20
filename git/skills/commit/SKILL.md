@@ -59,6 +59,8 @@ hooks:
           once: false
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:commit`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Workflow Git Commit
 
 Créer un commit bien formaté avec les arguments : $ARGUMENTS

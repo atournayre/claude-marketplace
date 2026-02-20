@@ -4,6 +4,8 @@ description: Systematic implementation using APEX methodology (Analyze-Plan-Exec
 argument-hint: "[-a] [-x] [-s] [-t] [-b] [-pr] [-i] [-r <task-id>] <task description>"
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `orchestrator:feature`. Voir le plugin `orchestrator`. Sera supprimée en v3.0.
+
 <objective>
 Execute systematic implementation workflows using the APEX methodology. This skill uses progressive step loading to minimize context usage and supports saving outputs for review and resumption.
 </objective>

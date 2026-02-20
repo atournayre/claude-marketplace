@@ -8,6 +8,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `implementer:fix-issue`. Voir le plugin `implementer`. Sera supprimée en v3.0.
+
 # Correction d'Issue GitHub
 
 ## Instructions à Exécuter

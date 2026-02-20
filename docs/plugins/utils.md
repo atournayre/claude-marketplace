@@ -1,10 +1,10 @@
 ---
 title: "utils"
 description: "Skills et agents utilitaires génériques  - fix-grammar, action, explore-codebase"
-version: "1.0.0"
+version: "1.0.1"
 ---
 
-# utils <Badge type="info" text="v1.0.0" />
+# utils <Badge type="info" text="v1.0.1" />
 
 
 Skills et agents utilitaires génériques pour tâches courantes.

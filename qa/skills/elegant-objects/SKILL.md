@@ -7,6 +7,8 @@ allowed-tools: [Bash, Read, Grep, Glob]
 model: sonnet
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `reviewer:elegant-objects`. Voir le plugin `reviewer`. Sera supprimée en v3.0.
+
 # Elegant Objects Reviewer Skill
 
 ## Instructions à Exécuter

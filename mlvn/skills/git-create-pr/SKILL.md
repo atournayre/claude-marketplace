@@ -5,6 +5,8 @@ model: haiku
 allowed-tools: Bash(git :*), Bash(gh :*)
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:pr`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Create PR
 
 Create pull request with concise, meaningful description.

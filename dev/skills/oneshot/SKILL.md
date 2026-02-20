@@ -4,6 +4,8 @@ description: Ultra-fast feature implementation using Explore → Code → Test w
 argument-hint: <feature-description>
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `implementer:oneshot`. Voir le plugin `implementer`. Sera supprimée en v3.0.
+
 # OneShot
 
 Implement `$ARGUMENTS` at maximum speed. Ship fast, iterate later.

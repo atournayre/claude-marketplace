@@ -3,6 +3,8 @@ name: prompt-creator
 description: Expert prompt engineering for creating effective prompts for Claude, GPT, and other LLMs. Use when writing system prompts, user prompts, few-shot examples, or optimizing existing prompts for better performance.
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `infra:skill-creator`. Voir le plugin `infra`. Sera supprimée en v3.0.
+
 <objective>
 Create highly effective prompts using proven techniques from Anthropic and OpenAI research. This skill covers all major prompting methodologies: clarity, structure, examples, reasoning, and advanced patterns.
 

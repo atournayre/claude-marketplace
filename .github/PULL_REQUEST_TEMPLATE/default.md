@@ -16,22 +16,33 @@
 
 <!-- Coche les plugins impactés -->
 
+- [ ] analyst
+- [ ] architect
 - [ ] chrome-ui-test
 - [ ] claude
 - [ ] customize
 - [ ] dev
+- [ ] devops
 - [ ] doc
+- [ ] documenter
 - [ ] framework
 - [ ] gemini
 - [ ] git
 - [ ] github
+- [ ] implementer
+- [ ] infra
 - [ ] marketing
 - [ ] mlvn
 - [ ] notifications
+- [ ] orchestrator
+- [ ] php
 - [ ] prompt
 - [ ] qa
+- [ ] researcher
 - [ ] review
+- [ ] reviewer
 - [ ] symfony
+- [ ] tester
 - [ ] utils
 
 ## Checklist

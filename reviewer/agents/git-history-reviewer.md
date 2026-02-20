@@ -85,28 +85,26 @@ Ne reporter que les problèmes avec score >= 70.
 
 ## Rapport / Réponse
 
-```markdown
-## Analyse Historique Git
-
-### Contexte des fichiers modifiés
-- `fichier.php` : X commits récents, dernier auteur Y
-
-### Points d'attention historiques
-
-#### [Problème potentiel]
-- Fichier: /chemin/fichier.php:ligne
-- Contexte: Ce code a été modifié X fois en Y jours
-- Risque: [Description]
-- Recommandation: [Action suggérée]
-
-### TODOs/FIXMEs existants
-- `fichier.php:42` : TODO: refactorer cette méthode
-
-### PRs précédentes pertinentes
-- PR #123: "Fix auth bug" — Commentaire pertinent
-
-### Aucun problème historique détecté
-(si applicable)
+```xml
+<review>
+  <scope>
+    <file commits="X" last-author="Y">fichier.php</file>
+  </scope>
+  <findings>
+    <finding confidence="85">
+      <location>/chemin/fichier.php:ligne</location>
+      <context>Ce code a été modifié X fois en Y jours</context>
+      <risk>Description du risque</risk>
+      <suggestion>Action suggérée</suggestion>
+    </finding>
+  </findings>
+  <todos>
+    <todo file="fichier.php" line="42">TODO: refactorer cette méthode</todo>
+  </todos>
+  <related-prs>
+    <pr number="123" title="Fix auth bug">Commentaire pertinent à cette review</pr>
+  </related-prs>
+</review>
 ```
 
 ## Restrictions

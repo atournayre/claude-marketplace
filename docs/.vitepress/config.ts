@@ -170,7 +170,7 @@ export default defineConfig({
           items: [
             { text: 'Doc', link: '/plugins/doc' },
             { text: 'Prompt', link: '/plugins/prompt' },
-            { text: 'Claude', link: '/plugins/claude' }
+            { text: 'Claude', link: '/plugins/claude', badge: { text: 'Déprécié', type: 'danger' } }
           ]
         },
         {
@@ -186,7 +186,7 @@ export default defineConfig({
           items: [
             { text: 'Customize', link: '/plugins/customize' },
             { text: 'Notifications', link: '/plugins/notifications' },
-            { text: 'Chrome UI Test', link: '/plugins/chrome-ui-test' },
+            { text: 'Chrome UI Test', link: '/plugins/chrome-ui-test', badge: { text: 'Déprécié', type: 'danger' } },
             { text: 'Marketing', link: '/plugins/marketing' },
             { text: 'MLVN (AIBlueprint)', link: '/plugins/mlvn' }
           ]

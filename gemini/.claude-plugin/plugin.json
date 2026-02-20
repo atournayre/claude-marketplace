@@ -1,6 +1,6 @@
 {
   "name": "gemini",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search temps réel",
   "author": {
     "name": "Aurélien Tournayre",
@@ -14,5 +14,8 @@
     "google-search",
     "ai-orchestration"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "deprecated": true,
+  "replaced_by": ["researcher", "architect", "analyst"],
+  "deprecation_message": "Ce plugin est déprécié. Utilise les plugins-persona : researcher, architect, analyst"
 }

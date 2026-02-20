@@ -33,6 +33,8 @@ hooks:
           once: false
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:worktree`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Configuration de sortie
 
 **IMPORTANT** : Cette skill effectue une opération Git rapide et nécessite un format de sortie spécifique.

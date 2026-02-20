@@ -7,6 +7,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `analyst:explore`. Voir le plugin `analyst`. Sera supprimée en v3.0.
+
 # Configuration de sortie
 
 **IMPORTANT** : Cette skill génère un résumé d'exploration structuré et nécessite un format de sortie spécifique.

@@ -1,10 +1,10 @@
 ---
 title: "prompt"
 description: "Système hybride Starters + Mode Plan + Checklists + Agent Teams pour développement efficace - Templates légers, exploration contextuelle, validation automatisée, orchestration multi-agents"
-version: "2.3.1"
+version: "2.3.2"
 ---
 
-# prompt <Badge type="info" text="v2.3.1" />
+# prompt <Badge type="info" text="v2.3.2" />
 
 
 Système hybride combinant prompts structurés et mode plan pour un développement efficace.

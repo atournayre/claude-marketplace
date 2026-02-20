@@ -1,7 +1,7 @@
 {
   "name": "prompt",
   "description": "Système hybride Starters + Mode Plan + Checklists + Agent Teams pour développement efficace - Templates légers, exploration contextuelle, validation automatisée, orchestration multi-agents",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
@@ -22,5 +22,8 @@
     "agents",
     "orchestration",
     "multi-agent"
-  ]
+  ],
+  "deprecated": true,
+  "replaced_by": ["architect", "orchestrator"],
+  "deprecation_message": "Ce plugin est déprécié. Utilise les plugins-persona : architect, orchestrator"
 }

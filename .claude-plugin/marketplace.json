@@ -6,6 +6,16 @@
   },
   "plugins": [
     {
+      "name": "analyst",
+      "source": "./analyst",
+      "description": "Analyse architecture + design DDD : explore le codebase, propose l'architecture technique et conçoit le modèle de domaine"
+    },
+    {
+      "name": "architect",
+      "source": "./architect",
+      "description": "Analyse l'architecture, les patterns et la structure du codebase pour proposer une conception technique solide"
+    },
+    {
       "name": "command",
       "source": "./command",
       "description": "Plugin centralisé de commandes - Workaround pour Claude Code issue #15178"
@@ -29,6 +39,16 @@
       "name": "dev",
       "source": "./dev",
       "description": "Toolkit de développement core : context, debug, sessions, analytics"
+    },
+    {
+      "name": "devops",
+      "source": "./devops",
+      "description": "Pipeline CD/CI automation : branche, commit, PR, release-notes, conflict resolution, ci-autofix"
+    },
+    {
+      "name": "documenter",
+      "source": "./documenter",
+      "description": "Extraction et sauvegarde automatique de documentation : API Platform, Symfony, Meilisearch, atournayre-framework, Claude Code"
     },
     {
       "name": "git",
@@ -71,9 +91,39 @@
       "description": "Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search temps réel"
     },
     {
+      "name": "implementer",
+      "source": "./implementer",
+      "description": "Implémentation code + tests TDD : agents developer et implementer pour execution complète des plans"
+    },
+    {
+      "name": "infra",
+      "source": "./infra",
+      "description": "Infrastructure et configuration : skills, agents, hooks, règles projet et meta-agent creator"
+    },
+    {
+      "name": "orchestrator",
+      "source": "./orchestrator",
+      "description": "Orchestration multi-phase : check-prerequisites, discover, explore, design, plan, implement, review, validate"
+    },
+    {
+      "name": "php",
+      "source": "./php",
+      "description": "Génération code PHP Elegant Objects : make-entity, make-contracts, make-collection, make-factory, etc."
+    },
+    {
+      "name": "researcher",
+      "source": "./researcher",
+      "description": "Recherche temps réel : Google Search via Gemini, analyse docs, agents spécialisés"
+    },
+    {
       "name": "review",
       "source": "./review",
       "description": "Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer"
+    },
+    {
+      "name": "reviewer",
+      "source": "./reviewer",
+      "description": "Revue complète : PHPStan resolver, Elegant Objects reviewer, git-history reviewer, code reviewer, QA, silent failures"
     },
     {
       "name": "marketing",
@@ -84,6 +134,11 @@
       "name": "notifications",
       "source": "./notifications",
       "description": "Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète"
+    },
+    {
+      "name": "tester",
+      "source": "./tester",
+      "description": "Tests et QA : test-analyzer, tester agents pour exécution PHPUnit et validation"
     },
     {
       "name": "prompt",

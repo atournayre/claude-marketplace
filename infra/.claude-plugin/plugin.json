@@ -1,6 +1,6 @@
 {
   "name": "infra",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Infrastructure Claude Code : gestion mémoire (CLAUDE.md/.claude/rules), création de skills et agents, alias, versioning des plugins, initialisation marketplace, correction grammaticale",
   "author": {
     "name": "Aurélien Tournayre",

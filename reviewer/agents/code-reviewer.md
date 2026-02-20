@@ -109,36 +109,32 @@ final class MonService { }
 
 ## Rapport / Réponse
 
-```markdown
-## Code Review
-
-### Scope analysé
-- `src/Service/MonService.php` (modifié)
-- `src/Entity/MonEntite.php` (nouveau)
-
-### Critique (91-100)
-
-#### Violation CLAUDE.md — Condition non-Yoda
-- Confiance: 95/100
-- Fichier: `src/Service/MonService.php:42`
-- Règle: CLAUDE.md exige conditions Yoda
-- Code actuel: `if ($value === null)`
-- Correction: `if (null === $value)`
-
-### Important (80-90)
-
-#### Bug potentiel — Gestion null manquante
-- Confiance: 85/100
-- Fichier: `src/Service/MonService.php:67`
-- Problème: `$user->getEmail()` appelé sans vérifier si $user est null
-- Impact: NullPointerException en production
-
-### Conforme
-
-Le code respecte :
-- Typage strict
-- Injection de dépendance
-- Documentation @throws
+```xml
+<review>
+  <scope>
+    <file>src/Service/MonService.php (modifié)</file>
+    <file>src/Entity/MonEntite.php (nouveau)</file>
+  </scope>
+  <findings>
+    <finding severity="critical" confidence="95">
+      <location>src/Service/MonService.php:42</location>
+      <rule>Condition Yoda — CLAUDE.md</rule>
+      <problem>if ($value === null) — condition non-Yoda</problem>
+      <suggestion>if (null === $value)</suggestion>
+    </finding>
+    <finding severity="important" confidence="85">
+      <location>src/Service/MonService.php:67</location>
+      <rule>Null safety</rule>
+      <problem>$user->getEmail() appelé sans vérifier si $user est null — NullPointerException en production</problem>
+      <suggestion>Vérifier null avant appel ou lever une exception métier</suggestion>
+    </finding>
+  </findings>
+  <conformance>
+    <item>Typage strict : conforme</item>
+    <item>Injection de dépendance : conforme</item>
+    <item>Documentation @throws : conforme</item>
+  </conformance>
+</review>
 ```
 
 ## Restrictions

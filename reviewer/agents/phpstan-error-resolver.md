@@ -58,35 +58,36 @@ Lorsque invoqué, suivre ces étapes dans l'ordre :
 
 ## Rapport / Réponse
 
-```
-## Résolution erreurs PHPStan niveau 9
-
-Statut : Toutes corrigées | Partiellement corrigées | Échec analyse
-
-### Statistiques
-- Erreurs initiales : X
-- Erreurs corrigées : Y
-- Erreurs restantes : Z
-- Taux de résolution : XX%
-- Fichiers modifiés : N
-
-### Erreurs corrigées
-
-#### Type Mismatch (X corrigées)
-Fichier : `path/to/file.php:123`
-Erreur : Parameter #1 $id of method expects int, string given
-Correction : Ajout cast explicite ou type narrowing
-
-### Erreurs restantes
-
-Fichier : `path/to/file.php:456`
-Erreur : [Description erreur]
-Raison : Nécessite refactoring majeur / Confirmation utilisateur requise
-
-### Prochaines étapes
-- [ ] Relancer PHPStan pour confirmer les corrections
-- [ ] Traiter les erreurs restantes manuellement
-- [ ] Vérifier les tests unitaires impactés
+```xml
+<phpstan-report>
+  <status>all-fixed|partial|failed</status>
+  <stats>
+    <initial>X</initial>
+    <fixed>Y</fixed>
+    <remaining>Z</remaining>
+    <rate>XX%</rate>
+    <files-modified>N</files-modified>
+  </stats>
+  <fixed>
+    <error type="type-mismatch">
+      <location>path/to/file.php:123</location>
+      <description>Parameter #1 $id of method expects int, string given</description>
+      <fix>Ajout cast explicite ou type narrowing</fix>
+    </error>
+  </fixed>
+  <remaining>
+    <error>
+      <location>path/to/file.php:456</location>
+      <description>Description de l'erreur non résolue</description>
+      <reason>Nécessite refactoring majeur / Confirmation utilisateur requise</reason>
+    </error>
+  </remaining>
+  <next-steps>
+    <step>Relancer PHPStan pour confirmer les corrections</step>
+    <step>Traiter les erreurs restantes manuellement</step>
+    <step>Vérifier les tests unitaires impactés</step>
+  </next-steps>
+</phpstan-report>
 ```
 
 ## Restrictions

@@ -1,11 +1,14 @@
 ---
 title: "claude"
 description: "Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation"
-version: "1.3.1"
+version: "1.3.2"
 ---
 
-# claude <Badge type="info" text="v1.3.1" />
+# claude <Badge type="info" text="v1.3.2" /> <Badge type="danger" text="Déprécié" />
 
+::: danger Plugin déprécié
+Ce plugin est remplacé par **[infra](/plugins/infra)** (skills, agents, hooks, mémoire) et **[documenter](/plugins/documenter)** (chargement documentation). Il sera supprimé en v3.0.
+:::
 
 Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation.
 

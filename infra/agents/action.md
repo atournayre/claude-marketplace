@@ -39,7 +39,15 @@ Rapport : "Supprimé 2/3 : axios, moment. Ignoré : lodash (utilisé dans utils.
 
 ## Rapport / Réponse
 
-Format de sortie structuré :
-- Nombre d'actions exécutées / total
-- Liste des actions effectuées
-- Liste des actions ignorées avec raisons
+```xml
+<actions>
+  <summary executed="2" total="3"/>
+  <executed>
+    <action>npm remove axios</action>
+    <action>npm remove moment</action>
+  </executed>
+  <skipped>
+    <action reason="utilisé dans utils.ts">lodash</action>
+  </skipped>
+</actions>
+```

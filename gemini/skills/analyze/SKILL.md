@@ -6,6 +6,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `researcher:analyze`. Voir le plugin `researcher`. Sera supprimée en v3.0.
+
 # Configuration de sortie
 
 **IMPORTANT** : Cette skill génère une analyse structurée et nécessite un format de sortie spécifique.

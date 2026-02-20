@@ -5,6 +5,8 @@ allowed-tools: Read, Edit, Write, MultiEdit, Task
 argument-hint: <file-path> [additional-files...]
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `infra:fix-grammar`. Voir le plugin `infra`. Sera supprimée en v3.0.
+
 # Fix Grammar
 
 Fix grammar and spelling errors in files while preserving formatting and meaning.

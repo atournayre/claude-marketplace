@@ -1,10 +1,10 @@
 ---
 title: "notifications"
 description: "Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète"
-version: "1.0.2"
+version: "1.0.3"
 ---
 
-# notifications <Badge type="info" text="v1.0.2" />
+# notifications <Badge type="info" text="v1.0.3" />
 
 
 Système de notifications avancé pour Claude Code avec queue persistante, dispatchers multiples et gestion complète.

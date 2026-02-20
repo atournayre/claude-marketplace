@@ -15,6 +15,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `orchestrator:feature`. Voir le plugin `orchestrator`. Sera supprimée en v3.0.
+
 # Objectif
 
 ## Instructions à Exécuter

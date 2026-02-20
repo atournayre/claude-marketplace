@@ -4,6 +4,8 @@ description: Fetch PR review comments and implement all requested changes
 allowed-tools: Bash(gh :*), Bash(git :*), Read, Edit, MultiEdit
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `implementer:fix-pr-comments`. Voir le plugin `implementer`. Sera supprimée en v3.0.
+
 # Fix PR Comments
 
 Systematically address ALL unresolved review comments until PR is approved.

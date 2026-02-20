@@ -12,6 +12,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `reviewer:review`. Voir le plugin `reviewer`. Sera supprimée en v3.0.
+
 # Objectif
 
 ## Instructions à Exécuter

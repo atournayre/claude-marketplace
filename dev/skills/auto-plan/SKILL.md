@@ -10,6 +10,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `architect:plan`. Voir le plugin `architect`. Sera supprimée en v3.0.
+
 # Objectif
 
 ## Instructions à Exécuter

@@ -75,39 +75,37 @@ Exécuter toutes les suites de tests détectées.
 
 ## Rapport / Réponse
 
+```xml
+<qa-report>
+  <tools>
+    <tool name="phpstan" source="Makefile" criticality="blocking"/>
+    <tool name="phpunit" source="Makefile" criticality="blocking"/>
+    <tool name="rector" source="vendor/bin" criticality="informational"/>
+  </tools>
+  <static-analysis>
+    <result tool="phpstan" command="make phpstan" status="PASS|FAIL|WARN">
+      <detail>Détails si non-PASS</detail>
+    </result>
+  </static-analysis>
+  <code-style>
+    <result tool="php-cs-fixer" command="make cs-fix" status="PASS|WARN">
+      <files-to-fix>0</files-to-fix>
+    </result>
+  </code-style>
+  <tests>
+    <result suite="phpunit" command="make test" status="PASS|FAIL">
+      <total>X</total>
+      <failed>Y</failed>
+    </result>
+  </tests>
+  <verdict>PASS|WARN|FAIL</verdict>
+</qa-report>
 ```
-## Rapport QA
 
-### Outils découverts
-- [liste des outils détectés avec source et criticité]
-
-### Analyse statique
-Pour chaque outil détecté :
-- Outil : [nom]
-- Commande : [commande exécutée]
-- Statut : PASS / FAIL / WARN
-- Détails : [résultat si non-PASS]
-
-### Style de code
-Pour chaque outil détecté :
-- Outil : [nom]
-- Commande : [commande exécutée]
-- Statut : PASS / WARN
-- Fichiers à corriger : X
-
-### Tests
-Pour chaque suite détectée :
-- Suite : [nom]
-- Commande : [commande exécutée]
-- Statut : PASS / FAIL
-- Tests exécutés : X
-- Tests en échec : Y
-
-### Verdict global
-- PASS : tous les outils BLOQUANTS sont verts
-- WARN : problèmes sur outils INFORMATIFS uniquement, peut merger
-- FAIL : au moins un outil BLOQUANT en échec, corrections nécessaires
-```
+Légende verdict :
+- `PASS` : tous les outils BLOQUANTS sont verts
+- `WARN` : problèmes sur outils INFORMATIFS uniquement, peut merger
+- `FAIL` : au moins un outil BLOQUANT en échec, corrections nécessaires
 
 ## Restrictions
 

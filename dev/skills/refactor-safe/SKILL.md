@@ -8,6 +8,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `implementer:refactor`. Voir le plugin `implementer`. Sera supprimée en v3.0.
+
 # Objectif
 
 ## Instructions à Exécuter

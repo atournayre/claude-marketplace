@@ -4,6 +4,8 @@ description: Setup the Ralph autonomous AI coding loop - ships features while yo
 argument-hint: "<project-path> [-i/--interactive] [-f/--feature <name>]"
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `orchestrator:ralph`. Voir le plugin `orchestrator`. Sera supprimée en v3.0.
+
 <objective>
 Set up the Ralph autonomous coding loop in any project. Ralph runs AI agents in a loop, picking tasks from a PRD, implementing one at a time, committing after each, and accumulating learnings until all tasks are complete.
 

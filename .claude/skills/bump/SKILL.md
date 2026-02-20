@@ -103,6 +103,11 @@ Utilise `AskUserQuestion` :
 }
 ```
 
+**Vérification dépréciation** : Pour chaque plugin sélectionné, lis `{plugin}/.claude-plugin/plugin.json` et vérifie si `"deprecated": true` est présent. Si oui, afficher un avertissement :
+```
+⚠️  {plugin} est déprécié (remplacé par : {replaced_by}). Continuer quand même ? (bump patch uniquement recommandé)
+```
+
 **TaskUpdate : Tâche #2 → `completed`**
 
 ---
@@ -245,7 +250,29 @@ git diff {plugin}/ | grep -i "env\.claude\|MAIN_BRANCH\|WORKTREE_DIR\|REPO\|PROJ
 
 **Si aucune référence `.env.claude` détectée** : passer cette sous-étape.
 
-#### 5.6 Mettre à jour le template PR
+#### 5.6 Mettre à jour les badges de dépréciation dans VitePress
+
+**Condition** : Exécuter si `{plugin}/.claude-plugin/plugin.json` contient `"deprecated": true`.
+
+**5.6.1 Sidebar (`docs/.vitepress/config.ts`)** :
+Lis le fichier. Trouve l'item sidebar correspondant au plugin (cherche `link: '/plugins/{plugin}'`). Ajoute le champ `badge` si absent :
+```ts
+{ text: '{Plugin}', link: '/plugins/{plugin}', badge: { text: 'Déprécié', type: 'danger' } }
+```
+
+**5.6.2 Page doc (`docs/plugins/{plugin}.md`)** :
+Lis le fichier. Si le badge `Déprécié` est absent :
+1. Ajouter `<Badge type="danger" text="Déprécié" />` après le badge de version dans le H1
+2. Ajouter le callout juste après le H1 (avant le texte d'introduction) :
+```md
+::: danger Plugin déprécié
+Ce plugin est remplacé par **[{replaced_by[0]}](/plugins/{replaced_by[0]})**{si plusieurs : ` et **[{replaced_by[1]}](/plugins/{replaced_by[1]})**`}. Il sera supprimé en v3.0.
+:::
+```
+
+**Si aucun `deprecated: true` détecté** : passer cette sous-étape.
+
+#### 5.7 Mettre à jour le template PR
 
 Met à jour `.github/PULL_REQUEST_TEMPLATE/default.md` avec la liste des plugins :
 
@@ -272,6 +299,7 @@ find . -name "plugin.json" -path "*/.claude-plugin/*" | sed 's|^\./||' | sed 's|
 - [ ] `CHANGELOG.md` global → entrée du jour avec résumé du plugin (Read pour vérifier)
 - [ ] `.claude-plugin/marketplace.json` → plugin présent avec description à jour (Read pour vérifier)
 - [ ] `docs/guide/env-claude.md` → variables `.env.claude` à jour si applicable (Read pour vérifier)
+- [ ] Si `deprecated: true` → `docs/.vitepress/config.ts` badge ajouté + `docs/plugins/{plugin}.md` callout ajouté (Read pour vérifier)
 - [ ] `.github/PULL_REQUEST_TEMPLATE/default.md` → liste plugins synchronisée (Read pour vérifier)
 
 **TaskUpdate : Tâche #4 → `completed`**

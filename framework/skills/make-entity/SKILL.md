@@ -6,6 +6,8 @@ version: 1.0.0
 allowed-tools: [AskUserQuestion, Bash, Read, Write, Skill]
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `php:make-entity`. Voir le plugin `php`. Sera supprimée en v3.0.
+
 # Framework Make Entity Skill
 
 Génère une entité Doctrine complète avec son repository selon les principes Elegant Objects.

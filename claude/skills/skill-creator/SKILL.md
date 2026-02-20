@@ -4,6 +4,8 @@ description: This skill should be used when the user asks to "create a skill", "
 license: Complete terms in LICENSE.txt
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `infra:skill-creator`. Voir le plugin `infra`. Sera supprimée en v3.0.
+
 # Skill Creator
 
 This skill provides guidance for creating effective skills.

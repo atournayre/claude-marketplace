@@ -1,6 +1,6 @@
 {
   "name": "implementer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Skills d'implémentation de code : code, debug, refactoring, correction d'issues et PR",
   "author": {
     "name": "Aurélien Tournayre",

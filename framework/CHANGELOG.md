@@ -1,3 +1,11 @@
+## [1.1.2] - 2026-02-20
+
+### Added
+- Release for marketplace
+
+### Changed
+- Documentation updates
+
 # Changelog
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.

@@ -7,6 +7,8 @@ allowed-tools: [Task, Bash, Read, Edit, Grep, Glob]
 model: opus
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `reviewer:phpstan`. Voir le plugin `reviewer`. Sera supprimée en v3.0.
+
 # PHPStan Error Resolver Skill
 
 ## Instructions à Exécuter

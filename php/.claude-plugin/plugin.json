@@ -1,6 +1,6 @@
 {
   "name": "php",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Skills PHP/Symfony orientés Elegant Objects : génération d'entités, collections, contrats, factories, stories",
   "author": {
     "name": "Aurélien Tournayre",

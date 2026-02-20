@@ -1,11 +1,14 @@
 ---
 title: "chrome-ui-test"
 description: "Tests automatisés d'interface utilisateur dans Chrome  - navigation, validation visuelle, tests fonctionnels et responsive"
-version: "1.0.0"
+version: "1.0.1"
 ---
 
-# chrome-ui-test <Badge type="info" text="v1.0.0" />
+# chrome-ui-test <Badge type="info" text="v1.0.1" /> <Badge type="danger" text="Déprécié" />
 
+::: danger Plugin déprécié
+Ce plugin est remplacé par **[tester](/plugins/tester)** qui offre les mêmes fonctionnalités avec une architecture améliorée. Il sera supprimé en v3.0.
+:::
 
 Plugin de tests automatisés d'interface utilisateur dans Chrome pour Claude Code.
 

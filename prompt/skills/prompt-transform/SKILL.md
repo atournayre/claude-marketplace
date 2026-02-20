@@ -8,6 +8,8 @@ model: sonnet
 argument-hint: <prompt-file-or-text> [--name=<output-name>]
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `orchestrator:transform`. Voir le plugin `orchestrator`. Sera supprimée en v3.0.
+
 Tu es un spécialiste de la transformation de prompts en prompts exécutables compatibles avec le Task Management System de Claude Code.
 
 ## Objectif

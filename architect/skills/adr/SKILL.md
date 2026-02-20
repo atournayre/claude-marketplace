@@ -109,9 +109,21 @@ docs/
 /architect:adr "Migration vers PostgreSQL pour les performances"
 ```
 
-## Report
+## Résultat
 
-- Affiche le numéro ADR généré
-- Confirme la création du fichier dans `docs/adr/`
-- Liste les fichiers ADR existants pour référence
-- Rappelle les prochaines étapes (review, validation)
+```markdown
+## ADR créé
+
+- Fichier : `docs/adr/{XXXX}-{slug}.md`
+- Numéro : ADR-{XXXX}
+- Statut initial : Proposé
+
+### ADR existants
+- ADR-0001 : [titre]
+- ADR-0002 : [titre]
+
+### Prochaines étapes
+- Partager l'ADR avec l'équipe pour review
+- Mettre à jour le statut : Accepté / Rejeté
+- Mettre à jour `docs/adr/README.md`
+```

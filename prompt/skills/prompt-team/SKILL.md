@@ -7,6 +7,8 @@ version: 2.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `orchestrator:team`. Voir le plugin `orchestrator`. Sera supprimée en v3.0.
+
 # Objectif
 
 Orchestrer une équipe d'agents natifs via Agent Teams pour les tâches de développement complexes. Tu es le **team lead** : tu crées l'équipe, distribues les tâches, coordonnes les phases et rapportes les résultats.

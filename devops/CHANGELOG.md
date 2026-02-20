@@ -1,3 +1,11 @@
+## [1.1.0] - 2026-02-20
+
+### Added
+- Release for marketplace
+
+### Changed
+- Documentation updates
+
 # Changelog - devops
 
 ## [1.0.0] - 2026-02-19

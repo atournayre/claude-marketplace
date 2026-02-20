@@ -1,3 +1,11 @@
+## [1.0.1] - 2026-02-20
+
+### Added
+- Release for marketplace
+
+### Changed
+- Documentation updates
+
 # Changelog
 
 Toutes les modifications notables de ce plugin seront documentées dans ce fichier.

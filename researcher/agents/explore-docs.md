@@ -38,38 +38,37 @@ From documentation, gather:
 
 **CRITICAL**: Output findings directly. NEVER create markdown files.
 
-### Library Information
-- Name: [library name]
-- Version: [if specified]
-- Context7 ID: [resolved ID]
-
-### Relevant Documentation
-
-#### [Feature/Topic 1]
-```
+```xml
+<research>
+  <library name="[library name]" version="[if specified]" context7-id="[resolved ID]"/>
+  <documentation>
+    <topic name="[Feature/Topic 1]">
+      <example><![CDATA[
 [Actual code example or API signature]
-```
-- Purpose: [what it does]
-- Usage: [when to use it]
-- Key parameters/props: [list with brief descriptions]
-
-#### [Feature/Topic 2]
-```
+      ]]></example>
+      <purpose>What it does</purpose>
+      <usage>When to use it</usage>
+      <params>Key parameters/props with brief descriptions</params>
+    </topic>
+    <topic name="[Feature/Topic 2]">
+      <example><![CDATA[
 [Actual code example]
+      ]]></example>
+      <purpose>What it does</purpose>
+      <related-to-task>How it applies to the task</related-to-task>
+    </topic>
+  </documentation>
+  <implementation-notes>
+    <pattern>Key pattern discovered</pattern>
+    <setup>Required setup step</setup>
+    <warning>Important gotcha or warning</warning>
+  </implementation-notes>
+  <missing>
+    <item type="web-search">Topic needing web search</item>
+    <item type="research">Area requiring more research</item>
+  </missing>
+</research>
 ```
-- Purpose: [what it does]
-- Related to task: [how it applies]
-
-### Implementation Notes
-
-- Key patterns discovered: [list]
-- Required setup steps: [list]
-- Important gotchas or warnings: [list]
-
-### Missing Information
-
-- Topics needing web search: [list if any]
-- Areas requiring more research: [list if any]
 
 ## Execution Rules
 

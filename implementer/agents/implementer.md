@@ -69,23 +69,24 @@ Pour chaque composant, écrire le test associé immédiatement après :
 
 ## Rapport / Réponse
 
-```
-## Résumé d'implémentation
-
-### Fichiers créés
-- [Fichier] : [Description]
-
-### Fichiers modifiés
-- [Fichier] : [Nature de la modification]
-
-### Tests créés
-- [Fichier de test] : [Composant testé] - [X tests]
-
-### Concerns adressés
-- [Concern BLOQUANT] : [Comment résolu]
-
-### Points d'attention
-- [Élément à vérifier manuellement]
+```xml
+<done>
+  <files-created>
+    <file path="src/...">Description</file>
+  </files-created>
+  <files-modified>
+    <file path="src/...">Nature de la modification</file>
+  </files-modified>
+  <tests-created>
+    <file path="tests/..." tests="X">Composant testé</file>
+  </tests-created>
+  <concerns-addressed>
+    <concern>Concern BLOQUANT : comment résolu</concern>
+  </concerns-addressed>
+  <attention>
+    <point>Élément à vérifier manuellement</point>
+  </attention>
+</done>
 ```
 
 ## Restrictions

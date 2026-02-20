@@ -1,4 +1,5 @@
 # Claude Code - Logs et data
+.claude/settings.local.json
 .claude/logs/
 .claude/data/
 .claude/sessions/

@@ -5,6 +5,8 @@ license: MIT
 version: 1.0.0
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `php:make-factory`. Voir le plugin `php`. Sera supprimée en v3.0.
+
 # Framework Make Factory Skill
 
 ## Instructions à Exécuter

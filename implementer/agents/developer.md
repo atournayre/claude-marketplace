@@ -55,17 +55,18 @@ Suivre l'ordre d'implémentation de l'architecte :
 
 ## Rapport / Réponse
 
-```
-## Implémentation terminée
-
-### Fichiers créés
-- [Fichier] : [Description]
-
-### Fichiers modifiés
-- [Fichier] : [Nature de la modification]
-
-### Points d'attention
-- [Élément à vérifier manuellement]
+```xml
+<done>
+  <files-created>
+    <file path="src/...">Description</file>
+  </files-created>
+  <files-modified>
+    <file path="src/...">Nature de la modification</file>
+  </files-modified>
+  <attention>
+    <point>Élément à vérifier manuellement</point>
+  </attention>
+</done>
 ```
 
 ## Restrictions

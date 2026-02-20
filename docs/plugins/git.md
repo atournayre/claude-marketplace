@@ -1,10 +1,10 @@
 ---
 title: "git"
 description: "Workflow Git complet  - branches, commits, conflits, PR avec automation QA et CI autofix"
-version: "1.14.0"
+version: "1.14.1"
 ---
 
-# git <Badge type="info" text="v1.14.0" />
+# git <Badge type="info" text="v1.14.1" />
 
 
 Workflow Git complet : branches, commits, conflits, PR.

@@ -3,6 +3,8 @@ name: skill-workflow-creator
 description: Expert guidance for creating, building, and using Claude Code subagents and the Task tool. Use when working with subagents, setting up agent configurations, understanding how agents work, or using the Task tool to launch specialized agents.
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `infra:make-subagent`. Voir le plugin `infra`. Sera supprimée en v3.0.
+
 <objective>
 Subagents are specialized Claude instances that run in isolated contexts with focused roles and limited tool access. This skill teaches you how to create effective subagents, write strong system prompts, configure tool access, and orchestrate multi-agent workflows using the Task tool.
 

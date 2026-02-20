@@ -5,6 +5,8 @@ license: MIT
 version: 1.0.0
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `php:make-urls`. Voir le plugin `php`. Sera supprimée en v3.0.
+
 # Framework Make Urls Skill
 
 ## Instructions à Exécuter

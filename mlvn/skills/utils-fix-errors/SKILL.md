@@ -4,6 +4,8 @@ description: Fix all ESLint and TypeScript errors with parallel processing using
 allowed-tools: Bash(pnpm :*), Bash(tsc :*), Bash(npm :*), Read, Task, Grep
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `implementer:debug`. Voir le plugin `implementer`. Sera supprimée en v3.0.
+
 # Fix Errors
 
 Fix all ESLint and TypeScript errors by breaking them into areas and processing in parallel.

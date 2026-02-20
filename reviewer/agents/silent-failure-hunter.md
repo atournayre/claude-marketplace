@@ -89,32 +89,32 @@ try {
 
 ## Rapport / Réponse
 
-```markdown
-## Analyse Silent Failures
-
-### Fichiers analysés
-- `src/Service/MonService.php`
-
-### CRITIQUE (échecs silencieux)
-
-#### Catch vide
-- Fichier: `src/Service/MonService.php:42`
-- Sévérité: CRITIQUE
-- Problème: Catch vide qui avale toutes les exceptions
-- Erreurs cachées: DatabaseException, TimeoutException, ValidationException
-- Impact: Bugs impossibles à diagnostiquer
-
-### HAUTE (gestion inadéquate)
-
-[Même format]
-
-### MOYENNE (améliorations)
-
-[Même format]
-
-### Bonnes pratiques détectées
-- Utilisation correcte des exceptions métier *Invalide
-- Logging avec contexte approprié
+```xml
+<review>
+  <scope>
+    <file>src/Service/MonService.php</file>
+  </scope>
+  <findings>
+    <finding severity="critical">
+      <location>src/Service/MonService.php:42</location>
+      <pattern>catch-vide</pattern>
+      <problem>Catch vide qui avale toutes les exceptions — DatabaseException, TimeoutException, ValidationException masquées</problem>
+      <impact>Bugs impossibles à diagnostiquer en production</impact>
+      <suggestion>Logger l'exception + relancer ou lever une exception métier spécifique</suggestion>
+    </finding>
+    <finding severity="high">
+      <location>src/Service/MonService.php:67</location>
+      <pattern>return-null-on-error</pattern>
+      <problem>Return null en cas d'exception — erreur DB ou timeout silencieuse</problem>
+      <impact>Comportement imprévisible pour l'appelant</impact>
+      <suggestion>Propager l'exception ou lever une exception métier</suggestion>
+    </finding>
+  </findings>
+  <good-practices>
+    <item>Utilisation correcte des exceptions métier *Invalide</item>
+    <item>Logging avec contexte approprié</item>
+  </good-practices>
+</review>
 ```
 
 ## Restrictions

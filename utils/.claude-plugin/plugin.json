@@ -1,7 +1,7 @@
 {
   "name": "utils",
   "description": "Skills et agents utilitaires génériques : fix-grammar, action, explore-codebase",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
@@ -15,5 +15,8 @@
     "action-agent",
     "explore-codebase",
     "generic-skills"
-  ]
+  ],
+  "deprecated": true,
+  "replaced_by": ["infra", "analyst"],
+  "deprecation_message": "Ce plugin est déprécié. Utilise les plugins-persona : infra, analyst"
 }

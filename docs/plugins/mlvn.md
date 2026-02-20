@@ -1,10 +1,10 @@
 ---
 title: "mlvn"
 description: "Adaptation du repo AIBlueprint de Melvynx (https -//github.com/Melvynx/aiblueprint) - Agents spécialisés, workflows autonomes, skills Git/Meta/Utils (version épurée - composants migrés vers autres plugins)"
-version: "1.1.0"
+version: "1.1.1"
 ---
 
-# mlvn <Badge type="info" text="v1.1.0" />
+# mlvn <Badge type="info" text="v1.1.1" />
 
 
 > **🔗 Ce plugin est une adaptation du repo [AIBlueprint de Melvynx](https://github.com/Melvynx/aiblueprint)**
