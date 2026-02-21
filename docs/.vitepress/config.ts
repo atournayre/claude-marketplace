@@ -195,10 +195,7 @@ export default defineConfig({
           ]
         }
       ],
-      '/plugins/': pluginsSidebar,
-      '/commands/': pluginsSidebar,
-      '/agents/': pluginsSidebar,
-      '/hooks/': pluginsSidebar
+      '/plugins/': pluginsSidebar
     },
 
     search: {
