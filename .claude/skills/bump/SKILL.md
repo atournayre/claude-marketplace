@@ -255,20 +255,13 @@ git diff {plugin}/ | grep -i "env\.claude\|MAIN_BRANCH\|WORKTREE_DIR\|REPO\|PROJ
 **Condition** : Exécuter si `{plugin}/.claude-plugin/plugin.json` contient `"deprecated": true`.
 
 **5.6.1 Sidebar (`docs/.vitepress/config.ts`)** :
-Lis le fichier. Trouve l'item sidebar correspondant au plugin (cherche `link: '/plugins/{plugin}'`). Ajoute le champ `badge` si absent :
+Lis le fichier. La sidebar est définie dans la constante `pluginsSidebar` en haut du fichier. Trouve l'item correspondant au plugin (cherche `link: '/plugins/{plugin}'` dans la constante). Ajoute le champ `badge` si absent :
 ```ts
 { text: '{Plugin}', link: '/plugins/{plugin}', badge: { text: 'Déprécié', type: 'danger' } }
 ```
 
 **5.6.2 Page doc (`docs/plugins/{plugin}.md`)** :
-Lis le fichier. Si le badge `Déprécié` est absent :
-1. Ajouter `<Badge type="danger" text="Déprécié" />` après le badge de version dans le H1
-2. Ajouter le callout juste après le H1 (avant le texte d'introduction) :
-```md
-::: danger Plugin déprécié
-Ce plugin est remplacé par **[{replaced_by[0]}](/plugins/{replaced_by[0]})**{si plusieurs : ` et **[{replaced_by[1]}](/plugins/{replaced_by[1]})**`}. Il sera supprimé en v3.0.
-:::
-```
+⚠️ Ne pas modifier manuellement ce fichier. Il est **généré automatiquement** par `scripts/generate-docs.ts` lors du rebuild VitePress (étape 6.2). Le badge `<Badge type="danger" text="Déprécié" />` et le callout `:::warning` sont ajoutés automatiquement si `deprecated: true` est présent dans `plugin.json`.
 
 **Si aucun `deprecated: true` détecté** : passer cette sous-étape.
 
@@ -339,12 +332,14 @@ git status --short docs/
 
 Les fichiers `docs/plugins/{plugin}.md` et `docs/commands/index.md` doivent être modifiés.
 Si nouveaux agents ajoutés, `docs/agents/index.md` doit aussi être modifié.
+Si nouveaux hooks ajoutés, `docs/hooks/index.md` doit aussi être modifié.
 
 **🔒 AVANT DE MARQUER COMPLETED - Vérifie ces points :**
 - [ ] `{plugin}/DEPENDENCIES.json` → existe (Read pour vérifier)
 - [ ] `cd docs && npm run build` → exécuté avec succès (0 erreurs)
 - [ ] `git status --short docs/` → au moins `docs/plugins/{plugin}.md` et `docs/commands/index.md` modifiés
 - [ ] Si nouveaux agents → `docs/agents/index.md` aussi modifié
+- [ ] Si nouveaux hooks → `docs/hooks/index.md` aussi modifié
 
 **TaskUpdate : Tâche #5 → `completed`**
 
@@ -372,6 +367,8 @@ Fichiers modifiés :
 ✓ .github/PULL_REQUEST_TEMPLATE/default.md
 ✓ docs/plugins/{plugin}.md
 ✓ docs/commands/index.md
+✓ docs/agents/index.md (si nouveaux agents)
+✓ docs/hooks/index.md (si nouveaux hooks)
 
 Prochaine étape : /git:commit
 ```
@@ -397,9 +394,10 @@ Prochaine étape : /git:commit
 - [ ] `.github/PULL_REQUEST_TEMPLATE/default.md` → liste plugins synchronisée
 
 ### Documentation générée (toujours)
-- [ ] `docs/plugins/{plugin}.md` → régénéré via VitePress
+- [ ] `docs/plugins/{plugin}.md` → régénéré via VitePress (badge + callout dépréciation auto si `deprecated: true`)
 - [ ] `docs/commands/index.md` → régénéré via VitePress
 - [ ] `docs/agents/index.md` → régénéré si nouveaux agents
+- [ ] `docs/hooks/index.md` → régénéré si nouveaux hooks
 
 ### Tâches
 - [ ] Tâche #1 completed : Plugins détectés

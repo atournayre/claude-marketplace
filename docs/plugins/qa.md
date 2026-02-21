@@ -4,7 +4,11 @@ description: "Quality assurance  - PHPStan automatisé, tests, linters avec skil
 version: "1.3.4"
 ---
 
-# qa <Badge type="info" text="v1.3.4" />
+# qa <Badge type="info" text="v1.3.4" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise le plugin-persona : reviewer
+:::
 
 
 Quality assurance : PHPStan, tests, linters.

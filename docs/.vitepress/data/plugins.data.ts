@@ -15,6 +15,8 @@ export interface PluginMetadata {
   hookCount: number
   readmeLines: number
   slug: string
+  deprecated?: boolean
+  deprecation_message?: string
 }
 
 export default {

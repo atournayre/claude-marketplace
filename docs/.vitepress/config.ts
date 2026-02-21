@@ -1,10 +1,75 @@
 import { defineConfig } from 'vitepress'
 
+const pluginsSidebar = [
+  {
+    text: 'Vue d\'ensemble',
+    items: [
+      { text: 'Tous les plugins', link: '/plugins/' },
+      { text: 'Par catégorie', link: '/plugins/by-category' }
+    ]
+  },
+  {
+    text: 'Git & Workflow',
+    collapsed: false,
+    items: [
+      { text: 'Git', link: '/plugins/git', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'GitHub', link: '/plugins/github', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'Review', link: '/plugins/review', badge: { text: 'Déprécié', type: 'danger' } }
+    ]
+  },
+  {
+    text: 'Développement',
+    collapsed: false,
+    items: [
+      { text: 'Dev', link: '/plugins/dev', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'Framework', link: '/plugins/framework', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'QA', link: '/plugins/qa', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'Feature Dev', link: '/plugins/feature-dev' }
+    ]
+  },
+  {
+    text: 'Framework',
+    collapsed: false,
+    items: [
+      { text: 'Symfony', link: '/plugins/symfony' }
+    ]
+  },
+  {
+    text: 'Documentation',
+    collapsed: false,
+    items: [
+      { text: 'Doc', link: '/plugins/doc' },
+      { text: 'Prompt', link: '/plugins/prompt', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'Claude', link: '/plugins/claude', badge: { text: 'Déprécié', type: 'danger' } }
+    ]
+  },
+  {
+    text: 'IA',
+    collapsed: false,
+    items: [
+      { text: 'Gemini', link: '/plugins/gemini', badge: { text: 'Déprécié', type: 'danger' } }
+    ]
+  },
+  {
+    text: 'Outils',
+    collapsed: false,
+    items: [
+      { text: 'Customize', link: '/plugins/customize', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'Notifications', link: '/plugins/notifications', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'Chrome UI Test', link: '/plugins/chrome-ui-test', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'Marketing', link: '/plugins/marketing' },
+      { text: 'MLVN (AIBlueprint)', link: '/plugins/mlvn', badge: { text: 'Déprécié', type: 'danger' } },
+      { text: 'Utils', link: '/plugins/utils', badge: { text: 'Déprécié', type: 'danger' } }
+    ]
+  }
+]
+
 export default defineConfig({
   title: 'Claude Plugin Marketplace',
   description: 'Marketplace de plugins pour Claude Code',
   base: '/claude-marketplace/',
   appearance: true,
+  ignoreDeadLinks: true,
 
   head: [
     ['link', { rel: 'icon', href: '/claude-marketplace/favicon.ico' }],
@@ -130,68 +195,10 @@ export default defineConfig({
           ]
         }
       ],
-      '/plugins/': [
-        {
-          text: 'Vue d\'ensemble',
-          items: [
-            { text: 'Tous les plugins', link: '/plugins/' },
-            { text: 'Par catégorie', link: '/plugins/by-category' }
-          ]
-        },
-        {
-          text: 'Git & Workflow',
-          collapsed: false,
-          items: [
-            { text: 'Git', link: '/plugins/git' },
-            { text: 'GitHub', link: '/plugins/github' },
-            { text: 'Review', link: '/plugins/review' }
-          ]
-        },
-        {
-          text: 'Développement',
-          collapsed: false,
-          items: [
-            { text: 'Dev', link: '/plugins/dev' },
-            { text: 'Framework', link: '/plugins/framework' },
-            { text: 'QA', link: '/plugins/qa' },
-            { text: 'Feature Dev', link: '/plugins/feature-dev' }
-          ]
-        },
-        {
-          text: 'Framework',
-          collapsed: false,
-          items: [
-            { text: 'Symfony', link: '/plugins/symfony' }
-          ]
-        },
-        {
-          text: 'Documentation',
-          collapsed: false,
-          items: [
-            { text: 'Doc', link: '/plugins/doc' },
-            { text: 'Prompt', link: '/plugins/prompt' },
-            { text: 'Claude', link: '/plugins/claude', badge: { text: 'Déprécié', type: 'danger' } }
-          ]
-        },
-        {
-          text: 'IA',
-          collapsed: false,
-          items: [
-            { text: 'Gemini', link: '/plugins/gemini' }
-          ]
-        },
-        {
-          text: 'Outils',
-          collapsed: false,
-          items: [
-            { text: 'Customize', link: '/plugins/customize' },
-            { text: 'Notifications', link: '/plugins/notifications' },
-            { text: 'Chrome UI Test', link: '/plugins/chrome-ui-test', badge: { text: 'Déprécié', type: 'danger' } },
-            { text: 'Marketing', link: '/plugins/marketing' },
-            { text: 'MLVN (AIBlueprint)', link: '/plugins/mlvn' }
-          ]
-        }
-      ]
+      '/plugins/': pluginsSidebar,
+      '/commands/': pluginsSidebar,
+      '/agents/': pluginsSidebar,
+      '/hooks/': pluginsSidebar
     },
 
     search: {

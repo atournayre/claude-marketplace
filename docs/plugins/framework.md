@@ -4,7 +4,11 @@ description: "Plugin pour atournayre/framework avec commandes et intégrations"
 version: "1.1.2"
 ---
 
-# framework <Badge type="info" text="v1.1.2" />
+# framework <Badge type="info" text="v1.1.2" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise le plugin-persona : php
+:::
 
 
 Plugin pour [atournayre/framework](https://github.com/atournayre/framework).

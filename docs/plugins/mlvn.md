@@ -4,7 +4,11 @@ description: "Adaptation du repo AIBlueprint de Melvynx (https -//github.com/Mel
 version: "1.1.1"
 ---
 
-# mlvn <Badge type="info" text="v1.1.1" />
+# mlvn <Badge type="info" text="v1.1.1" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise les plugins-persona : researcher, devops
+:::
 
 
 > **🔗 Ce plugin est une adaptation du repo [AIBlueprint de Melvynx](https://github.com/Melvynx/aiblueprint)**

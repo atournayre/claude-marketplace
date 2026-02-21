@@ -4,7 +4,11 @@ description: "Skills et agents utilitaires génériques  - fix-grammar, action, 
 version: "1.0.1"
 ---
 
-# utils <Badge type="info" text="v1.0.1" />
+# utils <Badge type="info" text="v1.0.1" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise les plugins-persona : infra, analyst
+:::
 
 
 Skills et agents utilitaires génériques pour tâches courantes.
