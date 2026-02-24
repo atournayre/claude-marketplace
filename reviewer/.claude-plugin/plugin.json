@@ -9,5 +9,6 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["review", "code-quality", "phpstan", "elegant-objects", "php", "symfony"]
+  "keywords": ["review", "code-quality", "phpstan", "elegant-objects", "php", "symfony"],
+  "category": "development"
 }

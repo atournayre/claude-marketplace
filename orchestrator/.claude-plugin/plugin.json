@@ -9,5 +9,6 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["orchestrator", "workflow", "feature", "parallel", "agents", "automation"]
+  "keywords": ["orchestrator", "workflow", "feature", "parallel", "agents", "automation"],
+  "category": "development"
 }

@@ -9,5 +9,6 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["infra", "memory", "skills", "agents", "alias", "bump", "marketplace", "grammar"]
+  "keywords": ["infra", "memory", "skills", "agents", "alias", "bump", "marketplace", "grammar"],
+  "category": "tools"
 }

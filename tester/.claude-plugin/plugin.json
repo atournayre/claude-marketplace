@@ -9,5 +9,6 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["test", "ui", "phpunit", "tdd", "chrome", "coverage", "qa"]
+  "keywords": ["test", "ui", "phpunit", "tdd", "chrome", "coverage", "qa"],
+  "category": "development"
 }

@@ -1,0 +1,225 @@
+[
+  {
+    "text": "Vue d'ensemble",
+    "items": [
+      {
+        "text": "Tous les plugins",
+        "link": "/plugins/"
+      },
+      {
+        "text": "Par catégorie",
+        "link": "/plugins/by-category"
+      }
+    ]
+  },
+  {
+    "text": "Git & Workflow",
+    "collapsed": false,
+    "items": [
+      {
+        "text": "Devops",
+        "link": "/plugins/devops"
+      }
+    ]
+  },
+  {
+    "text": "Développement",
+    "collapsed": false,
+    "items": [
+      {
+        "text": "Analyst",
+        "link": "/plugins/analyst"
+      },
+      {
+        "text": "Architect",
+        "link": "/plugins/architect"
+      },
+      {
+        "text": "Implementer",
+        "link": "/plugins/implementer"
+      },
+      {
+        "text": "Orchestrator",
+        "link": "/plugins/orchestrator"
+      },
+      {
+        "text": "Reviewer",
+        "link": "/plugins/reviewer"
+      },
+      {
+        "text": "Tester",
+        "link": "/plugins/tester"
+      }
+    ]
+  },
+  {
+    "text": "Framework",
+    "collapsed": false,
+    "items": [
+      {
+        "text": "Php",
+        "link": "/plugins/php"
+      },
+      {
+        "text": "Symfony",
+        "link": "/plugins/symfony"
+      }
+    ]
+  },
+  {
+    "text": "Documentation",
+    "collapsed": false,
+    "items": [
+      {
+        "text": "Doc",
+        "link": "/plugins/doc"
+      },
+      {
+        "text": "Documenter",
+        "link": "/plugins/documenter"
+      }
+    ]
+  },
+  {
+    "text": "Intelligence Artificielle",
+    "collapsed": false,
+    "items": [
+      {
+        "text": "Researcher",
+        "link": "/plugins/researcher"
+      }
+    ]
+  },
+  {
+    "text": "Outils",
+    "collapsed": false,
+    "items": [
+      {
+        "text": "Infra",
+        "link": "/plugins/infra"
+      },
+      {
+        "text": "Marketing",
+        "link": "/plugins/marketing"
+      }
+    ]
+  },
+  {
+    "text": "Dépréciés",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Chrome Ui Test",
+        "link": "/plugins/chrome-ui-test",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Claude",
+        "link": "/plugins/claude",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Customize",
+        "link": "/plugins/customize",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Dev",
+        "link": "/plugins/dev",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Framework",
+        "link": "/plugins/framework",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Gemini",
+        "link": "/plugins/gemini",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Git",
+        "link": "/plugins/git",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Github",
+        "link": "/plugins/github",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Mlvn",
+        "link": "/plugins/mlvn",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Notifications",
+        "link": "/plugins/notifications",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Prompt",
+        "link": "/plugins/prompt",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Qa",
+        "link": "/plugins/qa",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Review",
+        "link": "/plugins/review",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      },
+      {
+        "text": "Utils",
+        "link": "/plugins/utils",
+        "badge": {
+          "text": "Déprécié",
+          "type": "danger"
+        }
+      }
+    ]
+  }
+]

@@ -451,6 +451,86 @@ import { data as plugins } from '../.vitepress/data/plugins.data'
   console.log('✅ Index des plugins généré')
 }
 
+// Phase 2.4 : Générer la sidebar des plugins
+function generatePluginsSidebar() {
+  console.log('📑 Génération de la sidebar des plugins...')
+
+  const CATEGORY_LABELS: Record<string, string> = {
+    'git-workflow': 'Git & Workflow',
+    'development': 'Développement',
+    'framework': 'Framework',
+    'documentation': 'Documentation',
+    'ai': 'Intelligence Artificielle',
+    'tools': 'Outils'
+  }
+
+  const CATEGORY_ORDER = ['git-workflow', 'development', 'framework', 'documentation', 'ai', 'tools']
+
+  function toTitleCase(slug: string): string {
+    return slug.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+  }
+
+  const pluginDirs = findPluginDirectories()
+  const plugins = pluginDirs.map(dir => {
+    const pluginJson = readPluginJson(dir)
+    return { ...pluginJson, slug: dir }
+  })
+
+  const activePlugins = plugins.filter(p => !p.deprecated)
+  const deprecatedPlugins = plugins.filter(p => p.deprecated)
+
+  const byCategory: Record<string, typeof activePlugins> = {}
+  for (const plugin of activePlugins) {
+    const cat = (plugin as any).category || 'tools'
+    if (!byCategory[cat]) byCategory[cat] = []
+    byCategory[cat].push(plugin)
+  }
+
+  const sections: object[] = [
+    {
+      text: "Vue d'ensemble",
+      items: [
+        { text: 'Tous les plugins', link: '/plugins/' },
+        { text: 'Par catégorie', link: '/plugins/by-category' }
+      ]
+    }
+  ]
+
+  for (const cat of CATEGORY_ORDER) {
+    const pluginsInCat = byCategory[cat]
+    if (!pluginsInCat || pluginsInCat.length === 0) continue
+    sections.push({
+      text: CATEGORY_LABELS[cat] || cat,
+      collapsed: false,
+      items: pluginsInCat
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(p => ({ text: toTitleCase(p.slug), link: `/plugins/${p.slug}` }))
+    })
+  }
+
+  if (deprecatedPlugins.length > 0) {
+    sections.push({
+      text: 'Dépréciés',
+      collapsed: true,
+      items: deprecatedPlugins
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(p => ({
+          text: toTitleCase(p.slug),
+          link: `/plugins/${p.slug}`,
+          badge: { text: 'Déprécié', type: 'danger' }
+        }))
+    })
+  }
+
+  const generatedDir = path.join(docsDir, '.vitepress', 'generated')
+  if (!fs.existsSync(generatedDir)) {
+    fs.mkdirSync(generatedDir, { recursive: true })
+  }
+
+  fs.writeFileSync(path.join(generatedDir, 'plugins-sidebar.json'), JSON.stringify(sections, null, 2))
+  console.log('✅ Sidebar des plugins générée')
+}
+
 // Exécution principale
 function main() {
   console.log('🚀 Génération de la documentation VitePress...\n')
@@ -468,6 +548,9 @@ function main() {
   console.log()
 
   generatePluginIndex()
+  console.log()
+
+  generatePluginsSidebar()
   console.log()
 
   console.log('✨ Génération terminée!')

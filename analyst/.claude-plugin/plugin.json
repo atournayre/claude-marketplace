@@ -9,5 +9,6 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["analysis", "exploration", "discovery", "clarification", "impact"]
+  "keywords": ["analysis", "exploration", "discovery", "clarification", "impact"],
+  "category": "development"
 }

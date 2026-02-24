@@ -9,5 +9,6 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["research", "search", "gemini", "websearch", "analyze", "documentation"]
+  "keywords": ["research", "search", "gemini", "websearch", "analyze", "documentation"],
+  "category": "ai"
 }

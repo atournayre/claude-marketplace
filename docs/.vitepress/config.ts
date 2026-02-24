@@ -1,68 +1,7 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig, DefaultTheme } from 'vitepress'
+import pluginsSidebarData from './generated/plugins-sidebar.json'
 
-const pluginsSidebar = [
-  {
-    text: 'Vue d\'ensemble',
-    items: [
-      { text: 'Tous les plugins', link: '/plugins/' },
-      { text: 'Par catégorie', link: '/plugins/by-category' }
-    ]
-  },
-  {
-    text: 'Git & Workflow',
-    collapsed: false,
-    items: [
-      { text: 'Git', link: '/plugins/git', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'GitHub', link: '/plugins/github', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'Review', link: '/plugins/review', badge: { text: 'Déprécié', type: 'danger' } }
-    ]
-  },
-  {
-    text: 'Développement',
-    collapsed: false,
-    items: [
-      { text: 'Dev', link: '/plugins/dev', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'Framework', link: '/plugins/framework', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'QA', link: '/plugins/qa', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'Feature Dev', link: '/plugins/feature-dev' }
-    ]
-  },
-  {
-    text: 'Framework',
-    collapsed: false,
-    items: [
-      { text: 'Symfony', link: '/plugins/symfony' }
-    ]
-  },
-  {
-    text: 'Documentation',
-    collapsed: false,
-    items: [
-      { text: 'Doc', link: '/plugins/doc' },
-      { text: 'Prompt', link: '/plugins/prompt', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'Claude', link: '/plugins/claude', badge: { text: 'Déprécié', type: 'danger' } }
-    ]
-  },
-  {
-    text: 'IA',
-    collapsed: false,
-    items: [
-      { text: 'Gemini', link: '/plugins/gemini', badge: { text: 'Déprécié', type: 'danger' } }
-    ]
-  },
-  {
-    text: 'Outils',
-    collapsed: false,
-    items: [
-      { text: 'Customize', link: '/plugins/customize', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'Notifications', link: '/plugins/notifications', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'Chrome UI Test', link: '/plugins/chrome-ui-test', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'Marketing', link: '/plugins/marketing' },
-      { text: 'MLVN (AIBlueprint)', link: '/plugins/mlvn', badge: { text: 'Déprécié', type: 'danger' } },
-      { text: 'Utils', link: '/plugins/utils', badge: { text: 'Déprécié', type: 'danger' } }
-    ]
-  }
-]
+const pluginsSidebar = pluginsSidebarData as DefaultTheme.SidebarItem[]
 
 export default defineConfig({
   title: 'Claude Plugin Marketplace',
@@ -70,6 +9,19 @@ export default defineConfig({
   base: '/claude-marketplace/',
   appearance: true,
   ignoreDeadLinks: true,
+
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+        ignored: [
+          '**/node_modules/**',
+          '**/.git/**',
+          '**/dist/**',
+        ]
+      }
+    }
+  },
 
   head: [
     ['link', { rel: 'icon', href: '/claude-marketplace/favicon.ico' }],

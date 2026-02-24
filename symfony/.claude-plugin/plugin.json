@@ -16,5 +16,6 @@
     "maker",
     "documentation",
     "commands"
-  ]
+  ],
+  "category": "framework"
 }

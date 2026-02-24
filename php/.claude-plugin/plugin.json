@@ -9,5 +9,6 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["php", "symfony", "elegant-objects", "doctrine", "generation", "framework"]
+  "keywords": ["php", "symfony", "elegant-objects", "doctrine", "generation", "framework"],
+  "category": "framework"
 }

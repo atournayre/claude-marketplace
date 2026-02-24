@@ -9,5 +9,6 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["architecture", "design", "planning", "adr", "decisions"]
+  "keywords": ["architecture", "design", "planning", "adr", "decisions"],
+  "category": "development"
 }
