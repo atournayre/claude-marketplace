@@ -1,0 +1,14 @@
+{
+  "name": "devops",
+  "version": "1.1.0",
+  "description": "Opérations DevOps Git : branches, commits, worktrees, PR, CI, releases",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["git", "devops", "branch", "commit", "pr", "ci", "release", "worktree"],
+  "category": "git-workflow"
+}

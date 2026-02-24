@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "critical": {},
+  "optional": {
+    "symfony": {
+      "version": "*",
+      "description": "Pour les makers Symfony"
+    }
+  },
+  "packages": {
+    "composer": {
+      "version": "*",
+      "description": "Gestionnaire de paquets PHP"
+    }
+  }
+}

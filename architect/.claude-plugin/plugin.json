@@ -1,0 +1,14 @@
+{
+  "name": "architect",
+  "version": "1.1.0",
+  "description": "Design architectural, planification d'implémentation et documentation des décisions techniques",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["architecture", "design", "planning", "adr", "decisions"],
+  "category": "development"
+}

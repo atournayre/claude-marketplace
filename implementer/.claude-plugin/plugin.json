@@ -1,0 +1,14 @@
+{
+  "name": "implementer",
+  "version": "1.1.0",
+  "description": "Skills d'implémentation de code : code, debug, refactoring, correction d'issues et PR",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["implementation", "code", "debug", "refactor", "php", "symfony"],
+  "category": "development"
+}

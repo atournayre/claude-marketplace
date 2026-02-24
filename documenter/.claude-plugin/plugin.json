@@ -1,0 +1,14 @@
+{
+  "name": "documenter",
+  "version": "1.1.0",
+  "description": "Documentation : RTFM, génération docs, chargement frameworks, scraping agents",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["documentation", "rtfm", "docs", "framework-loader", "scraper"],
+  "category": "documentation"
+}

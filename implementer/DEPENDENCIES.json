@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "critical": {
+    "devops": {
+      "version": "*",
+      "description": "Pour fix-pr-comments (git operations)"
+    }
+  },
+  "optional": {},
+  "packages": {}
+}

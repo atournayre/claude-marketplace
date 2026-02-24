@@ -1,0 +1,14 @@
+{
+  "name": "reviewer",
+  "version": "1.1.0",
+  "description": "Skills de review de code : qualité, PHPStan, Elegant Objects, challenge adversarial",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["review", "code-quality", "phpstan", "elegant-objects", "php", "symfony"],
+  "category": "development"
+}

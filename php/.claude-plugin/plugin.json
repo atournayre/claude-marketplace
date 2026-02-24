@@ -1,0 +1,14 @@
+{
+  "name": "php",
+  "version": "1.1.0",
+  "description": "Skills PHP/Symfony orientés Elegant Objects : génération d'entités, collections, contrats, factories, stories",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["php", "symfony", "elegant-objects", "doctrine", "generation", "framework"],
+  "category": "framework"
+}

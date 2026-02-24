@@ -1,0 +1,14 @@
+{
+  "name": "researcher",
+  "version": "1.1.0",
+  "description": "Recherche et analyse via Gemini (Google Search) et agents web spécialisés",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["research", "search", "gemini", "websearch", "analyze", "documentation"],
+  "category": "ai"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "tester",
+  "version": "1.1.0",
+  "description": "Tests automatisés : UI Chrome, tests PHPUnit TDD, analyse de couverture",
+  "author": {
+    "name": "Aurélien Tournayre",
+    "email": "aurelien.tournayre@gmail.com"
+  },
+  "homepage": "https://github.com/atournayre/claude-marketplace",
+  "repository": "https://github.com/atournayre/claude-marketplace",
+  "license": "MIT",
+  "keywords": ["test", "ui", "phpunit", "tdd", "chrome", "coverage", "qa"],
+  "category": "development"
+}
