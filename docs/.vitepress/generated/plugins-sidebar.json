@@ -13,53 +13,9 @@
     ]
   },
   {
-    "text": "Git & Workflow",
-    "collapsed": false,
-    "items": [
-      {
-        "text": "Devops",
-        "link": "/plugins/devops"
-      }
-    ]
-  },
-  {
-    "text": "Développement",
-    "collapsed": false,
-    "items": [
-      {
-        "text": "Analyst",
-        "link": "/plugins/analyst"
-      },
-      {
-        "text": "Architect",
-        "link": "/plugins/architect"
-      },
-      {
-        "text": "Implementer",
-        "link": "/plugins/implementer"
-      },
-      {
-        "text": "Orchestrator",
-        "link": "/plugins/orchestrator"
-      },
-      {
-        "text": "Reviewer",
-        "link": "/plugins/reviewer"
-      },
-      {
-        "text": "Tester",
-        "link": "/plugins/tester"
-      }
-    ]
-  },
-  {
     "text": "Framework",
     "collapsed": false,
     "items": [
-      {
-        "text": "Php",
-        "link": "/plugins/php"
-      },
       {
         "text": "Symfony",
         "link": "/plugins/symfony"
@@ -73,20 +29,6 @@
       {
         "text": "Doc",
         "link": "/plugins/doc"
-      },
-      {
-        "text": "Documenter",
-        "link": "/plugins/documenter"
-      }
-    ]
-  },
-  {
-    "text": "Intelligence Artificielle",
-    "collapsed": false,
-    "items": [
-      {
-        "text": "Researcher",
-        "link": "/plugins/researcher"
       }
     ]
   },
@@ -94,10 +36,6 @@
     "text": "Outils",
     "collapsed": false,
     "items": [
-      {
-        "text": "Infra",
-        "link": "/plugins/infra"
-      },
       {
         "text": "Marketing",
         "link": "/plugins/marketing"

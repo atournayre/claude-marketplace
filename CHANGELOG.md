@@ -7,6 +7,14 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.27] - 2026-02-27
+
+### Plugins Updated
+- **git v1.14.2** - PR draft par défaut pour limiter exécution CI (PATCH bump)
+  - Ajout du flag `--draft` à la création de PR
+  - Les PR restent en draft jusqu'à confirmation manuelle
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
 ## [2026.02.20a] - 2026-02-20
 
 ### New Plugins

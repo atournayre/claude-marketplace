@@ -1,3 +1,10 @@
+## [1.14.2] - 2026-02-27
+
+### Fixed
+- **Skills PR** - Créer les PR en draft par défaut pour limiter l'exécution automatique de la CI
+  - Ajout du flag `--draft` à la création de PR (`safe_push_pr.sh`)
+  - Les PR restent en draft jusqu'à confirmation manuelle pour éviter les faux positifs CI
+
 ## [1.14.1] - 2026-02-20
 
 ### Added

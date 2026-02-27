@@ -19,7 +19,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📖 **Documenter** | 1.1.0 | Extraction et sauvegarde automatique de documentation : API Platform, Symfony, Meilisearch, atournayre-framework, Claude Code | [README](documenter/README.md) |
 | 🏗️ **Framework** | 1.1.2 | Skills framework pour génération code PHP Elegant Objects | [README](framework/README.md) |
 | 🔮 **Gemini** | 1.4.3 | Délégation Gemini CLI : contexte ultra-long (1M tokens), Deep Think, Google Search + 3 skills | [README](gemini/README.md) |
-| 🔧 **Git** | 1.14.1 | Workflow Git complet : branches, worktrees, commits, conflits, PR, fix-pr-comments, ci-autofix + Task Management System | [README](git/README.md) |
+| 🔧 **Git** | 1.14.2 | Workflow Git complet : branches, worktrees, commits, conflits, PR, fix-pr-comments, ci-autofix + Task Management System | [README](git/README.md) |
 | 🐙 **GitHub** | 1.3.3 | Gestion GitHub : issues, PR, analyse d'impact | [README](github/README.md) |
 | 🛠️ **Implementer** | 1.1.0 | Implémentation code + tests TDD : agents developer et implementer pour execution complète des plans | [README](implementer/README.md) |
 | 🔨 **Infra** | 1.1.0 | Infrastructure et configuration : skills, agents, hooks, règles projet et meta-agent creator | [README](infra/README.md) |
