@@ -46,6 +46,8 @@ hooks:
           once: false
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `reviewer:review`. Voir le plugin `reviewer`. Sera supprimée en v3.0.
+
 # Objectif
 
 Phase 6 du workflow de développement : review qualité complète du code implémenté.

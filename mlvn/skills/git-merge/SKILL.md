@@ -5,6 +5,8 @@ allowed-tools: Bash(git :*), Bash(gh :*), Read, Edit, MultiEdit, Task
 argument-hint: <branch-name>
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:conflict`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Merge
 
 Merge branches intelligently by understanding feature context and resolving conflicts efficiently.

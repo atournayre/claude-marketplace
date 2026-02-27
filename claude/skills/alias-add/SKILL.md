@@ -8,6 +8,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `infra:alias-add`. Voir le plugin `infra`. Sera supprimée en v3.0.
+
 # Générateur d'Alias de Slash Commands
 
 ## Instructions à Exécuter

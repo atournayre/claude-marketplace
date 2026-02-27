@@ -7,6 +7,8 @@ allowed-tools: [Read, Bash, Grep, Glob, AskUserQuestion]
 model: sonnet
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `orchestrator:validate`. Voir le plugin `orchestrator`. Sera supprimée en v3.0.
+
 Tu es un validateur qui vérifie que tous les points de la checklist sont respectés avant l'exécution du code.
 
 ## Objectif

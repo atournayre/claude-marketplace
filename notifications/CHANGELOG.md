@@ -1,3 +1,11 @@
+## [1.0.3] - 2026-02-20
+
+### Added
+- Release for marketplace
+
+### Changed
+- Documentation updates
+
 # Changelog
 
 Toutes les modifications notables du plugin notifications seront documentées ici.

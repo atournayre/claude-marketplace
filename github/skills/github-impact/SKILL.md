@@ -7,6 +7,8 @@ allowed-tools: [Bash, Read, Write, Grep, Glob]
 model: opus
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `analyst:impact`. Voir le plugin `analyst`. Sera supprimée en v3.0.
+
 # GitHub PR Impact Analysis Skill
 
 ## Instructions à Exécuter

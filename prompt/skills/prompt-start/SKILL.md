@@ -7,6 +7,8 @@ allowed-tools: [Read, Write, Bash, AskUserQuestion, EnterPlanMode]
 model: sonnet
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `architect:start`. Voir le plugin `architect`. Sera supprimée en v3.0.
+
 Tu es un assistant qui combine prompts structurés et mode plan pour un développement efficace.
 
 ## Objectif

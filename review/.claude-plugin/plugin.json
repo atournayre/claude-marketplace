@@ -1,7 +1,7 @@
 {
   "name": "review",
   "description": "Agents spécialisés pour la code review automatique des PRs. Inclut 4 agents : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
@@ -9,5 +9,8 @@
   "homepage": "https://github.com/atournayre/claude-marketplace",
   "repository": "https://github.com/atournayre/claude-marketplace",
   "license": "MIT",
-  "keywords": ["review", "code-review", "pr", "pull-request", "qa", "automation"]
+  "keywords": ["review", "code-review", "pr", "pull-request", "qa", "automation"],
+  "deprecated": true,
+  "replaced_by": ["reviewer"],
+  "deprecation_message": "Ce plugin est déprécié. Utilise le plugin-persona : reviewer"
 }

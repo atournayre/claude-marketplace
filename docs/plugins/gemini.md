@@ -1,10 +1,14 @@
 ---
 title: "gemini"
 description: "Délégation Gemini CLI  - contexte ultra-long (1M tokens), Deep Think, Google Search temps réel"
-version: "1.4.2"
+version: "1.4.3"
 ---
 
-# gemini <Badge type="info" text="v1.4.2" />
+# gemini <Badge type="info" text="v1.4.3" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise les plugins-persona : researcher, architect, analyst
+:::
 
 
 Intégration Gemini CLI pour Claude Code. Permet de déléguer des tâches spécialisées à Gemini tout en gardant Claude comme orchestrateur principal.

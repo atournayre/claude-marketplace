@@ -5,6 +5,8 @@ license: MIT
 version: 1.0.0
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `php:make-invalide`. Voir le plugin `php`. Sera supprimée en v3.0.
+
 # Framework Make Invalide Skill
 
 ## Instructions à Exécuter

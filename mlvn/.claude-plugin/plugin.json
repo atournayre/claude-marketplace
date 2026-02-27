@@ -1,6 +1,6 @@
 {
   "name": "mlvn",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Adaptation du repo AIBlueprint de Melvynx (https://github.com/Melvynx/aiblueprint) - Agents spécialisés, workflows autonomes, skills Git/Meta/Utils (version épurée - composants migrés vers autres plugins)",
   "author": {
     "name": "Melvyn (Melvynx)",
@@ -18,5 +18,8 @@
     "statusline",
     "git"
   ],
-  "category": "productivity"
+  "category": "productivity",
+  "deprecated": true,
+  "replaced_by": ["researcher", "devops"],
+  "deprecation_message": "Ce plugin est déprécié. Utilise les plugins-persona : researcher, devops"
 }

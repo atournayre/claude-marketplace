@@ -7,6 +7,8 @@ allowed-tools: [Bash, Read, AskUserQuestion]
 model: haiku
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:branch`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Git Branch Core (Internal)
 
 ## Instructions à Exécuter

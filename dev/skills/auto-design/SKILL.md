@@ -12,6 +12,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `architect:design`. Voir le plugin `architect`. Sera supprimée en v3.0.
+
 # Configuration de sortie
 
 ## Instructions à Exécuter
@@ -70,11 +72,17 @@ Contexte du codebase :
 Décisions prises (Elegant Objects, edge cases, etc.) :
 {décisions de la phase 3}
 
+Contraintes architecturales du projet (depuis CLAUDE.md et .claude/rules/) :
+{phases.1.constraints du workflow state}
+
+CHAQUE composant proposé DOIT respecter ces contraintes. Si une contrainte empêche une approche, la disqualifier.
+
 RECOMMANDE la meilleure approche pour CE projet basée sur :
 1. Les patterns existants du codebase
 2. Les principes Elegant Objects applicables
 3. L'absence d'over-engineering
 4. La complexité justifiée vs bénéfices
+5. Le respect des contraintes architecturales du projet
 
 Retourne :
 - Approche recommandée + raison précise

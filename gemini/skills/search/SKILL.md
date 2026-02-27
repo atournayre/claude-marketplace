@@ -6,6 +6,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `researcher:search`. Voir le plugin `researcher`. Sera supprimée en v3.0.
+
 Recherche des informations fraîches et actuelles via l'intégration Google Search native de Gemini.
 
 ## Arguments

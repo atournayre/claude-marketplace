@@ -1,10 +1,27 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig, DefaultTheme } from 'vitepress'
+import pluginsSidebarData from './generated/plugins-sidebar.json'
+
+const pluginsSidebar = pluginsSidebarData as DefaultTheme.SidebarItem[]
 
 export default defineConfig({
   title: 'Claude Plugin Marketplace',
   description: 'Marketplace de plugins pour Claude Code',
   base: '/claude-marketplace/',
   appearance: true,
+  ignoreDeadLinks: true,
+
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+        ignored: [
+          '**/node_modules/**',
+          '**/.git/**',
+          '**/dist/**',
+        ]
+      }
+    }
+  },
 
   head: [
     ['link', { rel: 'icon', href: '/claude-marketplace/favicon.ico' }],
@@ -130,68 +147,7 @@ export default defineConfig({
           ]
         }
       ],
-      '/plugins/': [
-        {
-          text: 'Vue d\'ensemble',
-          items: [
-            { text: 'Tous les plugins', link: '/plugins/' },
-            { text: 'Par catégorie', link: '/plugins/by-category' }
-          ]
-        },
-        {
-          text: 'Git & Workflow',
-          collapsed: false,
-          items: [
-            { text: 'Git', link: '/plugins/git' },
-            { text: 'GitHub', link: '/plugins/github' },
-            { text: 'Review', link: '/plugins/review' }
-          ]
-        },
-        {
-          text: 'Développement',
-          collapsed: false,
-          items: [
-            { text: 'Dev', link: '/plugins/dev' },
-            { text: 'Framework', link: '/plugins/framework' },
-            { text: 'QA', link: '/plugins/qa' },
-            { text: 'Feature Dev', link: '/plugins/feature-dev' }
-          ]
-        },
-        {
-          text: 'Framework',
-          collapsed: false,
-          items: [
-            { text: 'Symfony', link: '/plugins/symfony' }
-          ]
-        },
-        {
-          text: 'Documentation',
-          collapsed: false,
-          items: [
-            { text: 'Doc', link: '/plugins/doc' },
-            { text: 'Prompt', link: '/plugins/prompt' },
-            { text: 'Claude', link: '/plugins/claude' }
-          ]
-        },
-        {
-          text: 'IA',
-          collapsed: false,
-          items: [
-            { text: 'Gemini', link: '/plugins/gemini' }
-          ]
-        },
-        {
-          text: 'Outils',
-          collapsed: false,
-          items: [
-            { text: 'Customize', link: '/plugins/customize' },
-            { text: 'Notifications', link: '/plugins/notifications' },
-            { text: 'Chrome UI Test', link: '/plugins/chrome-ui-test' },
-            { text: 'Marketing', link: '/plugins/marketing' },
-            { text: 'MLVN (AIBlueprint)', link: '/plugins/mlvn' }
-          ]
-        }
-      ]
+      '/plugins/': pluginsSidebar
     },
 
     search: {

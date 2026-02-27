@@ -103,6 +103,11 @@ Utilise `AskUserQuestion` :
 }
 ```
 
+**Vérification dépréciation** : Pour chaque plugin sélectionné, lis `{plugin}/.claude-plugin/plugin.json` et vérifie si `"deprecated": true` est présent. Si oui, afficher un avertissement :
+```
+⚠️  {plugin} est déprécié (remplacé par : {replaced_by}). Continuer quand même ? (bump patch uniquement recommandé)
+```
+
 **TaskUpdate : Tâche #2 → `completed`**
 
 ---
@@ -245,7 +250,22 @@ git diff {plugin}/ | grep -i "env\.claude\|MAIN_BRANCH\|WORKTREE_DIR\|REPO\|PROJ
 
 **Si aucune référence `.env.claude` détectée** : passer cette sous-étape.
 
-#### 5.6 Mettre à jour le template PR
+#### 5.6 Mettre à jour les badges de dépréciation dans VitePress
+
+**Condition** : Exécuter si `{plugin}/.claude-plugin/plugin.json` contient `"deprecated": true`.
+
+**5.6.1 Sidebar (`docs/.vitepress/config.ts`)** :
+Lis le fichier. La sidebar est définie dans la constante `pluginsSidebar` en haut du fichier. Trouve l'item correspondant au plugin (cherche `link: '/plugins/{plugin}'` dans la constante). Ajoute le champ `badge` si absent :
+```ts
+{ text: '{Plugin}', link: '/plugins/{plugin}', badge: { text: 'Déprécié', type: 'danger' } }
+```
+
+**5.6.2 Page doc (`docs/plugins/{plugin}.md`)** :
+⚠️ Ne pas modifier manuellement ce fichier. Il est **généré automatiquement** par `scripts/generate-docs.ts` lors du rebuild VitePress (étape 6.2). Le badge `<Badge type="danger" text="Déprécié" />` et le callout `:::warning` sont ajoutés automatiquement si `deprecated: true` est présent dans `plugin.json`.
+
+**Si aucun `deprecated: true` détecté** : passer cette sous-étape.
+
+#### 5.7 Mettre à jour le template PR
 
 Met à jour `.github/PULL_REQUEST_TEMPLATE/default.md` avec la liste des plugins :
 
@@ -272,6 +292,7 @@ find . -name "plugin.json" -path "*/.claude-plugin/*" | sed 's|^\./||' | sed 's|
 - [ ] `CHANGELOG.md` global → entrée du jour avec résumé du plugin (Read pour vérifier)
 - [ ] `.claude-plugin/marketplace.json` → plugin présent avec description à jour (Read pour vérifier)
 - [ ] `docs/guide/env-claude.md` → variables `.env.claude` à jour si applicable (Read pour vérifier)
+- [ ] Si `deprecated: true` → `docs/.vitepress/config.ts` badge ajouté + `docs/plugins/{plugin}.md` callout ajouté (Read pour vérifier)
 - [ ] `.github/PULL_REQUEST_TEMPLATE/default.md` → liste plugins synchronisée (Read pour vérifier)
 
 **TaskUpdate : Tâche #4 → `completed`**
@@ -311,12 +332,14 @@ git status --short docs/
 
 Les fichiers `docs/plugins/{plugin}.md` et `docs/commands/index.md` doivent être modifiés.
 Si nouveaux agents ajoutés, `docs/agents/index.md` doit aussi être modifié.
+Si nouveaux hooks ajoutés, `docs/hooks/index.md` doit aussi être modifié.
 
 **🔒 AVANT DE MARQUER COMPLETED - Vérifie ces points :**
 - [ ] `{plugin}/DEPENDENCIES.json` → existe (Read pour vérifier)
 - [ ] `cd docs && npm run build` → exécuté avec succès (0 erreurs)
 - [ ] `git status --short docs/` → au moins `docs/plugins/{plugin}.md` et `docs/commands/index.md` modifiés
 - [ ] Si nouveaux agents → `docs/agents/index.md` aussi modifié
+- [ ] Si nouveaux hooks → `docs/hooks/index.md` aussi modifié
 
 **TaskUpdate : Tâche #5 → `completed`**
 
@@ -344,6 +367,8 @@ Fichiers modifiés :
 ✓ .github/PULL_REQUEST_TEMPLATE/default.md
 ✓ docs/plugins/{plugin}.md
 ✓ docs/commands/index.md
+✓ docs/agents/index.md (si nouveaux agents)
+✓ docs/hooks/index.md (si nouveaux hooks)
 
 Prochaine étape : /git:commit
 ```
@@ -369,9 +394,10 @@ Prochaine étape : /git:commit
 - [ ] `.github/PULL_REQUEST_TEMPLATE/default.md` → liste plugins synchronisée
 
 ### Documentation générée (toujours)
-- [ ] `docs/plugins/{plugin}.md` → régénéré via VitePress
+- [ ] `docs/plugins/{plugin}.md` → régénéré via VitePress (badge + callout dépréciation auto si `deprecated: true`)
 - [ ] `docs/commands/index.md` → régénéré via VitePress
 - [ ] `docs/agents/index.md` → régénéré si nouveaux agents
+- [ ] `docs/hooks/index.md` → régénéré si nouveaux hooks
 
 ### Tâches
 - [ ] Tâche #1 completed : Plugins détectés

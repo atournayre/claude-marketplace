@@ -12,12 +12,15 @@ interface PluginMetadata {
   description: string
   author: { name: string; email: string }
   keywords: string[]
+  deprecated?: boolean
+  deprecation_message?: string
 }
 
 interface Command {
   command: string
   plugin: string
   description: string
+  deprecated?: boolean
 }
 
 interface Agent {
@@ -25,12 +28,14 @@ interface Agent {
   plugin: string
   description: string
   tools: string
+  deprecated?: boolean
 }
 
 interface Hook {
   name: string
   plugin: string
   description: string
+  deprecated?: boolean
 }
 
 // Fonction pour trouver tous les dossiers de plugins
@@ -102,6 +107,11 @@ function copyPluginReadmes() {
       .replace(/"/g, '\\"')
       .replace(/:/g, ' -')
 
+    // Bandeau de dépréciation si nécessaire
+    const deprecationBanner = pluginJson.deprecated
+      ? `\n::: warning Déprécié\n${pluginJson.deprecation_message || 'Ce plugin est déprécié.'}\n:::\n`
+      : ''
+
     // Créer le frontmatter et le nouveau contenu
     const frontmatter = `---
 title: "${pluginJson.name}"
@@ -109,8 +119,8 @@ description: "${escapedDescription}"
 version: "${pluginJson.version}"
 ---
 
-# ${pluginJson.name} <Badge type="info" text="v${pluginJson.version}" />
-
+# ${pluginJson.name} <Badge type="info" text="v${pluginJson.version}" />${pluginJson.deprecated ? ' <Badge type="danger" text="Déprécié" />' : ''}
+${deprecationBanner}
 ${content}`
 
     const outputPath = path.join(pluginsDir, `${dir}.md`)
@@ -123,7 +133,7 @@ ${content}`
 
 // Phase 2.2 : Générer l'index des commandes
 // Fonction utilitaire pour scanner un dossier de skills et extraire les commandes
-function scanSkillsDirectory(skillsDir: string, pluginLabel: string, allCommands: Command[]) {
+function scanSkillsDirectory(skillsDir: string, pluginLabel: string, allCommands: Command[], deprecated = false) {
   if (!fs.existsSync(skillsDir)) {
     return
   }
@@ -154,7 +164,8 @@ function scanSkillsDirectory(skillsDir: string, pluginLabel: string, allCommands
       allCommands.push({
         command: nameMatch[1],
         plugin: pluginLabel,
-        description: descMatch[1]
+        description: descMatch[1],
+        deprecated
       })
     }
   })
@@ -168,22 +179,24 @@ function generateCommandsIndex() {
 
   // Scanner les skills de chaque plugin
   pluginDirs.forEach(pluginDir => {
+    const pluginJson = readPluginJson(pluginDir)
     const skillsDir = path.join(rootDir, pluginDir, 'skills')
-    scanSkillsDirectory(skillsDir, pluginDir, allCommands)
+    scanSkillsDirectory(skillsDir, pluginDir, allCommands, pluginJson.deprecated ?? false)
   })
 
   // Scanner les skills au niveau marketplace (.claude/skills/)
   const marketplaceSkillsDir = path.join(rootDir, '.claude', 'skills')
-  scanSkillsDirectory(marketplaceSkillsDir, 'marketplace', allCommands)
+  scanSkillsDirectory(marketplaceSkillsDir, 'marketplace', allCommands, false)
 
   // Trier par nom de commande
   allCommands.sort((a, b) => a.command.localeCompare(b.command))
 
   // Générer la table markdown
   const tableRows = allCommands.map(cmd => {
+    const deprecatedSuffix = cmd.deprecated ? ' ⚠️' : ''
     const pluginCell = cmd.plugin === 'marketplace'
       ? 'marketplace'
-      : `[${cmd.plugin}](/plugins/${cmd.plugin})`
+      : `[${cmd.plugin}](/plugins/${cmd.plugin})${deprecatedSuffix}`
     return `| \`/${cmd.command}\` | ${pluginCell} | ${cmd.description} |`
   }).join('\n')
 
@@ -195,7 +208,7 @@ title: Index des Skills
 
 ${allCommands.length} skills disponibles dans le marketplace.
 
-**Note** : Les skills sont invoquées via slash commands (ex: \`/git:commit\`, \`/dev:feature\`).
+**Note** : Les skills sont invoquées via slash commands (ex: \`/git:commit\`, \`/dev:feature\`). ⚠️ = plugin déprécié.
 
 | Skill | Plugin | Description |
 |-------|--------|-------------|
@@ -220,6 +233,7 @@ function generateAgentsIndex() {
 
   pluginDirs.forEach(pluginDir => {
     const agentsDir = path.join(rootDir, pluginDir, 'agents')
+    const pluginJson = readPluginJson(pluginDir)
 
     if (!fs.existsSync(agentsDir)) {
       return
@@ -249,7 +263,8 @@ function generateAgentsIndex() {
           name: nameMatch[1],
           plugin: pluginDir,
           description: descMatch[1],
-          tools: toolsMatch ? toolsMatch[1] : 'N/A'
+          tools: toolsMatch ? toolsMatch[1] : 'N/A',
+          deprecated: pluginJson.deprecated ?? false
         })
       }
     })
@@ -259,9 +274,10 @@ function generateAgentsIndex() {
   allAgents.sort((a, b) => a.name.localeCompare(b.name))
 
   // Générer la table markdown
-  const tableRows = allAgents.map(agent =>
-    `| \`${agent.name}\` | [${agent.plugin}](/plugins/${agent.plugin}) | ${agent.description} | ${agent.tools} |`
-  ).join('\n')
+  const tableRows = allAgents.map(agent => {
+    const deprecatedSuffix = agent.deprecated ? ' ⚠️' : ''
+    return `| \`${agent.name}\` | [${agent.plugin}](/plugins/${agent.plugin})${deprecatedSuffix} | ${agent.description} | ${agent.tools} |`
+  }).join('\n')
 
   const content = `---
 title: Index des Agents
@@ -271,7 +287,7 @@ title: Index des Agents
 
 ${allAgents.length} agents disponibles dans le marketplace.
 
-**Note** : Les agents sont des sous-agents spécialisés qui peuvent être invoqués via le Task tool.
+**Note** : Les agents sont des sous-agents spécialisés qui peuvent être invoqués via le Task tool. ⚠️ = plugin déprécié.
 
 | Agent | Plugin | Description | Outils |
 |-------|--------|-------------|--------|
@@ -311,6 +327,7 @@ function generateHooksIndex() {
 
   pluginDirs.forEach(pluginDir => {
     const hooksDir = path.join(rootDir, pluginDir, 'hooks')
+    const pluginJson = readPluginJson(pluginDir)
 
     if (!fs.existsSync(hooksDir)) {
       return
@@ -357,7 +374,8 @@ function generateHooksIndex() {
       allHooks.push({
         name: hookName,
         plugin: pluginDir,
-        description: description
+        description: description,
+        deprecated: pluginJson.deprecated ?? false
       })
     })
   })
@@ -366,9 +384,10 @@ function generateHooksIndex() {
   allHooks.sort((a, b) => a.name.localeCompare(b.name))
 
   // Générer la table markdown
-  const tableRows = allHooks.map(hook =>
-    `| \`${hook.name}\` | [${hook.plugin}](/plugins/${hook.plugin}) | ${hook.description} |`
-  ).join('\n')
+  const tableRows = allHooks.map(hook => {
+    const deprecatedSuffix = hook.deprecated ? ' ⚠️' : ''
+    return `| \`${hook.name}\` | [${hook.plugin}](/plugins/${hook.plugin})${deprecatedSuffix} | ${hook.description} |`
+  }).join('\n')
 
   const content = `---
 title: Index des Hooks
@@ -378,7 +397,7 @@ title: Index des Hooks
 
 ${allHooks.length} hooks disponibles dans le marketplace.
 
-**Note** : Les hooks sont des scripts Python qui s'exécutent en réponse à des événements (pre_tool_use, post_tool_use, etc.).
+**Note** : Les hooks sont des scripts Python qui s'exécutent en réponse à des événements (pre_tool_use, post_tool_use, etc.). ⚠️ = plugin déprécié.
 
 | Hook | Plugin | Description |
 |------|--------|-------------|
@@ -412,7 +431,9 @@ import { data as plugins } from '../.vitepress/data/plugins.data'
   <h2>
     <a :href="'/claude-marketplace/plugins/' + plugin.slug">{{ plugin.name }}</a>
     <Badge type="info" :text="'v' + plugin.version" />
+    <Badge v-if="plugin.deprecated" type="danger" text="Déprécié" />
   </h2>
+  <p v-if="plugin.deprecated" class="deprecation-notice">⚠️ {{ plugin.deprecation_message }}</p>
   <p>{{ plugin.description }}</p>
   <div class="meta">
     <Badge type="tip" :text="plugin.skillCount + ' skills'" />
@@ -428,6 +449,86 @@ import { data as plugins } from '../.vitepress/data/plugins.data'
   const pluginsDir = path.join(docsDir, 'plugins')
   fs.writeFileSync(path.join(pluginsDir, 'index.md'), content)
   console.log('✅ Index des plugins généré')
+}
+
+// Phase 2.4 : Générer la sidebar des plugins
+function generatePluginsSidebar() {
+  console.log('📑 Génération de la sidebar des plugins...')
+
+  const CATEGORY_LABELS: Record<string, string> = {
+    'git-workflow': 'Git & Workflow',
+    'development': 'Développement',
+    'framework': 'Framework',
+    'documentation': 'Documentation',
+    'ai': 'Intelligence Artificielle',
+    'tools': 'Outils'
+  }
+
+  const CATEGORY_ORDER = ['git-workflow', 'development', 'framework', 'documentation', 'ai', 'tools']
+
+  function toTitleCase(slug: string): string {
+    return slug.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+  }
+
+  const pluginDirs = findPluginDirectories()
+  const plugins = pluginDirs.map(dir => {
+    const pluginJson = readPluginJson(dir)
+    return { ...pluginJson, slug: dir }
+  })
+
+  const activePlugins = plugins.filter(p => !p.deprecated)
+  const deprecatedPlugins = plugins.filter(p => p.deprecated)
+
+  const byCategory: Record<string, typeof activePlugins> = {}
+  for (const plugin of activePlugins) {
+    const cat = (plugin as any).category || 'tools'
+    if (!byCategory[cat]) byCategory[cat] = []
+    byCategory[cat].push(plugin)
+  }
+
+  const sections: object[] = [
+    {
+      text: "Vue d'ensemble",
+      items: [
+        { text: 'Tous les plugins', link: '/plugins/' },
+        { text: 'Par catégorie', link: '/plugins/by-category' }
+      ]
+    }
+  ]
+
+  for (const cat of CATEGORY_ORDER) {
+    const pluginsInCat = byCategory[cat]
+    if (!pluginsInCat || pluginsInCat.length === 0) continue
+    sections.push({
+      text: CATEGORY_LABELS[cat] || cat,
+      collapsed: false,
+      items: pluginsInCat
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(p => ({ text: toTitleCase(p.slug), link: `/plugins/${p.slug}` }))
+    })
+  }
+
+  if (deprecatedPlugins.length > 0) {
+    sections.push({
+      text: 'Dépréciés',
+      collapsed: true,
+      items: deprecatedPlugins
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(p => ({
+          text: toTitleCase(p.slug),
+          link: `/plugins/${p.slug}`,
+          badge: { text: 'Déprécié', type: 'danger' }
+        }))
+    })
+  }
+
+  const generatedDir = path.join(docsDir, '.vitepress', 'generated')
+  if (!fs.existsSync(generatedDir)) {
+    fs.mkdirSync(generatedDir, { recursive: true })
+  }
+
+  fs.writeFileSync(path.join(generatedDir, 'plugins-sidebar.json'), JSON.stringify(sections, null, 2))
+  console.log('✅ Sidebar des plugins générée')
 }
 
 // Exécution principale
@@ -447,6 +548,9 @@ function main() {
   console.log()
 
   generatePluginIndex()
+  console.log()
+
+  generatePluginsSidebar()
   console.log()
 
   console.log('✨ Génération terminée!')

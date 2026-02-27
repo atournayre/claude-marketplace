@@ -8,6 +8,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `reviewer:challenge`. Voir le plugin `reviewer`. Sera supprimée en v3.0.
+
 # Challenge - Auto-évaluation des réponses Claude
 
 ## Instructions à Exécuter

@@ -12,6 +12,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `analyst:explore`. Voir le plugin `analyst`. Sera supprimée en v3.0.
+
 # Objectif
 
 ## Instructions à Exécuter
@@ -35,6 +37,12 @@ workflow_state_file=".claude/data/workflows/issue-${issue_number}-dev-workflow-s
 - Si le fichier n'existe pas, exit avec erreur code 1
 
 ## 2. Lancer les agents d'exploration
+
+### Limites d'exploration
+
+- `max_turns` par agent : **10**
+- Seuil fichiers : si un agent a identifié 10+ fichiers, STOP et consolider
+- Instruction dans chaque prompt agent : "Tu as maximum 10 tours. Retourne tes meilleurs résultats partiels si tu atteins la limite."
 
 Lancer **2-3 agents `code-explorer` en parallèle** avec des focus différents :
 

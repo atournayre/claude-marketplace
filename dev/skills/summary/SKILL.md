@@ -7,6 +7,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `documenter:summary`. Voir le plugin `documenter`. Sera supprimée en v3.0.
+
 # Configuration de sortie
 
 ## Instructions à Exécuter

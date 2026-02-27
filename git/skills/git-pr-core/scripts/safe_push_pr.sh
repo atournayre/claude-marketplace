@@ -42,12 +42,13 @@ if ! git push -u origin "$BRANCH_NAME"; then
     exit 1
 fi
 
-# Création PR
-echo "📝 Création de la Pull Request..."
+# Création PR (draft pour limiter l'exécution de la CI)
+echo "📝 Création de la Pull Request (draft)..."
 PR_URL=$(gh pr create \
     --base "$BRANCH_BASE" \
     --title "$PR_TITLE" \
     --body-file "$PR_BODY_FILE" \
+    --draft \
     2>&1)
 
 if [ $? -ne 0 ]; then

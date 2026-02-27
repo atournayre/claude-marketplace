@@ -7,6 +7,8 @@ allowed-tools: [Bash, Read, Write, AskUserQuestion]
 model: sonnet
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:pr`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Git PR Core (Internal)
 
 ## Instructions à Exécuter

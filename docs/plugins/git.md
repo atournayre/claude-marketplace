@@ -1,10 +1,14 @@
 ---
 title: "git"
-description: "Workflow Git complet  - branches, commits, conflits, PR avec automation QA"
-version: "1.13.0"
+description: "Workflow Git complet  - branches, commits, conflits, PR avec automation QA et CI autofix"
+version: "1.14.2"
 ---
 
-# git <Badge type="info" text="v1.13.0" />
+# git <Badge type="info" text="v1.14.2" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise le plugin-persona : devops
+:::
 
 
 Workflow Git complet : branches, commits, conflits, PR.

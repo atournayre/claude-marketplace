@@ -85,15 +85,13 @@ if [ -n "$ISSUE_NUMBER" ]; then
 fi
 
 # Créer fichier temporaire avec le body
-PR_BODY_FILE="/tmp/pr_body_$(date +%s).md"
+PR_BODY_FILE=$(mktemp /tmp/pr_body_XXXXXX.md)
+trap 'rm -f "$PR_BODY_FILE"' EXIT
 echo "$PR_TEMPLATE" > "$PR_BODY_FILE"
 
 # Appeler le script de push sécurisé
 PR_NUMBER=$(bash "$SCRIPTS_DIR/safe_push_pr.sh" "$BRANCH_BASE" "$BRANCH_NAME" "$PR_TITLE" "$PR_BODY_FILE")
 EXIT_CODE=$?
-
-# Nettoyer
-rm -f "$PR_BODY_FILE"
 
 if [ $EXIT_CODE -ne 0 ]; then
     exit 1

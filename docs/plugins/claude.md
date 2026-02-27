@@ -1,10 +1,14 @@
 ---
 title: "claude"
 description: "Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation"
-version: "1.3.1"
+version: "1.3.2"
 ---
 
-# claude <Badge type="info" text="v1.3.1" />
+# claude <Badge type="info" text="v1.3.2" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise les plugins-persona : infra, documenter
+:::
 
 
 Plugin de base pour Claude Code avec commandes essentielles pour l'amélioration et la documentation.

@@ -14,6 +14,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `implementer:code`. Voir le plugin `implementer`. Sera supprimée en v3.0.
+
 # Objectif
 
 ## Instructions à Exécuter
@@ -37,8 +39,11 @@ workflow_state_file=".claude/data/workflows/issue-${issue_number}-dev-workflow-s
 ```
 
 - Lire le workflow state pour accéder au plan généré (Phase 5)
+- Lire `phases.1.constraints` du workflow state pour les contraintes architecturales
 - Lire `docs/specs/{feature}.md` (ou chemin du plan)
 - Si le plan n'existe pas, exit avec erreur
+
+**Contraintes :** Chaque fichier créé/modifié DOIT respecter les contraintes architecturales extraites en Phase 1 (depuis le CLAUDE.md et .claude/rules/ du projet cible).
 
 ## 2. Implémenter selon le plan
 

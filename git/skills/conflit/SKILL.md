@@ -8,6 +8,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:conflict`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Résolution Interactive de Conflits Git
 
 ## Instructions à Exécuter

@@ -1,10 +1,14 @@
 ---
 title: "github"
 description: "Gestion GitHub  - issues, PR, analyse d'impact avec skills spécialisés"
-version: "1.3.2"
+version: "1.3.3"
 ---
 
-# github <Badge type="info" text="v1.3.2" />
+# github <Badge type="info" text="v1.3.3" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise les plugins-persona : implementer, analyst
+:::
 
 
 Gestion GitHub : issues, PR, analyse d'impact.

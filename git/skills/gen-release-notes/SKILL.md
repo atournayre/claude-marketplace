@@ -7,6 +7,8 @@ allowed-tools: [Bash, Read, Write, Grep, Glob, AskUserQuestion]
 model: sonnet
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:release-notes`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Gen Release Notes Skill
 
 ## Instructions à Exécuter

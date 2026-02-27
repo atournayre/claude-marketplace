@@ -15,6 +15,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `orchestrator:feature`. Voir le plugin `orchestrator`. Sera supprimée en v3.0.
+
 # Objectif
 
 ## Instructions à Exécuter
@@ -276,6 +278,8 @@ Si `/dev:auto:discover` échoue (ambiguïté critique) :
 **⏱️ Démarrer le timer**
 
 Exécuter `/dev:auto:explore` (exploration codebase sans interaction)
+
+**Time-box :** si exploration dépasse 5 minutes, passer à la phase suivante avec résultats partiels. Enregistrer `timebox_triggered: true` dans le workflow state.
 
 **⏱️ Arrêter le timer**
 

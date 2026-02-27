@@ -1,10 +1,14 @@
 ---
 title: "qa"
 description: "Quality assurance  - PHPStan automatisé, tests, linters avec skills spécialisés"
-version: "1.3.2"
+version: "1.3.4"
 ---
 
-# qa <Badge type="info" text="v1.3.2" />
+# qa <Badge type="info" text="v1.3.4" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise le plugin-persona : reviewer
+:::
 
 
 Quality assurance : PHPStan, tests, linters.

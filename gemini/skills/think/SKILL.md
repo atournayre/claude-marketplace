@@ -6,6 +6,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `architect:deep-think`. Voir le plugin `architect`. Sera supprimée en v3.0.
+
 Soumet un problème complexe à Gemini pour une réflexion approfondie avec exploration multi-hypothèses.
 
 ## Arguments

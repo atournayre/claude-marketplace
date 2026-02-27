@@ -1,10 +1,14 @@
 ---
 title: "customize"
 description: "Personnalise ton expérience Claude Code avec hooks, output styles et status lines sur mesure"
-version: "1.1.1"
+version: "1.1.3"
 ---
 
-# customize <Badge type="info" text="v1.1.1" />
+# customize <Badge type="info" text="v1.1.3" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise le plugin-persona : infra
+:::
 
 
 Personnalise ton expérience Claude Code avec hooks, output styles et status lines sur mesure.

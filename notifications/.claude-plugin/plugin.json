@@ -1,6 +1,6 @@
 {
   "name": "notifications",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète",
   "author": {
     "name": "Aurélien Tournayre",
@@ -17,5 +17,8 @@
     "desktop",
     "notify-send",
     "phpstorm"
-  ]
+  ],
+  "deprecated": true,
+  "replaced_by": ["infra"],
+  "deprecation_message": "Ce plugin est déprécié. Utilise le plugin-persona : infra"
 }

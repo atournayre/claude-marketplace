@@ -5,6 +5,8 @@ license: MIT
 version: 1.0.0
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `php:make-story`. Voir le plugin `php`. Sera supprimée en v3.0.
+
 # Framework Make Story Skill
 
 ## Instructions à Exécuter

@@ -1,10 +1,14 @@
 ---
 title: "chrome-ui-test"
 description: "Tests automatisés d'interface utilisateur dans Chrome  - navigation, validation visuelle, tests fonctionnels et responsive"
-version: "1.0.0"
+version: "1.0.1"
 ---
 
-# chrome-ui-test <Badge type="info" text="v1.0.0" />
+# chrome-ui-test <Badge type="info" text="v1.0.1" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise le plugin-persona : tester
+:::
 
 
 Plugin de tests automatisés d'interface utilisateur dans Chrome pour Claude Code.

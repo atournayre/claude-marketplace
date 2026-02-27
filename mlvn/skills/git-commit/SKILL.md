@@ -5,6 +5,8 @@ model: haiku
 allowed-tools: Bash(git :*), Bash(npm :*), Bash(pnpm :*)
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `devops:commit`. Voir le plugin `devops`. Sera supprimée en v3.0.
+
 # Commit
 
 Quick commit with conventional message format, then push.

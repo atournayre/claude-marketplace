@@ -1,10 +1,14 @@
 ---
 title: "dev"
-description: "Workflow structuré de développement de features en 8 phases avec agents spécialisés et support git worktrees"
-version: "2.5.1"
+description: "Workflow structuré de développement de features en 8 phases avec agents spécialisés, support git worktrees, implémentation forcée et refactoring sûr"
+version: "2.6.1"
 ---
 
-# dev <Badge type="info" text="v2.5.1" />
+# dev <Badge type="info" text="v2.6.1" /> <Badge type="danger" text="Déprécié" />
+
+::: warning Déprécié
+Ce plugin est déprécié. Utilise les plugins-persona : analyst, architect, implementer, orchestrator
+:::
 
 
 Workflow structuré de développement de features avec **deux modes** :

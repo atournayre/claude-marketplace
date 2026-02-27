@@ -7,6 +7,76 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2026.02.27] - 2026-02-27
+
+### Plugins Updated
+- **git v1.14.2** - PR draft par défaut pour limiter exécution CI (PATCH bump)
+  - Ajout du flag `--draft` à la création de PR
+  - Les PR restent en draft jusqu'à confirmation manuelle
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
+## [2026.02.20a] - 2026-02-20
+
+### New Plugins
+- **analyst v1.1.0** - Analyse architecture + design DDD
+- **architect v1.1.0** - Analyse architecturale et patterns
+- **devops v1.1.0** - Pipeline CD/CI automation
+- **documenter v1.1.0** - Extraction documentation automatique
+- **implementer v1.1.0** - Implémentation code + tests TDD
+- **infra v1.1.0** - Infrastructure et configuration
+- **orchestrator v1.1.0** - Orchestration multi-phase
+- **php v1.1.0** - Génération code PHP Elegant Objects
+- **researcher v1.1.0** - Recherche temps réel
+- **reviewer v1.1.0** - Revue complète de code
+- **tester v1.1.0** - Tests et QA
+
+### Plugins Updated
+- **chrome-ui-test v1.0.1** - Minor fixes and improvements
+- **claude v1.3.2** - Documentation and structure updates
+- **customize v1.1.3** - Configuration enhancements
+- **dev v2.6.1** - Workflow improvements
+- **framework v1.1.2** - PHP generation updates
+- **gemini v1.4.3** - Gemini integration updates
+- **git v1.14.1** - Git workflow refinements
+- **github v1.3.3** - GitHub integration improvements
+- **mlvn v1.1.1** - Minor updates
+- **notifications v1.0.3** - Notification system improvements
+- **prompt v2.3.2** - Prompt system enhancements
+- **qa v1.3.4** - QA system improvements
+- **review v1.0.2** - Code review refinements
+- **utils v1.0.1** - Utility improvements
+
+Dépôt : Voir les CHANGELOG individuels dans chaque répertoire plugin
+
+## [2026.02.08c] - 2026-02-08
+
+### Plugins Updated
+- **dev v2.6.0** - Nouvelles skills implementation + refactoring + time-boxing (MINOR bump)
+  - Nouvelles skills : `/dev:implement`, `/dev:parallel-implement`, `/dev:refactor-safe`
+  - Time-boxing exploration : max 10 tours agents + 5min auto-feature
+  - Passage contraintes architecturales aux agents (CLAUDE.md + .claude/rules/)
+  - Dépôt : [dev/CHANGELOG.md](dev/CHANGELOG.md)
+
+- **git v1.14.0** - Skill CI autofix + scripts Git durcis (MINOR bump)
+  - Nouvelle skill : `/git:ci-autofix` pour corrections automatiques CI
+  - Scripts Git : `set -euo pipefail`, `eval` supprimé, `mktemp + trap`, guards inputs vides
+  - Dépôt : [git/CHANGELOG.md](git/CHANGELOG.md)
+
+- **customize v1.1.2** - Hook PHPStan post-édition (PATCH bump)
+  - Hook PostToolUse : détection PHPStan + annotations suppression après Edit/Write
+  - Script Python `phpstan_check.py` pour analyse post-édition
+  - Dépôt : [customize/CHANGELOG.md](customize/CHANGELOG.md)
+
+- **prompt v2.3.1** - Contraintes architecturales dans analyst (PATCH bump)
+  - Agent `prompt-analyst` : extraction CLAUDE.md + .claude/rules/ dans section dédiée
+  - Passage contraintes à tous les agents en aval
+  - Dépôt : [prompt/CHANGELOG.md](prompt/CHANGELOG.md)
+
+- **qa v1.3.3** - Anti-suppression PHPStan automatique (PATCH bump)
+  - Vérification automatique étape 4.5 de la boucle de résolution
+  - Agent `phpstan-error-resolver` : interdiction `@phpstan-ignore*`
+  - Dépôt : [qa/CHANGELOG.md](qa/CHANGELOG.md)
+
 ## [2026.02.08b] - 2026-02-08
 
 ### Plugins Updated

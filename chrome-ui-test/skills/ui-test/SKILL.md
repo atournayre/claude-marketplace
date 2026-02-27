@@ -25,6 +25,8 @@ allowed-tools: [
 model: sonnet
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `tester:ui-test`. Voir le plugin `tester`. Sera supprimée en v3.0.
+
 # Chrome UI Test Skill
 
 ## Instructions à Exécuter

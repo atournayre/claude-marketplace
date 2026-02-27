@@ -8,6 +8,8 @@ version: 1.0.0
 license: MIT
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `documenter:claude-question`. Voir le plugin `documenter`. Sera supprimée en v3.0.
+
 # Interrogation de la Documentation Claude Code
 
 ## Instructions à Exécuter

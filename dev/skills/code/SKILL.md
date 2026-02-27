@@ -62,6 +62,8 @@ hooks:
           once: false
 ---
 
+> ⚠️ **Déprécié** : Cette skill est remplacée par `implementer:code`. Voir le plugin `implementer`. Sera supprimée en v3.0.
+
 # Objectif
 
 Phase 5 du workflow de développement : implémenter la feature selon le plan généré.

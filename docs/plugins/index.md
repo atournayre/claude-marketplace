@@ -12,7 +12,9 @@ import { data as plugins } from '../.vitepress/data/plugins.data'
   <h2>
     <a :href="'/claude-marketplace/plugins/' + plugin.slug">{{ plugin.name }}</a>
     <Badge type="info" :text="'v' + plugin.version" />
+    <Badge v-if="plugin.deprecated" type="danger" text="Déprécié" />
   </h2>
+  <p v-if="plugin.deprecated" class="deprecation-notice">⚠️ {{ plugin.deprecation_message }}</p>
   <p>{{ plugin.description }}</p>
   <div class="meta">
     <Badge type="tip" :text="plugin.skillCount + ' skills'" />

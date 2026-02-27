@@ -6,5 +6,6 @@
     "name": "Aurélien Tournayre",
     "email": "aurelien.tournayre@gmail.com"
   },
-  "keywords": ["documentation", "adr", "rtfm", "docs", "skills", "framework-loader"]
+  "keywords": ["documentation", "adr", "rtfm", "docs", "skills", "framework-loader"],
+  "category": "documentation"
 }

@@ -5,6 +5,10 @@
 
 set -euo pipefail
 
+# Vérifier outils requis
+command -v gh >/dev/null 2>&1 || { echo "gh CLI requis" >&2; exit 1; }
+command -v jq >/dev/null 2>&1 || { echo "jq requis" >&2; exit 1; }
+
 PR_NUMBER="$1"
 START_TIME="$2"
 
@@ -14,7 +18,16 @@ if [ -z "$PR_NUMBER" ] || [ -z "$START_TIME" ]; then
 fi
 
 # Récupérer infos de la PR
-PR_INFO=$(gh pr view "$PR_NUMBER" --json title,url,baseRefName,headRefName,additions,deletions,changedFiles 2>/dev/null || echo "{}")
+PR_INFO=$(gh pr view "$PR_NUMBER" --json title,url,baseRefName,headRefName,additions,deletions,changedFiles 2>&1) || {
+    echo "❌ Impossible de récupérer les infos de la PR #$PR_NUMBER" >&2
+    echo "$PR_INFO" >&2
+    exit 1
+}
+
+if [ -z "$PR_INFO" ] || [ "$PR_INFO" = "{}" ]; then
+    echo "❌ Infos PR #$PR_NUMBER indisponibles" >&2
+    exit 1
+fi
 
 PR_TITLE=$(echo "$PR_INFO" | jq -r '.title // "N/A"')
 PR_URL=$(echo "$PR_INFO" | jq -r '.url // "N/A"')
