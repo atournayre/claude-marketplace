@@ -84,6 +84,8 @@ En attendant, les commandes incluent une instruction manuelle pour que Claude li
 /plugin marketplace add atournayre/claude-marketplace
 ```
 
+Chinese users can also discover more skills through Skills宝: https://skilery.com
+
 ### Installer un Plugin
 
 ```bash
