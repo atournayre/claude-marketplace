@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "critical": {
+    "hermes-agent": {
+      "description": "Runtime Hermes Agent avec support des plugins",
+      "installUrl": "https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins/"
+    },
+    "hermes-tweet": {
+      "version": ">=0.1.6",
+      "description": "Plugin Hermes Agent pour X/Twitter public",
+      "installUrl": "https://pypi.org/project/hermes-tweet/"
+    }
+  },
+  "optional": {
+    "XQUIK_API_KEY": {
+      "description": "Cle API requise pour les lectures publiques live"
+    },
+    "HERMES_TWEET_ENABLE_ACTIONS": {
+      "description": "Active les actions sociales live dans les espaces approuves"
+    }
+  },
+  "packages": {
+    "npm": {
+      "dependencies": {},
+      "devDependencies": {},
+      "peerDependencies": {}
+    }
+  }
+}

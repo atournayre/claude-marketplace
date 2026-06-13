@@ -81,6 +81,11 @@
       "description": "Génération de contenu marketing : posts LinkedIn, annonces, communications"
     },
     {
+      "name": "hermes-tweet",
+      "source": "./hermes-tweet",
+      "description": "Recherche X/Twitter publique et planification d'actions sociales via Hermes Agent"
+    },
+    {
       "name": "notifications",
       "source": "./notifications",
       "description": "Système de notifications avancé avec queue persistante, dispatchers multiples et gestion complète"

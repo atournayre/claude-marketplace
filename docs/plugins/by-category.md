@@ -13,7 +13,7 @@ const categories = {
   'Framework': ['symfony'],
   'Documentation': ['doc', 'prompt', 'claude'],
   'IA': ['gemini'],
-  'Outils': ['customize', 'notifications', 'chrome-ui-test', 'marketing', 'command', 'mlvn']
+  'Outils': ['customize', 'notifications', 'chrome-ui-test', 'marketing', 'hermes-tweet', 'command', 'mlvn']
 }
 
 function getPluginsByCategory(category) {
@@ -103,4 +103,4 @@ function getPluginsByCategory(category) {
 ## Navigation
 
 - [Tous les plugins](/plugins/) - Liste complète
-- [Index des commandes](/commands/) - 69 slash commands
+- [Index des commandes](/commands/) - 84 slash commands

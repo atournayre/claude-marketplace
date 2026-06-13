@@ -23,6 +23,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 📝 **Prompt** | 2.3.0 | Système hybride Starters + Mode Plan + Checklists + Agent Teams - Templates légers, exploration contextuelle, validation automatisée, orchestration multi-agents | [README](prompt/README.md) |
 | 📋 **QA** | 1.3.2 | Quality assurance : PHPStan, tests, linters | [README](qa/README.md) |
 | 🔍 **Review** | 1.0.1 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
+| 🛰️ **Hermes Tweet** | 1.0.0 | Recherche X/Twitter publique et planification d'actions sociales via Hermes Agent | [README](hermes-tweet/README.md) |
 | 🎯 **Symfony** | 1.3.2 | Plugin Symfony avec skills make, documentation et intégrations | [README](symfony/README.md) |
 | 🛠️ **Utils** | 1.0.0 | Skills et agents utilitaires : fix-grammar, action, explore-codebase | [README](utils/README.md) |
 
@@ -95,6 +96,7 @@ En attendant, les commandes incluent une instruction manuelle pour que Claude li
 /plugin install claude@atournayre
 /plugin install git@atournayre
 /plugin install symfony@atournayre
+/plugin install hermes-tweet@atournayre
 ```
 
 ### Installer Tous les Plugins
