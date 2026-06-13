@@ -4,7 +4,7 @@ title: Index des Skills
 
 # Index des Skills
 
-83 skills disponibles dans le marketplace.
+84 skills disponibles dans le marketplace.
 
 **Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
 
@@ -75,6 +75,7 @@ title: Index des Skills
 | `/git:worktree` | [git](/plugins/git) | Création de worktree Git avec workflow structuré |
 | `/github-impact` | [github](/plugins/github) | > |
 | `/github:fix` | [github](/plugins/github) | Corriger une issue GitHub avec workflow simplifié et efficace |
+| `/hermes-tweet:workflow` | [hermes-tweet](/plugins/hermes-tweet) | Prepare des workflows X/Twitter publics avec Hermes Agent et garde les actions sociales sous validation explicite |
 | `/init-marketplace` | marketplace | Initialise le marketplace et vérifie toutes les dépendances nécessaires aux plugins |
 | `/marketing:linkedin` | [marketing](/plugins/marketing) | Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace |
 | `/merge` | [mlvn](/plugins/mlvn) | Intelligently merge branches with context-aware conflict resolution |

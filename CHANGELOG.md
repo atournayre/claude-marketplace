@@ -7,6 +7,13 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+### Plugins Added
+- **hermes-tweet v1.0.0** - Recherche X/Twitter publique et planification d'actions sociales via Hermes Agent
+  - Skill `/hermes-tweet:workflow` pour cadrer `tweet_explore`, `tweet_read` et `tweet_action`
+  - Installation Hermes Agent depuis `Xquik-dev/hermes-tweet` avec fallback PyPI
+  - Garde-fous explicites pour cle API, activation des actions et validation utilisateur
+  - Depot : [hermes-tweet/CHANGELOG.md](hermes-tweet/CHANGELOG.md)
+
 ## [2026.02.08b] - 2026-02-08
 
 ### Plugins Updated
