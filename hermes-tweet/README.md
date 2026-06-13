@@ -44,7 +44,7 @@ hermes plugins enable hermes-tweet
 Activer les actions sociales uniquement dans les espaces de travail approuves :
 
 ```bash
-export HERMES_TWEET_ENABLE_ACTIONS=1
+export HERMES_TWEET_ENABLE_ACTIONS=true
 ```
 
 ## Workflow
