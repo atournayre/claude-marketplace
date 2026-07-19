@@ -33,6 +33,42 @@ interface Hook {
   description: string
 }
 
+function readFrontmatter(content: string): string | undefined {
+  return content.match(/^---\r?\n([\s\S]+?)\r?\n---/)?.[1]
+}
+
+function readFrontmatterValue(frontmatter: string, key: string): string | undefined {
+  const lines = frontmatter.split(/\r?\n/)
+  const fieldIndex = lines.findIndex(line => line.startsWith(`${key}:`))
+  if (fieldIndex < 0) {
+    return undefined
+  }
+
+  const firstValue = lines[fieldIndex].slice(key.length + 1).trim()
+  const continuation: string[] = []
+  for (let index = fieldIndex + 1; index < lines.length; index += 1) {
+    const line = lines[index] || ''
+    if (line.length > 0 && !/^\s/.test(line)) {
+      break
+    }
+    continuation.push(line.trim())
+  }
+
+  let value = firstValue
+
+  if (/^[>|][+-]?$/.test(firstValue)) {
+    value = continuation.filter(Boolean).join(' ')
+  } else if (firstValue === '[') {
+    value = [firstValue, ...continuation].join(' ')
+  }
+
+  const normalized = value
+    .replace(/^(['"])([\s\S]*)\1$/, '$2')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return normalized.length > 0 ? normalized : undefined
+}
+
 // Fonction pour trouver tous les dossiers de plugins
 function findPluginDirectories(): string[] {
   const entries = fs.readdirSync(rootDir, { withFileTypes: true })
@@ -140,21 +176,19 @@ function scanSkillsDirectory(skillsDir: string, pluginLabel: string, allCommands
 
     const skillContent = fs.readFileSync(skillPath, 'utf-8')
 
-    // Parser le frontmatter YAML
-    const frontmatterMatch = skillContent.match(/^---\n([\s\S]+?)\n---/)
-    if (!frontmatterMatch) {
+    const frontmatter = readFrontmatter(skillContent)
+    if (!frontmatter) {
       return
     }
 
-    const frontmatter = frontmatterMatch[1]
-    const nameMatch = frontmatter.match(/name:\s*['"]?(.+?)['"]?\s*$/m)
-    const descMatch = frontmatter.match(/description:\s*['"]?(.+?)['"]?\s*$/m)
+    const name = readFrontmatterValue(frontmatter, 'name')
+    const description = readFrontmatterValue(frontmatter, 'description')
 
-    if (nameMatch && descMatch) {
+    if (name && description) {
       allCommands.push({
-        command: nameMatch[1],
+        command: name,
         plugin: pluginLabel,
-        description: descMatch[1]
+        description
       })
     }
   })
@@ -233,23 +267,20 @@ function generateAgentsIndex() {
       const agentPath = path.join(agentsDir, agentFile.name)
       const agentContent = fs.readFileSync(agentPath, 'utf-8')
 
-      // Parser le frontmatter YAML
-      const frontmatterMatch = agentContent.match(/^---\n([\s\S]+?)\n---/)
-      if (!frontmatterMatch) {
+      const frontmatter = readFrontmatter(agentContent)
+      if (!frontmatter) {
         return
       }
 
-      const frontmatter = frontmatterMatch[1]
-      const nameMatch = frontmatter.match(/name:\s*['"]?(.+?)['"]?\s*$/m)
-      const descMatch = frontmatter.match(/description:\s*['"]?(.+?)['"]?\s*$/m)
-      const toolsMatch = frontmatter.match(/tools:\s*(.+?)\s*$/m)
+      const name = readFrontmatterValue(frontmatter, 'name')
+      const description = readFrontmatterValue(frontmatter, 'description')
 
-      if (nameMatch && descMatch) {
+      if (name && description) {
         allAgents.push({
-          name: nameMatch[1],
+          name,
           plugin: pluginDir,
-          description: descMatch[1],
-          tools: toolsMatch ? toolsMatch[1] : 'N/A'
+          description,
+          tools: readFrontmatterValue(frontmatter, 'tools') || 'N/A'
         })
       }
     })
