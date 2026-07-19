@@ -4,7 +4,7 @@ title: Index des Skills
 
 # Index des Skills
 
-83 skills disponibles dans le marketplace.
+84 skills disponibles dans le marketplace.
 
 **Note** : Les skills sont invoquées via slash commands (ex: `/git:commit`, `/dev:feature`).
 
@@ -43,11 +43,11 @@ title: Index des Skills
 | `/dev:status` | [dev](/plugins/dev) | Affiche le workflow et l'étape courante |
 | `/dev:summary` | [dev](/plugins/dev) | Résumé de ce qui a été construit (Phase 7) |
 | `/dev:worktree` | [dev](/plugins/dev) | Gestion des git worktrees pour développement parallèle |
-| `/doc-loader` | [doc](/plugins/doc) | > |
+| `/doc-loader` | [doc](/plugins/doc) | Charge la documentation d'un framework depuis son site web dans des fichiers markdown locaux. Supporte Symfony, API Platform, Meilisearch, atournayre-framework et Claude Code. |
 | `/doc:adr` | [doc](/plugins/doc) | Génère un Architecture Decision Record (ADR) formaté et structuré |
 | `/doc:rtfm` | [doc](/plugins/doc) | Lit la documentation technique - RTFM (Read The Fucking Manual) |
 | `/doc:update` | [doc](/plugins/doc) | Crées la documentation pour la fonctionnalité en cours. Mets à jour le readme global du projet si nécessaire. Lie les documents entre eux pour ne pas avoir de documentation orpheline. La documentation est générée dans les répertoire de documentation du projet. |
-| `/elegant-objects` | [qa](/plugins/qa) | > |
+| `/elegant-objects` | [qa](/plugins/qa) | Vérifie la conformité du code PHP aux principes Elegant Objects de Yegor Bugayenko. Analyse un fichier spécifique ou tous les fichiers modifiés dans la branche. |
 | `/fix-errors` | [mlvn](/plugins/mlvn) | Fix all ESLint and TypeScript errors with parallel processing using snipper agents |
 | `/fix-grammar` | [utils](/plugins/utils) | Fix grammar and spelling errors in one or multiple files while preserving formatting |
 | `/fix-pr-comments` | [git](/plugins/git) | Fetch PR review comments and implement all requested changes |
@@ -63,23 +63,23 @@ title: Index des Skills
 | `/gemini:analyze` | [gemini](/plugins/gemini) | Analyse une codebase ou documentation avec Gemini (1M tokens) |
 | `/gemini:search` | [gemini](/plugins/gemini) | Recherche temps réel via Google Search intégré à Gemini |
 | `/gemini:think` | [gemini](/plugins/gemini) | Délègue un problème complexe à Gemini Deep Think |
-| `/gen-release-notes` | [git](/plugins/git) | > |
-| `/git-branch-core` | [git](/plugins/git) | > |
-| `/git-cd-pr` | [git](/plugins/git) | > |
-| `/git-pr` | [git](/plugins/git) | > |
-| `/git-pr-core` | [git](/plugins/git) | > |
+| `/gen-release-notes` | [git](/plugins/git) | Génère des notes de release HTML orientées utilisateurs finaux. Transforme les commits techniques en descriptions accessibles sans jargon. |
+| `/git-branch-core` | [git](/plugins/git) | Skill interne fournissant les scripts communs pour la création de branches. Ne pas appeler directement - utilisé par git:branch et git:worktree. |
+| `/git-cd-pr` | [git](/plugins/git) | Crée une Pull Request en mode Continuous Delivery avec workflow complet : QA, labels version (major/minor/patch), feature flags, code review automatique. |
+| `/git-pr` | [git](/plugins/git) | Crée une Pull Request GitHub standard avec workflow complet : QA, commits, assignation milestone/projet, code review automatique. |
+| `/git-pr-core` | [git](/plugins/git) | Skill interne fournissant les scripts communs pour la création de Pull Requests. Ne pas appeler directement - utilisé par git-pr et git-cd-pr. |
 | `/git:branch` | [git](/plugins/git) | Création de branche Git avec workflow structuré |
 | `/git:commit` | [git](/plugins/git) | Créer des commits bien formatés avec format conventional et emoji |
 | `/git:conflit` | [git](/plugins/git) | Analyse les conflits git et propose à l'utilisateur une résolution pas à pas avec validation de chaque étape. |
 | `/git:release-report` | [git](/plugins/git) | Génère un rapport HTML d'analyse d'impact entre deux branches |
 | `/git:worktree` | [git](/plugins/git) | Création de worktree Git avec workflow structuré |
-| `/github-impact` | [github](/plugins/github) | > |
+| `/github-impact` | [github](/plugins/github) | Génère automatiquement deux rapports d'impact (métier et technique) pour une PR GitHub et les intègre dans la description. |
 | `/github:fix` | [github](/plugins/github) | Corriger une issue GitHub avec workflow simplifié et efficace |
 | `/init-marketplace` | marketplace | Initialise le marketplace et vérifie toutes les dépendances nécessaires aux plugins |
 | `/marketing:linkedin` | [marketing](/plugins/marketing) | Génère un post LinkedIn attractif basé sur les dernières modifications du marketplace |
 | `/merge` | [mlvn](/plugins/mlvn) | Intelligently merge branches with context-aware conflict resolution |
 | `/oneshot` | [dev](/plugins/dev) | Ultra-fast feature implementation using Explore → Code → Test workflow. Use when implementing focused features, single tasks, or when speed over completeness is priority. |
-| `/phpstan-resolver` | [qa](/plugins/qa) | > |
+| `/phpstan-resolver` | [qa](/plugins/qa) | Résout automatiquement les erreurs PHPStan en analysant et corrigeant les problèmes de types. Boucle jusqu'à zéro erreur ou stagnation. |
 | `/prompt-creator` | [mlvn](/plugins/mlvn) | Expert prompt engineering for creating effective prompts for Claude, GPT, and other LLMs. Use when writing system prompts, user prompts, few-shot examples, or optimizing existing prompts for better performance. |
 | `/prompt:start` | [prompt](/plugins/prompt) | Démarre un développement avec un starter léger puis active le mode plan |
 | `/prompt:team` | [prompt](/plugins/prompt) | Orchestre une équipe d'agents spécialisés pour les tâches complexes. Auto-détecte le type, compose l'équipe, coordonne les phases analyse → challenge → implémentation → QA. |
@@ -91,5 +91,6 @@ title: Index des Skills
 | `/symfony-framework` | [symfony](/plugins/symfony) | Comprehensive Symfony 6.4 development skill for web applications, APIs, and microservices. |
 | `/symfony:doc:load` | [symfony](/plugins/symfony) | Charge la documentation Symfony depuis son site web dans des fichiers markdown locaux |
 | `/symfony:doc:question` | [symfony](/plugins/symfony) | Interroger la documentation Symfony locale pour répondre à une question |
-| `/symfony:make` | [symfony](/plugins/symfony) | Cherche si il existe un maker Symfony pour faire la tache demandée et l'utilise si il existe. Si aucun maker n'existe alors utilise la slash command "/prepare |
-| `/ui-test` | [chrome-ui-test](/plugins/chrome-ui-test) | > |
+| `/symfony:make` | [symfony](/plugins/symfony) | Cherche si il existe un maker Symfony pour faire la tache demandée et l'utilise si il existe. Si aucun maker n'existe alors utilise la slash command "/prepare" |
+| `/ui-test` | [chrome-ui-test](/plugins/chrome-ui-test) | Teste automatiquement une interface utilisateur dans Chrome : navigation, clics, validation visuelle, tests fonctionnels, responsive, comportement et debug. Génère un rapport détaillé avec screenshots et optionnellement un GIF du parcours. |
+| `/xquik:x-twitter-scraper` | [xquik](/plugins/xquik) | Use Xquik for X data through REST, MCP, SDKs, search, exports, monitoring, webhooks, bulk extraction, or approved publishing. Not affiliated with X Corp. |

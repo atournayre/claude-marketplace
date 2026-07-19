@@ -94,6 +94,11 @@
       "name": "mlvn",
       "source": "./mlvn",
       "description": "AIBlueprint by Melvynx : agents spécialisés, workflows autonomes (Ralph Loop), hooks sécurité, skills Git/Meta/Utils"
+    },
+    {
+      "name": "xquik",
+      "source": "./xquik",
+      "description": "X data workflow guidance for Xquik REST API, MCP, webhooks, and bulk extraction. Not affiliated with X Corp."
     }
   ]
 }

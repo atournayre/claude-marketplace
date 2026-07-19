@@ -25,6 +25,7 @@ Marketplace de plugins pour Claude Code, offrant un ensemble d'outils pour amél
 | 🔍 **Review** | 1.0.1 | Agents spécialisés code review : code-reviewer, silent-failure-hunter, test-analyzer, git-history-reviewer | [README](review/README.md) |
 | 🎯 **Symfony** | 1.3.2 | Plugin Symfony avec skills make, documentation et intégrations | [README](symfony/README.md) |
 | 🛠️ **Utils** | 1.0.0 | Skills et agents utilitaires : fix-grammar, action, explore-codebase | [README](utils/README.md) |
+| **Xquik** | 1.0.0 | X data workflow guidance for REST API, MCP, webhooks, and bulk extraction. Not affiliated with X Corp. | [README](xquik/README.md) |
 
 ## 🎨 Convention Output Styles
 
